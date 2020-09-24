@@ -21,11 +21,7 @@ namespace Domain
 
         public DateTime CheckOut { get; set; }
 
-        public int AdultQuantity { get; set; }
-
-        public int ChildrenQuantity { get; set; }
-
-        public int BabyQuantity { get; set; }
+        public GuestsQuantity GuestsQuantity { get; set; }
 
         public string Name { get; set; }
 

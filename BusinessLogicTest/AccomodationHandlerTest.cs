@@ -33,6 +33,7 @@ namespace BusinessLogicTest
                 Name = "Hotel",
                 Stars = 4.0,
                 Address = "Cuareim",
+                Available = true,
                 ImageUrlList = new List<string>(),
                 Categories = new List<Category>(),
                 Fee = 4000,
@@ -108,6 +109,60 @@ namespace BusinessLogicTest
 
             accomodationMock.VerifyAll();
             Assert.AreEqual(true, res);
+        }
+
+        [TestMethod]
+        public void SearchAvailableAccomodation()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            accomodationMock.Setup(x => x.Filter(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Accomodation> { accomodation });
+
+            DateTime checkIn, checkOut = new DateTime();
+            checkIn = DateTime.Now;
+            checkOut.AddDays(10);
+            GuestsQuantity guestsQuantity = new GuestsQuantity 
+            {
+                AdultQuantity = 2, 
+                ChildrenQuantity = 1, 
+                BabyQuantity = 0
+            };
+            
+            var res = handler.SearchByTouristSpot(touristSpot, checkIn, checkOut, guestsQuantity);
+
+            accomodationMock.VerifyAll();
+            Assert.AreEqual(new List<Accomodation> { accomodation }[0], res[0]);
+        }
+
+        [TestMethod]
+        public void SearchNonAvailableAccomodation()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            accomodationMock.Setup(x => x.Filter(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Accomodation> {});
+
+            DateTime checkIn, checkOut = new DateTime();
+            checkIn = DateTime.Now;
+            checkOut.AddDays(10);
+            GuestsQuantity guestsQuantity = new GuestsQuantity
+            {
+                AdultQuantity = 2,
+                ChildrenQuantity = 1,
+                BabyQuantity = 0
+            };
+
+            var res = handler.SearchByTouristSpot(touristSpot, checkIn, checkOut, guestsQuantity);
+
+            accomodationMock.VerifyAll();
+            Assert.AreEqual(0, res.Count);
         }
 
         [TestMethod]

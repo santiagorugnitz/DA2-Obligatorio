@@ -15,6 +15,7 @@ namespace BusinessLogicTest
         private Accomodation accomodation;
         private TouristSpot touristSpot;
         private Reservation reservation;
+        private GuestsQuantity guestsQuantity;
 
         [TestInitialize]
         public void SetUp()
@@ -42,15 +43,20 @@ namespace BusinessLogicTest
                 TouristSpot = touristSpot
             };
 
+            GuestsQuantity guestsQuantity = new GuestsQuantity
+            {
+                AdultQuantity = 2,
+                ChildrenQuantity = 1,
+                BabyQuantity = 0
+            };
+
             reservation = new Reservation()
             {
                 Id = 1,
                 Accomodation = accomodation,
                 CheckIn = new DateTime(),
                 CheckOut = new DateTime().AddDays(10),
-                AdultQuantity = 1,
-                ChildrenQuantity = 1,
-                BabyQuantity = 1,
+                GuestsQuantity = guestsQuantity,
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "martin.gut",
