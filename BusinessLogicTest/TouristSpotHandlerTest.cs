@@ -11,13 +11,12 @@ namespace BusinessLogicTest
     [TestClass]
     public class TouristSpotHandlerTest
     {
-        [TestMethod]
-        public void AddSpot()
+        private TouristSpot spot;
+        
+        [TestInitialize]
+        public void SetUp()
         {
-            var mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
-            var handler = new TouristSpotHandler(mock.Object);
-
-            var spot = new TouristSpot()
+            spot = new TouristSpot()
             {
                 Name = "Beach",
                 Description = "asd",
@@ -25,6 +24,14 @@ namespace BusinessLogicTest
                 Region = new Region() { Name = "region" },
                 Categories = new List<Category>()
             };
+        }
+
+        [TestMethod]
+        public void AddSpot()
+        {
+            var mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var handler = new TouristSpotHandler(mock.Object);
+
             mock.Setup(x => x.Add(spot)).Returns(true);
 
             var res = handler.Add(spot);
@@ -39,14 +46,6 @@ namespace BusinessLogicTest
             var mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
             var handler = new TouristSpotHandler(mock.Object);
 
-            var spot = new TouristSpot()
-            {
-                Name = "Beach",
-                Description = "asd",
-                ImageUrl = "url",
-                Region = new Region() { Name = "region" },
-                Categories = new List<Category>()
-            };
             mock.Setup(x => x.Delete(spot)).Returns(true);
 
             var res = handler.Delete(spot);
@@ -54,6 +53,20 @@ namespace BusinessLogicTest
             mock.VerifyAll();
             Assert.AreEqual(true, res);
 
+        }
+
+        [TestMethod]
+        public void ExistsSpot()
+        {
+            var mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var handler = new TouristSpotHandler(mock.Object);
+
+            mock.Setup(x => x.Exists(spot)).Returns(true);
+
+            var res = handler.Exists(spot);
+
+            mock.VerifyAll();
+            Assert.AreEqual(true, res);
         }
     }
 }

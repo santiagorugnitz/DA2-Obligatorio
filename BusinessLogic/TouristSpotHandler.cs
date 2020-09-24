@@ -23,5 +23,10 @@ namespace BusinessLogic
         {
             return repository.Delete(spot);
         }
+
+        public bool Exists(TouristSpot touristSpot)
+        {
+            return repository.Exists(touristSpot);
+        }
     }
 }
