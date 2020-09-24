@@ -11,35 +11,106 @@ namespace BusinessLogicTest
     [TestClass]
     public class ReservationHandlerTest
     {
-        [TestMethod]
-        public void AddReservation()
-        {
-            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object);
 
-            var reservation = new Reservation()
+        private Accomodation accomodation;
+        private TouristSpot touristSpot;
+        private Reservation reservation;
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            touristSpot = new TouristSpot
             {
+                Name = "Beach",
+                Description = "asd",
+                ImageUrl = "url",
+                Region = new Region() { Name = "region" },
+                Categories = new List<Category>()
             };
+
+            accomodation = new Accomodation()
+            {
+                Name = "Hotel",
+                Stars = 4.0,
+                Address = "Cuareim",
+                ImageUrlList = new List<string>(),
+                Categories = new List<Category>(),
+                Fee = 4000,
+                Description = "Hotel in Mvdeo",
+                Telephone = "+598",
+                ContactInformation = "Owner",
+                TouristSpot = touristSpot
+            };
+
+            reservation = new Reservation()
+            {
+                Id = 1,
+                Accomodation = accomodation,
+                CheckIn = new DateTime(),
+                CheckOut = new DateTime().AddDays(10),
+                AdultQuantity = 1,
+                ChildrenQuantity = 1,
+                BabyQuantity = 1,
+                Name = "Martin",
+                Surname = "Gutman",
+                Email = "martin.gut",
+                ReservationState = ReservationState.Active,
+                ReservationDescription = "Activa"
+            };
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NullReferenceException),
+    "The accomodation spot does not exists")]
+        public void AddReservationWithoutAccomodation()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            touristSpotMock.Setup(x => x.Exists(touristSpot)).Returns(true);
+            accomodationMock.Setup(x => x.Exists(accomodation)).Returns(false);
+            mock.Setup(x => x.Add(reservation)).Returns(true);
+
+            var res = handler.Add(reservation);
+        }
+
+        [TestMethod]
+        public void AddReservationWithAccomodation()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Exists(accomodation)).Returns(true);
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             var res = handler.Add(reservation);
 
             mock.VerifyAll();
+            accomodationMock.VerifyAll();
             Assert.AreEqual(true, res);
         }
 
         [TestMethod]
         public void DeleteReservation()
         {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
-            var spot = new Reservation()
-            {
-            };
-            mock.Setup(x => x.Delete(spot)).Returns(true);
+            mock.Setup(x => x.Delete(reservation)).Returns(true);
 
-            var res = handler.Delete(spot);
+            var res = handler.Delete(reservation);
 
             mock.VerifyAll();
             Assert.AreEqual(true, res);

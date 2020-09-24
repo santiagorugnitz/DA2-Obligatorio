@@ -8,15 +8,24 @@ namespace BusinessLogic
     {
 
         private IRepository<Reservation> repository;
+        private AccomodationHandler accomodationHandler;
 
-        public ReservationHandler(IRepository<Reservation> repo)
+        public ReservationHandler(IRepository<Reservation> repo, AccomodationHandler accomodationHand)
         {
             repository = repo;
+            accomodationHandler = accomodationHand;
         }
 
         public bool Add(Reservation reservation)
         {
-            return repository.Add(reservation);
+            if (accomodationHandler.Exists(reservation.Accomodation))
+            {
+                return repository.Add(reservation);
+            }
+            else
+            {
+                throw new NullReferenceException("The tourist spot does not exists");
+            }
         }
 
         public object Delete(Reservation reservation)

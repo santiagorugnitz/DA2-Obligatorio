@@ -6,6 +6,6 @@ namespace DataAccessInterface
     {
         bool Add(T entity);
         bool Delete(T entity);
-
+        bool Exists(T entity);
     }
 }

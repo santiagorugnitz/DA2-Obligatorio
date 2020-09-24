@@ -11,18 +11,28 @@ namespace BusinessLogicTest
     [TestClass]
     public class AdministratorHandlerTest
     {
+        private Administrator administrator;
+
+        [TestInitialize]
+        public void SetUp()
+        {
+            administrator = new Administrator
+            {
+                Name = "Santiago",
+                Email = "santi.rug",
+                Password = "1234"
+            };
+        }
+
         [TestMethod]
         public void AddAdmin()
         {
             var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
-            var spot = new Administrator()
-            {
-            };
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            mock.Setup(x => x.Add(administrator)).Returns(true);
 
-            var res = handler.Add(spot);
+            var res = handler.Add(administrator);
 
             mock.VerifyAll();
             Assert.AreEqual(true, res);
@@ -34,16 +44,12 @@ namespace BusinessLogicTest
             var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
-            var spot = new Administrator()
-            {
-            };
-            mock.Setup(x => x.Delete(spot)).Returns(true);
+            mock.Setup(x => x.Delete(administrator)).Returns(true);
 
-            var res = handler.Delete(spot);
+            var res = handler.Delete(administrator);
 
             mock.VerifyAll();
             Assert.AreEqual(true, res);
-
         }
     }
 }
