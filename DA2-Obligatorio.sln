@@ -3,15 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{0BC7A0BB-9FBA-4F0D-996E-ADB951877C43}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{0BC7A0BB-9FBA-4F0D-996E-ADB951877C43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{048054F6-1D1D-416B-A72B-5605F92639FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "BusinessLogic\BusinessLogic.csproj", "{048054F6-1D1D-416B-A72B-5605F92639FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicTest", "BusinessLogicTest\BusinessLogicTest.csproj", "{92EC074D-FBC0-437B-9DD7-C6B6DAE65DCB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogicTest", "BusinessLogicTest\BusinessLogicTest.csproj", "{92EC074D-FBC0-437B-9DD7-C6B6DAE65DCB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{B0986446-6BB6-4033-9CA0-DCD9CA452DA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{B0986446-6BB6-4033-9CA0-DCD9CA452DA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessInterface", "DataAccessInterface\DataAccessInterface.csproj", "{F098B1C0-2AF0-47EE-B052-527395B36EF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessInterface", "DataAccessInterface\DataAccessInterface.csproj", "{F098B1C0-2AF0-47EE-B052-527395B36EF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{E22DB74F-78E3-4016-9CFE-6E961F0ABE30}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F098B1C0-2AF0-47EE-B052-527395B36EF7} = {F098B1C0-2AF0-47EE-B052-527395B36EF7}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessTest", "DataAccessTest\DataAccessTest.csproj", "{AB00C9AC-27C3-4FD9-BBF6-56FED4923F63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +46,14 @@ Global
 		{F098B1C0-2AF0-47EE-B052-527395B36EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F098B1C0-2AF0-47EE-B052-527395B36EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F098B1C0-2AF0-47EE-B052-527395B36EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E22DB74F-78E3-4016-9CFE-6E961F0ABE30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E22DB74F-78E3-4016-9CFE-6E961F0ABE30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E22DB74F-78E3-4016-9CFE-6E961F0ABE30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E22DB74F-78E3-4016-9CFE-6E961F0ABE30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB00C9AC-27C3-4FD9-BBF6-56FED4923F63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB00C9AC-27C3-4FD9-BBF6-56FED4923F63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB00C9AC-27C3-4FD9-BBF6-56FED4923F63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB00C9AC-27C3-4FD9-BBF6-56FED4923F63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
