@@ -5,7 +5,11 @@ namespace Domain
 {
     public enum ReservationState
     {
-        Active
+        Creada, 
+        Pendiente_Pago, 
+        Aceptada, 
+        Rechazada,
+        Expirada
     }
     public class Reservation
     {

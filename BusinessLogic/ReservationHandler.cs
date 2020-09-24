@@ -32,5 +32,17 @@ namespace BusinessLogic
         {
             return repository.Delete(reservation);
         }
+
+        public Reservation CheckState(int id)
+        {
+            return repository.GetById(id);
+        }
+
+        public object ChangeState(Reservation reservation, ReservationState state, string description)
+        {
+            reservation.ReservationState = state;
+            reservation.ReservationDescription = description;
+            return repository.Modify(reservation.Id, reservation);
+        }
     }
 }

@@ -29,6 +29,7 @@ namespace BusinessLogicTest
 
             accomodation = new Accomodation()
             {
+                Id = 1,
                 Name = "Hotel",
                 Stars = 4.0,
                 Address = "Cuareim",
@@ -104,6 +105,22 @@ namespace BusinessLogicTest
             accomodationMock.Setup(x => x.Exists(accomodation)).Returns(true);
 
             var res = handler.Exists(accomodation);
+
+            accomodationMock.VerifyAll();
+            Assert.AreEqual(true, res);
+        }
+
+        [TestMethod]
+        public void ChangeAccomodationAvaliability()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            accomodationMock.Setup(x => x.Modify(accomodation.Id, accomodation)).Returns(true);
+
+            var res = handler.ChangeAvailability(accomodation, false);
 
             accomodationMock.VerifyAll();
             Assert.AreEqual(true, res);

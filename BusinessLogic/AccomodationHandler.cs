@@ -37,5 +37,11 @@ namespace BusinessLogic
         {
             return accomodationRepository.Exists(accomodation);
         }
+
+        public object ChangeAvailability(Accomodation accomodation, bool availability)
+        {
+            accomodation.Available = availability;
+            return accomodationRepository.Modify(accomodation.Id, accomodation);
+        }
     }
 }
