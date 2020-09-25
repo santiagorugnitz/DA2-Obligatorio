@@ -15,6 +15,7 @@ namespace BusinessLogicTest
         private Accomodation accomodation;
         private TouristSpot touristSpot;
         private Reservation reservation;
+        private GuestsQuantity guestsQuantity;
 
         [TestInitialize]
         public void SetUp()
@@ -42,19 +43,24 @@ namespace BusinessLogicTest
                 TouristSpot = touristSpot
             };
 
+            GuestsQuantity guestsQuantity = new GuestsQuantity
+            {
+                AdultQuantity = 2,
+                ChildrenQuantity = 1,
+                BabyQuantity = 0
+            };
+
             reservation = new Reservation()
             {
                 Id = 1,
                 Accomodation = accomodation,
                 CheckIn = new DateTime(),
                 CheckOut = new DateTime().AddDays(10),
-                AdultQuantity = 1,
-                ChildrenQuantity = 1,
-                BabyQuantity = 1,
+                GuestsQuantity = guestsQuantity,
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "martin.gut",
-                ReservationState = ReservationState.Active,
+                ReservationState = ReservationState.Aceptada,
                 ReservationDescription = "Activa"
             };
         }
@@ -115,6 +121,43 @@ namespace BusinessLogicTest
             mock.VerifyAll();
             Assert.AreEqual(true, res);
 
+        }
+
+        [TestMethod]
+        public void CheckReservationState()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            mock.Setup(x => x.GetById(reservation.Id)).Returns(reservation);
+
+            Reservation res = handler.CheckState(reservation.Id);
+
+            mock.VerifyAll();
+            Assert.AreEqual(ReservationState.Aceptada, res.ReservationState);
+            Assert.AreEqual("Activa", res.ReservationDescription);
+        }
+
+        [TestMethod]
+        public void ChangeReservationState()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            mock.Setup(x => x.Modify(reservation.Id, reservation)).Returns(true);
+
+            var res = handler.ChangeState(reservation, ReservationState.Creada, "Cambio de estado");
+
+            mock.VerifyAll();
+            Assert.AreEqual(true, res);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using DataAccessInterface;
 using Domain;
 using System;
+using System.Collections.Generic;
 
 namespace BusinessLogic
 {
@@ -27,6 +28,22 @@ namespace BusinessLogic
         public bool Exists(TouristSpot touristSpot)
         {
             return repository.Exists(touristSpot);
+        }
+
+        public List<TouristSpot> SearchByRegion(Region region)
+        {
+            return repository.Filter(x => ((TouristSpot)x).Region.Equals(region));
+        }
+
+        public List<TouristSpot> SearchByCategory(Category category)
+        {
+            return repository.Filter(x => ((TouristSpot)x).Categories.Contains(category));
+        }
+
+        public List<TouristSpot> SearchByRegionAndCategory(Category category, Region region)
+        {
+            return repository.Filter(x => ((TouristSpot)x).Categories.Contains(category) &&
+            ((TouristSpot)x).Categories.Contains(category));
         }
     }
 }

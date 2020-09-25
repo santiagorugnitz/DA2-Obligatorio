@@ -37,5 +37,17 @@ namespace BusinessLogic
         {
             return accomodationRepository.Exists(accomodation);
         }
+
+        public object ChangeAvailability(Accomodation accomodation, bool availability)
+        {
+            accomodation.Available = availability;
+            return accomodationRepository.Modify(accomodation.Id, accomodation);
+        }
+
+        public List<Accomodation> SearchByTouristSpot(TouristSpot touristSpot, DateTime checkIn, DateTime checkOut, GuestsQuantity guestsQuantity)
+        {
+            return accomodationRepository.Filter(x => ((Accomodation)x).TouristSpot.Equals(touristSpot) &&
+            ((Accomodation)x).Available);
+        }
     }
 }
