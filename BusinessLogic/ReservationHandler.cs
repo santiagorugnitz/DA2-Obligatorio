@@ -35,7 +35,7 @@ namespace BusinessLogic
 
         public Reservation CheckState(int id)
         {
-            return repository.GetById(id);
+            return repository.Get(id);
         }
 
         public object ChangeState(Reservation reservation, ReservationState state, string description)

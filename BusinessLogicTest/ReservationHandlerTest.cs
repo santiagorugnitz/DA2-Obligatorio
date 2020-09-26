@@ -133,7 +133,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
-            mock.Setup(x => x.GetById(reservation.Id)).Returns(reservation);
+            mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
 
             Reservation res = handler.CheckState(reservation.Id);
 
