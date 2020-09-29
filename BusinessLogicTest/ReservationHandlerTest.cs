@@ -26,7 +26,6 @@ namespace BusinessLogicTest
                 Description = "asd",
                 ImageUrl = "url",
                 Region = new Region() { Name = "region" },
-                Categories = new List<Category>()
             };
 
             accomodation = new Accomodation()

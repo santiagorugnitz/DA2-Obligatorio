@@ -23,20 +23,42 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Region>()
+                .HasKey(x => x.Id);
+
+            modelBuilder.Entity<Category>()
+                .HasKey(x => x.Id);
+
+            modelBuilder.Entity<TouristSpot>()
+                .HasKey(x => x.Id);
+
+            modelBuilder.Entity<TouristSpotCategory>()
+                .HasKey(x => new { x.TouristSpotId, x.CategoryId});
+
+            modelBuilder.Entity<TouristSpotCategory>()
+                .HasOne(x => x.TouristSpot)
+                .WithMany(x => x.TouristSpotCategories)
+                .HasForeignKey(x => x.TouristSpotId);
+
+            modelBuilder.Entity<TouristSpotCategory>()
+                .HasOne(x => x.Category)
+                .WithMany(x => x.TouristSpotCategories)
+                .HasForeignKey(x => x.CategoryId);
+
             modelBuilder.Entity<Administrator>()
                 .HasKey(x => x.Id);
 
             modelBuilder.Entity<Accomodation>()
                 .HasKey(x => x.Id);
 
+            modelBuilder.Entity<Accomodation>()
+                .HasOne(x => x.TouristSpot);
+
             modelBuilder.Entity<Reservation>()
                 .HasKey(x => x.Id);
 
             modelBuilder.Entity<Reservation>()
                 .HasOne(x => x.Accomodation);
-                
-            modelBuilder.Entity<Accomodation>()
-                .HasOne(x => x.TouristSpot);
         }
 
 

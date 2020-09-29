@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
@@ -15,6 +16,9 @@ namespace Domain
 
         public Region Region { get; set; }
 
+        public IEnumerable<TouristSpotCategory> TouristSpotCategories { get; set; }
+        
+        [NotMapped]
         public List<Category> Categories { get; set; }
     }
 }

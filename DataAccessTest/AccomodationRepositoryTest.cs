@@ -27,8 +27,7 @@ namespace DataAccessTest
                 Name = "Beach",
                 Description = "asd",
                 ImageUrl = "url",
-                Region = new Region() { Name = "region" },
-                Categories = new List<Category>()
+                Region = new Region() { Name = "region" }
             };
 
             accomodation = new Accomodation()
