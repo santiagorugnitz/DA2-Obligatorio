@@ -12,7 +12,7 @@ namespace BusinessLogicTest
     public class TouristSpotHandlerTest
     {
         private TouristSpot spot;
-        
+
         [TestInitialize]
         public void SetUp()
         {
@@ -22,7 +22,7 @@ namespace BusinessLogicTest
                 Description = "asd",
                 ImageUrl = "url",
                 Region = new Region() { Name = "metropolitana" },
-                Categories = new List<Category>{ new Category { Name = "Ciudades"} }
+                Categories = new List<Category> { new Category { Name = "Ciudades" } }
             };
         }
 
@@ -61,7 +61,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
             var handler = new TouristSpotHandler(mock.Object);
 
-            mock.Setup(x => x.Exists(spot)).Returns(true);
+            mock.Setup(x => x.Get(spot.Id)).Returns(spot);
 
             var res = handler.Exists(spot);
 
@@ -75,7 +75,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
             var handler = new TouristSpotHandler(mock.Object);
 
-            mock.Setup(x => x.Filter(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
 
             List<TouristSpot> res = handler.SearchByRegion(new Region { Name = "metropolitana" });
 
@@ -89,7 +89,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
             var handler = new TouristSpotHandler(mock.Object);
 
-            mock.Setup(x => x.Filter(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
 
             List<TouristSpot> res = handler.SearchByCategory(new Category { Name = "ciudades" });
 
@@ -103,10 +103,10 @@ namespace BusinessLogicTest
             var mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
             var handler = new TouristSpotHandler(mock.Object);
 
-            mock.Setup(x => x.Filter(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
 
-            List<TouristSpot> res = handler.SearchByRegionAndCategory(new Category { Name = "ciudades" }, 
-                new Region { Name = "metropolitana"});
+            List<TouristSpot> res = handler.SearchByRegionAndCategory(new Category { Name = "ciudades" },
+                new Region { Name = "metropolitana" });
 
             mock.VerifyAll();
             Assert.AreEqual(spot, res[0]);

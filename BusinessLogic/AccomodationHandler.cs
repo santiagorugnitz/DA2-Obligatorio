@@ -2,6 +2,7 @@
 using Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BusinessLogic
@@ -35,19 +36,19 @@ namespace BusinessLogic
         }
         public bool Exists(Accomodation accomodation)
         {
-            return accomodationRepository.Exists(accomodation);
+            return accomodationRepository.Get(accomodation.Id) != null;
         }
 
         public object ChangeAvailability(Accomodation accomodation, bool availability)
         {
             accomodation.Available = availability;
-            return accomodationRepository.Modify(accomodation.Id, accomodation);
+            return accomodationRepository.Update(accomodation);
         }
 
         public List<Accomodation> SearchByTouristSpot(TouristSpot touristSpot, DateTime checkIn, DateTime checkOut, GuestsQuantity guestsQuantity)
         {
-            return accomodationRepository.Filter(x => ((Accomodation)x).TouristSpot.Equals(touristSpot) &&
-            ((Accomodation)x).Available);
+            return accomodationRepository.GetAll(x => ((Accomodation)x).TouristSpot.Equals(touristSpot) &&
+            ((Accomodation)x).Available).ToList();
         }
     }
 }

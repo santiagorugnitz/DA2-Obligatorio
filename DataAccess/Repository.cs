@@ -31,19 +31,24 @@ namespace DataAccess
             return true;
         }
 
-        public bool Exists(T entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Save()
         {
             context.SaveChanges();
         }
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(Func<object, bool> p = null)
         {
             return DbSet.ToList();
+        }
+
+        public T Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Update(T entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

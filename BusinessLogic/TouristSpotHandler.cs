@@ -2,6 +2,7 @@
 using Domain;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLogic
 {
@@ -27,23 +28,23 @@ namespace BusinessLogic
 
         public bool Exists(TouristSpot touristSpot)
         {
-            return repository.Exists(touristSpot);
+            return repository.Get(touristSpot.Id) != null;
         }
 
         public List<TouristSpot> SearchByRegion(Region region)
         {
-            return repository.Filter(x => ((TouristSpot)x).Region.Equals(region));
+            return repository.GetAll(x => ((TouristSpot)x).Region.Equals(region)).ToList();
         }
 
         public List<TouristSpot> SearchByCategory(Category category)
         {
-            return repository.Filter(x => ((TouristSpot)x).Categories.Contains(category));
+            return repository.GetAll(x => ((TouristSpot)x).Categories.Contains(category)).ToList();
         }
 
         public List<TouristSpot> SearchByRegionAndCategory(Category category, Region region)
         {
-            return repository.Filter(x => ((TouristSpot)x).Categories.Contains(category) &&
-            ((TouristSpot)x).Categories.Contains(category));
+            return repository.GetAll(x => ((TouristSpot)x).Categories.Contains(category) &&
+            ((TouristSpot)x).Categories.Contains(category)).ToList();
         }
     }
 }
