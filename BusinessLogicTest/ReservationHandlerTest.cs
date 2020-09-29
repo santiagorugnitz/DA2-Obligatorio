@@ -43,7 +43,7 @@ namespace BusinessLogicTest
                 TouristSpot = touristSpot
             };
 
-            GuestsQuantity guestsQuantity = new GuestsQuantity
+            guestsQuantity = new GuestsQuantity
             {
                 AdultQuantity = 2,
                 ChildrenQuantity = 1,
