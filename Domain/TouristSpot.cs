@@ -14,9 +14,9 @@ namespace Domain
 
         public string ImageUrl { get; set; }
 
-        public Region Region { get; set; }
+        public virtual Region Region { get; set; }
 
-        public IEnumerable<TouristSpotCategory> TouristSpotCategories { get; set; }
+        public virtual IEnumerable<TouristSpotCategory> TouristSpotCategories { get; set; }
         
         [NotMapped]
         public List<Category> Categories { get; set; }

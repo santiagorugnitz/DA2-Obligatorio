@@ -14,6 +14,6 @@ namespace Domain
                    Name == category.Name;
         }
 
-        public IEnumerable<TouristSpotCategory> TouristSpotCategories { get; set; }
+        public virtual IEnumerable<TouristSpotCategory> TouristSpotCategories { get; set; }
     }
 }

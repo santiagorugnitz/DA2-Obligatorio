@@ -25,7 +25,7 @@ namespace Domain
 
         public string ContactInformation { get; set; }
 
-        public TouristSpot TouristSpot { get; set; }
+        public virtual TouristSpot TouristSpot { get; set; }
 
     }
 }

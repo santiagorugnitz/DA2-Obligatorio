@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
@@ -15,12 +16,13 @@ namespace Domain
     {
         public int Id { get; set; }
 
-        public Accomodation Accomodation { get; set; }
+        public virtual Accomodation Accomodation { get; set; }
 
         public DateTime CheckIn { get; set; }
 
         public DateTime CheckOut { get; set; }
 
+        [NotMapped]
         public GuestsQuantity GuestsQuantity { get; set; }
 
         public string Name { get; set; }

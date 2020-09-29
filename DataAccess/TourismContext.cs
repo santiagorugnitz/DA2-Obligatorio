@@ -10,6 +10,10 @@ namespace DataAccess
         public DbSet<Administrator> Administrators { get; set; }
         public DbSet<Accomodation> Accomodations { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<TouristSpot> TouristSpots { get; set; }
+        //public DbSet<GuestsQuantity> GuestsQuantities { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public TourismContext(DbContextOptions options) : base(options)
         {
@@ -18,11 +22,12 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
-            optionBuilder.UseLazyLoadingProxies();
+        optionBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Region>()
                 .HasKey(x => x.Id);
 
@@ -59,6 +64,14 @@ namespace DataAccess
 
             modelBuilder.Entity<Reservation>()
                 .HasOne(x => x.Accomodation);
+
+            modelBuilder.Entity<Accomodation>()
+                .HasOne(x => x.TouristSpot);
+
+
+            //TODO: fix this
+            modelBuilder.Entity<Accomodation>()
+                .Ignore(x => x.ImageUrlList);
         }
 
 

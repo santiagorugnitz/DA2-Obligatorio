@@ -10,7 +10,7 @@ using System.Text;
 namespace DataAccessTest
 {
     [TestClass]
-    class ReservationRepositoryTest
+    public class ReservationRepositoryTest
     {
         private Accomodation accomodation;
         private TouristSpot touristSpot;

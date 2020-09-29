@@ -8,10 +8,10 @@ namespace Domain
     {
         public int TouristSpotId { get; set; }
 
-        public TouristSpot TouristSpot { get; set; }
+        public virtual TouristSpot TouristSpot { get; set; }
 
         public int CategoryId { get; set; }
 
-        public Category Category { get; set; }
+        public virtual Category Category { get; set; }
     }
 }
