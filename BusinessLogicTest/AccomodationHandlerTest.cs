@@ -35,7 +35,6 @@ namespace BusinessLogicTest
                 Address = "Cuareim",
                 Available = true,
                 ImageUrlList = new List<string>(),
-                Categories = new List<Category>(),
                 Fee = 4000,
                 Description = "Hotel in Mvdeo",
                 Telephone = "+598",
