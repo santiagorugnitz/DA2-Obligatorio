@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DataAccess
 {
-    public class Repository<T,K> : IRepository<T,K> where T : class
+    public class Repository<T> : IRepository<T> where T : class
     {
         private TourismContext context;
         private readonly DbSet<T> DbSet;
@@ -36,12 +36,12 @@ namespace DataAccess
             context.SaveChanges();
         }
 
-        public IEnumerable<T> GetAll(Func<object, bool> p)
+        public IEnumerable<T> GetAll(Func<object, bool> p = null)
         {
             return DbSet.ToList();
         }
 
-        public T Get(K key)
+        public T Get(int id)
         {
             throw new NotImplementedException();
         }

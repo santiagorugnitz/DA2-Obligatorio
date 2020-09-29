@@ -77,8 +77,8 @@ namespace BusinessLogicTest
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
-            touristSpotMock.Setup(x => x.Exists(touristSpot)).Returns(true);
-            accomodationMock.Setup(x => x.Exists(accomodation)).Returns(false);
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation)null);
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             var res = handler.Add(reservation);
@@ -94,7 +94,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
-            accomodationMock.Setup(x => x.Exists(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             var res = handler.Add(reservation);
@@ -152,7 +152,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
-            mock.Setup(x => x.Modify(reservation.Id, reservation)).Returns(true);
+            mock.Setup(x => x.Update(reservation)).Returns(true);
 
             var res = handler.ChangeState(reservation, ReservationState.Creada, "Cambio de estado");
 

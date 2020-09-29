@@ -55,7 +55,7 @@ namespace BusinessLogicTest
             var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
             var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
 
-            touristSpotMock.Setup(x => x.Exists(touristSpot)).Returns(false);
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns((TouristSpot)null);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
 
             var res = handler.Add(accomodation);
@@ -69,7 +69,7 @@ namespace BusinessLogicTest
             var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
             var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
 
-            touristSpotMock.Setup(x => x.Exists(touristSpot)).Returns(true);
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
 
             var res = handler.Add(accomodation);
@@ -103,7 +103,7 @@ namespace BusinessLogicTest
             var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
             var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
 
-            accomodationMock.Setup(x => x.Exists(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
 
             var res = handler.Exists(accomodation);
 
@@ -119,19 +119,19 @@ namespace BusinessLogicTest
             var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
             var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
 
-            accomodationMock.Setup(x => x.Filter(It.IsAny<Func<object, bool>>())).
+            accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accomodation> { accomodation });
 
             DateTime checkIn, checkOut = new DateTime();
             checkIn = DateTime.Now;
             checkOut.AddDays(10);
-            GuestsQuantity guestsQuantity = new GuestsQuantity 
+            GuestsQuantity guestsQuantity = new GuestsQuantity
             {
-                AdultQuantity = 2, 
-                ChildrenQuantity = 1, 
+                AdultQuantity = 2,
+                ChildrenQuantity = 1,
                 BabyQuantity = 0
             };
-            
+
             var res = handler.SearchByTouristSpot(touristSpot, checkIn, checkOut, guestsQuantity);
 
             accomodationMock.VerifyAll();
@@ -146,8 +146,8 @@ namespace BusinessLogicTest
             var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
             var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
 
-            accomodationMock.Setup(x => x.Filter(It.IsAny<Func<object, bool>>())).
-                Returns(new List<Accomodation> {});
+            accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Accomodation> { });
 
             DateTime checkIn, checkOut = new DateTime();
             checkIn = DateTime.Now;
@@ -173,7 +173,7 @@ namespace BusinessLogicTest
             var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
             var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
 
-            accomodationMock.Setup(x => x.Modify(accomodation.Id, accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Update(accomodation)).Returns(true);
 
             var res = handler.ChangeAvailability(accomodation, false);
 

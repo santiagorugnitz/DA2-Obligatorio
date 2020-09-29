@@ -42,7 +42,7 @@ namespace BusinessLogic
         {
             reservation.ReservationState = state;
             reservation.ReservationDescription = description;
-            return repository.Modify(reservation.Id, reservation);
+            return repository.Update(reservation);
         }
     }
 }
