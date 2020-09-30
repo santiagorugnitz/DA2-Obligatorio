@@ -46,8 +46,8 @@ namespace BusinessLogicTest
             {
                 Id = 1,
                 Accomodation = accomodation,
-                CheckIn = new DateTime(),
-                CheckOut = new DateTime().AddDays(10),
+                CheckIn = DateTime.Today.AddDays(1),
+                CheckOut = DateTime.Today.AddDays(10),
                 AdultQuantity = 2,
                 ChildrenQuantity = 1,
                 BabyQuantity = 0,
@@ -98,6 +98,208 @@ namespace BusinessLogicTest
             mock.VerifyAll();
             accomodationMock.VerifyAll();
             Assert.AreEqual(true, res);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Reservation needs a non empty name")]
+        public void AddReservationWithoutName()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(true);
+
+            reservation.Name = "";
+            var res = handler.Add(reservation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Reservation needs a non empty name")]
+        public void AddReservationWithoutName2()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(true);
+
+            reservation.Name = "    ";
+            var res = handler.Add(reservation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Reservation needs a non empty surname")]
+        public void AddReservationWithoutSurname()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(true);
+
+            reservation.Surname = "";
+            var res = handler.Add(reservation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Reservation needs a non empty surname")]
+        public void AddReservationWithoutSurname2()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(true);
+
+            reservation.Surname = "    ";
+            var res = handler.Add(reservation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Reservation needs a non empty email")]
+        public void AddReservationWithoutEmail()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(true);
+
+            reservation.Surname = "";
+            var res = handler.Add(reservation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Reservation needs a non empty email")]
+        public void AddReservationWithoutEmail2()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(true);
+
+            reservation.Surname = "    ";
+            var res = handler.Add(reservation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The Reservation needs at least one adult guest")]
+        public void AddReservationWithoutGuests()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(true);
+
+            reservation.AdultQuantity = 0;
+            var res = handler.Add(reservation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The Reservation needs at least one adult guest")]
+        public void AddReservationWithNegativeGuests()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(true);
+
+            reservation.AdultQuantity = -9;
+            var res = handler.Add(reservation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The Check In Date needs to be after today")]
+        public void AddReservationWithIncorrectCheckInDate()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(true);
+
+            reservation.CheckIn = DateTime.Today.AddDays(-1);
+            var res = handler.Add(reservation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The Check Out Date needs to be after Check Out")]
+        public void AddReservationWithIncorrectCheckOutDate()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(true);
+
+
+            reservation.CheckOut = DateTime.Today.AddDays(1);
+            reservation.CheckOut = DateTime.Today;
+            var res = handler.Add(reservation);
         }
 
         [TestMethod]
