@@ -1,10 +1,11 @@
-﻿using DataAccessInterface;
+﻿using BusinessLogicInterface;
+using DataAccessInterface;
 using Domain;
 using System;
 
 namespace BusinessLogic
 {
-    public class ReservationHandler
+    public class ReservationHandler : IReservationHandler
     {
 
         private IRepository<Reservation> repository;
