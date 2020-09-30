@@ -15,8 +15,6 @@ namespace Domain
 
         public List<string> ImageUrlList { get; set; }
 
-        public List<Category> Categories { get; set; }
-        
         public double Fee { get; set; }
 
         public string Description { get; set; }
@@ -27,7 +25,7 @@ namespace Domain
 
         public string ContactInformation { get; set; }
 
-        public TouristSpot TouristSpot { get; set; }
+        public virtual TouristSpot TouristSpot { get; set; }
 
     }
 }

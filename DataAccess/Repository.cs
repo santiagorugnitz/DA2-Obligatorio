@@ -43,12 +43,13 @@ namespace DataAccess
 
         public T Get(int id)
         {
-            throw new NotImplementedException();
+            return DbSet.Find(id);
         }
 
         public bool Update(T entity)
         {
-            throw new NotImplementedException();
+            DbSet.Update(entity);
+            return true;
         }
     }
 }

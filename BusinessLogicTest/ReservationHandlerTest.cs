@@ -15,7 +15,7 @@ namespace BusinessLogicTest
         private Accomodation accomodation;
         private TouristSpot touristSpot;
         private Reservation reservation;
-        private GuestsQuantity guestsQuantity;
+  
 
         [TestInitialize]
         public void SetUp()
@@ -26,7 +26,6 @@ namespace BusinessLogicTest
                 Description = "asd",
                 ImageUrl = "url",
                 Region = new Region() { Name = "region" },
-                Categories = new List<Category>()
             };
 
             accomodation = new Accomodation()
@@ -35,7 +34,6 @@ namespace BusinessLogicTest
                 Stars = 4.0,
                 Address = "Cuareim",
                 ImageUrlList = new List<string>(),
-                Categories = new List<Category>(),
                 Fee = 4000,
                 Description = "Hotel in Mvdeo",
                 Telephone = "+598",
@@ -43,12 +41,6 @@ namespace BusinessLogicTest
                 TouristSpot = touristSpot
             };
 
-            GuestsQuantity guestsQuantity = new GuestsQuantity
-            {
-                AdultQuantity = 2,
-                ChildrenQuantity = 1,
-                BabyQuantity = 0
-            };
 
             reservation = new Reservation()
             {
@@ -56,7 +48,9 @@ namespace BusinessLogicTest
                 Accomodation = accomodation,
                 CheckIn = new DateTime(),
                 CheckOut = new DateTime().AddDays(10),
-                GuestsQuantity = guestsQuantity,
+                AdultQuantity = 2,
+                ChildrenQuantity = 1,
+                BabyQuantity = 0,
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "martin.gut",
@@ -72,7 +66,8 @@ namespace BusinessLogicTest
         {
             var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
             var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
-            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
             var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
@@ -89,7 +84,8 @@ namespace BusinessLogicTest
         {
             var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
             var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
-            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
             var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
@@ -109,7 +105,8 @@ namespace BusinessLogicTest
         {
             var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
             var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
-            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
             var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
@@ -128,7 +125,8 @@ namespace BusinessLogicTest
         {
             var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
             var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
-            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
             var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
@@ -147,7 +145,8 @@ namespace BusinessLogicTest
         {
             var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
             var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
-            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
             var accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
