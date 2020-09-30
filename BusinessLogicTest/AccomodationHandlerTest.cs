@@ -18,13 +18,22 @@ namespace BusinessLogicTest
         [TestInitialize]
         public void SetUp()
         {
+
+            TouristSpotCategory joinedEntry = new TouristSpotCategory()
+            {
+                Category = new Category
+                {
+                    Name = "Ciudades"
+                }
+            };
+
             touristSpot = new TouristSpot
             {
                 Name = "Beach",
                 Description = "asd",
                 ImageUrl = "url",
-                Region = new Region() { Name = "region" },
-                TouristSpotCategories = new List<TouristSpotCategory>()
+                Region = new Region() { Name = RegionName.Región_Centro_Sur },
+                TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry }
             };
 
             accomodation = new Accomodation()

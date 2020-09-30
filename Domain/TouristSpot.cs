@@ -8,15 +8,77 @@ namespace Domain
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        private string name;
+        public string Name
+        {
+            set
+            {
+                if (value.Trim() == "")
+                {
+                    throw new ArgumentNullException("The spot needs a correct Region");
+                }
+                else
+                {
+                    name = value.Trim();
+                }
+            }
 
-        public string Description { get; set; }
+            get { return name; }
+        }
 
-        public string ImageUrl { get; set; }
+        private string description;
+        public string Description
+        {
+            set
+            {
+                if (value.Trim().Length > 2000)
+                {
+                    throw new ArgumentOutOfRangeException("The spot needs a shorter description (less than 2000 characters)");
+                }
+                else
+                {
+                    name = value.Trim();
+                }
+            }
+
+            get { return name; }
+        }
+        private string imageUrl;
+        public string ImageUrl
+        {
+            set
+            {
+                if (value.Trim() == "")
+                {
+                    throw new ArgumentNullException("The spot needs a correct Region");
+                }
+                else
+                {
+                    imageUrl = value.Trim();
+                }
+            }
+
+            get { return imageUrl; }
+        }
 
         public virtual Region Region { get; set; }
 
-        public virtual ICollection<TouristSpotCategory> TouristSpotCategories { get; set; }
-        
+        private ICollection<TouristSpotCategory> touristSpotCategories;
+        public virtual ICollection<TouristSpotCategory> TouristSpotCategories
+        {
+            get { return touristSpotCategories; }
+            set
+            {
+                if (value.Count == 0)
+                {
+                    throw new ArgumentNullException("The spot needs at least one category");
+                }
+                else
+                {
+                    touristSpotCategories = value;
+                }
+            }
+        }
+
     }
 }

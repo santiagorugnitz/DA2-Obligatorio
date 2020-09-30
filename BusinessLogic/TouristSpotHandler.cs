@@ -12,8 +12,6 @@ namespace BusinessLogic
         private IRepository<TouristSpot> spotsRepository;
         private IRepository<TouristSpotCategory> joinedRepository;
 
-
-
         public TouristSpotHandler(IRepository<TouristSpot> repo, IRepository<TouristSpotCategory> joinedRepo)
         {
             spotsRepository = repo;
