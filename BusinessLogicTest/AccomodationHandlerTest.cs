@@ -90,6 +90,168 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Accomodation needs a non empty name")]
+        public void AddAccomodationWithoutName()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+
+            accomodation.Name = "";
+            var res = handler.Add(accomodation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Accomodation needs a non empty name")]
+        public void AddAccomodationWithoutName2()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+
+            accomodation.Name = "   ";
+            var res = handler.Add(accomodation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Accomodation needs a non empty address")]
+        public void AddAccomodationWithoutDirection()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+
+            accomodation.Address = "";
+            var res = handler.Add(accomodation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Accomodation needs a non empty address")]
+        public void AddAccomodationWithoutDirection2()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+
+            accomodation.Address = "   ";
+            var res = handler.Add(accomodation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The Accomodation stars needs to be between 1 and 5")]
+        public void AddAccomodationWithNegativeStars()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+
+            accomodation.Stars = -1;
+            var res = handler.Add(accomodation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The Accomodation stars needs to be between 1 and 5")]
+        public void AddAccomodationWithMoreThan5Stars()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+
+            accomodation.Stars = 5.1;
+            var res = handler.Add(accomodation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The Accomodation stars needs to be between 1 and 5")]
+        public void AddAccomodationWith0Stars()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+
+            accomodation.Stars = 0;
+            var res = handler.Add(accomodation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The Accomodation fee needs to be more than 0")]
+        public void AddAccomodationWith0Fee()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+
+            accomodation.Fee = 0;
+            var res = handler.Add(accomodation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The Accomodation fee needs to be more than 0")]
+        public void AddAccomodationWithNegativeFee()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+
+            accomodation.Fee = -10;
+            var res = handler.Add(accomodation);
+        }
+
+        [TestMethod]
         public void DeleteAccomodation()
         {
             var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);

@@ -15,7 +15,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The spot needs a correct Region");
+                    throw new ArgumentNullException("The spot needs a non emty Name");
                 }
                 else
                 {
@@ -50,7 +50,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The spot needs a correct Region");
+                    throw new ArgumentNullException("The spot needs a non empty picture URL");
                 }
                 else
                 {
