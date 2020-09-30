@@ -37,11 +37,11 @@ namespace Domain
                 }
                 else
                 {
-                    name = value.Trim();
+                    description = value.Trim();
                 }
             }
 
-            get { return name; }
+            get { return description; }
         }
         private string imageUrl;
         public string ImageUrl
