@@ -26,7 +26,7 @@ namespace DataAccessTest
                 Description = "asd",
                 ImageUrl = "url",
                 Region = new Region() { Name = "metropolitana" },
-                Categories = new List<Category> { new Category { Name = "Ciudades" } }
+                TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
             };
         }
 
@@ -93,6 +93,9 @@ namespace DataAccessTest
             using (var context = new TourismContext(options))
             {
                 var repo = new Repository<TouristSpot>(context);
+                var joinedRepo = new Repository<TouristSpotCategory>(context);
+                var catRepo = new Repository<Category>(context);
+
 
                 Category category = new Category
                 {
@@ -100,13 +103,16 @@ namespace DataAccessTest
                 };
 
                 context.Set<TouristSpot>().Add(spot);
-                spot.Categories.Clear();
-                spot.Categories.Add(category);
+                spot.TouristSpotCategories.Clear();
+                spot.TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = category} };
+
                 spot.Id++;
                 context.Set<TouristSpot>().Add(spot);
                 context.SaveChanges();
 
-                var res = repo.GetAll(x => ((TouristSpot)x).Categories.Contains(category) && ((TouristSpot)x).Categories.Contains(category)).ToList();
+                var joinedEntry = context.Set<TouristSpotCategory>().Find(category.Id,spot.Id);
+
+                var res = repo.GetAll(x => ((TouristSpot)x).Id == joinedEntry.TouristSpotId &&((TouristSpot)x).Region.Id == spot.Region.Id).ToList();
 
                 Assert.AreEqual(spot.Id, res[0].Id);
 

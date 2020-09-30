@@ -22,8 +22,11 @@ namespace Domain
 
         public DateTime CheckOut { get; set; }
 
-        [NotMapped]
-        public GuestsQuantity GuestsQuantity { get; set; }
+        public int BabyQuantity { get; set; }
+        
+        public int ChildrenQuantity { get; set; }
+        
+        public int AdultQuantity { get; set; }
 
         public string Name { get; set; }
 

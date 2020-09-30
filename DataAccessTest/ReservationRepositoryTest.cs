@@ -15,7 +15,6 @@ namespace DataAccessTest
         private Accomodation accomodation;
         private TouristSpot touristSpot;
         private Reservation reservation;
-        private GuestsQuantity guestsQuantity;
 
         DbContextOptions<TourismContext> options;
 
@@ -32,7 +31,7 @@ namespace DataAccessTest
                 Description = "asd",
                 ImageUrl = "url",
                 Region = new Region() { Name = "region" },
-                Categories = new List<Category>()
+                TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
             };
 
             accomodation = new Accomodation()
@@ -48,12 +47,6 @@ namespace DataAccessTest
                 TouristSpot = touristSpot
             };
 
-            guestsQuantity = new GuestsQuantity
-            {
-                AdultQuantity = 2,
-                ChildrenQuantity = 1,
-                BabyQuantity = 0
-            };
 
             reservation = new Reservation()
             {
@@ -61,7 +54,9 @@ namespace DataAccessTest
                 Accomodation = accomodation,
                 CheckIn = new DateTime(),
                 CheckOut = new DateTime().AddDays(10),
-                GuestsQuantity = guestsQuantity,
+                AdultQuantity = 2,
+                ChildrenQuantity = 1,
+                BabyQuantity = 0,
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "martin.gut",
@@ -127,7 +122,9 @@ namespace DataAccessTest
                 Accomodation = accomodation,
                 CheckIn = new DateTime(),
                 CheckOut = new DateTime().AddDays(10),
-                GuestsQuantity = guestsQuantity,
+                AdultQuantity = 2,
+                ChildrenQuantity = 1,
+                BabyQuantity = 0,
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "martin.gut",
@@ -171,7 +168,9 @@ namespace DataAccessTest
                 Accomodation = accomodation,
                 CheckIn = new DateTime(),
                 CheckOut = new DateTime().AddDays(10),
-                GuestsQuantity = guestsQuantity,
+                AdultQuantity = 2,
+                ChildrenQuantity = 1,
+                BabyQuantity = 0,
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "santi.rug",

@@ -16,9 +16,7 @@ namespace Domain
 
         public virtual Region Region { get; set; }
 
-        public virtual IEnumerable<TouristSpotCategory> TouristSpotCategories { get; set; }
+        public virtual ICollection<TouristSpotCategory> TouristSpotCategories { get; set; }
         
-        [NotMapped]
-        public List<Category> Categories { get; set; }
     }
 }
