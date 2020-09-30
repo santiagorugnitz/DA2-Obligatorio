@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BusinessLogicInterface;
 
 namespace BusinessLogic
 {
-    public class AccomodationHandler
+    public class AccomodationHandler : IAccomodationHandler
     {
         private TouristSpotHandler touristSpotHandler;
         private IRepository<Accomodation> accomodationRepository;

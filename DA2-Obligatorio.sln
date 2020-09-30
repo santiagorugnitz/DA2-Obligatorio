@@ -13,12 +13,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessInterface", "DataAccessInterface\DataAccessInterface.csproj", "{F098B1C0-2AF0-47EE-B052-527395B36EF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{E22DB74F-78E3-4016-9CFE-6E961F0ABE30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{E22DB74F-78E3-4016-9CFE-6E961F0ABE30}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F098B1C0-2AF0-47EE-B052-527395B36EF7} = {F098B1C0-2AF0-47EE-B052-527395B36EF7}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessTest", "DataAccessTest\DataAccessTest.csproj", "{AB00C9AC-27C3-4FD9-BBF6-56FED4923F63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessTest", "DataAccessTest\DataAccessTest.csproj", "{AB00C9AC-27C3-4FD9-BBF6-56FED4923F63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogicInterface", "BusinessLogicInterface\BusinessLogicInterface.csproj", "{CA38AF19-E69D-4AEF-8718-496E96421022}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +56,10 @@ Global
 		{AB00C9AC-27C3-4FD9-BBF6-56FED4923F63}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB00C9AC-27C3-4FD9-BBF6-56FED4923F63}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB00C9AC-27C3-4FD9-BBF6-56FED4923F63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA38AF19-E69D-4AEF-8718-496E96421022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA38AF19-E69D-4AEF-8718-496E96421022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA38AF19-E69D-4AEF-8718-496E96421022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA38AF19-E69D-4AEF-8718-496E96421022}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

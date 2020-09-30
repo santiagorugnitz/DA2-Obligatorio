@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Domain;
+using BusinessLogicInterface;
 
 namespace BusinessLogic
 {
-    public class AdministratorHandler
+    public class AdministratorHandler : IAdministratorHandler
     {
         private IRepository<Administrator> repository;
 

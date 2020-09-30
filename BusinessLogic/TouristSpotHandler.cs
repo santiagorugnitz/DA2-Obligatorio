@@ -1,4 +1,5 @@
-﻿using DataAccessInterface;
+﻿using BusinessLogicInterface;
+using DataAccessInterface;
 using Domain;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 
 namespace BusinessLogic
 {
-    public class TouristSpotHandler
+    public class TouristSpotHandler : ITouristSpotHandler
     {
 
         private IRepository<TouristSpot> spotsRepository;
