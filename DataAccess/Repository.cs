@@ -9,11 +9,11 @@ namespace DataAccess
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private TourismContext context;
+        private DbContext context;
         private readonly DbSet<T> DbSet;
 
 
-        public Repository(TourismContext context)
+        public Repository(DbContext context)
         {
             this.DbSet = context.Set<T>();
             this.context = context;
@@ -22,16 +22,18 @@ namespace DataAccess
         public bool Add(T entity)
         {
             DbSet.Add(entity);
+            Save();
             return true;
         }
 
         public bool Delete(T entity)
         {
             DbSet.Remove(entity);
+            Save();
             return true;
         }
 
-        public void Save()
+        private void Save()
         {
             context.SaveChanges();
         }
@@ -49,6 +51,7 @@ namespace DataAccess
         public bool Update(T entity)
         {
             DbSet.Update(entity);
+            Save();
             return true;
         }
     }

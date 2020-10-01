@@ -10,10 +10,10 @@ namespace BusinessLogic
 {
     public class AccomodationHandler : IAccomodationHandler
     {
-        private TouristSpotHandler touristSpotHandler;
+        private ITouristSpotHandler touristSpotHandler;
         private IRepository<Accomodation> accomodationRepository;
 
-        public AccomodationHandler(IRepository<Accomodation> accomodationRepo, TouristSpotHandler touristSpotHand)
+        public AccomodationHandler(IRepository<Accomodation> accomodationRepo, ITouristSpotHandler touristSpotHand)
         {
             accomodationRepository = accomodationRepo;
             touristSpotHandler = touristSpotHand;

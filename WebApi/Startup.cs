@@ -39,13 +39,13 @@ namespace WebApi
             }); ;
 
             services.AddDbContext<DbContext, TourismContext>(
-                o => o.UseSqlServer(Configuration.GetConnectionString("Tourism"))
+                o => o.UseSqlServer(Configuration.GetConnectionString("Tourism"),b=>b.MigrationsAssembly("WebApi"))
             );
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IAdministratorHandler, AdministratorHandler>();
-        
-            
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -59,7 +59,6 @@ namespace DataAccessTest
                 context.Set<TouristSpot>().Add(touristSpot);
 
                 repo.Add(accomodation);
-                repo.Save();
 
                 Assert.AreEqual(accomodation.Name, repo.GetAll().First().Name);
 
@@ -82,8 +81,6 @@ namespace DataAccessTest
                 context.SaveChanges();
 
                 repo.Delete(accomodation);
-                repo.Save();
-
                 Assert.AreEqual(0, repo.GetAll().Count());
 
                 context.Set<TouristSpot>().Remove(touristSpot);
@@ -126,7 +123,6 @@ namespace DataAccessTest
                 accomodation.Available = false;
 
                 repo.Update(accomodation);
-                repo.Save();
 
                 Assert.AreEqual(false, context.Set<Accomodation>().Find(accomodation.Id).Available);
 
