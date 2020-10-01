@@ -8,8 +8,6 @@ namespace BusinessLogicInterface
         bool Add(TouristSpot spot);
         object Delete(TouristSpot spot);
         bool Exists(TouristSpot touristSpot);
-        List<TouristSpot> SearchByCategory(Category category);
-        List<TouristSpot> SearchByRegion(Region region);
-        List<TouristSpot> SearchByRegionAndCategory(Category category, Region region);
+        List<TouristSpot> Search(List<Category> categories, Region region);
     }
 }
