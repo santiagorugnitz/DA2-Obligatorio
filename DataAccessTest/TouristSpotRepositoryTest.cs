@@ -38,7 +38,6 @@ namespace DataAccessTest
                 var repo = new Repository<TouristSpot>(context);
 
                 repo.Add(spot);
-                repo.Save();
 
                 Assert.AreEqual(spot.Name, repo.GetAll().First().Name);
 
@@ -59,7 +58,6 @@ namespace DataAccessTest
                 context.SaveChanges();
 
                 repo.Delete(spot);
-                repo.Save();
 
                 Assert.AreEqual(0, repo.GetAll().Count());
 

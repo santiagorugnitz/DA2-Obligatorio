@@ -31,7 +31,7 @@ namespace DataAccessTest
                 Description = "asd",
                 ImageUrl = "url",
                 Region = new Region() { Name = RegionName.Región_Centro_Sur },
-                TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
+                TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
             };
 
             accomodation = new Accomodation()
@@ -53,7 +53,7 @@ namespace DataAccessTest
                 Id = 1,
                 Accomodation = accomodation,
                 CheckIn = DateTime.Today.AddDays(1),
-                CheckOut = DateTime.Today.AddDays(10),
+                CheckOut = DateTime.Today.AddDays(10),
                 AdultQuantity = 2,
                 ChildrenQuantity = 1,
                 BabyQuantity = 0,
@@ -76,7 +76,6 @@ namespace DataAccessTest
                 context.Set<TouristSpot>().Add(touristSpot);
                 context.Set<Accomodation>().Add(accomodation);
                 repo.Add(reservation);
-                repo.Save();
 
                 Assert.AreEqual("martin.gut", repo.GetAll().First().Email);
 
@@ -84,7 +83,6 @@ namespace DataAccessTest
                 context.Set<Accomodation>().Remove(accomodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
-                repo.Save();
             }
         }
 
@@ -98,15 +96,12 @@ namespace DataAccessTest
                 context.Set<TouristSpot>().Add(touristSpot);
                 context.Set<Accomodation>().Add(accomodation);
                 context.Set<Reservation>().Add(reservation);
-                repo.Save();
-
-                Assert.AreEqual("martin.gut", repo.GetAll().First().Email);
+                context.SaveChanges();
 
                 repo.Delete(reservation);
                 context.Set<Accomodation>().Remove(accomodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
-                repo.Save();
 
                 Assert.AreEqual(0, repo.GetAll().Count());
             }
@@ -121,7 +116,7 @@ namespace DataAccessTest
                 Id = 2,
                 Accomodation = accomodation,
                 CheckIn = DateTime.Today.AddDays(1),
-                CheckOut = DateTime.Today.AddDays(10),
+                CheckOut = DateTime.Today.AddDays(10),
                 AdultQuantity = 2,
                 ChildrenQuantity = 1,
                 BabyQuantity = 0,
@@ -141,7 +136,7 @@ namespace DataAccessTest
                 context.Set<Reservation>().Add(reservation);
                 context.Set<Reservation>().Add(reservation2);
 
-                repo.Save();
+                context.SaveChanges();
 
                 var res = repo.GetAll();
 
@@ -154,7 +149,6 @@ namespace DataAccessTest
                 context.Set<Accomodation>().Remove(accomodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
-                repo.Save();
             }
         }
 
@@ -167,7 +161,7 @@ namespace DataAccessTest
                 Id = 2,
                 Accomodation = accomodation,
                 CheckIn = DateTime.Today.AddDays(1),
-                CheckOut = DateTime.Today.AddDays(10),
+                CheckOut = DateTime.Today.AddDays(10),
                 AdultQuantity = 2,
                 ChildrenQuantity = 1,
                 BabyQuantity = 0,
@@ -187,7 +181,6 @@ namespace DataAccessTest
                 context.Set<Reservation>().Add(reservation);
                 context.Set<Reservation>().Add(reservation2);
 
-                repo.Save();
 
                 var res = repo.Get(1);
 
@@ -198,7 +191,6 @@ namespace DataAccessTest
                 context.Set<Accomodation>().Remove(accomodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
-                repo.Save();
             }
         }
 
@@ -212,7 +204,7 @@ namespace DataAccessTest
                 context.Set<TouristSpot>().Add(touristSpot);
                 context.Set<Accomodation>().Add(accomodation);
                 context.Set<Reservation>().Add(reservation);
-                repo.Save();
+                context.SaveChanges();
 
                 reservation.Email = "santi.rug";
 
@@ -224,7 +216,6 @@ namespace DataAccessTest
                 context.Set<Accomodation>().Remove(accomodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
-                repo.Save();
             }
         }
     }

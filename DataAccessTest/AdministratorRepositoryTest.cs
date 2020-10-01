@@ -36,7 +36,6 @@ namespace DataAccessTest
                     Email = "bob@mail.com",
                 };
                 repo.Add(admin);
-                repo.Save();
 
                 Assert.AreEqual("Bob", repo.GetAll().First().Name);
                 context.Set<Administrator>().Remove(admin);
@@ -61,7 +60,6 @@ namespace DataAccessTest
                 context.Set<Administrator>().Add(admin);
                 context.SaveChanges();
                 repo.Delete(admin);
-                repo.Save();
 
                 Assert.AreEqual(0, repo.GetAll().Count());
             }
