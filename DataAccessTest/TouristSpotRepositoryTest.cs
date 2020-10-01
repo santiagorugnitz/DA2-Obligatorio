@@ -25,7 +25,7 @@ namespace DataAccessTest
                 Name = "Beach",
                 Description = "asd",
                 ImageUrl = "url",
-                Region = new Region() { Name = "metropolitana" },
+                Region = new Region() { Name = RegionName.Región_metropolitana },
                 TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
             };
         }

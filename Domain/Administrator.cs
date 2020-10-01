@@ -8,10 +8,58 @@ namespace Domain
     {
         public int Id { get; set; }
 
-        public string Name { get; set; }
+        private string name;
+        public string Name
+        {
+            set
+            {
+                if (value.Trim() == "")
+                {
+                    throw new ArgumentNullException("The administrator needs a non empty Name");
+                }
+                else
+                {
+                    name = value.Trim();
+                }
+            }
 
-        public string Email { get; set; }
+            get { return name; }
+        }
 
-        public string Password { get; set; }
+        private string email;
+        public string Email
+        {
+            set
+            {
+                if (value.Trim() == "")
+                {
+                    throw new ArgumentNullException("The administrator needs a non empty Email");
+                }
+                else
+                {
+                    email = value.Trim();
+                }
+            }
+
+            get { return email; }
+        }
+
+        private string password;
+        public string Password
+        {
+            set
+            {
+                if (value.Trim() == "")
+                {
+                    throw new ArgumentNullException("The administrator needs a non empty Password");
+                }
+                else
+                {
+                    password = value.Trim();
+                }
+            }
+
+            get { return password; }
+        }
     }
 }

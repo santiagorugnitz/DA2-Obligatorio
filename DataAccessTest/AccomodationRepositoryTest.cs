@@ -28,7 +28,7 @@ namespace DataAccessTest
                 Name = "Beach",
                 Description = "asd",
                 ImageUrl = "url",
-                Region = new Region() { Name = "region" }
+                Region = new Region() { Name = RegionName.Región_Centro_Sur }
             };
 
             accomodation = new Accomodation()
@@ -151,7 +151,7 @@ namespace DataAccessTest
                     Name = "Beach1",
                     Description = "asd1",
                     ImageUrl = "url1",
-                    Region = new Region() { Name = "region1" }
+                    Region = new Region() { Name = RegionName.Región_Litoral_Norte }
                 };
 
                 var accomodation1 = new Accomodation()

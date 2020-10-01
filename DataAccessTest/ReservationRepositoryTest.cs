@@ -30,7 +30,7 @@ namespace DataAccessTest
                 Name = "Beach",
                 Description = "asd",
                 ImageUrl = "url",
-                Region = new Region() { Name = "region" },
+                Region = new Region() { Name = RegionName.Región_Centro_Sur },
                 TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
             };
 
@@ -52,8 +52,8 @@ namespace DataAccessTest
             {
                 Id = 1,
                 Accomodation = accomodation,
-                CheckIn = new DateTime(),
-                CheckOut = new DateTime().AddDays(10),
+                CheckIn = DateTime.Today.AddDays(1),
+                CheckOut = DateTime.Today.AddDays(10),
                 AdultQuantity = 2,
                 ChildrenQuantity = 1,
                 BabyQuantity = 0,
@@ -120,8 +120,8 @@ namespace DataAccessTest
             {
                 Id = 2,
                 Accomodation = accomodation,
-                CheckIn = new DateTime(),
-                CheckOut = new DateTime().AddDays(10),
+                CheckIn = DateTime.Today.AddDays(1),
+                CheckOut = DateTime.Today.AddDays(10),
                 AdultQuantity = 2,
                 ChildrenQuantity = 1,
                 BabyQuantity = 0,
@@ -166,8 +166,8 @@ namespace DataAccessTest
             {
                 Id = 2,
                 Accomodation = accomodation,
-                CheckIn = new DateTime(),
-                CheckOut = new DateTime().AddDays(10),
+                CheckIn = DateTime.Today.AddDays(1),
+                CheckOut = DateTime.Today.AddDays(10),
                 AdultQuantity = 2,
                 ChildrenQuantity = 1,
                 BabyQuantity = 0,
