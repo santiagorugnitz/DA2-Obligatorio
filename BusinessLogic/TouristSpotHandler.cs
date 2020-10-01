@@ -34,24 +34,23 @@ namespace BusinessLogic
             return spotsRepository.Get(touristSpot.Id) != null;
         }
 
-        public List<TouristSpot> SearchByRegion(Region region)
+        public List<TouristSpot> Search(List<Category> categories = null, Region region = null)
         {
-            return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Equals(region)).ToList();
-        }
+            var joinedEntry = new List<TouristSpotCategory>();
+            
+            if(categories==null) return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Equals(region)).ToList();
 
-        public List<TouristSpot> SearchByCategory(Category category)
-        {
-            var joinedEntry = joinedRepository.Get(category.Id);
-
-            return spotsRepository.GetAll(x => ((TouristSpot)x).Id == joinedEntry.TouristSpotId).ToList();
-        }
-
-        public List<TouristSpot> SearchByRegionAndCategory(Category category, Region region)
-        {
-            var joinedEntry = joinedRepository.Get(category.Id);
-
-            return spotsRepository.GetAll(x => ((TouristSpot)x).Id == joinedEntry.TouristSpotId &&
-            ((TouristSpot)x).Region.Id == region.Id).ToList();
+            foreach (var cat in categories)
+            {
+                joinedEntry.AddRange(joinedRepository.GetAll(x => ((TouristSpotCategory)x).CategoryId == cat.Id));
+            }
+            var spots = new List<TouristSpot>();
+            foreach (var entry in joinedEntry)
+            {
+                if (!spots.Contains(entry.TouristSpot)) spots.Add(entry.TouristSpot);
+            }
+            if(region!=null) return spots.FindAll(x => x.Region.Id == region.Id);
+            return spots;
         }
     }
 }
