@@ -31,6 +31,8 @@ namespace BusinessLogicTest
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Add(administrator)).Returns(true);
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>()))
+                .Returns(new List<Administrator> { });
 
             var res = handler.Add(administrator);
 
@@ -82,7 +84,7 @@ namespace BusinessLogicTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException),
-    "The Administrator needs a non empty name")]
+    "The Administrator needs a non empty email")]
         public void AddAdminWithoutEmail2()
         {
             var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
@@ -92,6 +94,34 @@ namespace BusinessLogicTest
 
             administrator.Email = "    ";
             var res = handler.Add(administrator);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException),
+   "The Administrator needs a non empty password")]
+        public void AddAdminWithRepeatedEmail()
+        {
+            var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Add(administrator)).Returns(true);
+
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>()))
+                .Returns(new List<Administrator> { });
+
+            handler.Add(administrator);
+
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>()))
+                .Returns(new List<Administrator> { administrator });
+
+            Administrator incorrectAdmin = new Administrator
+            {
+                Name = "Martin",
+                Email = "santi.rug",
+                Password = "1234"
+            };
+
+            var res = handler.Add(incorrectAdmin);
         }
 
         [TestMethod]
