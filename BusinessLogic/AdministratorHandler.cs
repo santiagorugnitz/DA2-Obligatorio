@@ -22,7 +22,7 @@ namespace BusinessLogic
             if (repository.GetAll((x => ((Administrator)x).Email == administrator.Email))
                 .Count() != 0)
             {
-                throw new InvalidOperationException("The Administrator needs a non empty password");
+                throw new InvalidOperationException("The mail already exists");
             }
 
             return repository.Add(administrator);

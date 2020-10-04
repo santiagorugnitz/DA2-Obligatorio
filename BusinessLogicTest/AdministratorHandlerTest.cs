@@ -98,7 +98,7 @@ namespace BusinessLogicTest
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException),
-   "The Administrator needs a non empty password")]
+   "The mail already exists")]
         public void AddAdminWithRepeatedEmail()
         {
             var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
