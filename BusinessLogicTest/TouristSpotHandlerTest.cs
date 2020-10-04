@@ -23,7 +23,7 @@ namespace BusinessLogicTest
                 Name = "Beach",
                 Description = "asd",
                 ImageUrl = "url",
-                Region = new Region() { Name = RegionName.Región_metropolitana },
+                Region = new Region() { Name =  "Region metropolitana" },
                 TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry }
 
             };
@@ -177,7 +177,7 @@ namespace BusinessLogicTest
 
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
 
-            List<TouristSpot> res = handler.Search(null,new Region { Name = RegionName.Región_metropolitana });
+            List<TouristSpot> res = handler.Search(null,new Region { Name =  "Region metropolitana" });
 
             mock.VerifyAll();
             Assert.AreEqual(spot, res[0]);
@@ -208,7 +208,7 @@ namespace BusinessLogicTest
             joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpotCategory>() { joinedEntry });
 
             List<TouristSpot> res = handler.Search(new List<Category>(){ new Category { Name = "Ciudades" } },
-                new Region { Name = RegionName.Región_metropolitana });
+                new Region { Name =  "Region metropolitana" });
 
 
             joinedMock.VerifyAll();

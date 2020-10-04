@@ -18,8 +18,8 @@ namespace BusinessLogicTest
         [TestInitialize]
         public void SetUp()
         {
-            regionCentro = new Region { Name = RegionName.Región_Centro_Sur };
-            regionCorredor = new Region { Name = RegionName.Región_Corredor_Pájaros_Pintados };
+            regionCentro = new Region { Name =  "Region Centro Sur" };
+            regionCorredor = new Region { Name =  "Region Corredor Pajaros Pintados" };
         }
 
         [TestMethod]

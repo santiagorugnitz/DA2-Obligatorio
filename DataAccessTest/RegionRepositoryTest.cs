@@ -23,8 +23,8 @@ namespace DataAccessTest
                              .UseInMemoryDatabase(databaseName: "TestDB")
                              .Options;
 
-            regionCentro = new Region { Name = RegionName.Región_Centro_Sur };
-            regionCorredor = new Region { Name = RegionName.Región_Corredor_Pájaros_Pintados };
+            regionCentro = new Region { Name =  "Region Centro Sur" };
+            regionCorredor = new Region { Name =  "Region Corredor Pajaros Pintados" };
         }
 
         [TestMethod]
@@ -39,8 +39,9 @@ namespace DataAccessTest
                 context.SaveChanges();
 
                 var result = repo.GetAll();
-                Assert.AreEqual(RegionName.Región_Centro_Sur, result.First().Name);
-                Assert.AreEqual(RegionName.Región_Corredor_Pájaros_Pintados, result.Last().Name);
+
+                Assert.AreEqual( "Region Corredor Pajaros Pintados", result.First().Name);
+                Assert.AreEqual( "Region Centro Sur", result.Last().Name);
                 Assert.AreEqual(2, result.Count());
 
                 context.Set<Region>().Remove(regionCentro);
