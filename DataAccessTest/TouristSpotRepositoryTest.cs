@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace DataAccessTest
 {
+    [TestClass]
     public class TouristSpotRepositoryTest
     {
         DbContextOptions<TourismContext> options;
@@ -25,7 +26,7 @@ namespace DataAccessTest
                 Name = "Beach",
                 Description = "asd",
                 ImageUrl = "url",
-                Region = new Region() { Name = RegionName.Región_metropolitana },
+                Region = new Region() { Name =  "Region metropolitana" },
                 TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
             };
         }
@@ -61,7 +62,6 @@ namespace DataAccessTest
 
                 Assert.AreEqual(0, repo.GetAll().Count());
 
-                context.Set<TouristSpot>().Remove(spot);
                 context.SaveChanges();
             }
         }
@@ -104,8 +104,17 @@ namespace DataAccessTest
                 spot.TouristSpotCategories.Clear();
                 spot.TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = category} };
 
-                spot.Id++;
-                context.Set<TouristSpot>().Add(spot);
+                TouristSpot spot1 = new TouristSpot()
+                {
+                    Id = 2,
+                    Name = "Beach1",
+                    Description = "asd1",
+                    ImageUrl = "url1",
+                    Region = new Region() { Name =  "Region metropolitana" },
+                    TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
+                };
+
+                context.Set<TouristSpot>().Add(spot1);
                 context.SaveChanges();
 
                 var joinedEntry = context.Set<TouristSpotCategory>().Find(category.Id,spot.Id);
@@ -115,8 +124,7 @@ namespace DataAccessTest
                 Assert.AreEqual(spot.Id, res[0].Id);
 
                 context.Set<TouristSpot>().Remove(spot);
-                spot.Id--;
-                context.Set<TouristSpot>().Remove(spot);
+                context.Set<TouristSpot>().Remove(spot1);
                 context.SaveChanges();
             }
         }

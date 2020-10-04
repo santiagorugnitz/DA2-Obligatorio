@@ -44,7 +44,26 @@ namespace WebApi
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IAdministratorHandler, AdministratorHandler>();
+            services.AddScoped<IRegionHandler, RegionHandler>();
+            services.AddScoped<ICategoryHandler, CategoryHandler>();
 
+            services.AddSwaggerGen(options =>
+            {
+                var groupName = "v1";
+
+                options.SwaggerDoc(groupName, new OpenApiInfo
+                {
+                    Title = $"Tourism {groupName}",
+                    Version = groupName,
+                    Description = "Tourism api",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Tourism",
+                        Email = string.Empty,
+                        Url = new Uri("https://tourism.api.com/"),
+                    }
+                });
+            });
 
         }
 
@@ -59,6 +78,12 @@ namespace WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Tourism API");
+            });
 
             app.UseAuthorization();
 

@@ -25,7 +25,7 @@ namespace BusinessLogicTest
                 Name = "Beach",
                 Description = "asd",
                 ImageUrl = "url",
-                Region = new Region() { Name = RegionName.Región_Centro_Sur },
+                Region = new Region() { Name =  "Region Centro Sur" },
             };
 
             accomodation = new Accomodation()

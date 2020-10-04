@@ -11,7 +11,7 @@ using WebApi.Models;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("administrators")]
     public class AdministratorController : ControllerBase
     {
         private readonly IAdministratorHandler handler;

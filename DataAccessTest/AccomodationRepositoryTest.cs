@@ -5,6 +5,7 @@ using DataAccess;
 using Domain;
 using System.Linq;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DataAccessTest
 {
@@ -14,7 +15,7 @@ namespace DataAccessTest
         DbContextOptions<TourismContext> options;
         private Accomodation accomodation;
         private TouristSpot touristSpot;
-
+        private Region region;
         [TestInitialize]
         public void StartUp()
         {
@@ -22,13 +23,15 @@ namespace DataAccessTest
                              .UseInMemoryDatabase(databaseName: "TestDB")
                              .Options;
 
+            region = new Region() { Name =  "Region Centro Sur" };
+
             touristSpot = new TouristSpot
             {
                 Id = 1,
                 Name = "Beach",
                 Description = "asd",
                 ImageUrl = "url",
-                Region = new Region() { Name = RegionName.Región_Centro_Sur }
+                Region = region
             };
 
             accomodation = new Accomodation()
@@ -46,6 +49,16 @@ namespace DataAccessTest
                 TouristSpot = touristSpot
             };
 
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            using (var context = new TourismContext(options)) 
+            {
+                context.Set<Region>().Remove(region);
+                context.SaveChanges();
+            }
         }
 
         [TestMethod]
@@ -140,6 +153,7 @@ namespace DataAccessTest
             {
                 var repo = new Repository<Accomodation>(context);
 
+                var region1 = new Region() { Name =  "Region Litoral Norte" };
 
                 var touristSpot1 = new TouristSpot
                 {
@@ -147,7 +161,7 @@ namespace DataAccessTest
                     Name = "Beach1",
                     Description = "asd1",
                     ImageUrl = "url1",
-                    Region = new Region() { Name = RegionName.Región_Litoral_Norte }
+                    Region = region1
                 };
 
                 var accomodation1 = new Accomodation()
@@ -181,6 +195,7 @@ namespace DataAccessTest
                 context.Set<Accomodation>().Remove(accomodation1);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.Set<TouristSpot>().Remove(touristSpot1);
+                context.Set<Region>().Remove(region1);
                 context.SaveChanges();
 
             }
