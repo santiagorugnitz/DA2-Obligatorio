@@ -22,7 +22,7 @@ namespace BusinessLogicTest
             {
                 Name = "Beach",
                 Description = "asd",
-                ImageUrl = "url",
+                Image = new Image { Name = "imagen"},
                 Region = new Region() { Name =  "Region metropolitana" },
                 TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry }
 
@@ -119,7 +119,7 @@ namespace BusinessLogicTest
             var handler = new TouristSpotHandler(mock.Object, joinedMock.Object);
             mock.Setup(x => x.Add(spot)).Returns(true);
 
-            spot.ImageUrl = "";
+            spot.Image.Name = "";
             var res = handler.Add(spot);
         }
 
@@ -133,7 +133,7 @@ namespace BusinessLogicTest
             var handler = new TouristSpotHandler(mock.Object, joinedMock.Object);
             mock.Setup(x => x.Add(spot)).Returns(true);
 
-            spot.ImageUrl = "   ";
+            spot.Image.Name = "   ";
             var res = handler.Add(spot);
         }
         [TestMethod]

@@ -30,7 +30,7 @@ namespace DataAccessTest
                 Id = 1,
                 Name = "Beach",
                 Description = "asd",
-                ImageUrl = "url",
+                Image = new Image { Name = "imagen" },
                 Region = region
             };
 
@@ -41,7 +41,7 @@ namespace DataAccessTest
                 Stars = 4.0,
                 Address = "Cuareim",
                 Available = true,
-                ImageUrlList = new List<string>(),
+                Images = new List<Image> { new Image { Name = "imagen" } },
                 Fee = 4000,
                 Description = "Hotel in Mvdeo",
                 Telephone = "+598",
@@ -160,7 +160,7 @@ namespace DataAccessTest
                     Id = 2,
                     Name = "Beach1",
                     Description = "asd1",
-                    ImageUrl = "url1",
+                    Image = new Image { Name = "imagen" },
                     Region = region1
                 };
 
@@ -171,7 +171,7 @@ namespace DataAccessTest
                     Stars = 4.0,
                     Address = "Cuareim",
                     Available = true,
-                    ImageUrlList = new List<string>(),
+                    Images = new List<Image> { new Image { Name = "imagen" } },
                     Fee = 4000,
                     Description = "Hotel in Mvdeo",
                     Telephone = "+598",

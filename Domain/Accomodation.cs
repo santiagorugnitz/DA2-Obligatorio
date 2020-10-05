@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Domain
@@ -62,7 +63,22 @@ namespace Domain
             get { return address; }
         }
 
-        public List<string> ImageUrlList { get; set; }
+        private List<Image> images;
+        public virtual List<Image> Images
+        {
+            get { return images; }
+            set
+            {
+                if (value.Count() == 0)
+                {
+                    throw new ArgumentNullException("The Accomodation needs at least one image");
+                }
+                else
+                {
+                    images = value;
+                }
+            }
+        }
 
         private double fee;
         public double Fee

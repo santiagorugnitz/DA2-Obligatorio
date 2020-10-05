@@ -43,23 +43,8 @@ namespace Domain
 
             get { return description; }
         }
-        private string imageUrl;
-        public string ImageUrl
-        {
-            set
-            {
-                if (value.Trim() == "")
-                {
-                    throw new ArgumentNullException("The spot needs a non empty picture URL");
-                }
-                else
-                {
-                    imageUrl = value.Trim();
-                }
-            }
 
-            get { return imageUrl; }
-        }
+        public virtual Image Image { get; set; }
 
         public virtual Region Region { get; set; }
 

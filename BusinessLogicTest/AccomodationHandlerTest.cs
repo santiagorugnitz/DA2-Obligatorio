@@ -31,7 +31,7 @@ namespace BusinessLogicTest
             {
                 Name = "Beach",
                 Description = "asd",
-                ImageUrl = "url",
+                Image = new Image { Name = "imagen" },
                 Region = new Region() { Name =  "Region Centro Sur" },
                 TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry }
             };
@@ -43,7 +43,7 @@ namespace BusinessLogicTest
                 Stars = 4.0,
                 Address = "Cuareim",
                 Available = true,
-                ImageUrlList = new List<string>(),
+                Images = new List<Image> { new Image { Name = "imagen"} },
                 Fee = 4000,
                 Description = "Hotel in Mvdeo",
                 Telephone = "+598",
@@ -248,6 +248,24 @@ namespace BusinessLogicTest
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
 
             accomodation.Fee = -10;
+            var res = handler.Add(accomodation);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Accomodation needs at least one image")]
+        public void AddAccomodationWithoutImages()
+        {
+            var accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            var touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
+            var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
+            var touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, joinedMock.Object);
+            var handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+
+            accomodation.Images = new List<Image>();
             var res = handler.Add(accomodation);
         }
 

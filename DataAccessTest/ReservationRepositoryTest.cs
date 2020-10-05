@@ -29,7 +29,7 @@ namespace DataAccessTest
             {
                 Name = "Beach",
                 Description = "asd",
-                ImageUrl = "url",
+                Image = new Image { Name = "imagen" },
                 Region = new Region() { Name =  "Region Centro Sur" },
                 TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
 
@@ -40,7 +40,7 @@ namespace DataAccessTest
                 Name = "Hotel",
                 Stars = 4.0,
                 Address = "Cuareim",
-                ImageUrlList = new List<string>(),
+                Images = new List<Image> { new Image { Name = "imagen" } },
                 Fee = 4000,
                 Description = "Hotel in Mvdeo",
                 Telephone = "+598",
