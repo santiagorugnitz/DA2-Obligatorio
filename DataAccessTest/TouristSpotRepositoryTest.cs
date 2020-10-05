@@ -99,7 +99,7 @@ namespace DataAccessTest
                 {
                     Name = "Campo"
                 };
-
+                context.Set<Category>().Add(category);
                 context.Set<TouristSpot>().Add(spot);
                 spot.TouristSpotCategories.Clear();
                 spot.TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = category} };
@@ -120,6 +120,52 @@ namespace DataAccessTest
                 var joinedEntry = context.Set<TouristSpotCategory>().Find(category.Id,spot.Id);
 
                 var res = repo.GetAll(x => ((TouristSpot)x).Id == joinedEntry.TouristSpotId &&((TouristSpot)x).Region.Id == spot.Region.Id).ToList();
+
+                Assert.AreEqual(1, res.Count());
+                Assert.AreEqual(spot.Id, res[0].Id);
+
+                context.Set<TouristSpot>().Remove(spot);
+                context.Set<TouristSpot>().Remove(spot1);
+                context.Set<Category>().Remove(category);
+                context.SaveChanges();
+            }
+        }
+
+        [TestMethod]
+        public void GetAllNoResults()
+        {
+            using (var context = new TourismContext(options))
+            {
+                var repo = new Repository<TouristSpot>(context);
+                var joinedRepo = new Repository<TouristSpotCategory>(context);
+                var catRepo = new Repository<Category>(context);
+
+
+                Category category = new Category
+                {
+                    Name = "Campo"
+                };
+
+                context.Set<TouristSpot>().Add(spot);
+                spot.TouristSpotCategories.Clear();
+                spot.TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = category } };
+
+                TouristSpot spot1 = new TouristSpot()
+                {
+                    Id = 2,
+                    Name = "Beach1",
+                    Description = "asd1",
+                    ImageUrl = "url1",
+                    Region = new Region() { Name = "Region metropolitana" },
+                    TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
+                };
+
+                context.Set<TouristSpot>().Add(spot1);
+                context.SaveChanges();
+
+                var joinedEntry = context.Set<TouristSpotCategory>().Find(category.Id, spot.Id);
+
+                var res = repo.GetAll(x => ((TouristSpot)x).Id == joinedEntry.TouristSpotId && ((TouristSpot)x).Region.Id == spot.Region.Id).ToList();
 
                 Assert.AreEqual(spot.Id, res[0].Id);
 

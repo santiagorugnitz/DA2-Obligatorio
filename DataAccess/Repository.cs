@@ -40,7 +40,7 @@ namespace DataAccess
 
         public IEnumerable<T> GetAll(Func<object, bool> p = null)
         {
-            return DbSet.ToList();
+            return DbSet.ToList().Where(x=>p.Invoke(x));
         }
 
         public T Get(int id)

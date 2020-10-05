@@ -102,7 +102,7 @@ namespace BusinessLogicTest
    "The mail already exists")]
         public void AddAdminWithRepeatedEmail()
         {
-            var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Add(administrator)).Returns(true);
