@@ -9,9 +9,9 @@ namespace BusinessLogic
 {
     public class AdministratorHandler : IAdministratorHandler
     {
-        private IRepository<Administrator> repository;
+        private IAdministratorRepository repository;
 
-        public AdministratorHandler(IRepository<Administrator> repo)
+        public AdministratorHandler(IAdministratorRepository repo)
         {
             repository = repo;
         }
@@ -21,9 +21,19 @@ namespace BusinessLogic
             return repository.Add(administrator);
         }
 
-        public object Delete(Administrator administrator)
+        public bool Delete(Administrator administrator)
         {
             return repository.Delete(administrator);
+        }
+
+        public string Login(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Logout(string token)
+        {
+            throw new NotImplementedException();
         }
     }
 }
