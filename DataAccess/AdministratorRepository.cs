@@ -32,21 +32,21 @@ namespace DataAccess
             return admins.ToArray()[0];
         }
 
-        public bool IsLogged(string token)
+        public Administrator Find(string token)
         {
             if (token == null)
             {
-                return false;
+                return null;
             }
             
             var admins = DbSet.ToList().Where(admin => admin.Token == token);
 
             if (admins.Count() == 0)
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return admins.ToArray()[0];
         }
     }
 }

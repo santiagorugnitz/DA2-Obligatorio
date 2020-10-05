@@ -168,7 +168,7 @@ namespace DataAccessTest
         }
 
         [TestMethod]
-        public void IsLoggedAdmin()
+        public void FindAdminByToken()
         {
             using (var context = new TourismContext(options))
             {
@@ -191,9 +191,9 @@ namespace DataAccessTest
                 context.Set<Administrator>().Add(admin2);
                 context.SaveChanges();
 
-                var res = repo.IsLogged("bob1");
+                var res = repo.Find("bob1");
 
-                Assert.AreEqual(true, res);
+                Assert.AreEqual(admin1, res);
 
                 context.Remove(admin1);
                 context.Remove(admin2);
@@ -202,7 +202,7 @@ namespace DataAccessTest
         }
 
         [TestMethod]
-        public void IsNotLoggedAdmin()
+        public void FindInexistingAdminByToken()
         {
             using (var context = new TourismContext(options))
             {
@@ -225,9 +225,9 @@ namespace DataAccessTest
                 context.Set<Administrator>().Add(admin2);
                 context.SaveChanges();
 
-                var res = repo.IsLogged("bob3");
+                var res = repo.Find("bob3");
 
-                Assert.AreEqual(false, res);
+                Assert.AreEqual(null, res);
 
                 context.Remove(admin1);
                 context.Remove(admin2);

@@ -7,7 +7,7 @@ namespace DataAccessInterface
 {
     public interface IAdministratorRepository : IRepository<Administrator>
     {
-        public bool IsLogged(string token);
+        public Administrator Find(string token);
         public Administrator Find(string email, string password);
 
 
