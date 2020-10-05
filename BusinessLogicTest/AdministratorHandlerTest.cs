@@ -20,14 +20,15 @@ namespace BusinessLogicTest
             {
                 Name = "Santiago",
                 Email = "santi.rug",
-                Password = "1234"
+                Password = "1234",
+                Token = "asdg25-f812j"
             };
         }
 
         [TestMethod]
         public void AddAdmin()
         {
-            var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Add(administrator)).Returns(true);
@@ -43,7 +44,7 @@ namespace BusinessLogicTest
     "The Administrator needs a non empty name")]
         public void AddAdminWithoutName1()
         {
-            var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Add(administrator)).Returns(true);
@@ -57,7 +58,7 @@ namespace BusinessLogicTest
     "The Administrator needs a non empty name")]
         public void AddAdminWithoutName2()
         {
-            var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Add(administrator)).Returns(true);
@@ -71,7 +72,7 @@ namespace BusinessLogicTest
    "The Administrator needs a non empty email")]
         public void AddAdminWithoutEmail1()
         {
-            var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Add(administrator)).Returns(true);
@@ -85,7 +86,7 @@ namespace BusinessLogicTest
     "The Administrator needs a non empty name")]
         public void AddAdminWithoutEmail2()
         {
-            var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Add(administrator)).Returns(true);
@@ -99,7 +100,7 @@ namespace BusinessLogicTest
    "The Administrator needs a non empty password")]
         public void AddAdminWithoutPassword1()
         {
-            var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Add(administrator)).Returns(true);
@@ -113,7 +114,7 @@ namespace BusinessLogicTest
     "The Administrator needs a non empty password")]
         public void AddAdminWithoutPassword2()
         {
-            var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Add(administrator)).Returns(true);
@@ -125,7 +126,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void DeleteAdmin()
         {
-            var mock = new Mock<IRepository<Administrator>>(MockBehavior.Strict);
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Delete(administrator)).Returns(true);
@@ -134,6 +135,64 @@ namespace BusinessLogicTest
 
             mock.VerifyAll();
             Assert.AreEqual(true, res);
+        }
+
+        [TestMethod]
+        public void LoginOk()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Find(administrator.Email, administrator.Password)).Returns(administrator);
+            mock.Setup(x => x.Update(administrator)).Returns(true);
+
+
+            var res = handler.Login(administrator.Email, administrator.Password);
+
+            mock.VerifyAll();
+            Assert.AreNotEqual(null, res);
+        }
+
+        [ExpectedException(typeof(InvalidOperationException),"The Administrator needs a non empty password")]
+        [TestMethod]
+        public void LoginBad()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Find(administrator.Email, administrator.Password)).Returns((Administrator)null);
+            mock.Setup(x => x.Update(administrator)).Returns(true);
+
+            var res = handler.Login(administrator.Email, administrator.Password);
+
+            mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void LogoutOk()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Find(administrator.Token)).Returns(administrator);
+            mock.Setup(x => x.Update(administrator)).Returns(true);
+
+            handler.Logout(administrator.Token);
+
+            mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void LogoutBad()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Find(administrator.Token)).Returns((Administrator)null);
+
+            handler.Logout(administrator.Token);
+
+            mock.VerifyAll();
         }
     }
 }

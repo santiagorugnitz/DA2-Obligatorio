@@ -101,5 +101,138 @@ namespace DataAccessTest
             }
         }
 
+        [TestMethod]
+        public void FindAdmins()
+        {
+            using (var context = new TourismContext(options))
+            {
+                var repo = new AdministratorRepository(context);
+
+                var admin1 = new Administrator()
+                {
+                    Name = "Bob1",
+                    Password = "12345678",
+                    Email = "bob1@mail.com",
+                };
+                var admin2 = new Administrator()
+                {
+                    Name = "Bob2",
+                    Password = "12345678",
+                    Email = "bob2@mail.com",
+                };
+                context.Set<Administrator>().Add(admin1);
+                context.Set<Administrator>().Add(admin2);
+                context.SaveChanges();
+
+                var res = repo.Find("bob1@mail.com", "12345678");
+
+                Assert.AreEqual(admin1, res);
+
+                context.Remove(admin1);
+                context.Remove(admin2);
+                context.SaveChanges();
+            }
+        }
+
+        [TestMethod]
+        public void FindInexistingAdmins()
+        {
+            using (var context = new TourismContext(options))
+            {
+                var repo = new AdministratorRepository(context);
+
+                var admin1 = new Administrator()
+                {
+                    Name = "Bob1",
+                    Password = "12345678",
+                    Email = "bob1@mail.com",
+                };
+                var admin2 = new Administrator()
+                {
+                    Name = "Bob2",
+                    Password = "12345678",
+                    Email = "bob2@mail.com",
+                };
+                context.Set<Administrator>().Add(admin1);
+                context.Set<Administrator>().Add(admin2);
+                context.SaveChanges();
+
+                var res = repo.Find("bob3@mail.com", "12345678");
+
+                Assert.AreEqual(null, res);
+
+                context.Remove(admin1);
+                context.Remove(admin2);
+                context.SaveChanges();
+            }
+        }
+
+        [TestMethod]
+        public void FindAdminByToken()
+        {
+            using (var context = new TourismContext(options))
+            {
+                var repo = new AdministratorRepository(context);
+
+                var admin1 = new Administrator()
+                {
+                    Name = "Bob1",
+                    Password = "12345678",
+                    Email = "bob1@mail.com",
+                    Token = "bob1"
+                };
+                var admin2 = new Administrator()
+                {
+                    Name = "Bob2",
+                    Password = "12345678",
+                    Email = "bob2@mail.com",
+                };
+                context.Set<Administrator>().Add(admin1);
+                context.Set<Administrator>().Add(admin2);
+                context.SaveChanges();
+
+                var res = repo.Find("bob1");
+
+                Assert.AreEqual(admin1, res);
+
+                context.Remove(admin1);
+                context.Remove(admin2);
+                context.SaveChanges();
+            }
+        }
+
+        [TestMethod]
+        public void FindInexistingAdminByToken()
+        {
+            using (var context = new TourismContext(options))
+            {
+                var repo = new AdministratorRepository(context);
+
+                var admin1 = new Administrator()
+                {
+                    Name = "Bob1",
+                    Password = "12345678",
+                    Email = "bob1@mail.com",
+                    Token = "bob1"
+                };
+                var admin2 = new Administrator()
+                {
+                    Name = "Bob2",
+                    Password = "12345678",
+                    Email = "bob2@mail.com",
+                };
+                context.Set<Administrator>().Add(admin1);
+                context.Set<Administrator>().Add(admin2);
+                context.SaveChanges();
+
+                var res = repo.Find("bob3");
+
+                Assert.AreEqual(null, res);
+
+                context.Remove(admin1);
+                context.Remove(admin2);
+                context.SaveChanges();
+            }
+        }
     }
 }

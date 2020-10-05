@@ -9,9 +9,9 @@ namespace BusinessLogic
 {
     public class AdministratorHandler : IAdministratorHandler
     {
-        private IRepository<Administrator> repository;
+        private IAdministratorRepository repository;
 
-        public AdministratorHandler(IRepository<Administrator> repo)
+        public AdministratorHandler(IAdministratorRepository repo)
         {
             repository = repo;
         }
@@ -21,9 +21,26 @@ namespace BusinessLogic
             return repository.Add(administrator);
         }
 
-        public object Delete(Administrator administrator)
+        public bool Delete(Administrator administrator)
         {
             return repository.Delete(administrator);
+        }
+
+        public string Login(string email, string password)
+        {
+            var admin = repository.Find(email, password);
+            if (admin == null) throw new InvalidOperationException("Admin does not exist");
+            admin.Token = Guid.NewGuid().ToString();
+            repository.Update(admin);
+            return admin.Token;
+        }
+
+        public void Logout(string token)
+        {
+            var admin = repository.Find(token);
+            if (admin == null) return;
+            admin.Token = null;
+            repository.Update(admin);
         }
     }
 }

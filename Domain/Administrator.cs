@@ -61,5 +61,6 @@ namespace Domain
 
             get { return password; }
         }
+        public string Token { get; set; }
     }
 }

@@ -38,5 +38,38 @@ namespace WebApiTest
             mock.VerifyAll();
 
         }
+
+        [TestMethod]
+        public void LoginOk()
+        {
+            var mock = new Mock<IAdministratorHandler>(MockBehavior.Strict);
+            var controller = new AdministratorController(mock.Object);
+            var loginModel = new LoginModel()
+            {
+                Email = "prueba@probando.com",
+                Password = "12345678",
+            };
+
+            mock.Setup(x => x.Login(loginModel.Email,loginModel.Password)).Returns("token");
+
+            var result = controller.Login(loginModel);
+            var okResult = result as OkObjectResult;
+
+            mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void LogoutOk()
+        {
+            var mock = new Mock<IAdministratorHandler>(MockBehavior.Strict);
+            var controller = new AdministratorController(mock.Object);
+
+            mock.Setup(x => x.Logout("token"));
+
+            var result = controller.Logout("token");
+            var okResult = result as OkObjectResult;
+
+            mock.VerifyAll();
+        }
     }
 }
