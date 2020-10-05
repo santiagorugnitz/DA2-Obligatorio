@@ -40,6 +40,8 @@ namespace DataAccess
 
         public IEnumerable<T> GetAll(Func<object, bool> p = null)
         {
+            if (p == null) return DbSet.ToList();
+
             return DbSet.ToList().Where(x=>p.Invoke(x));
         }
 

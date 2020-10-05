@@ -155,7 +155,7 @@ namespace DataAccessTest
                     Id = 2,
                     Name = "Beach1",
                     Description = "asd1",
-                    ImageUrl = "url1",
+                    Image = new Image { Name = "imagen" },
                     Region = new Region() { Name = "Region metropolitana" },
                     TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
                 };
