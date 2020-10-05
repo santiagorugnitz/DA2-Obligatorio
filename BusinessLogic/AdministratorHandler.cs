@@ -28,12 +28,19 @@ namespace BusinessLogic
 
         public string Login(string email, string password)
         {
-            throw new NotImplementedException();
+            var admin = repository.Find(email, password);
+            if (admin == null) throw new InvalidOperationException("Admin does not exist");
+            admin.Token = Guid.NewGuid().ToString();
+            repository.Update(admin);
+            return admin.Token;
         }
 
         public void Logout(string token)
         {
-            throw new NotImplementedException();
+            var admin = repository.Find(token);
+            if (admin == null) return;
+            admin.Token = null;
+            repository.Update(admin);
         }
     }
 }
