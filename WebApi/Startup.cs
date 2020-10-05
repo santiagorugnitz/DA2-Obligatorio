@@ -43,6 +43,7 @@ namespace WebApi
             );
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped(IAdministratorRepository, AdministratorRepository);
             services.AddScoped<IAdministratorHandler, AdministratorHandler>();
             services.AddScoped<IRegionHandler, RegionHandler>();
             services.AddScoped<ICategoryHandler, CategoryHandler>();
