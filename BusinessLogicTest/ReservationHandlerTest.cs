@@ -24,7 +24,7 @@ namespace BusinessLogicTest
             {
                 Name = "Beach",
                 Description = "asd",
-                ImageUrl = "url",
+                Image = new Image { Name = "imagen" },
                 Region = new Region() { Name =  "Region Centro Sur" },
             };
 
@@ -33,7 +33,7 @@ namespace BusinessLogicTest
                 Name = "Hotel",
                 Stars = 4.0,
                 Address = "Cuareim",
-                ImageUrlList = new List<string>(),
+                Images = new List<Image> { new Image { Name = "imagen" } },
                 Fee = 4000,
                 Description = "Hotel in Mvdeo",
                 Telephone = "+598",

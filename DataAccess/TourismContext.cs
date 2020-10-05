@@ -27,6 +27,8 @@ namespace DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Image>()
+                .HasKey(x => x.Id);
 
             modelBuilder.Entity<Region>()
                 .HasKey(x => x.Id);
@@ -36,6 +38,9 @@ namespace DataAccess
 
             modelBuilder.Entity<TouristSpot>()
                 .HasKey(x => x.Id);
+
+            modelBuilder.Entity<TouristSpot>()
+                .HasOne(x => x.Image);
 
             modelBuilder.Entity<TouristSpotCategory>()
                 .HasKey(x => new { x.TouristSpotId, x.CategoryId});
@@ -68,10 +73,8 @@ namespace DataAccess
             modelBuilder.Entity<Accomodation>()
                 .HasOne(x => x.TouristSpot);
 
-
-            //TODO: fix this
             modelBuilder.Entity<Accomodation>()
-                .Ignore(x => x.ImageUrlList);
+                .HasMany(x => x.Images);
         }
 
 
