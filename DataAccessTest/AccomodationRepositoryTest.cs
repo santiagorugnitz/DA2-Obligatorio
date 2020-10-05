@@ -16,6 +16,8 @@ namespace DataAccessTest
         private Accomodation accomodation;
         private TouristSpot touristSpot;
         private Region region;
+        private Image image;
+
         [TestInitialize]
         public void StartUp()
         {
@@ -25,12 +27,14 @@ namespace DataAccessTest
 
             region = new Region() { Name =  "Region Centro Sur" };
 
+            image = new Image { Name = "imagen" };
+
             touristSpot = new TouristSpot
             {
                 Id = 1,
                 Name = "Beach",
                 Description = "asd",
-                ImageUrl = "url",
+                Image = image,
                 Region = region
             };
 
@@ -41,7 +45,7 @@ namespace DataAccessTest
                 Stars = 4.0,
                 Address = "Cuareim",
                 Available = true,
-                ImageUrlList = new List<string>(),
+                Images = new List<Image> { image },
                 Fee = 4000,
                 Description = "Hotel in Mvdeo",
                 Telephone = "+598",
@@ -57,6 +61,7 @@ namespace DataAccessTest
             using (var context = new TourismContext(options)) 
             {
                 context.Set<Region>().Remove(region);
+                context.Set<Image>().Remove(image);
                 context.SaveChanges();
             }
         }
