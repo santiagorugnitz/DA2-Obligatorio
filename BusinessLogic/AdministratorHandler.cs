@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Domain;
 using BusinessLogicInterface;
+using System.Linq;
 
 namespace BusinessLogic
 {
@@ -18,6 +19,12 @@ namespace BusinessLogic
 
         public bool Add(Administrator administrator)
         {
+            if (repository.GetAll((x => ((Administrator)x).Email == administrator.Email))
+                .Count() != 0)
+            {
+                throw new InvalidOperationException("The mail already exists");
+            }
+
             return repository.Add(administrator);
         }
 
