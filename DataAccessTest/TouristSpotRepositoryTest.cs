@@ -13,6 +13,9 @@ namespace DataAccessTest
     {
         DbContextOptions<TourismContext> options;
         private TouristSpot spot;
+        private Image image;
+        private Category category;
+        private Region region;
 
         [TestInitialize]
         public void SetUp()
@@ -21,14 +24,78 @@ namespace DataAccessTest
                              .UseInMemoryDatabase(databaseName: "TestDB")
                              .Options;
 
+            image = new Image()
+            {
+                Id=1,
+                Name = "image"
+            };
+             category = new Category
+            {
+                Id = 1,
+                Name = "Campo"
+            };
+            region = new Region() { Name = "Region metropolitana" };
             spot = new TouristSpot()
             {
+                Id=1,
                 Name = "Beach",
                 Description = "asd",
                 Image = image,
                 Region = region,
                 TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = category } }
             };
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            using(var context = new TourismContext(options))
+            {
+                context.Set<Image>().Remove(image);
+                context.Set<Category>().Remove(category);
+                context.Set<Region>().Remove(region);
+                context.SaveChanges();
+
+            }
+        }
+
+        [TestMethod]
+        public void GetAllSpot()
+        {
+            using (var context = new TourismContext(options))
+            {
+                var repo = new Repository<TouristSpot>(context);
+                var joinedRepo = new Repository<TouristSpotCategory>(context);
+                var catRepo = new Repository<Category>(context);
+
+
+
+                context.Set<TouristSpot>().Add(spot);
+
+                TouristSpot spot1 = new TouristSpot()
+                {
+                    Id=2,
+                    Name = "Beach1",
+                    Description = "asd1",
+                    Image = image,
+                    Region = region,
+                    TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
+                };
+
+                context.Set<TouristSpot>().Add(spot1);
+                context.SaveChanges();
+
+                var joinedEntry = context.Set<TouristSpotCategory>().Find(category.Id, spot.Id);
+
+                var res = repo.GetAll(x => ((TouristSpot)x).Id == joinedEntry.TouristSpotId && ((TouristSpot)x).Region.Id == spot.Region.Id).ToList();
+
+                Assert.AreEqual(1, res.Count());
+                Assert.AreEqual(spot.Id, res[0].Id);
+
+                context.Set<TouristSpot>().Remove(spot);
+                context.Set<TouristSpot>().Remove(spot1);
+                context.SaveChanges();
+            }
         }
 
         [TestMethod]
@@ -85,81 +152,8 @@ namespace DataAccessTest
             }
         }
 
-        [TestMethod]
-        public void GetAllSpot()
-        {
-            using (var context = new TourismContext(options))
-            {
-                var repo = new Repository<TouristSpot>(context);
-                var joinedRepo = new Repository<TouristSpotCategory>(context);
-                var catRepo = new Repository<Category>(context);
+        
 
-
-                Category category = new Category
-                {
-                    Name = "Campo"
-                };
-                context.Set<Category>().Add(category);
-                context.Set<TouristSpot>().Add(spot);
-                context.SaveChanges();
-
-                var joinedEntry = context.Set<TouristSpotCategory>().Find(category.Id,spot.Id);
-
-                var res = repo.GetAll(x => ((TouristSpot)x).Id == joinedEntry.TouristSpotId &&((TouristSpot)x).Region.Id == spot.Region.Id).ToList();
-
-                Assert.AreEqual(1, res.Count());
-                Assert.AreEqual(spot.Id, res[0].Id);
-
-                context.Set<TouristSpot>().Remove(spot);
-                context.Set<TouristSpot>().Remove(spot1);
-                context.Set<Category>().Remove(category);
-                context.SaveChanges();
-            }
-        }
-
-        [TestMethod]
-        public void GetAllNoResults()
-        {
-            using (var context = new TourismContext(options))
-            {
-                var repo = new Repository<TouristSpot>(context);
-                var joinedRepo = new Repository<TouristSpotCategory>(context);
-                var catRepo = new Repository<Category>(context);
-
-
-                Category category = new Category
-                {
-                    Name = "Campo"
-                };
-
-                context.Set<TouristSpot>().Add(spot);
-                spot.TouristSpotCategories.Clear();
-                spot.TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = category } };
-
-                TouristSpot spot1 = new TouristSpot()
-                {
-                    Id = 2,
-                    Name = "Beach1",
-                    Description = "asd1",
-                    Image = new Image { Name = "imagen" },
-                    Region = new Region() { Name = "Region metropolitana" },
-                    TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
-                };
-
-                context.Set<TouristSpot>().Add(spot1);
-                context.SaveChanges();
-
-                var joinedEntry = context.Set<TouristSpotCategory>().Find(category.Id, spot.Id);
-
-                var res = repo.GetAll(x => ((TouristSpot)x).Id == joinedEntry.TouristSpotId && ((TouristSpot)x).Region.Id == spot.Region.Id).ToList();
-
-                Assert.AreEqual(spot.Id, res[0].Id);
-
-                context.Set<TouristSpot>().Remove(spot);
-                context.Set<TouristSpot>().Remove(spot1);
-                context.SaveChanges();
-            }
-        }
 
     }
 }
