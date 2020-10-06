@@ -25,9 +25,9 @@ namespace DataAccessTest
             {
                 Name = "Beach",
                 Description = "asd",
-                ImageUrl = "url",
-                Region = new Region() { Name =  "Region metropolitana" },
-                TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
+                Image = image,
+                Region = region,
+                TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = category } }
             };
         }
 
@@ -101,20 +101,6 @@ namespace DataAccessTest
                 };
                 context.Set<Category>().Add(category);
                 context.Set<TouristSpot>().Add(spot);
-                spot.TouristSpotCategories.Clear();
-                spot.TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = category} };
-
-                TouristSpot spot1 = new TouristSpot()
-                {
-                    Id = 2,
-                    Name = "Beach1",
-                    Description = "asd1",
-                    ImageUrl = "url1",
-                    Region = new Region() { Name =  "Region metropolitana" },
-                    TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = new Category { Name = "Ciudades" } } }
-                };
-
-                context.Set<TouristSpot>().Add(spot1);
                 context.SaveChanges();
 
                 var joinedEntry = context.Set<TouristSpotCategory>().Find(category.Id,spot.Id);
