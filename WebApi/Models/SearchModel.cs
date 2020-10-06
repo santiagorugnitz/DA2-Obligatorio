@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace WebApi.Models
 {
-    public class CategoryModel
+    public class SearchModel
     {
-        public int Id { get; set; }
+        public int RegionId { get; set; }
 
-        public string Name { get; set; }
+        public List<int> CategoryIds { get; set; }
     }
 }
