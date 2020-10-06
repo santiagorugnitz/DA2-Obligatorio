@@ -74,7 +74,7 @@ namespace WebApiTest
             var mock = new Mock<ITouristSpotHandler>(MockBehavior.Strict);
             var controller = new TouristSpotController(mock.Object);
 
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            //mock.Setup(x => x.Add(spot)).Returns(true);
 
             var result = controller.Put(spot.Id,spotModel);
             var okResult = result as OkObjectResult;

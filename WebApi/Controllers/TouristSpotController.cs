@@ -46,9 +46,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] TouristSpotModel spotModel)
         {
-            var spot = BuildTouristSpot(spotModel);
-
-            return Ok(handler.Add(spot));
+            return null;
         }
 
         private TouristSpot BuildTouristSpot(TouristSpotModel spotModel)
