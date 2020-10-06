@@ -45,9 +45,10 @@ namespace WebApiTest
             {
                 Name = spot.Name,
                 Description = spot.Description,
-                CategoryIds = new List<int>() { category.Id },
                 RegionId = region.Id,
+                CategoryIds = new List<int>() { category.Id },
                 Image = image.Name,
+
             };
 
         }
@@ -76,12 +77,34 @@ namespace WebApiTest
 
             //mock.Setup(x => x.Add(spot)).Returns(true);
 
-            var result = controller.Put(spot.Id,spotModel);
+            var result = controller.Post(spotModel);
             var okResult = result as OkObjectResult;
             var value = okResult.Value as TouristSpot;
 
             mock.VerifyAll();
             Assert.AreEqual(true, value);
+        }
+
+        [TestMethod]
+        public void GetAllOk()
+        {
+            var mock = new Mock<ITouristSpotHandler>(MockBehavior.Strict);
+            var controller = new TouristSpotController(mock.Object);
+
+            var searchModel = new SearchModel()
+            {
+                RegionId = region.Id,
+                CategoryIds = new List<int>() { category.Id },
+            };
+
+            mock.Setup(x => x.Search(searchModel.CategoryIds,searchModel.RegionId)).Returns(new List<TouristSpot>() { spot});
+
+            var result = controller.GetAll(searchModel);
+            var okResult = result as OkObjectResult;
+            var value = okResult.Value as List<TouristSpot>;
+
+            mock.VerifyAll();
+            Assert.AreEqual(spot, value[0]);
         }
     }
 }

@@ -38,6 +38,7 @@ namespace BusinessLogicTest
             {
                 Category = new Category
                 {
+                    Id=1,
                     Name = "Ciudades"
                 },
                 TouristSpot = spot,
@@ -190,7 +191,7 @@ namespace BusinessLogicTest
         {
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
 
-            List<TouristSpot> res = handler.Search(null,new Region { Name =  "Region metropolitana" });
+            List<TouristSpot> res = handler.Search(null,1);
 
             mock.VerifyAll();
             Assert.AreEqual(spot, res[0]);
@@ -201,7 +202,7 @@ namespace BusinessLogicTest
         {
             joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpotCategory>() { joinedEntry });
 
-            List<TouristSpot> res = handler.Search(new List<Category>(){ new Category { Name = "Ciudades" }});
+            List<TouristSpot> res = handler.Search(new List<int>(){1});
 
             joinedMock.VerifyAll();
             Assert.AreEqual(spot, res[0]);
@@ -212,8 +213,8 @@ namespace BusinessLogicTest
         {
             joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpotCategory>() { joinedEntry });
 
-            List<TouristSpot> res = handler.Search(new List<Category>(){ new Category { Name = "Ciudades" } },
-                new Region { Name =  "Region metropolitana" });
+            List<TouristSpot> res = handler.Search(new List<int>(){ 1 },
+                1);
 
 
             joinedMock.VerifyAll();

@@ -38,22 +38,22 @@ namespace BusinessLogic
             return spotsRepository.Get(id);
         }
 
-        public List<TouristSpot> Search(List<Category> categories = null, Region region = null)
+        public List<TouristSpot> Search(List<int> categories = null, int? region = null)
         {
             var joinedEntry = new List<TouristSpotCategory>();
             
-            if(categories==null) return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Equals(region)).ToList();
+            if(categories==null) return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id==region).ToList();
 
             foreach (var cat in categories)
             {
-                joinedEntry.AddRange(joinedRepository.GetAll(x => ((TouristSpotCategory)x).CategoryId == cat.Id));
+                joinedEntry.AddRange(joinedRepository.GetAll(x => ((TouristSpotCategory)x).CategoryId == cat));
             }
             var spots = new List<TouristSpot>();
             foreach (var entry in joinedEntry)
             {
                 if (!spots.Contains(entry.TouristSpot)) spots.Add(entry.TouristSpot);
             }
-            if(region!=null) return spots.FindAll(x => x.Region.Id == region.Id);
+            if(region!=null) return spots.FindAll(x => x.Region.Id == region);
             return spots;
         }
     }

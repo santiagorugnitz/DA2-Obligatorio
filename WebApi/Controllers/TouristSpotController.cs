@@ -25,9 +25,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult GetAll([FromBody] SearchModel search)
         {
-            return null;
+            return Ok(handler.Search(search.CategoryIds,search.RegionId));
         }
 
         [HttpGet("{id}")]
@@ -41,44 +41,6 @@ namespace WebApi.Controllers
         {
             return null;
 
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] TouristSpotModel spotModel)
-        {
-            return null;
-        }
-
-        private TouristSpot BuildTouristSpot(TouristSpotModel spotModel)
-        {
-            var image = new Image()
-            {
-                Id = 1,
-                Name = "image"
-            };
-            var category = new Category
-            {
-                Id = 1,
-                Name = "Campo"
-            };
-            var region = new Region() { Name = "Region metropolitana" };
-
-
-            return new TouristSpot()
-            {
-                Id = 1,
-                Name = "Beach",
-                Description = "asd",
-                Image = image,
-                Region = region,
-                TouristSpotCategories = new List<TouristSpotCategory> { new TouristSpotCategory() { Category = category } }
-            };
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            return null;
         }
     }
 }
