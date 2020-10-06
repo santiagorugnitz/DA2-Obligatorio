@@ -29,9 +29,9 @@ namespace BusinessLogic
             return spotsRepository.Delete(spot);
         }
 
-        public bool Exists(TouristSpot touristSpot)
+        public TouristSpot Get(int id)
         {
-            return spotsRepository.Get(touristSpot.Id) != null;
+            return spotsRepository.Get(id);
         }
 
         public List<TouristSpot> Search(List<Category> categories = null, Region region = null)

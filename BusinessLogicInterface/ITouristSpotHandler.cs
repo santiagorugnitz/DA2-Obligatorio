@@ -7,7 +7,7 @@ namespace BusinessLogicInterface
     {
         bool Add(TouristSpot spot);
         object Delete(TouristSpot spot);
-        bool Exists(TouristSpot touristSpot);
+        TouristSpot Get(int Id);
         List<TouristSpot> Search(List<Category> categories, Region region);
     }
 }

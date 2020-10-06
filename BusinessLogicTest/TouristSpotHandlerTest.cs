@@ -153,7 +153,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void ExistsSpot()
+        public void GetSpot()
         {
             var mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
             var joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
@@ -162,10 +162,10 @@ namespace BusinessLogicTest
 
             mock.Setup(x => x.Get(spot.Id)).Returns(spot);
 
-            var res = handler.Exists(spot);
+            var res = handler.Get(spot.Id);
 
             mock.VerifyAll();
-            Assert.AreEqual(true, res);
+            Assert.AreEqual(spot, res);
         }
 
         [TestMethod]

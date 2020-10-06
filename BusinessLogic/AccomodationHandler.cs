@@ -21,7 +21,7 @@ namespace BusinessLogic
 
         public bool Add(Accomodation accomodation)
         {
-            if (touristSpotHandler.Exists(accomodation.TouristSpot))
+            if (touristSpotHandler.Get(accomodation.TouristSpot.Id)!=null)
             {
                 return accomodationRepository.Add(accomodation);
             }

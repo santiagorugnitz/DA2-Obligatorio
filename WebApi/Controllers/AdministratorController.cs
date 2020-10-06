@@ -28,11 +28,13 @@ namespace WebApi.Controllers
             var res = handler.Add(adminModel.ToEntity());
             return Ok(res);
         }
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel loginModel)
         {
                 return Ok(handler.Login(loginModel.Email, loginModel.Password));
         }
+
         [HttpDelete("logout")]
         public IActionResult Logout([FromHeader] string token)
         {
