@@ -19,8 +19,10 @@ namespace BusinessLogic
 
         public bool Add(Reservation reservation, int accomodationId)
         {
-            if (accomodationHandler.Exists(accomodationId))
+            var gotAccomodation = accomodationHandler.Get(accomodationId);
+            if (gotAccomodation != null)
             {
+                reservation.Accomodation = gotAccomodation;
                 return repository.Add(reservation);
             }
             else

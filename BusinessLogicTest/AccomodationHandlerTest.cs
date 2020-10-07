@@ -291,10 +291,10 @@ namespace BusinessLogicTest
         {
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation) null);
 
-            var res = handler.Exists(accomodation.Id);
+            var res = handler.Get(accomodation.Id);
 
             accomodationMock.VerifyAll();
-            Assert.AreEqual(false, res);
+            Assert.AreEqual(null, res);
         }
 
         [TestMethod]
@@ -302,10 +302,10 @@ namespace BusinessLogicTest
         {
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
 
-            var res = handler.Exists(accomodation.Id);
+            var res = handler.Get(accomodation.Id);
 
             accomodationMock.VerifyAll();
-            Assert.AreEqual(true, res);
+            Assert.AreEqual(accomodation, res);
         }
     }
 }
