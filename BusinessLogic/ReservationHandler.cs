@@ -17,15 +17,15 @@ namespace BusinessLogic
             accomodationHandler = accomodationHand;
         }
 
-        public bool Add(Reservation reservation)
+        public bool Add(Reservation reservation, int accomodationId)
         {
-            if (accomodationHandler.Exists(reservation.Accomodation))
+            if (accomodationHandler.Exists(accomodationId))
             {
                 return repository.Add(reservation);
             }
             else
             {
-                throw new NullReferenceException("The tourist spot does not exists");
+                throw new NullReferenceException("The accomodation does not exists");
             }
         }
 

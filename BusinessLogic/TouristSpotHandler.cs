@@ -31,20 +31,16 @@ namespace BusinessLogic
         {
             if (regionRepository.Get(regionId) == null)
             {
-                regionRepository.Add(spot.Region);
+                throw new ArgumentNullException("The region does not exists");
             }
 
-            if (imageRepository.GetAll(x => ((Image) x).Name == imageName).Count() == 0)
-            {
-                imageRepository.Add(spot.Image);
-            }
-
+            imageRepository.Add(spot.Image);
+            
             foreach (var item in categoryIds)
             {
                 if (categoryRepository.Get(item) == null)
                 {
-                    categoryRepository.Add(spot.TouristSpotCategories.
-                        Where(x => x.CategoryId == item).ToList()[0].Category);
+                    throw new ArgumentNullException("A category does not exists");
                 }
             }
 

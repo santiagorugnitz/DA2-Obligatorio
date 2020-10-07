@@ -12,23 +12,30 @@ namespace BusinessLogic
     {
         private ITouristSpotHandler touristSpotHandler;
         private IRepository<Accomodation> accomodationRepository;
+        private IRepository<Image> imageRepository;
 
-        public AccomodationHandler(IRepository<Accomodation> accomodationRepo, ITouristSpotHandler touristSpotHand)
+        public AccomodationHandler(IRepository<Accomodation> accomodationRepo, 
+            IRepository<Image> imageRepo, ITouristSpotHandler touristSpotHand)
         {
             accomodationRepository = accomodationRepo;
+            imageRepository = imageRepo;
             touristSpotHandler = touristSpotHand;
         }
 
-        public bool Add(Accomodation accomodation)
+        public bool Add(Accomodation accomodation, int touristSpotId, List<string> imageNames)
         {
-            if (touristSpotHandler.Get(accomodation.TouristSpot.Id)!=null)
+            foreach (var item in imageNames)
             {
-                return accomodationRepository.Add(accomodation);
+                Image image = new Image { Name = item };
+                imageRepository.Add(image);
             }
-            else
+
+            if (touristSpotHandler.Get(touristSpotId)==null)
             {
-                throw new NullReferenceException("The tourist spot does not exists");
+                throw new ArgumentNullException("The tourist spot does not exists");
             }
+
+            return accomodationRepository.Add(accomodation);
         }
 
         public object Delete(Accomodation accomodation)
@@ -50,6 +57,11 @@ namespace BusinessLogic
         {
             return accomodationRepository.GetAll(x => ((Accomodation)x).TouristSpot.Equals(touristSpot) &&
             ((Accomodation)x).Available).ToList();
+        }
+
+        public bool Exists(int accomodationId)
+        {
+            return accomodationRepository.Get(accomodationId) != null;
         }
     }
 }
