@@ -62,5 +62,11 @@ namespace Domain
             get { return password; }
         }
         public string Token { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Administrator admin &&
+                   Id == admin.Id;
+        }
     }
 }
