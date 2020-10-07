@@ -64,6 +64,10 @@ namespace Domain
                 }
             }
         }
-
+        public override bool Equals(object obj)
+        {
+            return obj is TouristSpot spot &&
+                   spot.Id == Id;
+        }
     }
 }
