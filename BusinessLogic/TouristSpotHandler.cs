@@ -57,9 +57,15 @@ namespace BusinessLogic
 
             }
 
-            spot.TouristSpotCategories = gotCategories;
+            var result = spotsRepository.Add(spot);
 
-            return spotsRepository.Add(spot);
+            foreach (var item in gotCategories)
+            {
+                item.TouristSpotId = spot.Id;
+                joinedRepository.Add(item);
+            }
+
+            return result;
         }
 
         public TouristSpot Get(int id)
