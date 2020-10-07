@@ -6,6 +6,7 @@ using BusinessLogicInterface;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using WebApi.Filters;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -22,6 +23,7 @@ namespace WebApi.Controllers
             this.handler = handler;
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpPost]
         public IActionResult Post(AdministratorModel adminModel)
         {

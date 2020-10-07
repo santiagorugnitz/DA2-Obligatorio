@@ -12,6 +12,7 @@ namespace BusinessLogicInterface
         bool Delete(int id);
         string Login(string email, string password);
         void Logout(string token);
+        bool IsLogged(string token);
 
 
     }

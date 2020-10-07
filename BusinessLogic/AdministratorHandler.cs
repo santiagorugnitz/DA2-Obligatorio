@@ -46,7 +46,7 @@ namespace BusinessLogic
         public string Login(string email, string password)
         {
             var admin = repository.Find(email, password);
-            if (admin == null) throw new InvalidOperationException("Admin does not exist");
+            if (admin == null) throw new ArgumentException("Wrong email or password");
             admin.Token = Guid.NewGuid().ToString();
             repository.Update(admin);
             return admin.Token;
@@ -58,6 +58,12 @@ namespace BusinessLogic
             if (admin == null) return;
             admin.Token = null;
             repository.Update(admin);
+        }
+
+        public bool IsLogged(string token)
+        {
+            return repository.Find(token)!=null;
+            
         }
 
         public bool Update(Administrator administrator)
