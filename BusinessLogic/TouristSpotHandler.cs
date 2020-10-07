@@ -29,6 +29,12 @@ namespace BusinessLogic
 
         public bool Add(TouristSpot spot, int regionId, List<int> categoryIds, string imageName)
         {
+            if (spotsRepository.GetAll(x => ((TouristSpot) x).Name == spot.Name).
+                ToList().Count() > 0)
+            {
+                throw new ArgumentNullException("The name already exists");
+            }
+
             var gotRegion = regionRepository.Get(regionId);
             if (gotRegion == null)
             {
