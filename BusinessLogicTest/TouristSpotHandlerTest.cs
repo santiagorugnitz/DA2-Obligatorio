@@ -65,7 +65,9 @@ namespace BusinessLogicTest
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
-            imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
+            imageMock.Setup(x => x.Add(It.IsAny<Image>())).Returns(true);
+
+            joinedMock.Setup(x => x.Add(It.IsAny<TouristSpotCategory>())).Returns(true);
 
             mock.Setup(x => x.Add(spot)).Returns(true);
 
@@ -78,6 +80,7 @@ namespace BusinessLogicTest
             var res = handler.Add(spot,spot.Region.Id, categoriesIds, spot.Image.Name);
 
             mock.VerifyAll();
+            imageMock.VerifyAll();
             Assert.AreEqual(true, res);
         }
 
@@ -107,7 +110,7 @@ namespace BusinessLogicTest
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
-            imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
+            imageMock.Setup(x => x.Add(It.IsAny<Image>())).Returns(true);
 
             mock.Setup(x => x.Add(spot)).Returns(true);
 

@@ -11,9 +11,9 @@ namespace DataAccess
         public DbSet<Accomodation> Accomodations { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<TouristSpot> TouristSpots { get; set; }
-        //public DbSet<GuestsQuantity> GuestsQuantities { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Image> Images { get; set; }
 
         public TourismContext(DbContextOptions options) : base(options)
         {

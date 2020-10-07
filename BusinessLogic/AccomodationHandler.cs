@@ -24,16 +24,24 @@ namespace BusinessLogic
 
         public bool Add(Accomodation accomodation, int touristSpotId, List<string> imageNames)
         {
+            List<Image> accomodationImages = new List<Image>();
+
             foreach (var item in imageNames)
             {
                 Image image = new Image { Name = item };
                 imageRepository.Add(image);
+                accomodationImages.Add(image);
             }
 
-            if (touristSpotHandler.Get(touristSpotId)==null)
+            var gotTouristSpot = touristSpotHandler.Get(touristSpotId);
+
+            if (gotTouristSpot==null)
             {
                 throw new ArgumentNullException("The tourist spot does not exists");
             }
+
+            accomodation.Images = accomodationImages;
+            accomodation.TouristSpot = gotTouristSpot;
 
             return accomodationRepository.Add(accomodation);
         }
@@ -59,9 +67,9 @@ namespace BusinessLogic
             ((Accomodation)x).Available).ToList();
         }
 
-        public bool Exists(int accomodationId)
+        public Accomodation Get(int accomodationId)
         {
-            return accomodationRepository.Get(accomodationId) != null;
+            return accomodationRepository.Get(accomodationId);
         }
     }
 }

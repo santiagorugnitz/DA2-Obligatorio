@@ -29,22 +29,43 @@ namespace BusinessLogic
 
         public bool Add(TouristSpot spot, int regionId, List<int> categoryIds, string imageName)
         {
-            if (regionRepository.Get(regionId) == null)
+            var gotRegion = regionRepository.Get(regionId);
+            if (gotRegion == null)
             {
                 throw new ArgumentNullException("The region does not exists");
             }
 
-            imageRepository.Add(spot.Image);
-            
+            spot.Region = gotRegion;
+
+            Image image = new Image { Name = imageName };
+            imageRepository.Add(image);
+            spot.Image = image;
+
+            List<TouristSpotCategory> gotCategories = new List<TouristSpotCategory>();
+
             foreach (var item in categoryIds)
             {
-                if (categoryRepository.Get(item) == null)
+                var gotCategory = categoryRepository.Get(item);
+                
+                if (gotCategory == null)
                 {
                     throw new ArgumentNullException("A category does not exists");
                 }
+
+                gotCategories.Add(new TouristSpotCategory { CategoryId = item, Category = gotCategory,
+                TouristSpotId = spot.Id, TouristSpot = spot});
+
             }
 
-            return spotsRepository.Add(spot);
+            var result = spotsRepository.Add(spot);
+
+            foreach (var item in gotCategories)
+            {
+                item.TouristSpotId = spot.Id;
+                joinedRepository.Add(item);
+            }
+
+            return result;
         }
 
         public TouristSpot Get(int id)
