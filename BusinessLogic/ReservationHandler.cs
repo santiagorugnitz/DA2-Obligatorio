@@ -41,8 +41,9 @@ namespace BusinessLogic
             return repository.Get(id);
         }
 
-        public bool ChangeState(Reservation reservation, ReservationState state, string description)
+        public bool ChangeState(int idReservation, ReservationState state, string description)
         {
+            Reservation reservation = repository.Get(idReservation);
             reservation.ReservationState = state;
             reservation.ReservationDescription = description;
             return repository.Update(reservation);

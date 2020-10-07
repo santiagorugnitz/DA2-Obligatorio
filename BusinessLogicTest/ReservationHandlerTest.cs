@@ -297,8 +297,9 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             mock.Setup(x => x.Update(reservation)).Returns(true);
+            mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
 
-            var res = handler.ChangeState(reservation, ReservationState.Creada, "Cambio de estado");
+            var res = handler.ChangeState(reservation.Id, ReservationState.Creada, "Cambio de estado");
 
             mock.VerifyAll();
             Assert.AreEqual(true, res);
