@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using WebApi.Filters;
 
 namespace WebApi
 {
@@ -49,6 +50,7 @@ namespace WebApi
             services.AddScoped<ICategoryHandler, CategoryHandler>();
 
             services.AddScoped<AuthorizationFilter>();
+            services.AddScoped<ExceptionFilter>();
 
             services.AddSwaggerGen(options =>
             {
