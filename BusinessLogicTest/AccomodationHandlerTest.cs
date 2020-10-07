@@ -279,8 +279,10 @@ namespace BusinessLogicTest
         public void ChangeAccomodationAvaliability()
         {
             accomodationMock.Setup(x => x.Update(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
 
-            var res = handler.ChangeAvailability(accomodation, false);
+
+            var res = handler.ChangeAvailability(accomodation.Id, false);
 
             accomodationMock.VerifyAll();
             Assert.AreEqual(true, res);

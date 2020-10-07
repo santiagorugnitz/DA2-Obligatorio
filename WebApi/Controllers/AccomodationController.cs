@@ -26,10 +26,10 @@ namespace WebApi.Controllers
             return Ok(handler.Add(accomodation.ToEntity(), accomodation.TouristSpotId, accomodation.ImageNames));
         }
 
-        [HttpPut]
-        public IActionResult ChangeAveilability([FromBody] AccomodationModel accomodation, bool available)
+        [HttpPut("{id}")]
+        public IActionResult ChangeAvailability([FromHeader] int id, [FromBody] bool available)
         {
-            return Ok(handler.ChangeAvailability(accomodation.ToEntity(), available));
+            return Ok(handler.ChangeAvailability(id, available));
         }
 
         [HttpDelete]
@@ -38,7 +38,7 @@ namespace WebApi.Controllers
             return Ok(handler.Delete(accomodation.ToEntity()));
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult Get([FromHeader] int accomodationId)
         {
             return Ok(handler.Get(accomodationId));
