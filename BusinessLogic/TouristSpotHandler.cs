@@ -34,11 +34,8 @@ namespace BusinessLogic
                 regionRepository.Add(spot.Region);
             }
 
-            if (imageRepository.GetAll(x => ((Image) x).Name == imageName).Count() == 0)
-            {
-                imageRepository.Add(spot.Image);
-            }
-
+            imageRepository.Add(spot.Image);
+            
             foreach (var item in categoryIds)
             {
                 if (categoryRepository.Get(item) == null)

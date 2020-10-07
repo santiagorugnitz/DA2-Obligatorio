@@ -65,8 +65,7 @@ namespace BusinessLogicTest
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
-            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<Image> { spot.Image });
+            imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
 
             mock.Setup(x => x.Add(spot)).Returns(true);
 
@@ -90,35 +89,7 @@ namespace BusinessLogicTest
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
-            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<Image>());
             imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
-
-            mock.Setup(x => x.Add(spot)).Returns(true);
-
-            List<int> categoriesIds = new List<int>();
-            foreach (var item in spot.TouristSpotCategories)
-            {
-                categoriesIds.Add(item.CategoryId);
-            }
-
-            var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
-
-            mock.VerifyAll();
-            imageMock.VerifyAll();
-            Assert.AreEqual(true, res);
-        }
-
-        [TestMethod]
-        public void AddCorrectSpotWithoutImage()
-        {
-            categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
-    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
-
-            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
-
-            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<Image> { spot.Image});
 
             mock.Setup(x => x.Add(spot)).Returns(true);
 
@@ -144,8 +115,7 @@ namespace BusinessLogicTest
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns((Region)null);
             regionMock.Setup(x => x.Add(spot.Region)).Returns(true);
 
-            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<Image> { spot.Image });
+            imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
 
             mock.Setup(x => x.Add(spot)).Returns(true);
 
@@ -170,8 +140,7 @@ namespace BusinessLogicTest
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
-            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<Image> { spot.Image });
+            imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
 
             mock.Setup(x => x.Add(spot)).Returns(true);
 
@@ -199,8 +168,7 @@ namespace BusinessLogicTest
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
-            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<Image> { spot.Image });
+            imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
 
             mock.Setup(x => x.Add(spot)).Returns(true);
 
@@ -225,8 +193,7 @@ namespace BusinessLogicTest
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
-            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<Image> { spot.Image });
+            imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
 
             mock.Setup(x => x.Add(spot)).Returns(true);
 
