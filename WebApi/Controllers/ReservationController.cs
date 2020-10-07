@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicInterface;
+using Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Models;
@@ -21,21 +22,21 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] ReservationModel reservation)
+        public IActionResult Post([FromBody] ReservationModel reservation, int accomodationId)
         {
-            throw new NotImplementedException();
+            return Ok(handler.Add(reservation.ToEntity(), accomodationId));
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get([FromHeader] int reservationId)
+        public IActionResult CheckState([FromHeader] int reservationId)
         {
-            throw new NotImplementedException();
+            return Ok(handler.CheckState(reservationId));
         }
 
         [HttpPut]
-        public IActionResult ChangeState([FromBody] int state, int reservationId)
+        public IActionResult ChangeState([FromBody] ReservationState state, int reservationId, string description)
         {
-            throw new NotImplementedException();
+            return Ok(handler.ChangeState(reservationId, state, description));
         }
     }
 }
