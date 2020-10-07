@@ -47,10 +47,10 @@ namespace BusinessLogicTest
 
             spot.TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry };
 
-            accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
-            regionMock = new Mock<IRepository<Region>>(MockBehavior.Loose);
-            categoryMock = new Mock<IRepository<Category>>(MockBehavior.Loose);
-            imageMock = new Mock<IRepository<Image>>(MockBehavior.Loose);
+            accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            regionMock = new Mock<IRepository<Region>>(MockBehavior.Strict);
+            categoryMock = new Mock<IRepository<Category>>(MockBehavior.Strict);
+            imageMock = new Mock<IRepository<Image>>(MockBehavior.Strict);
             mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
             joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
             handler = new TouristSpotHandler(mock.Object, imageMock.Object,
@@ -60,6 +60,14 @@ namespace BusinessLogicTest
         [TestMethod]
         public void AddCorrectSpot()
         {
+            categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
+    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
+
+            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
+
+            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Image> { spot.Image });
+
             mock.Setup(x => x.Add(spot)).Returns(true);
 
             List<int> categoriesIds = new List<int>();
@@ -77,8 +85,13 @@ namespace BusinessLogicTest
         [TestMethod]
         public void AddCorrectSpotWithImage()
         {
-            imageMock = new Mock<IRepository<Image>>(MockBehavior.Strict);
-            imageMock.Setup(x => x.Get(spot.Image.Id)).Returns((Image)null);
+            categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
+    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
+
+            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
+
+            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Image>());
             imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
 
             mock.Setup(x => x.Add(spot)).Returns(true);
@@ -99,9 +112,14 @@ namespace BusinessLogicTest
         [TestMethod]
         public void AddCorrectSpotWithoutImage()
         {
-            imageMock = new Mock<IRepository<Image>>(MockBehavior.Strict);
-            imageMock.Setup(x => x.Get(spot.Image.Id)).Returns(spot.Image);
-            
+            categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
+    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
+
+            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
+
+            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Image> { spot.Image});
+
             mock.Setup(x => x.Add(spot)).Returns(true);
 
             List<int> categoriesIds = new List<int>();
@@ -120,9 +138,14 @@ namespace BusinessLogicTest
         [TestMethod]
         public void AddCorrectSpotWithRegion()
         {
-            regionMock = new Mock<IRepository<Region>>(MockBehavior.Strict);
+            categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
+    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
+
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns((Region)null);
             regionMock.Setup(x => x.Add(spot.Region)).Returns(true);
+
+            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Image> { spot.Image });
 
             mock.Setup(x => x.Add(spot)).Returns(true);
 
@@ -135,16 +158,21 @@ namespace BusinessLogicTest
             var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
 
             mock.VerifyAll();
-            imageMock.VerifyAll();
+            regionMock.VerifyAll();
             Assert.AreEqual(true, res);
         }
 
         [TestMethod]
         public void AddCorrectSpotWithoutRegion()
         {
-            regionMock = new Mock<IRepository<Region>>(MockBehavior.Strict);
+            categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
+    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
+
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
-            
+
+            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Image> { spot.Image });
+
             mock.Setup(x => x.Add(spot)).Returns(true);
 
             List<int> categoriesIds = new List<int>();
@@ -156,18 +184,23 @@ namespace BusinessLogicTest
             var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
 
             mock.VerifyAll();
-            imageMock.VerifyAll();
+            regionMock.VerifyAll();
             Assert.AreEqual(true, res);
         }
 
         [TestMethod]
         public void AddCorrectSpotWithCategories()
         {
-            categoryMock = new Mock<IRepository<Category>>(MockBehavior.Strict);
             categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
-                .First().CategoryId)).Returns((Category)null);
-            categoryMock.Setup(x => x.Add(spot.TouristSpotCategories.ToList()
-                .First().Category)).Returns(true);
+    .First().CategoryId)).Returns((Category)null);
+
+            categoryMock.Setup(x => x.Add(spot.TouristSpotCategories.
+                ToList()[0].Category)).Returns(true);
+
+            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
+
+            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Image> { spot.Image });
 
             mock.Setup(x => x.Add(spot)).Returns(true);
 
@@ -180,16 +213,20 @@ namespace BusinessLogicTest
             var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
 
             mock.VerifyAll();
-            imageMock.VerifyAll();
+            categoryMock.VerifyAll();
             Assert.AreEqual(true, res);
         }
 
         [TestMethod]
         public void AddCorrectSpotWithoutCategory()
         {
-            categoryMock = new Mock<IRepository<Category>>(MockBehavior.Strict);
             categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
-    .First().CategoryId)).Returns((Category)null);
+    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
+
+            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
+
+            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Image> { spot.Image });
 
             mock.Setup(x => x.Add(spot)).Returns(true);
 
@@ -199,10 +236,11 @@ namespace BusinessLogicTest
                 categoriesIds.Add(item.CategoryId);
             }
 
+
             var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
 
             mock.VerifyAll();
-            imageMock.VerifyAll();
+            categoryMock.VerifyAll();
             Assert.AreEqual(true, res);
         }
 

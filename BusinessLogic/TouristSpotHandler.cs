@@ -29,7 +29,25 @@ namespace BusinessLogic
 
         public bool Add(TouristSpot spot, int regionId, List<int> categoryIds, string imageName)
         {
-            
+            if (regionRepository.Get(regionId) == null)
+            {
+                regionRepository.Add(spot.Region);
+            }
+
+            if (imageRepository.GetAll(x => ((Image) x).Name == imageName).Count() == 0)
+            {
+                imageRepository.Add(spot.Image);
+            }
+
+            foreach (var item in categoryIds)
+            {
+                if (categoryRepository.Get(item) == null)
+                {
+                    categoryRepository.Add(spot.TouristSpotCategories.
+                        Where(x => x.CategoryId == item).ToList()[0].Category);
+                }
+            }
+
             return spotsRepository.Add(spot);
         }
 
