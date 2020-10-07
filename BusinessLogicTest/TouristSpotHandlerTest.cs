@@ -29,8 +29,8 @@ namespace BusinessLogicTest
             {
                 Name = "Beach",
                 Description = "asd",
-                Image = new Image { Name = "imagen"},
-                Region = new Region() { Name =  "Region metropolitana" },
+                Image = new Image { Id = 1, Name = "imagen"},
+                Region = new Region { Id = 1, Name =  "Region metropolitana" },
 
             };
 

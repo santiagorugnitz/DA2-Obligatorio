@@ -39,7 +39,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] TouristSpotModel spot)
         {
-            return null;
+            return handler.Add(spot.ToEntity(),spot.RegionId,spot.CategoryIds,spot.Name);
 
         }
     }
