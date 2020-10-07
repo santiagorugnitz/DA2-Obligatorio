@@ -31,7 +31,7 @@ namespace BusinessLogic
             }
         }
 
-        public object Delete(Reservation reservation)
+        public bool Delete(Reservation reservation)
         {
             return repository.Delete(reservation);
         }
@@ -41,7 +41,7 @@ namespace BusinessLogic
             return repository.Get(id);
         }
 
-        public object ChangeState(Reservation reservation, ReservationState state, string description)
+        public bool ChangeState(Reservation reservation, ReservationState state, string description)
         {
             reservation.ReservationState = state;
             reservation.ReservationDescription = description;

@@ -76,8 +76,5 @@ namespace DataAccess
             modelBuilder.Entity<Accomodation>()
                 .HasMany(x => x.Images);
         }
-
-
-
     }
 }
