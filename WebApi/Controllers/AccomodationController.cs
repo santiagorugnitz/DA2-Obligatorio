@@ -26,5 +26,29 @@ namespace WebApi.Controllers
             return Ok(handler.Add(accomodation.ToEntity(), accomodation.TouristSpotId, accomodation.ImageNames));
         }
 
+        [HttpPut]
+        public IActionResult ChangeAveilability([FromBody] AccomodationModel accomodation, bool available)
+        {
+            return Ok(handler.ChangeAvailability(accomodation.ToEntity(), available));
+        }
+
+        [HttpDelete]
+        public IActionResult Delete([FromBody] AccomodationModel accomodation)
+        {
+            return Ok(handler.Delete(accomodation.ToEntity()));
+        }
+
+        [HttpGet]
+        public IActionResult Get([FromHeader] int accomodationId)
+        {
+            return Ok(handler.Get(accomodationId));
+        }
+
+        [HttpGet]
+        public IActionResult GetByTouristSpot([FromBody] TouristSpotModel touristSpot, 
+            DateTime checkIn, DateTime checkOut)
+        {
+            return Ok(handler.SearchByTouristSpot(touristSpot.ToEntity(), checkIn, checkOut));
+        }
     }
 }
