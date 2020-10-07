@@ -48,6 +48,8 @@ namespace WebApi
             services.AddScoped<IRegionHandler, RegionHandler>();
             services.AddScoped<ICategoryHandler, CategoryHandler>();
 
+            services.AddScoped<AuthorizationFilter>();
+
             services.AddSwaggerGen(options =>
             {
                 var groupName = "v1";

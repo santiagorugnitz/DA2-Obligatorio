@@ -183,7 +183,7 @@ namespace BusinessLogicTest
             Assert.AreNotEqual(null, res);
         }
 
-        [ExpectedException(typeof(InvalidOperationException),"The Administrator needs a non empty password")]
+        [ExpectedException(typeof(ArgumentException),"The Administrator needs a non empty password")]
         [TestMethod]
         public void LoginBad()
         {
@@ -223,6 +223,34 @@ namespace BusinessLogicTest
             handler.Logout(administrator.Token);
 
             mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void IsLoggedTrue()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Find(administrator.Token)).Returns((Administrator)null);
+
+            var res = handler.IsLogged(administrator.Token);
+
+            mock.VerifyAll();
+            Assert.AreEqual(false, res);
+        }
+
+        [TestMethod]
+        public void IsLoggedFalse()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Find(administrator.Token)).Returns(administrator);
+            
+            var res = handler.IsLogged(administrator.Token);
+
+            mock.VerifyAll();
+            Assert.AreEqual(true, res);
         }
     }
 }

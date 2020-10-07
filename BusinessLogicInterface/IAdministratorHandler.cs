@@ -8,6 +8,7 @@ namespace BusinessLogicInterface
         bool Delete(Administrator administrator);
         string Login(string email, string password);
         void Logout(string token);
+        bool IsLogged(string token);
 
 
     }
