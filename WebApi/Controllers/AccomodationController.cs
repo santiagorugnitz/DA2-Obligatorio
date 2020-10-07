@@ -27,7 +27,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPut]
-        public IActionResult ChangeAveilability([FromBody] AccomodationModel accomodation, bool available)
+        public IActionResult ChangeAvailability([FromBody] AccomodationModel accomodation, bool available)
         {
             return Ok(handler.ChangeAvailability(accomodation.ToEntity(), available));
         }
@@ -38,7 +38,7 @@ namespace WebApi.Controllers
             return Ok(handler.Delete(accomodation.ToEntity()));
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult Get([FromHeader] int accomodationId)
         {
             return Ok(handler.Get(accomodationId));

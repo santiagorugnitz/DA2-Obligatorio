@@ -70,7 +70,7 @@ namespace WebApiTest
             mock.Setup(x => x.ChangeAvailability(It.IsAny<Accomodation>(),
                 It.IsAny<bool>())).Returns(true);
 
-            var result = controller.ChangeAveilability(accomodationModel, true);
+            var result = controller.ChangeAvailability(accomodationModel, true);
             var okResult = result as OkObjectResult;
             var value = okResult.Value as bool?;
 
