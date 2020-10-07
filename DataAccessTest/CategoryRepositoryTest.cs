@@ -48,5 +48,25 @@ namespace DataAccessTest
                 context.SaveChanges();
             }
         }
+
+        [TestMethod]
+        public void GetCategoryById()
+        {
+            using (var context = new TourismContext(options))
+            {
+                var repo = new Repository<Category>(context);
+
+                context.Set<Category>().Add(categoryPlaya);
+                context.Set<Category>().Add(categoryCiudad);
+                context.SaveChanges();
+
+                var result = repo.Get(categoryCiudad.Id);
+                Assert.AreEqual("Ciudad", result.Name);
+                
+                context.Set<Category>().Remove(categoryCiudad);
+                context.Set<Category>().Remove(categoryPlaya);
+                context.SaveChanges();
+            }
+        }
     }
 }

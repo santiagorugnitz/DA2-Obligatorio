@@ -50,5 +50,26 @@ namespace DataAccessTest
             }
         }
 
+        [TestMethod]
+        public void GetRegionById()
+        {
+            using (var context = new TourismContext(options))
+            {
+                var repo = new Repository<Region>(context);
+
+                context.Set<Region>().Add(regionCentro);
+                context.Set<Region>().Add(regionCorredor);
+                context.SaveChanges();
+
+                var result = repo.Get(regionCentro.Id);
+
+                Assert.AreEqual("Region Centro Sur", result.Name);
+
+                context.Set<Region>().Remove(regionCentro);
+                context.Set<Region>().Remove(regionCorredor);
+                context.SaveChanges();
+            }
+        }
+
     }
 }

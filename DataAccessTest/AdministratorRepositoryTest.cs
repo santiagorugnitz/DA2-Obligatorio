@@ -234,5 +234,19 @@ namespace DataAccessTest
                 context.SaveChanges();
             }
         }
+
+        [TestMethod]
+        public void FindNullToken()
+        {
+            using (var context = new TourismContext(options))
+            {
+                var repo = new AdministratorRepository(context);
+
+                var res = repo.Find(null);
+
+                Assert.AreEqual(null, res);
+
+            }
+        }
     }
 }
