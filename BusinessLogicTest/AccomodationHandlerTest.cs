@@ -76,7 +76,7 @@ namespace BusinessLogicTest
 
 
         [TestMethod]
-        public void AddAccomodationWithoutTouristSpot()
+        public void AddAccomodationWithTouristSpot()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(accomodation.TouristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
@@ -90,33 +90,15 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void AddAccomodationWithTouristSpot()
+        [ExpectedException(typeof(ArgumentNullException),
+    "The tourist spot does not exists")]
+        public void AddAccomodationWithoutTouristSpot()
         {
-            categoryMock.Setup(x => x.Get(touristSpot.TouristSpotCategories.ToList()
-    .First().CategoryId)).Returns((Category)touristSpot.TouristSpotCategories.ToList().First().Category);
-
-            regionMock.Setup(x => x.Get(touristSpot.Region.Id)).Returns(touristSpot.Region);
-
-            imageMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<Image> { touristSpot.Image });
-
-            imageMock.Setup(x => x.Add(accomodation.Images.ToList().First())).Returns(true);
-
-            List<int> categoriesIds = new List<int>();
-            foreach (var item in touristSpot.TouristSpotCategories)
-            {
-                categoriesIds.Add(item.CategoryId);
-            }
-
+            
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns((TouristSpot)null);
-            touristSpotMock.Setup(x => x.Add(touristSpot)).Returns(true);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
 
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
-
-            accomodationMock.VerifyAll();
-            touristSpotMock.VerifyAll();
-            Assert.AreEqual(true, res);
         }
 
         [TestMethod]
@@ -299,6 +281,28 @@ namespace BusinessLogicTest
             accomodationMock.Setup(x => x.Update(accomodation)).Returns(true);
 
             var res = handler.ChangeAvailability(accomodation, false);
+
+            accomodationMock.VerifyAll();
+            Assert.AreEqual(true, res);
+        }
+
+        [TestMethod]
+        public void GetAccomodationFalse()
+        {
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation) null);
+
+            var res = handler.Exists(accomodation.Id);
+
+            accomodationMock.VerifyAll();
+            Assert.AreEqual(false, res);
+        }
+
+        [TestMethod]
+        public void GetAccomodationTrue()
+        {
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+
+            var res = handler.Exists(accomodation.Id);
 
             accomodationMock.VerifyAll();
             Assert.AreEqual(true, res);

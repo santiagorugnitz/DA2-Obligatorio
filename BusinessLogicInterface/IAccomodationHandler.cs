@@ -11,5 +11,6 @@ namespace BusinessLogicInterface
         object Delete(Accomodation accomodation);
         bool Exists(Accomodation accomodation);
         List<Accomodation> SearchByTouristSpot(TouristSpot touristSpot, DateTime checkIn, DateTime checkOut);
+        bool Exists(int accomodationId);
     }
 }

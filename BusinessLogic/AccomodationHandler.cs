@@ -32,13 +32,7 @@ namespace BusinessLogic
 
             if (touristSpotHandler.Get(touristSpotId)==null)
             {
-                List<int> categoriesIds = new List<int>();
-                foreach (var item in accomodation.TouristSpot.TouristSpotCategories)
-                {
-                    categoriesIds.Add(item.CategoryId);
-                }
-                touristSpotHandler.Add(accomodation.TouristSpot, accomodation.TouristSpot.Region.Id,
-                    categoriesIds, accomodation.TouristSpot.Image.Name);
+                throw new ArgumentNullException("The tourist spot does not exists");
             }
 
             return accomodationRepository.Add(accomodation);
@@ -63,6 +57,11 @@ namespace BusinessLogic
         {
             return accomodationRepository.GetAll(x => ((Accomodation)x).TouristSpot.Equals(touristSpot) &&
             ((Accomodation)x).Available).ToList();
+        }
+
+        public bool Exists(int accomodationId)
+        {
+            return accomodationRepository.Get(accomodationId) != null;
         }
     }
 }

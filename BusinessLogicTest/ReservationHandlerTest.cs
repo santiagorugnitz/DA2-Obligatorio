@@ -89,7 +89,7 @@ namespace BusinessLogicTest
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation)null);
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
         }
 
         [TestMethod]
@@ -101,7 +101,7 @@ namespace BusinessLogicTest
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
 
             mock.VerifyAll();
             accomodationMock.VerifyAll();
@@ -120,7 +120,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             reservation.Name = "";
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
         }
 
         [TestMethod]
@@ -135,7 +135,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             reservation.Name = "    ";
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
         }
 
         [TestMethod]
@@ -150,7 +150,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             reservation.Surname = "";
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
         }
 
         [TestMethod]
@@ -165,7 +165,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             reservation.Surname = "    ";
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
         }
 
         [TestMethod]
@@ -180,7 +180,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             reservation.Surname = "";
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
         }
 
         [TestMethod]
@@ -195,7 +195,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             reservation.Surname = "    ";
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
         }
 
         [TestMethod]
@@ -210,7 +210,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             reservation.AdultQuantity = 0;
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
         }
 
         [TestMethod]
@@ -225,7 +225,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             reservation.AdultQuantity = -9;
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
         }
 
         [TestMethod]
@@ -240,7 +240,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Add(reservation)).Returns(true);
 
             reservation.CheckIn = DateTime.Today.AddDays(-1);
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
         }
 
         [TestMethod]
@@ -257,7 +257,7 @@ namespace BusinessLogicTest
 
             reservation.CheckOut = DateTime.Today.AddDays(1);
             reservation.CheckOut = DateTime.Today;
-            var res = handler.Add(reservation);
+            var res = handler.Add(reservation, accomodation.Id);
         }
 
         [TestMethod]

@@ -82,66 +82,11 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void AddCorrectSpotWithImage()
-        {
-            categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
-    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
-
-            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
-
-            imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
-
-            mock.Setup(x => x.Add(spot)).Returns(true);
-
-            List<int> categoriesIds = new List<int>();
-            foreach (var item in spot.TouristSpotCategories)
-            {
-                categoriesIds.Add(item.CategoryId);
-            }
-
-            var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
-
-            mock.VerifyAll();
-            imageMock.VerifyAll();
-            Assert.AreEqual(true, res);
-        }
-
-        [TestMethod]
-        public void AddCorrectSpotWithRegion()
-        {
-            categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
-    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
-
-            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns((Region)null);
-            regionMock.Setup(x => x.Add(spot.Region)).Returns(true);
-
-            imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
-
-            mock.Setup(x => x.Add(spot)).Returns(true);
-
-            List<int> categoriesIds = new List<int>();
-            foreach (var item in spot.TouristSpotCategories)
-            {
-                categoriesIds.Add(item.CategoryId);
-            }
-
-            var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
-
-            mock.VerifyAll();
-            regionMock.VerifyAll();
-            Assert.AreEqual(true, res);
-        }
-
-        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),"The region does not exists")]
         public void AddCorrectSpotWithoutRegion()
         {
-            categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
-    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
-
-            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
-
-            imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
-
+            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns((Region)null);
+            
             mock.Setup(x => x.Add(spot)).Returns(true);
 
             List<int> categoriesIds = new List<int>();
@@ -151,21 +96,15 @@ namespace BusinessLogicTest
             }
 
             var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
-
-            mock.VerifyAll();
-            regionMock.VerifyAll();
-            Assert.AreEqual(true, res);
         }
 
         [TestMethod]
-        public void AddCorrectSpotWithCategories()
+        [ExpectedException(typeof(ArgumentNullException), "The category does not exists")]
+        public void AddCorrectSpotWithoutCategories()
         {
             categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
     .First().CategoryId)).Returns((Category)null);
 
-            categoryMock.Setup(x => x.Add(spot.TouristSpotCategories.
-                ToList()[0].Category)).Returns(true);
-
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
             imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
@@ -179,36 +118,6 @@ namespace BusinessLogicTest
             }
 
             var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
-
-            mock.VerifyAll();
-            categoryMock.VerifyAll();
-            Assert.AreEqual(true, res);
-        }
-
-        [TestMethod]
-        public void AddCorrectSpotWithoutCategory()
-        {
-            categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
-    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
-
-            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
-
-            imageMock.Setup(x => x.Add(spot.Image)).Returns(true);
-
-            mock.Setup(x => x.Add(spot)).Returns(true);
-
-            List<int> categoriesIds = new List<int>();
-            foreach (var item in spot.TouristSpotCategories)
-            {
-                categoriesIds.Add(item.CategoryId);
-            }
-
-
-            var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
-
-            mock.VerifyAll();
-            categoryMock.VerifyAll();
-            Assert.AreEqual(true, res);
         }
 
         [TestMethod]

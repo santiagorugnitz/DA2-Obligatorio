@@ -31,7 +31,7 @@ namespace BusinessLogic
         {
             if (regionRepository.Get(regionId) == null)
             {
-                regionRepository.Add(spot.Region);
+                throw new ArgumentNullException("The region does not exists");
             }
 
             imageRepository.Add(spot.Image);
@@ -40,8 +40,7 @@ namespace BusinessLogic
             {
                 if (categoryRepository.Get(item) == null)
                 {
-                    categoryRepository.Add(spot.TouristSpotCategories.
-                        Where(x => x.CategoryId == item).ToList()[0].Category);
+                    throw new ArgumentNullException("A category does not exists");
                 }
             }
 
