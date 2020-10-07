@@ -132,5 +132,9 @@ namespace Domain
         public string ReservationDescription { get; set; }
 
         public string StateDescription { get; set; }
+
+        public string Telephone { get; set; }
+
+        public string ContactInformation { get; set; }
     }
 }

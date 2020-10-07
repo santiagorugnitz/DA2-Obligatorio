@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BusinessLogicInterface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
