@@ -67,10 +67,10 @@ namespace WebApiTest
                 TouristSpotId = 1
             };
 
-            mock.Setup(x => x.ChangeAvailability(It.IsAny<Accomodation>(),
+            mock.Setup(x => x.ChangeAvailability(1,
                 It.IsAny<bool>())).Returns(true);
 
-            var result = controller.ChangeAvailability(accomodationModel, true);
+            var result = controller.ChangeAvailability(1, true);
             var okResult = result as OkObjectResult;
             var value = okResult.Value as bool?;
 

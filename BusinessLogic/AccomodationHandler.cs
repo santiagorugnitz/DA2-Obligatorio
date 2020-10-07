@@ -46,7 +46,7 @@ namespace BusinessLogic
             return accomodationRepository.Add(accomodation);
         }
 
-        public object Delete(Accomodation accomodation)
+        public bool Delete(Accomodation accomodation)
         {
             return accomodationRepository.Delete(accomodation);
         }
@@ -55,8 +55,9 @@ namespace BusinessLogic
             return accomodationRepository.Get(accomodation.Id) != null;
         }
 
-        public object ChangeAvailability(Accomodation accomodation, bool availability)
+        public bool ChangeAvailability(int id, bool availability)
         {
+            var accomodation = accomodationRepository.Get(id);
             accomodation.Available = availability;
             return accomodationRepository.Update(accomodation);
         }
