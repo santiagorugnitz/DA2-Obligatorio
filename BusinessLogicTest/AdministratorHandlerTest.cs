@@ -160,8 +160,10 @@ namespace BusinessLogicTest
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Delete(administrator)).Returns(true);
+            mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
 
-            var res = handler.Delete(administrator);
+
+            var res = handler.Delete(administrator.Id);
 
             mock.VerifyAll();
             Assert.AreEqual(true, res);
@@ -223,6 +225,47 @@ namespace BusinessLogicTest
             handler.Logout(administrator.Token);
 
             mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Get()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
+
+            var res = handler.Get(administrator.Id);
+
+            mock.VerifyAll();
+            Assert.AreEqual(administrator, res);
+        }
+
+        [TestMethod]
+        public void GetAll()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.GetAll(null)).Returns(new List<Administrator>() { administrator });
+
+            var res = handler.GetAll();
+
+            mock.VerifyAll();
+            Assert.AreEqual(administrator, res[0]);
+        }
+        [TestMethod]
+        public void Update()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Update(administrator)).Returns(true);
+
+            var res = handler.Update(administrator);
+
+            mock.VerifyAll();
+            Assert.AreEqual(true, res);
         }
 
     }

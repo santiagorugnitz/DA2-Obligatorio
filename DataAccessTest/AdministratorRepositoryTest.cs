@@ -43,6 +43,55 @@ namespace DataAccessTest
 
             }
         }
+        [TestMethod]
+        public void GetAdmin()
+        {
+            using (var context = new TourismContext(options))
+            {
+                var repo = new Repository<Administrator>(context);
+
+                var admin = new Administrator()
+                {
+                    Id=1,
+                    Name = "Bob",
+                    Password = "12345678",
+                    Email = "bob@mail.com",
+                };
+                context.Set<Administrator>().Add(admin);
+                context.SaveChanges();
+                var res=repo.Get(1);
+
+                Assert.AreEqual(admin.Email, res.Email);
+
+
+                context.Remove(admin);
+                context.SaveChanges();
+            }
+        }
+        [TestMethod]
+        public void UpdateAdmin()
+        {
+            using (var context = new TourismContext(options))
+            {
+                var repo = new Repository<Administrator>(context);
+
+                var admin = new Administrator()
+                {
+                    Name = "Bob",
+                    Password = "12345678",
+                    Email = "bob@mail.com",
+                };
+                context.Set<Administrator>().Add(admin);
+                context.SaveChanges();
+                admin.Name = "Bob1";
+                var res = repo.Update(admin);
+
+                Assert.AreEqual(true, res);
+
+                context.Remove(admin);
+                context.SaveChanges();
+            }
+        }
 
         [TestMethod]
         public void DeleteAdmin()
@@ -62,6 +111,7 @@ namespace DataAccessTest
                 repo.Delete(admin);
 
                 Assert.AreEqual(0, repo.GetAll().Count());
+
             }
         }
 

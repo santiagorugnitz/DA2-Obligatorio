@@ -28,9 +28,19 @@ namespace BusinessLogic
             return repository.Add(administrator);
         }
 
-        public bool Delete(Administrator administrator)
+        public bool Delete(int id)
         {
-            return repository.Delete(administrator);
+            return repository.Delete(Get(id));
+        }
+
+        public Administrator Get(int id)
+        {
+            return repository.Get(id);
+        }
+
+        public List<Administrator> GetAll()
+        {
+            return repository.GetAll().ToList();
         }
 
         public string Login(string email, string password)
@@ -48,6 +58,11 @@ namespace BusinessLogic
             if (admin == null) return;
             admin.Token = null;
             repository.Update(admin);
+        }
+
+        public bool Update(Administrator administrator)
+        {
+            return repository.Update(administrator);
         }
     }
 }

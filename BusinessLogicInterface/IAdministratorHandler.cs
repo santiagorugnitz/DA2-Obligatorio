@@ -1,11 +1,15 @@
 ﻿using Domain;
+using System.Collections.Generic;
 
 namespace BusinessLogicInterface
 {
     public interface IAdministratorHandler
     {
         bool Add(Administrator administrator);
-        bool Delete(Administrator administrator);
+        Administrator Get(int id);
+        List<Administrator> GetAll();
+        bool Update(Administrator administrator);
+        bool Delete(int id);
         string Login(string email, string password);
         void Logout(string token);
 

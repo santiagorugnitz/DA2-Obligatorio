@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using System.Collections.Generic;
 using WebApi.Controllers;
 using WebApi.Models;
 
@@ -12,9 +13,20 @@ namespace WebApiTest
     [TestClass]
     public class AdministratorControllerTest
     {
+
+        AdministratorModel adminModel;
+        Administrator admin;
+
         [TestInitialize]
         public void Setup()
         {
+            adminModel = new AdministratorModel()
+            {
+                Name = "Prueba",
+                Email = "prueba@probando.com",
+                Password = "12345678",
+            };
+            admin = adminModel.ToEntity();
         }
 
         [TestMethod]
@@ -22,13 +34,7 @@ namespace WebApiTest
         {
             var mock = new Mock<IAdministratorHandler>(MockBehavior.Strict);
             var controller = new AdministratorController(mock.Object);
-            var adminModel = new AdministratorModel()
-            {
-                Name = "Prueba",
-                Email = "prueba@probando.com",
-                Password = "12345678",
-            };
-
+            
             mock.Setup(x => x.Add(It.IsAny<Administrator>())).Returns(true);
 
             var result = controller.Post(adminModel);
@@ -36,8 +42,70 @@ namespace WebApiTest
             var value = okResult.Value as bool?;
 
             mock.VerifyAll();
-
         }
+
+        [TestMethod]
+        public void GetAll()
+        {
+            var mock = new Mock<IAdministratorHandler>(MockBehavior.Strict);
+            var controller = new AdministratorController(mock.Object);
+
+            mock.Setup(x => x.GetAll()).Returns(new List<Administrator>() { admin});
+
+            var result = controller.GetAll();
+            var okResult = result as OkObjectResult;
+            var value = okResult.Value as List<Administrator>;
+
+            mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Get()
+        {
+            var mock = new Mock<IAdministratorHandler>(MockBehavior.Strict);
+            var controller = new AdministratorController(mock.Object);
+
+            mock.Setup(x => x.Get(admin.Id)).Returns(admin);
+
+            var result = controller.Get(admin.Id);
+            var okResult = result as OkObjectResult;
+            var value = okResult.Value as Administrator;
+
+            mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Update()
+        {
+            var mock = new Mock<IAdministratorHandler>(MockBehavior.Strict);
+            var controller = new AdministratorController(mock.Object);
+
+            mock.Setup(x => x.Update(admin)).Returns(true);
+
+            var result = controller.Update(admin.Id,adminModel);
+            var okResult = result as OkObjectResult;
+            var value = okResult.Value as bool?;
+
+            Assert.AreEqual(true, value);
+            mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Delete()
+        {
+            var mock = new Mock<IAdministratorHandler>(MockBehavior.Strict);
+            var controller = new AdministratorController(mock.Object);
+
+            mock.Setup(x => x.Delete(admin.Id)).Returns(true);
+
+            var result = controller.Delete(admin.Id);
+            var okResult = result as OkObjectResult;
+            var value = okResult.Value as bool?;
+
+            Assert.AreEqual(true, value);
+            mock.VerifyAll();
+        }
+
 
         [TestMethod]
         public void LoginOk()
