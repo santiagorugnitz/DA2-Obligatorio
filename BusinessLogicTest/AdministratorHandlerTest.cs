@@ -31,14 +31,14 @@ namespace BusinessLogicTest
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
-            mock.Setup(x => x.Add(administrator)).Returns(true);
+            mock.Setup(x => x.Add(administrator)).Returns(administrator);
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>()))
                 .Returns(new List<Administrator> { });
 
             var res = handler.Add(administrator);
 
             mock.VerifyAll();
-            Assert.AreEqual(true, res);
+            Assert.AreEqual(administrator, res);
         }
 
         [TestMethod]
@@ -49,7 +49,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
-            mock.Setup(x => x.Add(administrator)).Returns(true);
+            mock.Setup(x => x.Add(administrator)).Returns(administrator);
 
             administrator.Name = "";
             var res = handler.Add(administrator);
@@ -63,7 +63,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
-            mock.Setup(x => x.Add(administrator)).Returns(true);
+            mock.Setup(x => x.Add(administrator)).Returns(administrator);
 
             administrator.Name = "    ";
             var res = handler.Add(administrator);
@@ -77,7 +77,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
-            mock.Setup(x => x.Add(administrator)).Returns(true);
+            mock.Setup(x => x.Add(administrator)).Returns(administrator);
 
             administrator.Email = "";
             var res = handler.Add(administrator);
@@ -91,7 +91,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
-            mock.Setup(x => x.Add(administrator)).Returns(true);
+            mock.Setup(x => x.Add(administrator)).Returns(administrator);
 
             administrator.Email = "    ";
             var res = handler.Add(administrator);
@@ -105,7 +105,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
-            mock.Setup(x => x.Add(administrator)).Returns(true);
+            mock.Setup(x => x.Add(administrator)).Returns(administrator);
 
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>()))
                 .Returns(new List<Administrator> { });
@@ -133,7 +133,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
-            mock.Setup(x => x.Add(administrator)).Returns(true);
+            mock.Setup(x => x.Add(administrator)).Returns(administrator);
 
             administrator.Password = "";
             var res = handler.Add(administrator);
@@ -147,7 +147,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
-            mock.Setup(x => x.Add(administrator)).Returns(true);
+            mock.Setup(x => x.Add(administrator)).Returns(administrator);
 
             administrator.Password = "    ";
             var res = handler.Add(administrator);

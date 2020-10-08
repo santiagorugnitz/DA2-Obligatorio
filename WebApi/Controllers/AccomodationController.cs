@@ -23,19 +23,22 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] AccomodationModel accomodation)
         {
-            return Ok(handler.Add(accomodation.ToEntity(), accomodation.TouristSpotId, accomodation.ImageNames));
+            handler.Add(accomodation.ToEntity(), accomodation.TouristSpotId, accomodation.ImageNames);
+            return Ok("Accomodation added");
         }
 
         [HttpPut("{id}")]
         public IActionResult ChangeAvailability([FromHeader] int id, [FromBody] bool available)
         {
-            return Ok(handler.ChangeAvailability(id, available));
+            handler.ChangeAvailability(id, available);
+            return Ok("Availability changed");
         }
 
         [HttpDelete]
         public IActionResult Delete([FromBody] AccomodationModel accomodation)
         {
-            return Ok(handler.Delete(accomodation.ToEntity()));
+            handler.Delete(accomodation.ToEntity());
+            return Ok("Accomodation deleted");
         }
 
         [HttpGet("{id}")]

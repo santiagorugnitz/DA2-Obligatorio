@@ -35,7 +35,7 @@ namespace WebApiTest
             var mock = new Mock<IAdministratorHandler>(MockBehavior.Strict);
             var controller = new AdministratorController(mock.Object);
             
-            mock.Setup(x => x.Add(It.IsAny<Administrator>())).Returns(true);
+            mock.Setup(x => x.Add(It.IsAny<Administrator>())).Returns(It.IsAny<Administrator>());
 
             var result = controller.Post(adminModel);
             var okResult = result as OkObjectResult;
@@ -84,9 +84,7 @@ namespace WebApiTest
 
             var result = controller.Update(admin.Id,adminModel);
             var okResult = result as OkObjectResult;
-            var value = okResult.Value as bool?;
 
-            Assert.AreEqual(true, value);
             mock.VerifyAll();
         }
 
@@ -100,9 +98,7 @@ namespace WebApiTest
 
             var result = controller.Delete(admin.Id);
             var okResult = result as OkObjectResult;
-            var value = okResult.Value as bool?;
 
-            Assert.AreEqual(true, value);
             mock.VerifyAll();
         }
 

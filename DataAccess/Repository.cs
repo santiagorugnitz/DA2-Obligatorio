@@ -19,11 +19,11 @@ namespace DataAccess
             this.context = context;
         }
 
-        public bool Add(T entity)
+        public T Add(T entity)
         {
             DbSet.Add(entity);
             Save();
-            return true;
+            return entity;
         }
 
         public bool Delete(T entity)

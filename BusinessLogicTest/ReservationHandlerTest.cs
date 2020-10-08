@@ -87,7 +87,7 @@ namespace BusinessLogicTest
 
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation)null);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             var res = handler.Add(reservation, accomodation.Id);
         }
@@ -99,13 +99,13 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             var res = handler.Add(reservation, accomodation.Id);
 
             mock.VerifyAll();
             accomodationMock.VerifyAll();
-            Assert.AreEqual(true, res);
+            Assert.AreEqual(reservation, res);
         }
 
         [TestMethod]
@@ -117,7 +117,7 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Name = "";
             var res = handler.Add(reservation, accomodation.Id);
@@ -132,7 +132,7 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Name = "    ";
             var res = handler.Add(reservation, accomodation.Id);
@@ -147,7 +147,7 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Surname = "";
             var res = handler.Add(reservation, accomodation.Id);
@@ -162,7 +162,7 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Surname = "    ";
             var res = handler.Add(reservation, accomodation.Id);
@@ -177,7 +177,7 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Surname = "";
             var res = handler.Add(reservation, accomodation.Id);
@@ -192,7 +192,7 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Surname = "    ";
             var res = handler.Add(reservation, accomodation.Id);
@@ -207,7 +207,7 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.AdultQuantity = 0;
             var res = handler.Add(reservation, accomodation.Id);
@@ -222,7 +222,7 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.AdultQuantity = -9;
             var res = handler.Add(reservation, accomodation.Id);
@@ -237,7 +237,7 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.CheckIn = DateTime.Today.AddDays(-1);
             var res = handler.Add(reservation, accomodation.Id);
@@ -252,7 +252,7 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
-            mock.Setup(x => x.Add(reservation)).Returns(true);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
 
             reservation.CheckOut = DateTime.Today.AddDays(1);

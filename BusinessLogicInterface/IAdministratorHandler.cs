@@ -5,7 +5,7 @@ namespace BusinessLogicInterface
 {
     public interface IAdministratorHandler
     {
-        bool Add(Administrator administrator);
+        Administrator Add(Administrator administrator);
         Administrator Get(int id);
         List<Administrator> GetAll();
         bool Update(Administrator administrator);

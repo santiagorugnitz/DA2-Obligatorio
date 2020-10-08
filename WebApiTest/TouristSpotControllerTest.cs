@@ -75,14 +75,12 @@ namespace WebApiTest
             var mock = new Mock<ITouristSpotHandler>(MockBehavior.Strict);
             var controller = new TouristSpotController(mock.Object);
 
-            mock.Setup(x => x.Add(spotModel.ToEntity(),spotModel.RegionId,spotModel.CategoryIds,spotModel.Image)).Returns(true);
+            mock.Setup(x => x.Add(spotModel.ToEntity(),spotModel.RegionId,spotModel.CategoryIds,spotModel.Image)).Returns(spotModel.ToEntity());
 
             var result = controller.Post(spotModel);
             var okResult = result as OkObjectResult;
-            var value = okResult.Value as bool?;
 
             mock.VerifyAll();
-            Assert.AreEqual(true, value);
         }
 
         [TestMethod]

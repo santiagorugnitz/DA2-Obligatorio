@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 
 namespace DataAccessInterface
 {
-    public interface IRepository<T> where T:class
+    public interface IRepository<T> where T : class
     {
-        bool Add(T entity);
+        T Add(T entity);
         bool Delete(T entity);
         bool Update(T entity);
         T Get(int id);
