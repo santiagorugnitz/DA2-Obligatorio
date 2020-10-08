@@ -49,7 +49,9 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok(handler.Get(id));
+            var res = handler.Get(id);
+            if (null == res) return NotFound();
+            return Ok(res);
         }
 
         [HttpDelete("{id}")]
@@ -75,5 +77,6 @@ namespace WebApi.Controllers
         {
             return Ok(handler.GetAll());
         }
+
     }
 }

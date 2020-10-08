@@ -32,7 +32,9 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult CheckState([FromHeader] int reservationId)
         {
-            return Ok(handler.CheckState(reservationId));
+            var res = handler.CheckState(reservationId);
+            if (null == res) return NotFound();
+            return Ok(res);
         }
 
         [HttpPut("{id}")]

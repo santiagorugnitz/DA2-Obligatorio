@@ -192,5 +192,18 @@ namespace WebApiTest
 
             mock.VerifyAll();
         }
+
+        [TestMethod]
+        public void Get404()
+        {
+            var mock = new Mock<IAccomodationHandler>(MockBehavior.Strict);
+            var controller = new AccomodationController(mock.Object);
+            mock.Setup(x => x.Get(It.IsAny<int>())).Returns((Accomodation)null);
+
+            var result = controller.Get(1);
+
+            Assert.AreEqual(true, result is NotFoundResult);
+            mock.VerifyAll();
+        }
     }
 }

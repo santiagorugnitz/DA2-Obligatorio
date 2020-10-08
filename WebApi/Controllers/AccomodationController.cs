@@ -44,7 +44,9 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get([FromHeader] int accomodationId)
         {
-            return Ok(handler.Get(accomodationId));
+            var res = handler.Get(accomodationId);
+            if (null == res) return NotFound();
+            return Ok(res);
         }
 
         [HttpGet]
