@@ -34,10 +34,10 @@ namespace WebApi.Controllers
             return Ok("Availability changed");
         }
 
-        [HttpDelete]
-        public IActionResult Delete([FromBody] AccomodationModel accomodation)
+        [HttpDelete("{id}")]
+        public IActionResult Delete([FromHeader] int id)
         {
-            handler.Delete(accomodation.ToEntity());
+            handler.Delete(id);
             return Ok("Accomodation deleted");
         }
 

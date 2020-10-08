@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         public IActionResult Post([FromBody] ReservationModel reservation, int accomodationId)
         {
             var res = handler.Add(reservation.ToEntity(), accomodationId);
-            return Ok("Reservation created, reservation number: "+ res);
+            return Ok("Reservation created, reservation number: " + res);
 
         }
 
@@ -35,8 +35,8 @@ namespace WebApi.Controllers
             return Ok(handler.CheckState(reservationId));
         }
 
-        [HttpPut]
-        public IActionResult ChangeState([FromBody] ReservationState state, int reservationId, string description)
+        [HttpPut("{id}")]
+        public IActionResult ChangeState([FromBody] ReservationState state, [FromHeader] int reservationId, string description)
         {
             handler.ChangeState(reservationId, state, description);
             return Ok("Reservation state updated");

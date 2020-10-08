@@ -46,9 +46,9 @@ namespace BusinessLogic
             return accomodationRepository.Add(accomodation);
         }
 
-        public bool Delete(Accomodation accomodation)
+        public bool Delete(int id)
         {
-            return accomodationRepository.Delete(accomodation);
+            return accomodationRepository.Delete(Get(id));
         }
         public bool Exists(Accomodation accomodation)
         {

@@ -96,9 +96,9 @@ namespace WebApiTest
                 TouristSpotId = 1
             };
 
-            mock.Setup(x => x.Delete(It.IsAny<Accomodation>())).Returns(true);
+            mock.Setup(x => x.Delete(1)).Returns(true);
 
-            var result = controller.Delete(accomodationModel);
+            var result = controller.Delete(1);
             var okResult = result as OkObjectResult;
             var value = okResult.Value as bool?;
 

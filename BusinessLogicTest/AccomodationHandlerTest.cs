@@ -224,8 +224,9 @@ namespace BusinessLogicTest
         public void DeleteAccomodation()
         {
             accomodationMock.Setup(x => x.Delete(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
 
-            var res = handler.Delete(accomodation);
+            var res = handler.Delete(accomodation.Id);
 
             accomodationMock.VerifyAll();
             Assert.AreEqual(true, res);
