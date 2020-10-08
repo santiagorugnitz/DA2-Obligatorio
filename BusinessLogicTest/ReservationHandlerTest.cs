@@ -230,6 +230,36 @@ namespace BusinessLogicTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The children quantity must be 0 or more")]
+        public void AddReservationWithNegativeChildren()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
+
+            reservation.ChildrenQuantity = -9;
+            var res = handler.Add(reservation, accomodation.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The baby quantity must be 0 or more")]
+        public void AddReservationWithNegativeBabies()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
+
+            reservation.BabyQuantity = -9;
+            var res = handler.Add(reservation, accomodation.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
     "The Check In Date needs to be after today")]
         public void AddReservationWithIncorrectCheckInDate()
         {
