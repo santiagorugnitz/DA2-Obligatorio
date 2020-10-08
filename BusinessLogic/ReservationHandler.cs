@@ -23,12 +23,22 @@ namespace BusinessLogic
             if (gotAccomodation != null)
             {
                 reservation.Accomodation = gotAccomodation;
+                reservation.Total = CalculateTotal(reservation);
                 return  repository.Add(reservation);
             }
             else
             {
                 throw new NullReferenceException("The accomodation does not exists");
             }
+        }
+
+        private double CalculateTotal(Reservation reservation)
+        {
+            double ret = 0;
+            int days = (reservation.CheckOut - reservation.CheckIn).Days;
+            ret += reservation.AdultQuantity + reservation.ChildrenQuantity*0.5 + reservation.BabyQuantity*0.25;
+            ret *= days * reservation.Accomodation.Fee;
+            return ret;
         }
 
         public bool Delete(Reservation reservation)
