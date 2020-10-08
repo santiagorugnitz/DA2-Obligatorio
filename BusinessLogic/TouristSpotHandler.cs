@@ -81,19 +81,39 @@ namespace BusinessLogic
 
         public List<TouristSpot> Search(List<int> categories = null, int? region = null)
         {
-            var joinedEntry = new List<TouristSpotCategory>();
-            
-            if(categories==null) return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id==region).ToList();
+            if (categories==null) return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id==region).ToList();
+
+            var auxiliarJoinedEntry = new List<TouristSpotCategory>();
+            var spots = spotsRepository.GetAll().ToList();
 
             foreach (var cat in categories)
             {
-                joinedEntry.AddRange(joinedRepository.GetAll(x => ((TouristSpotCategory)x).CategoryId == cat));
+                auxiliarJoinedEntry = joinedRepository.GetAll(x => ((TouristSpotCategory)x).CategoryId == cat).ToList();
+                var auxiliarTouristSpots = new List<TouristSpot>();
+                
+                foreach (var item in auxiliarJoinedEntry)
+                {
+                    if (!auxiliarTouristSpots.Contains(item.TouristSpot))
+                    {
+                        auxiliarTouristSpots.Add(item.TouristSpot);
+                    }
+                }
+
+                var removingSpots = new List<TouristSpot>();
+                foreach (var item in spots)
+                {
+                    if (!auxiliarTouristSpots.Contains(item))
+                    {
+                        removingSpots.Add(item);
+                    }
+                }
+
+                foreach (var item in removingSpots)
+                {
+                    spots.Remove(item);
+                }
             }
-            var spots = new List<TouristSpot>();
-            foreach (var entry in joinedEntry)
-            {
-                if (!spots.Contains(entry.TouristSpot)) spots.Add(entry.TouristSpot);
-            }
+
             if(region!=null) return spots.FindAll(x => x.Region.Id == region);
             return spots;
         }
