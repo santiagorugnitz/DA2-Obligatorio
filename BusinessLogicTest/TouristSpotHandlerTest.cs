@@ -139,7 +139,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<TouristSpot> { new TouristSpot()});
 
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            mock.Setup(x => x.Add(spot)).Returns(spot);
 
             List<int> categoriesIds = new List<int>();
             foreach (var item in spot.TouristSpotCategories)
@@ -235,8 +235,8 @@ namespace BusinessLogicTest
     "The spot needs a URL to a picture")]
         public void AddSpotWithoutPicture1()
         {
-                Returns(new List<TouristSpot>());
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot>());
             mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.Image.Name = "";
