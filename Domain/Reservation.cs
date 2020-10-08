@@ -52,9 +52,39 @@ namespace Domain
             }
         }
 
-        public int BabyQuantity { get; set; }
+        private int babyQuantity;
+        public int BabyQuantity
+        {
+            get { return babyQuantity; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException("The baby quantity must be 0 or more");
+                }
+                else
+                {
+                    babyQuantity = value;
+                }
+            }
+        }
 
-        public int ChildrenQuantity { get; set; }
+        private int childrenQuantity;
+        public int ChildrenQuantity
+        {
+            get { return childrenQuantity; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException("The children quantity must be 0 or more");
+                }
+                else
+                {
+                    childrenQuantity = value;
+                }
+            }
+        }
 
         private int adultQuantity;
         public int AdultQuantity
