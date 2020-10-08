@@ -38,7 +38,7 @@ namespace BusinessLogic
             var gotRegion = regionRepository.Get(regionId);
             if (gotRegion == null)
             {
-                throw new ArgumentNullException("The region does not exists");
+                throw new ArgumentNullException("The region does not exist");
             }
 
             spot.Region = gotRegion;
@@ -55,7 +55,7 @@ namespace BusinessLogic
                 
                 if (gotCategory == null)
                 {
-                    throw new ArgumentNullException("A category does not exists");
+                    throw new ArgumentNullException("A category does not exist");
                 }
 
                 gotCategories.Add(new TouristSpotCategory { CategoryId = item, Category = gotCategory,

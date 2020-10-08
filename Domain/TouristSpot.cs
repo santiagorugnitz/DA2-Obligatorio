@@ -15,7 +15,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The spot needs a non emty Name");
+                    throw new ArgumentNullException("The spot needs a non empty Name");
                 }
                 else
                 {

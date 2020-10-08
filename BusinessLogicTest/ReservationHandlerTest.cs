@@ -336,5 +336,18 @@ namespace BusinessLogicTest
             mock.VerifyAll();
             Assert.AreEqual(true, res);
         }
+
+        [ExpectedException(typeof(NullReferenceException))]
+        [TestMethod]
+        public void ChangeReservationStateWrongId()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            mock.Setup(x => x.Get(reservation.Id)).Returns((Reservation)null);
+
+            var res = handler.ChangeState(reservation.Id, ReservationState.Creada, "Cambio de estado");
+
+        }
     }
 }

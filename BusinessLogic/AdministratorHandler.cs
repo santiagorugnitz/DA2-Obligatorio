@@ -30,7 +30,9 @@ namespace BusinessLogic
 
         public bool Delete(int id)
         {
-            return repository.Delete(Get(id));
+            var admin = Get(id);
+            if (admin == null) throw new NullReferenceException("There is no admin with that id");
+            return repository.Delete(admin);
         }
 
         public Administrator Get(int id)
@@ -68,7 +70,12 @@ namespace BusinessLogic
 
         public bool Update(Administrator administrator)
         {
-            return repository.Update(administrator);
+            var admin = Get(administrator.Id);
+            if (admin == null) throw new NullReferenceException("There is no admin with that id");
+            admin.Name = administrator.Name;
+            admin.Email = administrator.Email;
+            admin.Password = administrator.Password;
+            return repository.Update(admin);
         }
     }
 }
