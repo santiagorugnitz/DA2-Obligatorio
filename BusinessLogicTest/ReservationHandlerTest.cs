@@ -58,6 +58,7 @@ namespace BusinessLogicTest
                 AdultQuantity = 2,
                 ChildrenQuantity = 1,
                 BabyQuantity = 0,
+                Total= 90000,
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "martin.gut",
@@ -106,6 +107,7 @@ namespace BusinessLogicTest
             mock.VerifyAll();
             accomodationMock.VerifyAll();
             Assert.AreEqual(reservation, res);
+            Assert.AreEqual(reservation.Total, res.Total);
         }
 
         [TestMethod]
