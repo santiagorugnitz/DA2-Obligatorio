@@ -37,11 +37,10 @@ namespace WebApiTest
             };
 
             mock.Setup(x => x.Add(It.IsAny<Reservation>(),
-                reservationModel.AccomodationId)).Returns(true);
+                reservationModel.AccomodationId)).Returns(reservationModel.ToEntity());
 
             var result = controller.Post(reservationModel, reservationModel.AccomodationId);
             var okResult = result as OkObjectResult;
-            var value = okResult.Value as bool?;
 
             mock.VerifyAll();
         }

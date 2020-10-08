@@ -5,7 +5,7 @@ namespace BusinessLogicInterface
 {
     public interface ITouristSpotHandler
     {
-        bool Add(TouristSpot spot, int regionId, List<int> categoryIds, string imageName);
+        TouristSpot Add(TouristSpot spot, int regionId, List<int> categoryIds, string imageName);
         TouristSpot Get(int Id);
         List<TouristSpot> Search(List<int> categories, int? region);
     }

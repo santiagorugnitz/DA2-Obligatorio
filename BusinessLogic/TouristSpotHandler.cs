@@ -27,7 +27,7 @@ namespace BusinessLogic
             joinedRepository = joinedRepo;
         }
 
-        public bool Add(TouristSpot spot, int regionId, List<int> categoryIds, string imageName)
+        public TouristSpot Add(TouristSpot spot, int regionId, List<int> categoryIds, string imageName)
         {
             var gotRegion = regionRepository.Get(regionId);
             if (gotRegion == null)

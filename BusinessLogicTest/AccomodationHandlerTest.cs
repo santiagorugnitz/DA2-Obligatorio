@@ -79,14 +79,14 @@ namespace BusinessLogicTest
         public void AddAccomodationWithTouristSpot()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(accomodation.TouristSpot);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
-            imageMock.Setup(x => x.Add(accomodation.Images.ToList().First())).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
+            imageMock.Setup(x => x.Add(accomodation.Images.ToList().First())).Returns(accomodation.Images.ToList().First());
 
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
 
             accomodationMock.VerifyAll();
             touristSpotMock.VerifyAll();
-            Assert.AreEqual(true, res);
+            Assert.AreEqual(accomodation, res);
         }
 
         [TestMethod]
@@ -96,7 +96,7 @@ namespace BusinessLogicTest
         {
             
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns((TouristSpot)null);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
         }
@@ -107,7 +107,7 @@ namespace BusinessLogicTest
         public void AddAccomodationWithoutName()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Name = "";
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
@@ -119,7 +119,7 @@ namespace BusinessLogicTest
         public void AddAccomodationWithoutName2()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Name = "   ";
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
@@ -131,7 +131,7 @@ namespace BusinessLogicTest
         public void AddAccomodationWithoutDirection()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Address = "";
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
@@ -143,7 +143,7 @@ namespace BusinessLogicTest
         public void AddAccomodationWithoutDirection2()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Address = "   ";
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
@@ -155,7 +155,7 @@ namespace BusinessLogicTest
         public void AddAccomodationWithNegativeStars()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Stars = -1;
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
@@ -167,7 +167,7 @@ namespace BusinessLogicTest
         public void AddAccomodationWithMoreThan5Stars()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Stars = 5.1;
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
@@ -179,7 +179,7 @@ namespace BusinessLogicTest
         public void AddAccomodationWith0Stars()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Stars = 0;
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
@@ -191,7 +191,7 @@ namespace BusinessLogicTest
         public void AddAccomodationWith0Fee()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Fee = 0;
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
@@ -203,7 +203,7 @@ namespace BusinessLogicTest
         public void AddAccomodationWithNegativeFee()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Fee = -10;
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
@@ -215,7 +215,7 @@ namespace BusinessLogicTest
         public void AddAccomodationWithoutImages()
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Add(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Images = new List<Image>();
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);

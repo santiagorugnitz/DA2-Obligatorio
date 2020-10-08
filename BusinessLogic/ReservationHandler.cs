@@ -17,13 +17,13 @@ namespace BusinessLogic
             accomodationHandler = accomodationHand;
         }
 
-        public bool Add(Reservation reservation, int accomodationId)
+        public Reservation Add(Reservation reservation, int accomodationId)
         {
             var gotAccomodation = accomodationHandler.Get(accomodationId);
             if (gotAccomodation != null)
             {
                 reservation.Accomodation = gotAccomodation;
-                return repository.Add(reservation);
+                return  repository.Add(reservation);
             }
             else
             {

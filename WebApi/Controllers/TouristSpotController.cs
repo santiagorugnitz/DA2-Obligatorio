@@ -39,7 +39,8 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] TouristSpotModel spot)
         {
-            return Ok(handler.Add(spot.ToEntity(),spot.RegionId,spot.CategoryIds,spot.Image));
+            handler.Add(spot.ToEntity(),spot.RegionId,spot.CategoryIds,spot.Image);
+            return Ok("Tourist spot added");
 
         }
     }

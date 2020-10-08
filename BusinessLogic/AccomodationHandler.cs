@@ -22,7 +22,7 @@ namespace BusinessLogic
             touristSpotHandler = touristSpotHand;
         }
 
-        public bool Add(Accomodation accomodation, int touristSpotId, List<string> imageNames)
+        public Accomodation Add(Accomodation accomodation, int touristSpotId, List<string> imageNames)
         {
             List<Image> accomodationImages = new List<Image>();
 

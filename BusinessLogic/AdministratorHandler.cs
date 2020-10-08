@@ -17,7 +17,7 @@ namespace BusinessLogic
             repository = repo;
         }
 
-        public bool Add(Administrator administrator)
+        public Administrator Add(Administrator administrator)
         {
             if (repository.GetAll((x => ((Administrator)x).Email == administrator.Email))
                 .Count() != 0)

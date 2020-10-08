@@ -39,7 +39,7 @@ namespace WebApiTest
             };
 
             mock.Setup(x => x.Add(It.IsAny<Accomodation>(),
-                accomodationModel.TouristSpotId, accomodationModel.ImageNames)).Returns(true);
+                accomodationModel.TouristSpotId, accomodationModel.ImageNames)).Returns(It.IsAny<Accomodation>());
 
             var result = controller.Post(accomodationModel);
             var okResult = result as OkObjectResult;

@@ -65,11 +65,11 @@ namespace BusinessLogicTest
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
-            imageMock.Setup(x => x.Add(It.IsAny<Image>())).Returns(true);
+            imageMock.Setup(x => x.Add(It.IsAny<Image>())).Returns(It.IsAny<Image>());
 
-            joinedMock.Setup(x => x.Add(It.IsAny<TouristSpotCategory>())).Returns(true);
+            joinedMock.Setup(x => x.Add(It.IsAny<TouristSpotCategory>())).Returns(It.IsAny<TouristSpotCategory>());
 
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            mock.Setup(x => x.Add(spot)).Returns(spot);
 
             List<int> categoriesIds = new List<int>();
             foreach (var item in spot.TouristSpotCategories)
@@ -81,7 +81,7 @@ namespace BusinessLogicTest
 
             mock.VerifyAll();
             imageMock.VerifyAll();
-            Assert.AreEqual(true, res);
+            Assert.AreEqual(spot, res);
         }
 
         [TestMethod]
@@ -90,7 +90,7 @@ namespace BusinessLogicTest
         {
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns((Region)null);
             
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            mock.Setup(x => x.Add(spot)).Returns(spot);
 
             List<int> categoriesIds = new List<int>();
             foreach (var item in spot.TouristSpotCategories)
@@ -110,9 +110,9 @@ namespace BusinessLogicTest
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
-            imageMock.Setup(x => x.Add(It.IsAny<Image>())).Returns(true);
+            imageMock.Setup(x => x.Add(It.IsAny<Image>())).Returns(It.IsAny<Image>());
 
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            mock.Setup(x => x.Add(spot)).Returns(spot);
 
             List<int> categoriesIds = new List<int>();
             foreach (var item in spot.TouristSpotCategories)
@@ -128,7 +128,7 @@ namespace BusinessLogicTest
     "The spot needs a non empty name")]
         public void AddSpotWithoutName1()
         {
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.Name = "";
             List<int> categoriesIds = new List<int>();
@@ -145,7 +145,7 @@ namespace BusinessLogicTest
     "The spot needs a non empty name")]
         public void AddSpotWithoutName2()
         {
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.Name = "    ";
             List<int> categoriesIds = new List<int>();
@@ -162,7 +162,7 @@ namespace BusinessLogicTest
     "The spot needs a shorter description (less than 2000 characters)")]
         public void AddSpotWithLargeDescription()
         {
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.Description = veryLargeDescription;
             List<int> categoriesIds = new List<int>();
@@ -179,7 +179,7 @@ namespace BusinessLogicTest
     "The spot needs at least one category")]
         public void AddSpotWithoutCategory()
         {
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.TouristSpotCategories = new List<TouristSpotCategory>();
             List<int> categoriesIds = new List<int>();
@@ -196,7 +196,7 @@ namespace BusinessLogicTest
     "The spot needs a URL to a picture")]
         public void AddSpotWithoutPicture1()
         {
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.Image.Name = "";
             List<int> categoriesIds = new List<int>();
@@ -213,7 +213,7 @@ namespace BusinessLogicTest
     "The spot needs a URL to a picture")]
         public void AddSpotWithoutPicture2()
         {
-            mock.Setup(x => x.Add(spot)).Returns(true);
+            mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.Image.Name = "   ";
             List<int> categoriesIds = new List<int>();

@@ -27,21 +27,23 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult Post(AdministratorModel adminModel)
         {
-            var res = handler.Add(adminModel.ToEntity());
-            return Ok(res);
+           handler.Add(adminModel.ToEntity());
+            return Ok("Administrator added");
         }
 
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel loginModel)
         {
-            return Ok(handler.Login(loginModel.Email, loginModel.Password));
+            handler.Login(loginModel.Email, loginModel.Password);
+            return Ok("Logged successfully");
+
         }
 
         [HttpDelete("logout")]
         public IActionResult Logout([FromHeader] string token)
         {
             handler.Logout(token);
-            return Ok();
+            return Ok("Logged out successfully");
         }
 
         [HttpGet("{id}")]
@@ -53,7 +55,9 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            return Ok(handler.Delete(id));
+            handler.Delete(id);
+            return Ok("Administrator deleted");
+
         }
 
         [HttpPut("{id}")]
@@ -61,7 +65,9 @@ namespace WebApi.Controllers
         {
             var admin = adminModel.ToEntity();
             admin.Id = id;
-            return Ok(handler.Update(admin));
+            handler.Update(admin);
+            return Ok("Administrator updated");
+
         }
 
         [HttpGet]
