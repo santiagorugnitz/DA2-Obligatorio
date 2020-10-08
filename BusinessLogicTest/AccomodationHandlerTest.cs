@@ -94,7 +94,6 @@ namespace BusinessLogicTest
     "The tourist spot does not exists")]
         public void AddAccomodationWithoutTouristSpot()
         {
-            
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns((TouristSpot)null);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
@@ -276,11 +275,24 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void ChangeAccomodationAvaliability()
+        public void ChangeAccomodationAvaliabilityOk()
         {
             accomodationMock.Setup(x => x.Update(accomodation)).Returns(true);
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
 
+            var res = handler.ChangeAvailability(accomodation.Id, false);
+
+            accomodationMock.VerifyAll();
+            Assert.AreEqual(true, res);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The Accomodation does not exists")]
+        public void ChangeAccomodationAvaliabilityBadAccomodation()
+        {
+            accomodationMock.Setup(x => x.Update(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation) null);
 
             var res = handler.ChangeAvailability(accomodation.Id, false);
 

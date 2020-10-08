@@ -58,8 +58,15 @@ namespace BusinessLogic
         public bool ChangeAvailability(int id, bool availability)
         {
             var accomodation = accomodationRepository.Get(id);
-            accomodation.Available = availability;
-            return accomodationRepository.Update(accomodation);
+            if (accomodation == null)
+            {
+                throw new ArgumentNullException("The accomodation does not exists");
+            }
+            else
+            {
+                accomodation.Available = availability;
+                return accomodationRepository.Update(accomodation);
+            }
         }
 
         public List<Accomodation> SearchByTouristSpot(TouristSpot touristSpot, DateTime checkIn, DateTime checkOut)

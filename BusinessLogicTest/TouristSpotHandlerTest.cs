@@ -69,6 +69,9 @@ namespace BusinessLogicTest
 
             joinedMock.Setup(x => x.Add(It.IsAny<TouristSpotCategory>())).Returns(It.IsAny<TouristSpotCategory>());
 
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot>());
+
             mock.Setup(x => x.Add(spot)).Returns(spot);
 
             List<int> categoriesIds = new List<int>();
@@ -89,6 +92,8 @@ namespace BusinessLogicTest
         public void AddCorrectSpotWithoutRegion()
         {
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns((Region)null);
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot>());
             
             mock.Setup(x => x.Add(spot)).Returns(spot);
 
@@ -112,7 +117,29 @@ namespace BusinessLogicTest
 
             imageMock.Setup(x => x.Add(It.IsAny<Image>())).Returns(It.IsAny<Image>());
 
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot>());
             mock.Setup(x => x.Add(spot)).Returns(spot);
+
+            List<int> categoriesIds = new List<int>();
+            foreach (var item in spot.TouristSpotCategories)
+            {
+                categoriesIds.Add(item.CategoryId);
+            }
+
+            var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException), "The name is repeated")]
+        public void AddCorrectSpotWithrepeatedName()
+        {
+            regionMock.Setup(x => x.Get(spot.Region.Id)).Returns((Region)null);
+
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot> { new TouristSpot()});
+
+            mock.Setup(x => x.Add(spot)).Returns(true);
 
             List<int> categoriesIds = new List<int>();
             foreach (var item in spot.TouristSpotCategories)
@@ -128,6 +155,9 @@ namespace BusinessLogicTest
     "The spot needs a non empty name")]
         public void AddSpotWithoutName1()
         {
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot>());
+
             mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.Name = "";
@@ -145,6 +175,9 @@ namespace BusinessLogicTest
     "The spot needs a non empty name")]
         public void AddSpotWithoutName2()
         {
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot>());
+
             mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.Name = "    ";
@@ -162,6 +195,9 @@ namespace BusinessLogicTest
     "The spot needs a shorter description (less than 2000 characters)")]
         public void AddSpotWithLargeDescription()
         {
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot>());
+
             mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.Description = veryLargeDescription;
@@ -179,6 +215,9 @@ namespace BusinessLogicTest
     "The spot needs at least one category")]
         public void AddSpotWithoutCategory()
         {
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot>());
+
             mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.TouristSpotCategories = new List<TouristSpotCategory>();
@@ -196,6 +235,8 @@ namespace BusinessLogicTest
     "The spot needs a URL to a picture")]
         public void AddSpotWithoutPicture1()
         {
+                Returns(new List<TouristSpot>());
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
             mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.Image.Name = "";
@@ -213,6 +254,9 @@ namespace BusinessLogicTest
     "The spot needs a URL to a picture")]
         public void AddSpotWithoutPicture2()
         {
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot>());
+
             mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.Image.Name = "   ";
