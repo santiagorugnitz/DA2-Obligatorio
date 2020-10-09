@@ -6,12 +6,14 @@ using BusinessLogicInterface;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Server.IIS;
+using WebApi.Filters;
 using WebApi.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebApi.Controllers
 {
+    [ServiceFilter(typeof(ExceptionFilter))]
     [Route("spots")]
     [ApiController]
     public class TouristSpotController : ControllerBase
@@ -39,6 +41,7 @@ namespace WebApi.Controllers
             return Ok(res);
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpPost]
         public IActionResult Post([FromBody] TouristSpotModel spot)
         {

@@ -79,8 +79,8 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException),
-    "The accomodation spot does not exists")]
+        [ExpectedException(typeof(ArgumentOutOfRangeException),
+    "The accomodation spot does not exist")]
         public void AddReservationWithoutAccomodation()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);

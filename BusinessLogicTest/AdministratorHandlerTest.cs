@@ -301,6 +301,7 @@ namespace BusinessLogicTest
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
+            mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
             mock.Setup(x => x.Update(administrator)).Returns(true);
 
             var res = handler.Update(administrator);

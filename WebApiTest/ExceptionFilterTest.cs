@@ -29,7 +29,7 @@ namespace WebApiTest
                                   actionDescriptor: new ActionDescriptor(),
                                   modelState: modelState),
                 new List<IFilterMetadata>());
-            context.Exception = new InvalidOperationException();
+            context.Exception = new Exception();
             filter.OnException(context);
 
             ContentResult response = context.Result as ContentResult;
@@ -57,6 +57,28 @@ namespace WebApiTest
             ContentResult response = context.Result as ContentResult;
 
             Assert.AreEqual(400, response.StatusCode);
+        }
+        [TestMethod]
+        public void Test404()
+        {
+            ExceptionFilter filter = new ExceptionFilter();
+
+
+            var modelState = new ModelStateDictionary();
+            var httpContext = new DefaultHttpContext();
+
+            var context = new ExceptionContext(
+                new ActionContext(httpContext: httpContext,
+                                  routeData: new Microsoft.AspNetCore.Routing.RouteData(),
+                                  actionDescriptor: new ActionDescriptor(),
+                                  modelState: modelState),
+                new List<IFilterMetadata>());
+            context.Exception = new NullReferenceException();
+            filter.OnException(context);
+
+            ContentResult response = context.Result as ContentResult;
+
+            Assert.AreEqual(404, response.StatusCode);
         }
     }
 }

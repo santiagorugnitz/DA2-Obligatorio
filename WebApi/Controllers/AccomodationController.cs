@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using BusinessLogicInterface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters;
 using WebApi.Models;
 
 namespace WebApi.Controllers
 {
+    [ServiceFilter(typeof(ExceptionFilter))]
     [ApiController]
     [Route("accomodations")]
     public class AccomodationController : Controller
@@ -27,6 +29,7 @@ namespace WebApi.Controllers
             return Ok("Accomodation added");
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpPut("{id}")]
         public IActionResult ChangeAvailability([FromHeader] int id, [FromBody] bool available)
         {
@@ -34,6 +37,7 @@ namespace WebApi.Controllers
             return Ok("Availability changed");
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpDelete("{id}")]
         public IActionResult Delete([FromHeader] int id)
         {

@@ -6,10 +6,12 @@ using BusinessLogicInterface;
 using Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters;
 using WebApi.Models;
 
 namespace WebApi.Controllers
 {
+    [ServiceFilter(typeof(ExceptionFilter))]
     [ApiController]
     [Route("reservations")]
     public class ReservationController : Controller
@@ -37,6 +39,7 @@ namespace WebApi.Controllers
             return Ok(res);
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpPut("{id}")]
         public IActionResult ChangeState([FromBody] ReservationState state, [FromHeader] int reservationId, string description)
         {

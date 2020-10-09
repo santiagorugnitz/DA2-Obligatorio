@@ -5,6 +5,7 @@ using System.Text;
 using Domain;
 using BusinessLogicInterface;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace BusinessLogic
 {
@@ -31,7 +32,7 @@ namespace BusinessLogic
         public bool Delete(int id)
         {
             var admin = Get(id);
-            if (admin == null) throw new NullReferenceException("There is no admin with that id");
+            if (admin == null) throw new NullReferenceException("There is no administrator with that id");
             return repository.Delete(admin);
         }
 
@@ -71,7 +72,7 @@ namespace BusinessLogic
         public bool Update(Administrator administrator)
         {
             var admin = Get(administrator.Id);
-            if (admin == null) throw new NullReferenceException("There is no admin with that id");
+            if (admin == null) throw new NullReferenceException("There is no administrator with that id");
             admin.Name = administrator.Name;
             admin.Email = administrator.Email;
             admin.Password = administrator.Password;
