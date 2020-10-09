@@ -11,6 +11,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
+    [ServiceFilter(typeof(ExceptionFilter))]
     [ApiController]
     [Route("administrators")]
     public class AdministratorController : ControllerBase
@@ -39,6 +40,7 @@ namespace WebApi.Controllers
 
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpDelete("logout")]
         public IActionResult Logout([FromHeader] string token)
         {
@@ -46,12 +48,16 @@ namespace WebApi.Controllers
             return Ok("Logged out successfully");
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok(handler.Get(id));
+            var res = handler.Get(id);
+            if (null == res) return NotFound();
+            return Ok(res);
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -60,6 +66,7 @@ namespace WebApi.Controllers
 
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpPut("{id}")]
         public IActionResult Update(int id, AdministratorModel adminModel)
         {
@@ -70,10 +77,12 @@ namespace WebApi.Controllers
 
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpGet]
         public IActionResult GetAll()
         {
             return Ok(handler.GetAll());
         }
+
     }
 }

@@ -224,11 +224,22 @@ namespace BusinessLogicTest
         public void DeleteAccomodation()
         {
             accomodationMock.Setup(x => x.Delete(accomodation)).Returns(true);
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
 
-            var res = handler.Delete(accomodation);
+            var res = handler.Delete(accomodation.Id);
 
             accomodationMock.VerifyAll();
             Assert.AreEqual(true, res);
+        }
+
+        [ExpectedException(typeof(NullReferenceException))]
+        [TestMethod]
+        public void DeleteAccomodationWrongId()
+        {
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation)null);
+
+            var res = handler.Delete(accomodation.Id);
+
         }
 
         [TestMethod]
@@ -287,8 +298,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
-    "The Accomodation does not exists")]
+        [ExpectedException(typeof(NullReferenceException))]
         public void ChangeAccomodationAvaliabilityBadAccomodation()
         {
             accomodationMock.Setup(x => x.Update(accomodation)).Returns(true);

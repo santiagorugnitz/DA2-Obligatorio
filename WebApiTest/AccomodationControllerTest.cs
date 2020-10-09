@@ -96,9 +96,9 @@ namespace WebApiTest
                 TouristSpotId = 1
             };
 
-            mock.Setup(x => x.Delete(It.IsAny<Accomodation>())).Returns(true);
+            mock.Setup(x => x.Delete(1)).Returns(true);
 
-            var result = controller.Delete(accomodationModel);
+            var result = controller.Delete(1);
             var okResult = result as OkObjectResult;
             var value = okResult.Value as bool?;
 
@@ -190,6 +190,19 @@ namespace WebApiTest
             var okResult = result as OkObjectResult;
             var value = okResult.Value as bool?;
 
+            mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Get404()
+        {
+            var mock = new Mock<IAccomodationHandler>(MockBehavior.Strict);
+            var controller = new AccomodationController(mock.Object);
+            mock.Setup(x => x.Get(It.IsAny<int>())).Returns((Accomodation)null);
+
+            var result = controller.Get(1);
+
+            Assert.AreEqual(true, result is NotFoundResult);
             mock.VerifyAll();
         }
     }

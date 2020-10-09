@@ -11,8 +11,10 @@ namespace WebApi.Filters
     {
         public void OnException(ExceptionContext context)
         {
-            int code = 400;
-            if (context.Exception is InvalidOperationException) code = 500;
+            int code = 500;
+            if (context.Exception is NullReferenceException) code = 404;
+            else if (context.Exception is ArgumentException || context.Exception is InvalidOperationException) code = 400;
+            
             context.Result = new ContentResult()
             {
                 StatusCode=code,

@@ -104,5 +104,18 @@ namespace WebApiTest
             mock.VerifyAll();
             Assert.AreEqual(spot, value[0]);
         }
+
+        [TestMethod]
+        public void Get404()
+        {
+            var mock = new Mock<ITouristSpotHandler>(MockBehavior.Strict);
+            var controller = new TouristSpotController(mock.Object);
+            mock.Setup(x => x.Get(It.IsAny<int>())).Returns((TouristSpot)null);
+
+            var result = controller.Get(1);
+
+            Assert.AreEqual(true, result is NotFoundResult);
+            mock.VerifyAll();
+        }
     }
 }

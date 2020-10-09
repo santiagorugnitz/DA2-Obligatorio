@@ -6,9 +6,11 @@ using BusinessLogicInterface;
 using Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters;
 
 namespace WebApi.Controllers
 {
+    [ServiceFilter(typeof(ExceptionFilter))]
     [Route("regions")]
     [ApiController]
     public class RegionController : ControllerBase

@@ -6,10 +6,12 @@ using BusinessLogicInterface;
 using Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Filters;
 using WebApi.Models;
 
 namespace WebApi.Controllers
 {
+    [ServiceFilter(typeof(ExceptionFilter))]
     [ApiController]
     [Route("reservations")]
     public class ReservationController : Controller
@@ -25,18 +27,21 @@ namespace WebApi.Controllers
         public IActionResult Post([FromBody] ReservationModel reservation, int accomodationId)
         {
             var res = handler.Add(reservation.ToEntity(), accomodationId);
-            return Ok("Reservation created, reservation number: "+ res);
+            return Ok("Reservation created, reservation number: " + res);
 
         }
 
         [HttpGet("{id}")]
         public IActionResult CheckState([FromHeader] int reservationId)
         {
-            return Ok(handler.CheckState(reservationId));
+            var res = handler.CheckState(reservationId);
+            if (null == res) return NotFound();
+            return Ok(res);
         }
 
-        [HttpPut]
-        public IActionResult ChangeState([FromBody] ReservationState state, int reservationId, string description)
+        [ServiceFilter(typeof(AuthorizationFilter))]
+        [HttpPut("{id}")]
+        public IActionResult ChangeState([FromBody] ReservationState state, [FromHeader] int reservationId, string description)
         {
             handler.ChangeState(reservationId, state, description);
             return Ok("Reservation state updated");

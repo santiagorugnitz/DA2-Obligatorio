@@ -28,7 +28,7 @@ namespace BusinessLogic
             }
             else
             {
-                throw new NullReferenceException("The accomodation does not exists");
+                throw new ArgumentOutOfRangeException("There is no accomodation with that id");
             }
         }
 

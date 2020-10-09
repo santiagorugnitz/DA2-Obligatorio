@@ -1,3 +1,4 @@
+using BusinessLogic;
 using BusinessLogicInterface;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
@@ -133,6 +134,19 @@ namespace WebApiTest
             var result = controller.Logout("token");
             var okResult = result as OkObjectResult;
 
+            mock.VerifyAll();
+        }
+
+        [TestMethod]
+        public void Get404()
+        {
+            var mock = new Mock<IAdministratorHandler>(MockBehavior.Strict);
+            var controller = new AdministratorController(mock.Object);
+            mock.Setup(x => x.Get(It.IsAny<int>())).Returns((Administrator)null);
+
+            var result = controller.Get(1);
+
+            Assert.AreEqual(true, result is NotFoundResult);
             mock.VerifyAll();
         }
     }

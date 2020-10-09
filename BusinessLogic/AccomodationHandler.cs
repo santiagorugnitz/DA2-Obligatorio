@@ -14,7 +14,7 @@ namespace BusinessLogic
         private IRepository<Accomodation> accomodationRepository;
         private IRepository<Image> imageRepository;
 
-        public AccomodationHandler(IRepository<Accomodation> accomodationRepo, 
+        public AccomodationHandler(IRepository<Accomodation> accomodationRepo,
             IRepository<Image> imageRepo, ITouristSpotHandler touristSpotHand)
         {
             accomodationRepository = accomodationRepo;
@@ -35,9 +35,9 @@ namespace BusinessLogic
 
             var gotTouristSpot = touristSpotHandler.Get(touristSpotId);
 
-            if (gotTouristSpot==null)
+            if (gotTouristSpot == null)
             {
-                throw new ArgumentNullException("The tourist spot does not exists");
+                throw new ArgumentNullException("The tourist spot does not exist");
             }
 
             accomodation.Images = accomodationImages;
@@ -46,8 +46,11 @@ namespace BusinessLogic
             return accomodationRepository.Add(accomodation);
         }
 
-        public bool Delete(Accomodation accomodation)
+        public bool Delete(int id)
         {
+            var accomodation = Get(id);
+            if (accomodation == null) throw new NullReferenceException("There is no accomodation with that id");
+
             return accomodationRepository.Delete(accomodation);
         }
         public bool Exists(Accomodation accomodation)
@@ -57,16 +60,11 @@ namespace BusinessLogic
 
         public bool ChangeAvailability(int id, bool availability)
         {
-            var accomodation = accomodationRepository.Get(id);
-            if (accomodation == null)
-            {
-                throw new ArgumentNullException("The accomodation does not exists");
-            }
-            else
-            {
-                accomodation.Available = availability;
-                return accomodationRepository.Update(accomodation);
-            }
+            var accomodation = Get(id);
+            if (accomodation == null) throw new NullReferenceException("There is no accomodation with that id");
+
+            accomodation.Available = availability;
+            return accomodationRepository.Update(accomodation);
         }
 
         public List<Accomodation> SearchByTouristSpot(TouristSpot touristSpot, DateTime checkIn, DateTime checkOut)

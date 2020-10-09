@@ -169,6 +169,19 @@ namespace BusinessLogicTest
             Assert.AreEqual(true, res);
         }
 
+        [ExpectedException(typeof(NullReferenceException))]
+        [TestMethod]
+        public void DeleteAdminWrongId()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Get(administrator.Id)).Returns((Administrator)null);
+
+            var res = handler.Delete(administrator.Id);
+
+        }
+
         [TestMethod]
         public void LoginOk()
         {
@@ -288,12 +301,26 @@ namespace BusinessLogicTest
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
 
+            mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
             mock.Setup(x => x.Update(administrator)).Returns(true);
 
             var res = handler.Update(administrator);
 
             mock.VerifyAll();
             Assert.AreEqual(true, res);
+        }
+
+        [ExpectedException(typeof(NullReferenceException))]
+        [TestMethod]
+        public void UpdateWrongId()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Get(administrator.Id)).Returns((Administrator)null);
+
+            var res = handler.Delete(administrator.Id);
+
         }
 
     }
