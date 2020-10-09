@@ -4,6 +4,7 @@ using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BusinessLogic
 {
@@ -29,7 +30,7 @@ namespace BusinessLogic
 
         public TouristSpot Add(TouristSpot spot, int regionId, List<int> categoryIds, string imageName)
         {
-            if (spotsRepository.GetAll(x => ((TouristSpot) x).Name == spot.Name).
+            if (spotsRepository.GetAll(x => ((TouristSpot)x).Name == spot.Name).
                 ToList().Count() > 0)
             {
                 throw new ArgumentNullException("The name already exists");
@@ -52,14 +53,19 @@ namespace BusinessLogic
             foreach (var item in categoryIds)
             {
                 var gotCategory = categoryRepository.Get(item);
-                
+
                 if (gotCategory == null)
                 {
                     throw new ArgumentNullException("A category does not exist");
                 }
 
-                gotCategories.Add(new TouristSpotCategory { CategoryId = item, Category = gotCategory,
-                TouristSpotId = spot.Id, TouristSpot = spot});
+                gotCategories.Add(new TouristSpotCategory
+                {
+                    CategoryId = item,
+                    Category = gotCategory,
+                    TouristSpotId = spot.Id,
+                    TouristSpot = spot
+                });
 
             }
 
@@ -81,21 +87,27 @@ namespace BusinessLogic
 
         public List<TouristSpot> Search(List<int> categories = null, int? region = null)
         {
-            var joinedEntry = new List<TouristSpotCategory>();
-            
-            if(categories==null) return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id==region).ToList();
+            if (categories == null) return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id == region).ToList();
 
-            foreach (var cat in categories)
+            List<TouristSpot> list;
+            if (region == null)
+                list = spotsRepository.GetAll().ToList();
+            else
+                list = spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id == region).ToList();
+
+            List<TouristSpot> ret = new List<TouristSpot>();
+
+            foreach (var spot in list)
             {
-                joinedEntry.AddRange(joinedRepository.GetAll(x => ((TouristSpotCategory)x).CategoryId == cat));
+                var hasAll = true;
+                foreach (var cat in categories)
+                {
+                    hasAll = spot.TouristSpotCategories.Any(x => x.CategoryId == cat);
+                    if (!hasAll) break;
+                }
+                if (hasAll) ret.Add(spot);
             }
-            var spots = new List<TouristSpot>();
-            foreach (var entry in joinedEntry)
-            {
-                if (!spots.Contains(entry.TouristSpot)) spots.Add(entry.TouristSpot);
-            }
-            if(region!=null) return spots.FindAll(x => x.Region.Id == region);
-            return spots;
+            return ret;
         }
     }
 }

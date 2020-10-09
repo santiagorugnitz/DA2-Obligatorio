@@ -13,7 +13,10 @@ namespace BusinessLogicTest
     public class TouristSpotHandlerTest
     {
         private TouristSpot spot;
+        private TouristSpot spot2;
         private TouristSpotCategory joinedEntry;
+        private TouristSpotCategory joinedEntry2;
+        private TouristSpotCategory joinedEntry3;
         private Mock<IRepository<Accomodation>> accomodationMock;
         private Mock<IRepository<Region>> regionMock;
         private Mock<IRepository<Category>> categoryMock;
@@ -28,10 +31,21 @@ namespace BusinessLogicTest
 
             spot = new TouristSpot()
             {
+                Id = 1,
                 Name = "Beach",
                 Description = "asd",
                 Image = new Image { Id = 1, Name = "imagen"},
                 Region = new Region { Id = 1, Name =  "Region metropolitana" },
+
+            };
+
+            spot2 = new TouristSpot()
+            {
+                Id = 2,
+                Name = "Montevideo",
+                Description = "asd",
+                Image = new Image { Id = 1, Name = "imagen" },
+                Region = new Region { Id = 1, Name = "Region metropolitana" },
 
             };
 
@@ -43,9 +57,36 @@ namespace BusinessLogicTest
                     Name = "Ciudades"
                 },
                 TouristSpot = spot,
+                CategoryId = 1,
+                TouristSpotId = 1
+            };
+
+            joinedEntry2 = new TouristSpotCategory()
+            {
+                Category = new Category
+                {
+                    Id = 2,
+                    Name = "Mar"
+                },
+                TouristSpot = spot2,
+                CategoryId = 2,
+                TouristSpotId = 2
+            };
+
+            joinedEntry3 = new TouristSpotCategory()
+            {
+                Category = new Category
+                {
+                    Id = 1,
+                    Name = "Ciudades"
+                },
+                TouristSpot = spot2,
+                CategoryId = 1,
+                TouristSpotId = 2
             };
 
             spot.TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry };
+            spot2.TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry, joinedEntry2 };
 
             accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
             regionMock = new Mock<IRepository<Region>>(MockBehavior.Strict);
@@ -60,8 +101,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void AddCorrectSpot()
         {
-            categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
-    .First().CategoryId)).Returns((Category)spot.TouristSpotCategories.ToList().First().Category);
+            categoryMock.Setup(x => x.Get(1)).Returns(spot.TouristSpotCategories.ToList().First().Category);
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
@@ -294,25 +334,54 @@ namespace BusinessLogicTest
         [TestMethod]
         public void SearchByCategory()
         {
-            joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpotCategory>() { joinedEntry });
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
 
             List<TouristSpot> res = handler.Search(new List<int>(){1});
 
-            joinedMock.VerifyAll();
+            mock.VerifyAll();
             Assert.AreEqual(spot, res[0]);
         }
 
         [TestMethod]
         public void SearchByRegionAndCategory()
         {
-            joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpotCategory>() { joinedEntry });
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
 
-            List<TouristSpot> res = handler.Search(new List<int>(){ 1 },
+            List<TouristSpot> res = handler.Search(new List<int>() { 1 }, 1);
+
+
+            Assert.AreEqual(spot, res[0]);
+        }
+
+        [TestMethod]
+        public void SearchByRegionAndCategories()
+        {
+            joinedMock.Setup(x => x.GetAll(It.Is<Func<object, bool>>(f => f.Equals(It.IsAny<TouristSpotCategory>().CategoryId == 1)))).
+                Returns(new List<TouristSpotCategory>() { joinedEntry });
+            joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpotCategory>() { joinedEntry2, joinedEntry3 });
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot> { spot, spot2 });
+
+            List<TouristSpot> res = handler.Search(new List<int>() { 1, 2 },
                 1);
 
+            Assert.AreEqual(spot2.Name, res[0].Name);
+            Assert.AreEqual(res.Count(), 1);
+        }
 
-            joinedMock.VerifyAll();
-            Assert.AreEqual(spot, res[0]);
+        [TestMethod]
+        public void SearchByMultipleCategories()
+        {
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot> { spot, spot2 });
+
+            List<TouristSpot> res = handler.Search(new List<int>(){ 1, 2 });
+
+
+            mock.VerifyAll();
+            Assert.AreEqual(1, res.Count());
+            Assert.AreEqual(spot2.Name, res[0].Name);
         }
 
 
