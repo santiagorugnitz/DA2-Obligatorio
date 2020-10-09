@@ -335,11 +335,10 @@ namespace BusinessLogicTest
         public void SearchByCategory()
         {
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
-            joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpotCategory>() { joinedEntry });
 
             List<TouristSpot> res = handler.Search(new List<int>(){1});
 
-            joinedMock.VerifyAll();
+            mock.VerifyAll();
             Assert.AreEqual(spot, res[0]);
         }
 
@@ -347,13 +346,10 @@ namespace BusinessLogicTest
         public void SearchByRegionAndCategory()
         {
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
-            joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpotCategory>() { joinedEntry });
 
-            List<TouristSpot> res = handler.Search(new List<int>() { 1 },
-                1);
+            List<TouristSpot> res = handler.Search(new List<int>() { 1 }, 1);
 
 
-            joinedMock.VerifyAll();
             Assert.AreEqual(spot, res[0]);
         }
 
@@ -377,17 +373,15 @@ namespace BusinessLogicTest
         [TestMethod]
         public void SearchByMultipleCategories()
         {
-            joinedMock.Setup(x => x.GetAll(It.Is<Func<object, bool>>(f => f.Equals(It.IsAny<TouristSpotCategory>().CategoryId == 1)))).
-                Returns(new List<TouristSpotCategory>() { joinedEntry , joinedEntry3 });
-            joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<TouristSpotCategory>() { joinedEntry2 });
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<TouristSpot> { spot, spot2 });
 
             List<TouristSpot> res = handler.Search(new List<int>(){ 1, 2 });
 
+
+            mock.VerifyAll();
+            Assert.AreEqual(1, res.Count());
             Assert.AreEqual(spot2.Name, res[0].Name);
-            Assert.AreEqual(res.Count(), 1);
         }
 
 
