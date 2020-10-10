@@ -39,7 +39,7 @@ namespace WebApiTest
             mock.Setup(x => x.Add(It.IsAny<Reservation>(),
                 reservationModel.AccomodationId)).Returns(reservationModel.ToEntity());
 
-            var result = controller.Post(reservationModel, reservationModel.AccomodationId);
+            var result = controller.Post(reservationModel);
             var okResult = result as OkObjectResult;
 
             mock.VerifyAll();
@@ -98,10 +98,16 @@ namespace WebApiTest
                 CheckOut = DateTime.Now.AddDays(10)
             };
 
+            ReservationChangeModel model = new ReservationChangeModel()
+            {
+                State = ReservationState.Aceptada,
+                Description = "valid"
+            };
+
             mock.Setup(x => x.ChangeState(It.IsAny<int>(), It.IsAny<ReservationState>()
                 , It.IsAny<string>())).Returns(true);
 
-            var result = controller.ChangeState(ReservationState.Aceptada, 1, "Valid");
+            var result = controller.ChangeState(1, model);
             var okResult = result as OkObjectResult;
             var value = okResult.Value as bool?;
 

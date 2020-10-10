@@ -24,26 +24,26 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] ReservationModel reservation, int accomodationId)
+        public IActionResult Post([FromBody] ReservationModel reservation)
         {
-            var res = handler.Add(reservation.ToEntity(), accomodationId);
+            var res = handler.Add(reservation.ToEntity(), reservation.AccomodationId);
             return Ok("Reservation created, reservation number: " + res);
 
         }
 
         [HttpGet("{id}")]
-        public IActionResult CheckState( int reservationId)
+        public IActionResult CheckState( int id)
         {
-            var res = handler.CheckState(reservationId);
+            var res = handler.CheckState(id);
             if (null == res) return NotFound();
             return Ok(res);
         }
 
         [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpPut("{id}")]
-        public IActionResult ChangeState([FromBody] ReservationState state, int reservationId, string description)
+        public IActionResult ChangeState(int id, [FromBody]ReservationChangeModel change)
         {
-            handler.ChangeState(reservationId, state, description);
+            handler.ChangeState(id, change.State, change.Description);
             return Ok("Reservation state updated");
 
         }
