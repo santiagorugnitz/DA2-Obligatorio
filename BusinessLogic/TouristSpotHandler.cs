@@ -87,7 +87,14 @@ namespace BusinessLogic
 
         public List<TouristSpot> Search(List<int> categories = null, int? region = null)
         {
-            if (categories == null) return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id == region).ToList();
+            if (categories == null)
+            {
+                if (region.HasValue && regionRepository.Get(region.Value) == null)
+                {
+                    throw new ArgumentNullException("The region does not exist");
+                }
+                return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id == region).ToList();
+            }
 
             List<TouristSpot> list;
             if (region == null)
@@ -102,6 +109,10 @@ namespace BusinessLogic
                 var hasAll = true;
                 foreach (var cat in categories)
                 {
+                    if (categoryRepository.Get(cat) == null)
+                    {
+                        throw new ArgumentNullException("A category does not exist");
+                    }
                     hasAll = spot.TouristSpotCategories.Any(x => x.CategoryId == cat);
                     if (!hasAll) break;
                 }
