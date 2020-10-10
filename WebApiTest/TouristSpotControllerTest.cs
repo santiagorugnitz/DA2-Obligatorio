@@ -89,15 +89,11 @@ namespace WebApiTest
             var mock = new Mock<ITouristSpotHandler>(MockBehavior.Strict);
             var controller = new TouristSpotController(mock.Object);
 
-            var searchModel = new SearchModel()
-            {
-                RegionId = region.Id,
-                CategoryIds = new List<int>() { category.Id },
-            };
+            var categories = new List<int>() { category.Id };
 
-            mock.Setup(x => x.Search(searchModel.CategoryIds,searchModel.RegionId)).Returns(new List<TouristSpot>() { spot});
+            mock.Setup(x => x.Search(categories,region.Id)).Returns(new List<TouristSpot>() { spot});
 
-            var result = controller.GetAll(searchModel);
+            var result = controller.GetAll(region.Id,categories);
             var okResult = result as OkObjectResult;
             var value = okResult.Value as List<TouristSpot>;
 

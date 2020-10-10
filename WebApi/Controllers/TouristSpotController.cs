@@ -28,9 +28,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll([FromBody] SearchModel search)
+        public IActionResult GetAll(int region, [FromQuery] List<int> cat)
         {
-            return Ok(handler.Search(search.CategoryIds,search.RegionId));
+            return Ok(handler.Search(cat,region));
         }
 
         [HttpGet("{id}")]
