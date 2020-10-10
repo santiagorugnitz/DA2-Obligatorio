@@ -67,9 +67,9 @@ namespace BusinessLogic
             return accomodationRepository.Update(accomodation);
         }
 
-        public List<Accomodation> SearchByTouristSpot(TouristSpot touristSpot, DateTime checkIn, DateTime checkOut)
+        public List<Accomodation> SearchByTouristSpot(int spotId)
         {
-            return accomodationRepository.GetAll(x => ((Accomodation)x).TouristSpot.Equals(touristSpot) &&
+            return accomodationRepository.GetAll(x => ((Accomodation)x).TouristSpot.Id==spotId &&
             ((Accomodation)x).Available).ToList();
         }
 

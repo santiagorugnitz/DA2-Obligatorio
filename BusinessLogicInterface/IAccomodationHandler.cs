@@ -10,7 +10,7 @@ namespace BusinessLogicInterface
         bool ChangeAvailability(int Id, bool availability);
         bool Delete(int id);
         bool Exists(Accomodation accomodation);
-        List<Accomodation> SearchByTouristSpot(TouristSpot touristSpot, DateTime checkIn, DateTime checkOut);
+        List<Accomodation> SearchByTouristSpot(int touristSpotId);
         Accomodation Get(int accomodationId);
     }
 }

@@ -31,7 +31,7 @@ namespace WebApi.Controllers
 
         [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpPut("{id}")]
-        public IActionResult ChangeAvailability([FromHeader] int id, [FromBody] bool available)
+        public IActionResult ChangeAvailability( int id, [FromBody] bool available)
         {
             handler.ChangeAvailability(id, available);
             return Ok("Availability changed");
@@ -39,25 +39,24 @@ namespace WebApi.Controllers
 
         [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpDelete("{id}")]
-        public IActionResult Delete([FromHeader] int id)
+        public IActionResult Delete( int id)
         {
             handler.Delete(id);
             return Ok("Accomodation deleted");
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get([FromHeader] int accomodationId)
+        public IActionResult Get( int id)
         {
-            var res = handler.Get(accomodationId);
+            var res = handler.Get(id);
             if (null == res) return NotFound();
             return Ok(res);
         }
 
         [HttpGet]
-        public IActionResult GetByTouristSpot([FromBody] TouristSpotModel touristSpot, 
-            DateTime checkIn, DateTime checkOut)
+        public IActionResult GetByTouristSpot(int spotId)
         {
-            return Ok(handler.SearchByTouristSpot(touristSpot.ToEntity(), checkIn, checkOut));
+            return Ok(handler.SearchByTouristSpot(spotId));
         }
     }
 }

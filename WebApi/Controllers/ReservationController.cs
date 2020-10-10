@@ -32,7 +32,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult CheckState([FromHeader] int reservationId)
+        public IActionResult CheckState( int reservationId)
         {
             var res = handler.CheckState(reservationId);
             if (null == res) return NotFound();
@@ -41,7 +41,7 @@ namespace WebApi.Controllers
 
         [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpPut("{id}")]
-        public IActionResult ChangeState([FromBody] ReservationState state, [FromHeader] int reservationId, string description)
+        public IActionResult ChangeState([FromBody] ReservationState state, int reservationId, string description)
         {
             handler.ChangeState(reservationId, state, description);
             return Ok("Reservation state updated");

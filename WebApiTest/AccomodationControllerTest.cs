@@ -152,8 +152,7 @@ namespace WebApiTest
                 TouristSpotId = 1
             };
 
-            mock.Setup(x => x.SearchByTouristSpot(It.IsAny<TouristSpot>(),
-                It.IsAny<DateTime>(), It.IsAny<DateTime>())).
+            mock.Setup(x => x.SearchByTouristSpot(1)).
                 Returns(new List<Accomodation> { accomodationModel.ToEntity() });
 
             Image image = new Image()
@@ -186,7 +185,7 @@ namespace WebApiTest
 
             };
 
-            var result = controller.GetByTouristSpot(touristSpotModel, DateTime.Now, DateTime.Now.AddMinutes(15));
+            var result = controller.GetByTouristSpot(spot.Id);
             var okResult = result as OkObjectResult;
             var value = okResult.Value as bool?;
 

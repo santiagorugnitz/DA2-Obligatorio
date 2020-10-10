@@ -263,7 +263,7 @@ namespace BusinessLogicTest
             checkIn = DateTime.Now;
             checkOut.AddDays(10);
          
-            var res = handler.SearchByTouristSpot(touristSpot, checkIn, checkOut);
+            var res = handler.SearchByTouristSpot(touristSpot.Id);
 
             accomodationMock.VerifyAll();
             Assert.AreEqual(new List<Accomodation> { accomodation }[0], res[0]);
@@ -279,7 +279,7 @@ namespace BusinessLogicTest
             checkIn = DateTime.Now;
             checkOut.AddDays(10);
 
-            var res = handler.SearchByTouristSpot(touristSpot, checkIn, checkOut);
+            var res = handler.SearchByTouristSpot(touristSpot.Id);
 
             accomodationMock.VerifyAll();
             Assert.AreEqual(0, res.Count);
