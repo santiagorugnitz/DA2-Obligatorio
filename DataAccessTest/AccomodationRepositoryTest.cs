@@ -61,7 +61,6 @@ namespace DataAccessTest
             using (var context = new TourismContext(options)) 
             {
                 context.Set<Region>().Remove(region);
-                context.Set<Image>().Remove(image);
                 context.SaveChanges();
             }
         }

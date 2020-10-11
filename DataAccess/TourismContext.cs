@@ -22,7 +22,7 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
-        optionBuilder.UseLazyLoadingProxies();
+            optionBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,7 +43,7 @@ namespace DataAccess
                 .HasOne(x => x.Image);
 
             modelBuilder.Entity<TouristSpotCategory>()
-                .HasKey(x => new { x.TouristSpotId, x.CategoryId});
+                .HasKey(x => new { x.TouristSpotId, x.CategoryId });
 
             modelBuilder.Entity<TouristSpotCategory>()
                 .HasOne(x => x.TouristSpot)
@@ -74,7 +74,9 @@ namespace DataAccess
                 .HasOne(x => x.TouristSpot);
 
             modelBuilder.Entity<Accomodation>()
-                .HasMany(x => x.Images);
+               .HasMany(x => x.Images)
+               .WithOne()
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
