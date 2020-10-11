@@ -310,6 +310,22 @@ namespace BusinessLogicTest
             Assert.AreEqual(true, res);
         }
 
+        [ExpectedException(typeof(NullReferenceException), "There is no administrator with that id")]
+        [TestMethod]
+        public void UpdateUnsuccesful()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Get(administrator.Id)).Returns((Administrator) null);
+            mock.Setup(x => x.Update(administrator)).Returns(true);
+
+            var res = handler.Update(administrator);
+
+            mock.VerifyAll();
+            Assert.AreEqual(true, res);
+        }
+
         [ExpectedException(typeof(NullReferenceException))]
         [TestMethod]
         public void UpdateWrongId()
