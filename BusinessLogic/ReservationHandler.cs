@@ -2,6 +2,9 @@
 using DataAccessInterface;
 using Domain;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BusinessLogic
 {
@@ -57,6 +60,11 @@ namespace BusinessLogic
             reservation.ReservationState = state;
             reservation.ReservationDescription = description;
             return repository.Update(reservation);
+        }
+
+        public List<Reservation> GetAllFromAccomodation(int id)
+        {
+            return repository.GetAll(x => ((Reservation)x).Accomodation.Id ==id).ToList();
         }
     }
 }

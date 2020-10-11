@@ -39,6 +39,12 @@ namespace WebApi.Controllers
             return Ok(res);
         }
 
+        [HttpGet()]
+        public IActionResult GetFromAccomodation(int accomodationId)
+        {
+            return Ok(handler.GetAllFromAccomodation(accomodationId));
+        }
+
         [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpPut("{id}")]
         public IActionResult ChangeState(int id, [FromBody]ReservationChangeModel change)

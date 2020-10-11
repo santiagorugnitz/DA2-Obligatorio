@@ -126,5 +126,34 @@ namespace WebApiTest
             Assert.AreEqual(true, result is NotFoundResult);
             mock.VerifyAll();
         }
+
+        [TestMethod]
+        public void GetFromAccomodation()
+        {
+            var mock = new Mock<IReservationHandler>(MockBehavior.Strict);
+            var controller = new ReservationController(mock.Object);
+            var reservationModel = new ReservationModel()
+            {
+                Name = "Prueba",
+                AdultQuantity = 3,
+                ChildrenQuantity = 2,
+                BabyQuantity = 1,
+                Email = "Email@prueba",
+                Surname = "Prueba",
+                ReservationState = ReservationState.Aceptada,
+                StateDescription = "Done",
+                Telephone = "0000000",
+                ContactInformation = "Juan",
+                ReservationDescription = "Paga",
+                CheckIn = DateTime.Now,
+                CheckOut = DateTime.Now.AddDays(10)
+            };
+            mock.Setup(x => x.GetAllFromAccomodation(1)).Returns(new List<Reservation>() { reservationModel.ToEntity()});
+
+            var result = controller.GetFromAccomodation(1);
+
+            Assert.AreEqual(true, result is OkObjectResult);
+            mock.VerifyAll();
+        }
     }
 }

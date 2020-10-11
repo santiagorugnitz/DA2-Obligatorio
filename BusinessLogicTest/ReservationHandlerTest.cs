@@ -349,5 +349,19 @@ namespace BusinessLogicTest
             var res = handler.ChangeState(reservation.Id, ReservationState.Creada, "Cambio de estado");
 
         }
+
+        [TestMethod]
+        public void GetAllFromAccomodationOk()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<Reservation>() { reservation});
+
+            var res = handler.GetAllFromAccomodation(reservation.Accomodation.Id);
+
+            Assert.AreEqual(reservation.Id, res[0].Id);
+        }
+
     }
 }
