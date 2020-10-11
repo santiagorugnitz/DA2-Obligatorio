@@ -1,6 +1,7 @@
 ﻿using BusinessLogicInterface;
 using DataAccessInterface;
 using Domain;
+using Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace BusinessLogic
             }
             else
             {
-                throw new ArgumentOutOfRangeException("There is no accomodation with that id");
+                throw new BadRequestException("There is no accomodation with that id");
             }
         }
 
@@ -57,10 +58,14 @@ namespace BusinessLogic
         public bool ChangeState(int idReservation, ReservationState state, string description)
         {
             if (!Enum.IsDefined(typeof(ReservationState), state))
-                throw new ArgumentException("Invalid state");
+                throw new BadRequestException("Invalid state");
 
 
             Reservation reservation = repository.Get(idReservation);
+            if (reservation == null)
+            {
+                throw new NotFoundException("The reservation does not exists");
+            }
             reservation.ReservationState = state;
             reservation.ReservationDescription = description;
             return repository.Update(reservation);

@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using WebApi.Filters;
+using Exceptions;
+
 namespace WebApiTest
 {
     [TestClass]
@@ -51,7 +53,7 @@ namespace WebApiTest
                                   actionDescriptor: new ActionDescriptor(),
                                   modelState: modelState),
                 new List<IFilterMetadata>());
-            context.Exception = new ArgumentException();
+            context.Exception = new BadRequestException();
             filter.OnException(context);
 
             ContentResult response = context.Result as ContentResult;
@@ -73,7 +75,7 @@ namespace WebApiTest
                                   actionDescriptor: new ActionDescriptor(),
                                   modelState: modelState),
                 new List<IFilterMetadata>());
-            context.Exception = new NullReferenceException();
+            context.Exception = new NotFoundException();
             filter.OnException(context);
 
             ContentResult response = context.Result as ContentResult;

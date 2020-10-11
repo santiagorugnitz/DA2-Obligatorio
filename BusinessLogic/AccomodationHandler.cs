@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BusinessLogicInterface;
+using Exceptions;
 
 namespace BusinessLogic
 {
@@ -37,7 +38,7 @@ namespace BusinessLogic
 
             if (gotTouristSpot == null)
             {
-                throw new ArgumentNullException("The tourist spot does not exist");
+                throw new BadRequestException("The tourist spot does not exist");
             }
 
             accomodation.Images = accomodationImages;
@@ -49,7 +50,7 @@ namespace BusinessLogic
         public bool Delete(int id)
         {
             var accomodation = Get(id);
-            if (accomodation == null) throw new NullReferenceException("There is no accomodation with that id");
+            if (accomodation == null) throw new NotFoundException("There is no accomodation with that id");
 
             return accomodationRepository.Delete(accomodation);
         }
@@ -61,7 +62,7 @@ namespace BusinessLogic
         public bool ChangeAvailability(int id, bool availability)
         {
             var accomodation = Get(id);
-            if (accomodation == null) throw new NullReferenceException("There is no accomodation with that id");
+            if (accomodation == null) throw new NotFoundException("There is no accomodation with that id");
 
             accomodation.Available = availability;
             return accomodationRepository.Update(accomodation);

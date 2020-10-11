@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Exceptions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -26,7 +27,7 @@ namespace Domain
             {
                 if (value < DateTime.Today)
                 {
-                    throw new ArgumentOutOfRangeException("The Check In Date needs to be after today");
+                    throw new BadRequestException("The Check In Date needs to be after today");
                 }
                 else
                 {
@@ -43,7 +44,7 @@ namespace Domain
             {
                 if (value < CheckIn)
                 {
-                    throw new ArgumentOutOfRangeException("The Check Out Date needs to be after Check In");
+                    throw new BadRequestException("The Check Out Date needs to be after Check In");
                 }
                 else
                 {
@@ -60,7 +61,7 @@ namespace Domain
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("The baby quantity must be 0 or more");
+                    throw new BadRequestException("The baby quantity must be 0 or more");
                 }
                 else
                 {
@@ -77,7 +78,7 @@ namespace Domain
             {
                 if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("The children quantity must be 0 or more");
+                    throw new BadRequestException("The children quantity must be 0 or more");
                 }
                 else
                 {
@@ -94,7 +95,7 @@ namespace Domain
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("The Reservation needs at least one adult guest");
+                    throw new BadRequestException("The Reservation needs at least one adult guest");
                 }
                 else
                 {
@@ -110,7 +111,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The reservation needs a non empty Name");
+                    throw new BadRequestException("The reservation needs a non empty Name");
                 }
                 else
                 {
@@ -128,7 +129,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The reservation needs a non empty Email");
+                    throw new BadRequestException("The reservation needs a non empty Email");
                 }
                 else
                 {
@@ -146,7 +147,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The reservation needs a non empty surname");
+                    throw new BadRequestException("The reservation needs a non empty surname");
                 }
                 else
                 {

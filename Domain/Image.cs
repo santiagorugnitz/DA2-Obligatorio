@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,7 +20,7 @@ namespace Domain
             {
                 if (value.Trim().Length == 0)
                 {
-                    throw new ArgumentNullException("The spot needs a non empty picture URL");
+                    throw new BadRequestException("The spot needs a non empty picture URL");
                 }
                 else
                 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The accomodation needs a non empty Name");
+                    throw new BadRequestException("The accomodation needs a non empty Name");
                 }
                 else
                 {
@@ -36,7 +37,7 @@ namespace Domain
             {
                 if (value > 5.0 || value < 1.0)
                 {
-                    throw new ArgumentOutOfRangeException("The Accomodation stars needs to be between 1 and 5");
+                    throw new BadRequestException("The Accomodation stars needs to be between 1 and 5");
                 }
                 else
                 {
@@ -52,7 +53,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The accomodation needs a non empty address");
+                    throw new BadRequestException("The accomodation needs a non empty address");
                 }
                 else
                 {
@@ -71,7 +72,7 @@ namespace Domain
             {
                 if (value.Count() == 0)
                 {
-                    throw new ArgumentNullException("The Accomodation needs at least one image");
+                    throw new BadRequestException("The Accomodation needs at least one image");
                 }
                 else
                 {
@@ -89,7 +90,7 @@ namespace Domain
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("The Accomodation fee needs to be more than 0");
+                    throw new BadRequestException("The Accomodation fee needs to be more than 0");
                 }
                 else
                 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace WebApi.Filters
         public void OnException(ExceptionContext context)
         {
             int code = 500;
-            if (context.Exception is NullReferenceException) code = 404;
-            else if (context.Exception is ArgumentException || context.Exception is InvalidOperationException) code = 400;
+            if (context.Exception is NotFoundException) code = 404;
+            else if (context.Exception is BadRequestException) code = 400;
             
             context.Result = new ContentResult()
             {

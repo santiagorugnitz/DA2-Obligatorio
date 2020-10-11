@@ -1,6 +1,7 @@
 ﻿using BusinessLogic;
 using DataAccessInterface;
 using Domain;
+using Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -79,7 +80,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The accomodation spot does not exist")]
         public void AddReservationWithoutAccomodation()
         {
@@ -111,7 +112,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Reservation needs a non empty name")]
         public void AddReservationWithoutName()
         {
@@ -126,7 +127,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Reservation needs a non empty name")]
         public void AddReservationWithoutName2()
         {
@@ -141,7 +142,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Reservation needs a non empty surname")]
         public void AddReservationWithoutSurname()
         {
@@ -156,7 +157,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Reservation needs a non empty surname")]
         public void AddReservationWithoutSurname2()
         {
@@ -171,7 +172,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Reservation needs a non empty email")]
         public void AddReservationWithoutEmail()
         {
@@ -186,7 +187,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Reservation needs a non empty email")]
         public void AddReservationWithoutEmail2()
         {
@@ -201,7 +202,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The Reservation needs at least one adult guest")]
         public void AddReservationWithoutGuests()
         {
@@ -216,7 +217,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The Reservation needs at least one adult guest")]
         public void AddReservationWithNegativeGuests()
         {
@@ -231,7 +232,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The children quantity must be 0 or more")]
         public void AddReservationWithNegativeChildren()
         {
@@ -246,7 +247,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The baby quantity must be 0 or more")]
         public void AddReservationWithNegativeBabies()
         {
@@ -261,7 +262,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The Check In Date needs to be after today")]
         public void AddReservationWithIncorrectCheckInDate()
         {
@@ -276,7 +277,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The Check Out Date needs to be after Check Out")]
         public void AddReservationWithIncorrectCheckOutDate()
         {
@@ -337,7 +338,7 @@ namespace BusinessLogicTest
             Assert.AreEqual(true, res);
         }
 
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
         public void ChangeReservationStateWrongId()
         {
@@ -347,10 +348,9 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Get(reservation.Id)).Returns((Reservation)null);
 
             var res = handler.ChangeState(reservation.Id, ReservationState.Creada, "Cambio de estado");
-
         }
 
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(BadRequestException))]
         [TestMethod]
         public void ChangeReservationStateWrongState()
         {

@@ -6,6 +6,7 @@ using Domain;
 using BusinessLogicInterface;
 using System.Linq;
 using System.Linq.Expressions;
+using Exceptions;
 
 namespace BusinessLogic
 {
@@ -23,7 +24,7 @@ namespace BusinessLogic
             if (repository.GetAll((x => ((Administrator)x).Email == administrator.Email))
                 .Count() != 0)
             {
-                throw new InvalidOperationException("The mail already exists");
+                throw new BadRequestException("The mail already exists");
             }
 
             return repository.Add(administrator);
@@ -32,7 +33,7 @@ namespace BusinessLogic
         public bool Delete(int id)
         {
             var admin = Get(id);
-            if (admin == null) throw new NullReferenceException("There is no administrator with that id");
+            if (admin == null) throw new NotFoundException("There is no administrator with that id");
             return repository.Delete(admin);
         }
 
@@ -49,7 +50,7 @@ namespace BusinessLogic
         public string Login(string email, string password)
         {
             var admin = repository.Find(email, password);
-            if (admin == null) throw new ArgumentException("Wrong email or password");
+            if (admin == null) throw new BadRequestException("Wrong email or password");
             admin.Token = Guid.NewGuid().ToString();
             repository.Update(admin);
             return admin.Token;
@@ -72,7 +73,7 @@ namespace BusinessLogic
         public bool Update(Administrator administrator)
         {
             var admin = Get(administrator.Id);
-            if (admin == null) throw new NullReferenceException("There is no administrator with that id");
+            if (admin == null) throw new NotFoundException("There is no administrator with that id");
             admin.Name = administrator.Name;
             admin.Email = administrator.Email;
             admin.Password = administrator.Password;

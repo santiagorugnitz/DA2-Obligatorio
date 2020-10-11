@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,7 +16,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The administrator needs a non empty Name");
+                    throw new BadRequestException("The administrator needs a non empty Name");
                 }
                 else
                 {
@@ -33,7 +34,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The administrator needs a non empty Email");
+                    throw new BadRequestException("The administrator needs a non empty Email");
                 }
                 else
                 {
@@ -51,7 +52,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The administrator needs a non empty Password");
+                    throw new BadRequestException("The administrator needs a non empty Password");
                 }
                 else
                 {

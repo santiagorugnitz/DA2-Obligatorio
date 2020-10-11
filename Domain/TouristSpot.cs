@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Exceptions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,7 +16,7 @@ namespace Domain
             {
                 if (value.Trim() == "")
                 {
-                    throw new ArgumentNullException("The spot needs a non empty Name");
+                    throw new BadRequestException("The spot needs a non empty Name");
                 }
                 else
                 {
@@ -33,7 +34,7 @@ namespace Domain
             {
                 if (value.Trim().Length > 2000)
                 {
-                    throw new ArgumentOutOfRangeException("The spot needs a shorter description (less than 2000 characters)");
+                    throw new BadRequestException("The spot needs a shorter description (less than 2000 characters)");
                 }
                 else
                 {
@@ -56,7 +57,7 @@ namespace Domain
             {
                 if (value.Count == 0)
                 {
-                    throw new ArgumentNullException("The spot needs at least one category");
+                    throw new BadRequestException("The spot needs at least one category");
                 }
                 else
                 {

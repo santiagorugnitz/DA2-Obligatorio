@@ -1,6 +1,7 @@
 ﻿using BusinessLogic;
 using DataAccessInterface;
 using Domain;
+using Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -124,7 +125,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),"The region does not exists")]
+        [ExpectedException(typeof(BadRequestException),"The region does not exists")]
         public void AddCorrectSpotWithoutRegion()
         {
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns((Region)null);
@@ -143,7 +144,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException), "The category does not exists")]
+        [ExpectedException(typeof(BadRequestException), "The category does not exists")]
         public void AddCorrectSpotWithWrongCategories()
         {
             categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
@@ -166,7 +167,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [ExpectedException(typeof(BadRequestException))]
         public void AddCorrectSpotWithoutCategories()
         {
 
@@ -174,7 +175,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException), "The name is repeated")]
+        [ExpectedException(typeof(BadRequestException), "The name is repeated")]
         public void AddCorrectSpotWithrepeatedName()
         {
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns((Region)null);
@@ -194,7 +195,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The spot needs a non empty name")]
         public void AddSpotWithoutName1()
         {
@@ -214,7 +215,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The spot needs a non empty name")]
         public void AddSpotWithoutName2()
         {
@@ -234,7 +235,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The spot needs a shorter description (less than 2000 characters)")]
         public void AddSpotWithLargeDescription()
         {
@@ -254,7 +255,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The spot needs at least one category")]
         public void AddSpotWithoutCategory()
         {
@@ -274,7 +275,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The spot needs a URL to a picture")]
         public void AddSpotWithoutPicture1()
         {
@@ -293,7 +294,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The spot needs a URL to a picture")]
         public void AddSpotWithoutPicture2()
         {
@@ -396,7 +397,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The region does not exist")]
         public void SearchRegionDoesNotExists1()
         {
@@ -414,7 +415,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The region does not exist")]
         public void SearchRegionDoesNotExists2()
         {
@@ -431,7 +432,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The category does not exist")]
         public void SearchCategoyDoesNotExists()
         {

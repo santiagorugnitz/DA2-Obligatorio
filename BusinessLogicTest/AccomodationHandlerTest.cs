@@ -1,6 +1,7 @@
 ﻿using BusinessLogic;
 using DataAccessInterface;
 using Domain;
+using Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -90,7 +91,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The tourist spot does not exists")]
         public void AddAccomodationWithoutTouristSpot()
         {
@@ -101,7 +102,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Accomodation needs a non empty name")]
         public void AddAccomodationWithoutName()
         {
@@ -113,7 +114,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Accomodation needs a non empty name")]
         public void AddAccomodationWithoutName2()
         {
@@ -125,7 +126,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Accomodation needs a non empty address")]
         public void AddAccomodationWithoutDirection()
         {
@@ -137,7 +138,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Accomodation needs a non empty address")]
         public void AddAccomodationWithoutDirection2()
         {
@@ -149,7 +150,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The Accomodation stars needs to be between 1 and 5")]
         public void AddAccomodationWithNegativeStars()
         {
@@ -161,7 +162,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The Accomodation stars needs to be between 1 and 5")]
         public void AddAccomodationWithMoreThan5Stars()
         {
@@ -173,7 +174,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The Accomodation stars needs to be between 1 and 5")]
         public void AddAccomodationWith0Stars()
         {
@@ -185,7 +186,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The Accomodation fee needs to be more than 0")]
         public void AddAccomodationWith0Fee()
         {
@@ -197,7 +198,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException),
+        [ExpectedException(typeof(BadRequestException),
     "The Accomodation fee needs to be more than 0")]
         public void AddAccomodationWithNegativeFee()
         {
@@ -209,7 +210,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Accomodation needs at least one image")]
         public void AddAccomodationWithoutImages()
         {
@@ -231,7 +232,7 @@ namespace BusinessLogicTest
             Assert.AreEqual(true, res);
         }
 
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
         public void DeleteAccomodationWrongId()
         {
@@ -297,7 +298,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(NotFoundException))]
         public void ChangeAccomodationAvaliabilityBadAccomodation()
         {
             accomodationMock.Setup(x => x.Update(accomodation)).Returns(true);

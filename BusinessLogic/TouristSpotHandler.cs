@@ -1,6 +1,7 @@
 ﻿using BusinessLogicInterface;
 using DataAccessInterface;
 using Domain;
+using Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,18 +29,18 @@ namespace BusinessLogic
 
         public TouristSpot Add(TouristSpot spot, int regionId, List<int> categoryIds, string imageName)
         {
-            if (categoryIds.Count == 0) throw new ArgumentNullException("The spot needs at least one category");
+            if (categoryIds.Count == 0) throw new BadRequestException("The spot needs at least one category");
 
             if (spotsRepository.GetAll(x => ((TouristSpot)x).Name == spot.Name).
                 ToList().Count() > 0)
             {
-                throw new ArgumentNullException("The name already exists");
+                throw new BadRequestException("The name already exists");
             }
 
             var gotRegion = regionRepository.Get(regionId);
             if (gotRegion == null)
             {
-                throw new ArgumentNullException("The region does not exist");
+                throw new BadRequestException("The region does not exist");
             }
 
             spot.Region = gotRegion;
@@ -54,7 +55,7 @@ namespace BusinessLogic
 
                 if (gotCategory == null)
                 {
-                    throw new ArgumentNullException("A category does not exist");
+                    throw new BadRequestException("A category does not exist");
                 }
 
                 gotCategories.Add(new TouristSpotCategory
@@ -89,7 +90,7 @@ namespace BusinessLogic
             {
                 if (region.HasValue && regionRepository.Get(region.Value) == null)
                 {
-                    throw new ArgumentNullException("The region does not exist");
+                    throw new BadRequestException("The region does not exist");
                 }
                 return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id == region).ToList();
             }
@@ -103,7 +104,7 @@ namespace BusinessLogic
             {
                 if (region.HasValue && regionRepository.Get(region.Value) == null)
                 {
-                    throw new ArgumentNullException("The region does not exist");
+                    throw new BadRequestException("The region does not exist");
                 }
                 list = spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id == region).ToList();
             }
@@ -117,7 +118,7 @@ namespace BusinessLogic
                 {
                     if (categoryRepository.Get(cat) == null)
                     {
-                        throw new ArgumentNullException("A category does not exist");
+                        throw new BadRequestException("A category does not exist");
                     }
                     hasAll = spot.TouristSpotCategories.Any(x => x.CategoryId == cat);
                     if (!hasAll) break;

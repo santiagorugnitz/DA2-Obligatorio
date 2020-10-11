@@ -1,6 +1,7 @@
 ﻿using BusinessLogic;
 using DataAccessInterface;
 using Domain;
+using Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -42,7 +43,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Administrator needs a non empty name")]
         public void AddAdminWithoutName1()
         {
@@ -56,7 +57,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Administrator needs a non empty name")]
         public void AddAdminWithoutName2()
         {
@@ -70,7 +71,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
    "The Administrator needs a non empty email")]
         public void AddAdminWithoutEmail1()
         {
@@ -84,7 +85,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Administrator needs a non empty email")]
         public void AddAdminWithoutEmail2()
         {
@@ -98,7 +99,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException),
+        [ExpectedException(typeof(BadRequestException),
    "The mail already exists")]
         public void AddAdminWithRepeatedEmail()
         {
@@ -126,7 +127,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
    "The Administrator needs a non empty password")]
         public void AddAdminWithoutPassword1()
         {
@@ -140,7 +141,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException),
+        [ExpectedException(typeof(BadRequestException),
     "The Administrator needs a non empty password")]
         public void AddAdminWithoutPassword2()
         {
@@ -169,7 +170,7 @@ namespace BusinessLogicTest
             Assert.AreEqual(true, res);
         }
 
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
         public void DeleteAdminWrongId()
         {
@@ -198,7 +199,7 @@ namespace BusinessLogicTest
             Assert.AreNotEqual(null, res);
         }
 
-        [ExpectedException(typeof(ArgumentException),"The Administrator needs a non empty password")]
+        [ExpectedException(typeof(BadRequestException),"The Administrator needs a non empty password")]
         [TestMethod]
         public void LoginBad()
         {
@@ -310,7 +311,7 @@ namespace BusinessLogicTest
             Assert.AreEqual(true, res);
         }
 
-        [ExpectedException(typeof(NullReferenceException), "There is no administrator with that id")]
+        [ExpectedException(typeof(NotFoundException), "There is no administrator with that id")]
         [TestMethod]
         public void UpdateUnsuccesful()
         {
@@ -326,7 +327,7 @@ namespace BusinessLogicTest
             Assert.AreEqual(true, res);
         }
 
-        [ExpectedException(typeof(NullReferenceException))]
+        [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
         public void UpdateWrongId()
         {
