@@ -22,13 +22,8 @@ namespace WebApi.Models
 
         public ReservationState ReservationState { get; set; }
 
-        public string Telephone { get; set; }
 
         public string StateDescription { get; set; }
-
-        public string ContactInformation { get; set; }
-
-        public string ReservationDescription { get; set; }
 
         public DateTime CheckIn { get; set; }
 
@@ -46,9 +41,6 @@ namespace WebApi.Models
             Surname = this.Surname,
             ReservationState = this.ReservationState,
             StateDescription = this.StateDescription,
-            Telephone = this.Telephone,
-            ContactInformation = this.ContactInformation,
-            ReservationDescription = this.ReservationDescription,
             CheckIn = this.CheckIn,
             CheckOut = this.CheckOut
         };

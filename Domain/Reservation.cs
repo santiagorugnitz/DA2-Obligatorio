@@ -163,10 +163,6 @@ namespace Domain
 
         public string StateDescription { get; set; }
 
-        public string Telephone { get; set; }
-
-        public string ContactInformation { get; set; }
-
         public double Total { get; set; }
     }
 }

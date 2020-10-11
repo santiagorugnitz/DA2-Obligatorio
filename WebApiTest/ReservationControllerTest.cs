@@ -29,9 +29,6 @@ namespace WebApiTest
                 Surname = "Prueba",
                 ReservationState = ReservationState.Aceptada,
                 StateDescription = "Done",
-                Telephone = "0000000",
-                ContactInformation = "Juan",
-                ReservationDescription = "Paga",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
             };
@@ -60,9 +57,6 @@ namespace WebApiTest
                 Surname = "Prueba",
                 ReservationState = ReservationState.Aceptada,
                 StateDescription = "Done",
-                Telephone = "0000000",
-                ContactInformation = "Juan",
-                ReservationDescription = "Paga",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
             };
@@ -91,9 +85,6 @@ namespace WebApiTest
                 Surname = "Prueba",
                 ReservationState = ReservationState.Aceptada,
                 StateDescription = "Done",
-                Telephone = "0000000",
-                ContactInformation = "Juan",
-                ReservationDescription = "Paga",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
             };
@@ -142,9 +133,6 @@ namespace WebApiTest
                 Surname = "Prueba",
                 ReservationState = ReservationState.Aceptada,
                 StateDescription = "Done",
-                Telephone = "0000000",
-                ContactInformation = "Juan",
-                ReservationDescription = "Paga",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
             };
