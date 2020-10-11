@@ -69,6 +69,10 @@ namespace BusinessLogic
 
         public List<Reservation> GetAllFromAccomodation(int id)
         {
+            if (accomodationHandler.Get(id) == null)
+            {
+                throw new BadRequestException("The Accomodation does not exists");
+            }
             return repository.GetAll(x => ((Reservation)x).Accomodation.Id ==id).ToList();
         }
     }

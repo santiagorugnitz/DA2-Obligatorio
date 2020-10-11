@@ -383,11 +383,26 @@ namespace BusinessLogicTest
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
 
-            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<Reservation>() { reservation});
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<Reservation>() { reservation });
+            accomodationMock.Setup(x => x.Get(reservation.Accomodation.Id)).Returns((Accomodation)reservation.Accomodation);
 
             var res = handler.GetAllFromAccomodation(reservation.Accomodation.Id);
+            
+            mock.VerifyAll();
+            accomodationMock.VerifyAll();
+        }
 
-            Assert.AreEqual(reservation.Id, res[0].Id);
+        [TestMethod]
+        [ExpectedException(typeof(BadRequestException))]
+        public void GetAllFromNonExistingAccomodation()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<Reservation>() { reservation });
+            accomodationMock.Setup(x => x.Get(reservation.Accomodation.Id)).Returns((Accomodation)null);
+
+            var res = handler.GetAllFromAccomodation(reservation.Accomodation.Id);
         }
 
     }
