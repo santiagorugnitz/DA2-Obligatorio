@@ -27,7 +27,7 @@ namespace WebApi.Controllers
         public IActionResult Post([FromBody] ReservationModel reservation)
         {
             var res = handler.Add(reservation.ToEntity(), reservation.AccomodationId);
-            return Ok("Reservation created, reservation number: " + res);
+            return Ok("Reservation created, reservation number: " + res.Id);
 
         }
 

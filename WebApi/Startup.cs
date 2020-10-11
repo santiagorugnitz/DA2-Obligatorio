@@ -49,6 +49,7 @@ namespace WebApi
             services.AddScoped<ITouristSpotHandler, TouristSpotHandler>();
             services.AddScoped<IAccomodationHandler, AccomodationHandler>();
             services.AddScoped<IRegionHandler, RegionHandler>();
+            services.AddScoped<IReservationHandler, ReservationHandler>();
             services.AddScoped<ICategoryHandler, CategoryHandler>();
 
             services.AddScoped<AuthorizationFilter>();
