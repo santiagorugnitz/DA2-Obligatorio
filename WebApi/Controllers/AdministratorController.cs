@@ -36,8 +36,7 @@ namespace WebApi.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginModel loginModel)
         {
-            handler.Login(loginModel.Email, loginModel.Password);
-            return Ok("Logged successfully");
+            return Ok(handler.Login(loginModel.Email, loginModel.Password));
 
         }
 
