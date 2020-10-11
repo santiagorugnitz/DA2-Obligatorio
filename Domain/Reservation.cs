@@ -158,7 +158,22 @@ namespace Domain
             get { return surname; }
         }
 
-        public ReservationState ReservationState { get; set; }
+        private ReservationState reservationState;
+
+        public ReservationState ReservationState
+        {
+            set
+            {
+                if (!Enum.IsDefined(typeof(ReservationState), value))
+                    throw new BadRequestException("Invalid state");
+                else
+                {
+                    reservationState = value;
+                }
+            }
+
+            get { return reservationState; }
+        }
 
         public string ReservationDescription { get; set; }
 

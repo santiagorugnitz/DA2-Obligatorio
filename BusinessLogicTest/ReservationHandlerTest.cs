@@ -294,6 +294,21 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(BadRequestException),
+    "Invalid state")]
+        public void AddReservationWithIncorrectState()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
+
+            reservation.ReservationState = (ReservationState)10;
+            var res = handler.Add(reservation, accomodation.Id);
+        }
+
+        [TestMethod]
         public void DeleteReservation()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
@@ -356,7 +371,7 @@ namespace BusinessLogicTest
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
-
+            mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
 
             var res = handler.ChangeState(reservation.Id, (ReservationState)5, "Cambio de estado");
 

@@ -57,10 +57,6 @@ namespace BusinessLogic
 
         public bool ChangeState(int idReservation, ReservationState state, string description)
         {
-            if (!Enum.IsDefined(typeof(ReservationState), state))
-                throw new BadRequestException("Invalid state");
-
-
             Reservation reservation = repository.Get(idReservation);
             if (reservation == null)
             {
