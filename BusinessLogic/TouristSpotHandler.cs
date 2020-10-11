@@ -30,6 +30,8 @@ namespace BusinessLogic
 
         public TouristSpot Add(TouristSpot spot, int regionId, List<int> categoryIds, string imageName)
         {
+            if (categoryIds.Count == 0) throw new ArgumentNullException("The spot needs at least one category");
+
             if (spotsRepository.GetAll(x => ((TouristSpot)x).Name == spot.Name).
                 ToList().Count() > 0)
             {
@@ -45,7 +47,7 @@ namespace BusinessLogic
             spot.Region = gotRegion;
 
             Image image = new Image { Name = imageName };
-            imageRepository.Add(image);
+        //    imageRepository.Add(image);
             spot.Image = image;
 
             List<TouristSpotCategory> gotCategories = new List<TouristSpotCategory>();

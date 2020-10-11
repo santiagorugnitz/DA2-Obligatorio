@@ -148,7 +148,7 @@ namespace BusinessLogicTest
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException), "The category does not exists")]
-        public void AddCorrectSpotWithoutCategories()
+        public void AddCorrectSpotWithWrongCategories()
         {
             categoryMock.Setup(x => x.Get(spot.TouristSpotCategories.ToList()
     .First().CategoryId)).Returns((Category)null);
@@ -168,6 +168,14 @@ namespace BusinessLogicTest
             }
 
             var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void AddCorrectSpotWithoutCategories()
+        {
+
+            var res = handler.Add(spot, spot.Region.Id, new List<int>(), spot.Image.Name);
         }
 
         [TestMethod]
