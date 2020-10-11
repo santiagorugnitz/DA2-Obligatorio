@@ -350,6 +350,18 @@ namespace BusinessLogicTest
 
         }
 
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void ChangeReservationStateWrongState()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+
+            var res = handler.ChangeState(reservation.Id, (ReservationState)5, "Cambio de estado");
+
+        }
+
         [TestMethod]
         public void GetAllFromAccomodationOk()
         {
