@@ -109,7 +109,7 @@ namespace Domain
         {
             set
             {
-                if (value.Trim() == "")
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new BadRequestException("The reservation needs a non empty Name");
                 }
@@ -127,7 +127,7 @@ namespace Domain
         {
             set
             {
-                if (value.Trim() == "")
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new BadRequestException("The reservation needs a non empty Email");
                 }
@@ -145,7 +145,7 @@ namespace Domain
         {
             set
             {
-                if (value.Trim() == "")
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new BadRequestException("The reservation needs a non empty surname");
                 }

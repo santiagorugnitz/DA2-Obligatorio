@@ -256,6 +256,26 @@ namespace BusinessLogicTest
 
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
+    "The spot needs a correct description (less than 2000 characters) and non empty")]
+        public void AddSpotWithNullDescription()
+        {
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot>());
+
+            mock.Setup(x => x.Add(spot)).Returns(spot);
+
+            spot.Description = null;
+            List<int> categoriesIds = new List<int>();
+            foreach (var item in spot.TouristSpotCategories)
+            {
+                categoriesIds.Add(item.CategoryId);
+            }
+
+            var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BadRequestException),
     "The spot needs at least one category")]
         public void AddSpotWithoutCategory()
         {
@@ -265,6 +285,26 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Add(spot)).Returns(spot);
 
             spot.TouristSpotCategories = new List<TouristSpotCategory>();
+            List<int> categoriesIds = new List<int>();
+            foreach (var item in spot.TouristSpotCategories)
+            {
+                categoriesIds.Add(item.CategoryId);
+            }
+
+            var res = handler.Add(spot, spot.Region.Id, categoriesIds, spot.Image.Name);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BadRequestException),
+    "The spot needs at least one category")]
+        public void AddSpotWithoutNullCategories()
+        {
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot>());
+
+            mock.Setup(x => x.Add(spot)).Returns(spot);
+
+            spot.TouristSpotCategories = null;
             List<int> categoriesIds = new List<int>();
             foreach (var item in spot.TouristSpotCategories)
             {

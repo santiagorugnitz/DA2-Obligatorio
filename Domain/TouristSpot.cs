@@ -14,7 +14,7 @@ namespace Domain
         {
             set
             {
-                if (value.Trim() == "")
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new BadRequestException("The spot needs a non empty Name");
                 }
@@ -32,9 +32,9 @@ namespace Domain
         {
             set
             {
-                if (value.Trim().Length > 2000)
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length > 2000)
                 {
-                    throw new BadRequestException("The spot needs a shorter description (less than 2000 characters)");
+                    throw new BadRequestException("The spot needs a correct description (less than 2000 characters) and non empty");
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace Domain
             get { return touristSpotCategories; }
             set
             {
-                if (value.Count == 0)
+                if (value == null || value.Count == 0)
                 {
                     throw new BadRequestException("The spot needs at least one category");
                 }

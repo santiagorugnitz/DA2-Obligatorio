@@ -15,7 +15,7 @@ namespace Domain
         {
             set
             {
-                if (value.Trim() == "")
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new BadRequestException("The accomodation needs a non empty Name");
                 }
@@ -51,7 +51,7 @@ namespace Domain
         {
             set
             {
-                if (value.Trim() == "")
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new BadRequestException("The accomodation needs a non empty address");
                 }
@@ -70,7 +70,7 @@ namespace Domain
             get { return images; }
             set
             {
-                if (value.Count() == 0)
+                if (value == null || value.Count() == 0)
                 {
                     throw new BadRequestException("The Accomodation needs at least one image");
                 }

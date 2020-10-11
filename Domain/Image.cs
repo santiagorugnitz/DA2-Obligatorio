@@ -18,7 +18,7 @@ namespace Domain
             }
             set
             {
-                if (value.Trim().Length == 0)
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new BadRequestException("The spot needs a non empty picture URL");
                 }
