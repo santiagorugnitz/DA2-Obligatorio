@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicInterface;
 using Domain;
+using Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Filters;
@@ -35,7 +36,7 @@ namespace WebApi.Controllers
         public IActionResult CheckState(int id)
         {
             var res = handler.CheckState(id);
-            if (null == res) return NotFound();
+            if (null == res) throw new NotFoundException("The Reservation does not exists");
             return Ok(res);
         }
 

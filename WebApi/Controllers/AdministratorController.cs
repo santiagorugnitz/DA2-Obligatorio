@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicInterface;
 using Domain;
+using Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApi.Filters;
@@ -53,7 +54,7 @@ namespace WebApi.Controllers
         public IActionResult Get(int id)
         {
             var res = handler.Get(id);
-            if (null == res) return NotFound();
+            if (null == res) throw new NotFoundException("The Administrator does not exists");
             return Ok(res);
         }
 

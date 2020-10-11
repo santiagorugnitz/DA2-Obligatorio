@@ -1,5 +1,6 @@
 ﻿using BusinessLogicInterface;
 using Domain;
+using Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -193,6 +194,7 @@ namespace WebApiTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(NotFoundException))]
         public void Get404()
         {
             var mock = new Mock<IAccomodationHandler>(MockBehavior.Strict);
@@ -200,9 +202,6 @@ namespace WebApiTest
             mock.Setup(x => x.Get(It.IsAny<int>())).Returns((Accomodation)null);
 
             var result = controller.Get(1);
-
-            Assert.AreEqual(true, result is NotFoundResult);
-            mock.VerifyAll();
         }
     }
 }
