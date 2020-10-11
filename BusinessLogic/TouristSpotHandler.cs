@@ -98,9 +98,17 @@ namespace BusinessLogic
 
             List<TouristSpot> list;
             if (region == null)
+            {
                 list = spotsRepository.GetAll().ToList();
+            }
             else
+            {
+                if (region.HasValue && regionRepository.Get(region.Value) == null)
+                {
+                    throw new ArgumentNullException("The region does not exist");
+                }
                 list = spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id == region).ToList();
+            }
 
             List<TouristSpot> ret = new List<TouristSpot>();
 
