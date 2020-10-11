@@ -12,17 +12,15 @@ namespace BusinessLogic
     {
 
         private IRepository<TouristSpot> spotsRepository;
-        private IRepository<Image> imageRepository;
         private IRepository<Category> categoryRepository;
         private IRepository<Region> regionRepository;
         private IRepository<TouristSpotCategory> joinedRepository;
 
-        public TouristSpotHandler(IRepository<TouristSpot> repo, IRepository<Image> imageRepo,
+        public TouristSpotHandler(IRepository<TouristSpot> repo, 
             IRepository<Category> categoryRepo, IRepository<Region> regionRepo
             , IRepository<TouristSpotCategory> joinedRepo)
         {
             spotsRepository = repo;
-            imageRepository = imageRepo;
             categoryRepository = categoryRepo;
             regionRepository = regionRepo;
             joinedRepository = joinedRepo;
@@ -46,9 +44,7 @@ namespace BusinessLogic
 
             spot.Region = gotRegion;
 
-            Image image = new Image { Name = imageName };
-        //    imageRepository.Add(image);
-            spot.Image = image;
+            spot.Image = new Image { Name = imageName };
 
             List<TouristSpotCategory> gotCategories = new List<TouristSpotCategory>();
 

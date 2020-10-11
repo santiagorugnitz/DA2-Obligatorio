@@ -20,7 +20,6 @@ namespace BusinessLogicTest
         private Mock<IRepository<Accomodation>> accomodationMock;
         private Mock<IRepository<Region>> regionMock;
         private Mock<IRepository<Category>> categoryMock;
-        private Mock<IRepository<Image>> imageMock;
         private Mock<IRepository<TouristSpot>> mock;
         private Mock<IRepository<TouristSpotCategory>> joinedMock;
         private TouristSpotHandler handler;
@@ -91,10 +90,9 @@ namespace BusinessLogicTest
             accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
             regionMock = new Mock<IRepository<Region>>(MockBehavior.Strict);
             categoryMock = new Mock<IRepository<Category>>(MockBehavior.Strict);
-            imageMock = new Mock<IRepository<Image>>(MockBehavior.Strict);
             mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
             joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
-            handler = new TouristSpotHandler(mock.Object, imageMock.Object,
+            handler = new TouristSpotHandler(mock.Object, 
                 categoryMock.Object, regionMock.Object, joinedMock.Object);
         }
 
@@ -105,7 +103,6 @@ namespace BusinessLogicTest
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
-            imageMock.Setup(x => x.Add(It.IsAny<Image>())).Returns(It.IsAny<Image>());
 
             joinedMock.Setup(x => x.Add(It.IsAny<TouristSpotCategory>())).Returns(It.IsAny<TouristSpotCategory>());
 
@@ -123,7 +120,6 @@ namespace BusinessLogicTest
             var res = handler.Add(spot,spot.Region.Id, categoriesIds, spot.Image.Name);
 
             mock.VerifyAll();
-            imageMock.VerifyAll();
             Assert.AreEqual(spot, res);
         }
 
@@ -155,7 +151,6 @@ namespace BusinessLogicTest
 
             regionMock.Setup(x => x.Get(spot.Region.Id)).Returns(spot.Region);
 
-            imageMock.Setup(x => x.Add(It.IsAny<Image>())).Returns(It.IsAny<Image>());
 
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<TouristSpot>());
