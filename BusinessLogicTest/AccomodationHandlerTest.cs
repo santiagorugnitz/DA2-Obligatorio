@@ -19,7 +19,6 @@ namespace BusinessLogicTest
         private Mock<IRepository<Accomodation>> accomodationMock;
         private Mock<IRepository<Region>> regionMock;
         private Mock<IRepository<Category>> categoryMock;
-        private Mock<IRepository<Image>> imageMock;
         private Mock<IRepository<TouristSpot>> touristSpotMock;
         private Mock<IRepository<TouristSpotCategory>> joinedMock;
         private TouristSpotHandler touristSpotHandler;
@@ -67,12 +66,11 @@ namespace BusinessLogicTest
             accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
             regionMock = new Mock<IRepository<Region>>(MockBehavior.Loose);
             categoryMock = new Mock<IRepository<Category>>(MockBehavior.Loose);
-            imageMock = new Mock<IRepository<Image>>(MockBehavior.Loose);
             touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
             joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
             touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, 
                 categoryMock.Object, regionMock.Object, joinedMock.Object);
-            handler = new AccomodationHandler(accomodationMock.Object, imageMock.Object, touristSpotHandler);
+            handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
         }
 
 
@@ -81,8 +79,7 @@ namespace BusinessLogicTest
         {
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(accomodation.TouristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
-            imageMock.Setup(x => x.Add(accomodation.Images.ToList().First())).Returns(accomodation.Images.ToList().First());
-
+            
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
 
             accomodationMock.VerifyAll();

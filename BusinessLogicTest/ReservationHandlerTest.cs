@@ -75,7 +75,7 @@ namespace BusinessLogicTest
             joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
             touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object,
                 categoryMock.Object, regionMock.Object, joinedMock.Object);
-            accomodationHandler = new AccomodationHandler(accomodationMock.Object, imageMock.Object, touristSpotHandler);
+            accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
 
         }
 

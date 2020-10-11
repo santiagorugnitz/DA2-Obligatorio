@@ -13,13 +13,11 @@ namespace BusinessLogic
     {
         private ITouristSpotHandler touristSpotHandler;
         private IRepository<Accomodation> accomodationRepository;
-        private IRepository<Image> imageRepository;
-
+        
         public AccomodationHandler(IRepository<Accomodation> accomodationRepo,
-            IRepository<Image> imageRepo, ITouristSpotHandler touristSpotHand)
+            ITouristSpotHandler touristSpotHand)
         {
             accomodationRepository = accomodationRepo;
-            imageRepository = imageRepo;
             touristSpotHandler = touristSpotHand;
         }
 
@@ -30,7 +28,6 @@ namespace BusinessLogic
             foreach (var item in imageNames)
             {
                 Image image = new Image { Name = item };
-                imageRepository.Add(image);
                 accomodationImages.Add(image);
             }
 
