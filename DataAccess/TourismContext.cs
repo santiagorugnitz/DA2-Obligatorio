@@ -71,6 +71,11 @@ namespace DataAccess
                 .HasOne(x => x.Accomodation);
 
             modelBuilder.Entity<Accomodation>()
+                .HasMany<Reservation>()
+                .WithOne(l => l.Accomodation)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Accomodation>()
                 .HasOne(x => x.TouristSpot);
 
             modelBuilder.Entity<Accomodation>()
