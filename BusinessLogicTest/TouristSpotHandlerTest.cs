@@ -323,6 +323,8 @@ namespace BusinessLogicTest
         [TestMethod]
         public void SearchByRegion()
         {
+            regionMock.Setup(x => x.Get(It.IsAny<int>())).Returns(spot.Region);
+            categoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(new Category { Id = 1 });
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
 
             List<TouristSpot> res = handler.Search(null,1);
@@ -334,6 +336,8 @@ namespace BusinessLogicTest
         [TestMethod]
         public void SearchByCategory()
         {
+            regionMock.Setup(x => x.Get(It.IsAny<int>())).Returns(spot.Region);
+            categoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(new Category { Id = 1 });
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
 
             List<TouristSpot> res = handler.Search(new List<int>(){1});
@@ -345,6 +349,8 @@ namespace BusinessLogicTest
         [TestMethod]
         public void SearchByRegionAndCategory()
         {
+            regionMock.Setup(x => x.Get(It.IsAny<int>())).Returns(spot.Region);
+            categoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(new Category { Id = 1 });
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
 
             List<TouristSpot> res = handler.Search(new List<int>() { 1 }, 1);
@@ -354,8 +360,24 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
+        public void SearchBy()
+        {
+            regionMock.Setup(x => x.Get(It.IsAny<int>())).Returns(spot.Region);
+            categoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(new Category { Id = 1 });
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<TouristSpot> { spot });
+
+            List<TouristSpot> res = handler.Search();
+
+
+            Assert.AreEqual(spot, res[0]);
+            Assert.AreEqual(1, res.Count());
+        }
+
+        [TestMethod]
         public void SearchByRegionAndCategories()
         {
+            regionMock.Setup(x => x.Get(It.IsAny<int>())).Returns(spot.Region);
+            categoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(new Category { Id = 1 });
             joinedMock.Setup(x => x.GetAll(It.Is<Func<object, bool>>(f => f.Equals(It.IsAny<TouristSpotCategory>().CategoryId == 1)))).
                 Returns(new List<TouristSpotCategory>() { joinedEntry });
             joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
@@ -371,8 +393,63 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The region does not exist")]
+        public void SearchRegionDoesNotExists1()
+        {
+            regionMock.Setup(x => x.Get(It.IsAny<int>())).Returns((Region)null);
+            categoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(new Category { Id = 1 });
+            joinedMock.Setup(x => x.GetAll(It.Is<Func<object, bool>>(f => f.Equals(It.IsAny<TouristSpotCategory>().CategoryId == 1)))).
+                Returns(new List<TouristSpotCategory>() { joinedEntry });
+            joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpotCategory>() { joinedEntry2, joinedEntry3 });
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot> { spot, spot2 });
+
+            List<TouristSpot> res = handler.Search(new List<int>() { 1, 2 },
+                0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The region does not exist")]
+        public void SearchRegionDoesNotExists2()
+        {
+            regionMock.Setup(x => x.Get(It.IsAny<int>())).Returns((Region)null);
+            categoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(new Category { Id = 1 });
+            joinedMock.Setup(x => x.GetAll(It.Is<Func<object, bool>>(f => f.Equals(It.IsAny<TouristSpotCategory>().CategoryId == 1)))).
+                Returns(new List<TouristSpotCategory>() { joinedEntry });
+            joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpotCategory>() { joinedEntry2, joinedEntry3 });
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot> { spot, spot2 });
+
+            List<TouristSpot> res = handler.Search(null, 0);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException),
+    "The category does not exist")]
+        public void SearchCategoyDoesNotExists()
+        {
+            regionMock.Setup(x => x.Get(It.IsAny<int>())).Returns(spot.Region);
+            categoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns((Category)null);
+            joinedMock.Setup(x => x.GetAll(It.Is<Func<object, bool>>(f => f.Equals(It.IsAny<TouristSpotCategory>().CategoryId == 1)))).
+                Returns(new List<TouristSpotCategory>() { joinedEntry });
+            joinedMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpotCategory>() { joinedEntry2, joinedEntry3 });
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<TouristSpot> { spot, spot2 });
+
+            List<TouristSpot> res = handler.Search(new List<int>() { 1, 2 },
+                0);
+        }
+
+        [TestMethod]
         public void SearchByMultipleCategories()
         {
+            regionMock.Setup(x => x.Get(It.IsAny<int>())).Returns(spot.Region);
+            categoryMock.Setup(x => x.Get(It.IsAny<int>())).Returns(new Category { Id = 1});
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<TouristSpot> { spot, spot2 });
 
