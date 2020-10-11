@@ -181,7 +181,7 @@ namespace BusinessLogicTest
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
-            reservation.Surname = "";
+            reservation.Email = "";
             var res = handler.Add(reservation, accomodation.Id);
         }
 
@@ -196,7 +196,7 @@ namespace BusinessLogicTest
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
-            reservation.Surname = "    ";
+            reservation.Email = "    ";
             var res = handler.Add(reservation, accomodation.Id);
         }
 
