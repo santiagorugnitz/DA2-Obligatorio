@@ -89,7 +89,7 @@ namespace WebApiTest
 
             ContentResult response = context.Result as ContentResult;
 
-            Assert.AreEqual(403, response.StatusCode);
+            Assert.AreEqual(401, response.StatusCode);
         }
     }
 }

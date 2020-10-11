@@ -32,7 +32,7 @@ namespace WebApi.Filters
             {
                 context.Result = new ContentResult()
                 {
-                    StatusCode = 403,
+                    StatusCode = 401,
                     Content = "You must be logged as an administrator to access."
                 };
                 return;
