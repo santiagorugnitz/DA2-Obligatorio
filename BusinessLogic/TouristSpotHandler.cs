@@ -100,12 +100,12 @@ namespace BusinessLogic
                 return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id == region).ToList();
             }
 
-            List<TouristSpot> spotsList;
-            spotsList = GetListByRegion(region);
+            List<TouristSpot> spotsListWithRegion;
+            spotsListWithRegion = GetListByRegion(region);
 
             List<TouristSpot> returningSpotList = new List<TouristSpot>();
 
-            foreach (var spot in spotsList)
+            foreach (var spot in spotsListWithRegion)
             {
                 var hasAll = HasAllCategories(categories, spot);
                 if (hasAll) returningSpotList.Add(spot);
