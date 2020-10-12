@@ -13,7 +13,7 @@ namespace BusinessLogic
     {
         private ITouristSpotHandler touristSpotHandler;
         private IRepository<Accomodation> accomodationRepository;
-        
+
         public AccomodationHandler(IRepository<Accomodation> accomodationRepo,
             ITouristSpotHandler touristSpotHand)
         {
@@ -67,8 +67,15 @@ namespace BusinessLogic
 
         public List<Accomodation> SearchByTouristSpot(int spotId)
         {
-            return accomodationRepository.GetAll(x => ((Accomodation)x).TouristSpot.Id==spotId &&
+            if (touristSpotHandler.Get(spotId) == null)
+            {
+                throw new BadRequestException("The spot does not exist");
+            }
+
+            return accomodationRepository.GetAll(x => ((Accomodation)x).TouristSpot.Id == spotId &&
             ((Accomodation)x).Available).ToList();
+
+
         }
 
         public Accomodation Get(int accomodationId)

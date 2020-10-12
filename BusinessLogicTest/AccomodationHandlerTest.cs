@@ -267,6 +267,7 @@ namespace BusinessLogicTest
         {
             accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accomodation> { accomodation });
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
 
             DateTime checkIn, checkOut = new DateTime();
             checkIn = DateTime.Now;
@@ -274,6 +275,7 @@ namespace BusinessLogicTest
          
             var res = handler.SearchByTouristSpot(touristSpot.Id);
 
+            touristSpotMock.VerifyAll();
             accomodationMock.VerifyAll();
             Assert.AreEqual(new List<Accomodation> { accomodation }[0], res[0]);
         }
@@ -283,6 +285,9 @@ namespace BusinessLogicTest
         {
             accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accomodation> { });
+            
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+
 
             DateTime checkIn, checkOut = new DateTime();
             checkIn = DateTime.Now;
@@ -290,8 +295,19 @@ namespace BusinessLogicTest
 
             var res = handler.SearchByTouristSpot(touristSpot.Id);
 
+            touristSpotMock.VerifyAll();
             accomodationMock.VerifyAll();
             Assert.AreEqual(0, res.Count);
+        }
+
+        [ExpectedException(typeof(BadRequestException))]
+        [TestMethod]
+        public void SearchNonExistingSpot()
+        {
+            touristSpotMock.Setup(x => x.Get(0)).Returns((TouristSpot)null);
+
+            var res = handler.SearchByTouristSpot(0);
+
         }
 
         [TestMethod]
