@@ -64,7 +64,6 @@ namespace BusinessLogicTest
                 Surname = "Gutman",
                 Email = "martin.gut",
                 ReservationState = ReservationState.Aceptada,
-                ReservationDescription = "Activa"
             };
 
             accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
@@ -335,7 +334,6 @@ namespace BusinessLogicTest
 
             mock.VerifyAll();
             Assert.AreEqual(ReservationState.Aceptada, res.ReservationState);
-            Assert.AreEqual("Activa", res.ReservationDescription);
         }
 
         [TestMethod]

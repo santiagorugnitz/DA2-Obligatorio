@@ -63,7 +63,7 @@ namespace BusinessLogic
                 throw new NotFoundException("The reservation does not exists");
             }
             reservation.ReservationState = state;
-            reservation.ReservationDescription = description;
+            reservation.StateDescription = description;
             return repository.Update(reservation);
         }
 

@@ -175,8 +175,6 @@ namespace Domain
             get { return reservationState; }
         }
 
-        public string ReservationDescription { get; set; }
-
         public string StateDescription { get; set; }
 
         public double Total { get; set; }

@@ -63,7 +63,6 @@ namespace DataAccessTest
                 Surname = "Gutman",
                 Email = "martin.gut",
                 ReservationState = ReservationState.Aceptada,
-                ReservationDescription = "Activa"
             };
         }
 
@@ -127,7 +126,6 @@ namespace DataAccessTest
                 Surname = "Gutman",
                 Email = "martin.gut",
                 ReservationState = ReservationState.Aceptada,
-                ReservationDescription = "Activa"
             };
 
             using (var context = new TourismContext(options))
@@ -173,7 +171,6 @@ namespace DataAccessTest
                 Surname = "Gutman",
                 Email = "santi.rug",
                 ReservationState = ReservationState.Aceptada,
-                ReservationDescription = "Activa"
             };
 
             using (var context = new TourismContext(options))
