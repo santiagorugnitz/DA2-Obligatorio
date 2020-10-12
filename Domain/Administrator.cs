@@ -69,5 +69,10 @@ namespace Domain
             return obj is Administrator admin &&
                    Id == admin.Id;
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, Email, Password);
+        }
     }
 }

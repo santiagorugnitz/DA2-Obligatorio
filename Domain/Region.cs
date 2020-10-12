@@ -15,5 +15,10 @@ namespace Domain
             return obj is Region region &&
                    Name == region.Name;
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -12,6 +13,11 @@ namespace Domain
         {
             return obj is Category category &&
                    Name == category.Name;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name);
         }
 
         public virtual ICollection<TouristSpotCategory> TouristSpotCategories { get; set; }

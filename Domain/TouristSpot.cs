@@ -70,5 +70,10 @@ namespace Domain
             return obj is TouristSpot spot &&
                    spot.Id == Id;
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, Description, Image, Region);
+        }
     }
 }
