@@ -44,14 +44,28 @@ namespace BusinessLogic
             }
 
             spot.Region = gotRegion;
-
             spot.Image = new Image { Name = imageName };
 
+            List<TouristSpotCategory> gotCategories = GenerateCategoriesList(spot, categoryIds);
+
+            var addingResult = spotsRepository.Add(spot);
+
+            foreach (var category in gotCategories)
+            {
+                category.TouristSpotId = spot.Id;
+                joinedRepository.Add(category);
+            }
+
+            return addingResult;
+        }
+
+        private List<TouristSpotCategory> GenerateCategoriesList(TouristSpot spot, List<int> categoryIds)
+        {
             List<TouristSpotCategory> gotCategories = new List<TouristSpotCategory>();
 
-            foreach (var item in categoryIds)
+            foreach (var category in categoryIds)
             {
-                var gotCategory = categoryRepository.Get(item);
+                var gotCategory = categoryRepository.Get(category);
 
                 if (gotCategory == null)
                 {
@@ -60,23 +74,14 @@ namespace BusinessLogic
 
                 gotCategories.Add(new TouristSpotCategory
                 {
-                    CategoryId = item,
+                    CategoryId = category,
                     Category = gotCategory,
                     TouristSpotId = spot.Id,
                     TouristSpot = spot
                 });
-
             }
 
-            var result = spotsRepository.Add(spot);
-
-            foreach (var item in gotCategories)
-            {
-                item.TouristSpotId = spot.Id;
-                joinedRepository.Add(item);
-            }
-
-            return result;
+            return gotCategories;
         }
 
         public TouristSpot Get(int id)
@@ -95,10 +100,43 @@ namespace BusinessLogic
                 return spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id == region).ToList();
             }
 
-            List<TouristSpot> list;
+            List<TouristSpot> spotsList;
+            spotsList = GetListByRegion(region);
+
+            List<TouristSpot> returningSpotList = new List<TouristSpot>();
+
+            foreach (var spot in spotsList)
+            {
+                var hasAll = HasAllCategories(categories, spot);
+                if (hasAll) returningSpotList.Add(spot);
+            }
+
+            return returningSpotList;
+        }
+
+        private bool HasAllCategories(List<int> categories, TouristSpot spot)
+        {
+            var hasAll = true;
+            foreach (var category in categories)
+            {
+                if (categoryRepository.Get(category) == null)
+                {
+                    throw new BadRequestException("A category does not exist");
+                }
+                hasAll = spot.TouristSpotCategories.Any(x => x.CategoryId == category);
+                if (!hasAll) break;
+            }
+
+            return hasAll;
+        }
+
+        private List<TouristSpot> GetListByRegion(int? region)
+        {
+            List<TouristSpot> spotsList;
+
             if (region == null)
             {
-                list = spotsRepository.GetAll().ToList();
+                spotsList = spotsRepository.GetAll().ToList();
             }
             else
             {
@@ -106,26 +144,10 @@ namespace BusinessLogic
                 {
                     throw new BadRequestException("The region does not exist");
                 }
-                list = spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id == region).ToList();
+                spotsList = spotsRepository.GetAll(x => ((TouristSpot)x).Region.Id == region).ToList();
             }
 
-            List<TouristSpot> ret = new List<TouristSpot>();
-
-            foreach (var spot in list)
-            {
-                var hasAll = true;
-                foreach (var cat in categories)
-                {
-                    if (categoryRepository.Get(cat) == null)
-                    {
-                        throw new BadRequestException("A category does not exist");
-                    }
-                    hasAll = spot.TouristSpotCategories.Any(x => x.CategoryId == cat);
-                    if (!hasAll) break;
-                }
-                if (hasAll) ret.Add(spot);
-            }
-            return ret;
+            return spotsList;
         }
     }
 }
