@@ -36,7 +36,8 @@ namespace WebApi.Models
             Fee = this.Fee,
             Description = this.Description,
             Telephone = this.Telephone,
-            ContactInformation = this.ContactInformation
+            ContactInformation = this.ContactInformation,
+            Available=this.Available
         };
     }
 }
