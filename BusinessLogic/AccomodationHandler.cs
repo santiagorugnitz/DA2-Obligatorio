@@ -25,9 +25,14 @@ namespace BusinessLogic
         {
             List<Image> accomodationImages = new List<Image>();
 
-            foreach (var item in imageNames)
+            if (imageNames == null)
             {
-                Image image = new Image { Name = item };
+                throw new BadRequestException("The accomodation needs at least one image");
+            }
+
+            foreach (var imageName in imageNames)
+            {
+                Image image = new Image { Name = imageName };
                 accomodationImages.Add(image);
             }
 

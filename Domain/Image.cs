@@ -20,7 +20,7 @@ namespace Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new BadRequestException("The spot needs a non empty picture URL");
+                    throw new BadRequestException("The image needs to be non empty");
                 }
                 else
                 {

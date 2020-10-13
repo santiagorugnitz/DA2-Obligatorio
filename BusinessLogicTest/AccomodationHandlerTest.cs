@@ -231,6 +231,18 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
+        [ExpectedException(typeof(BadRequestException),
+    "The Accomodation needs at least one image")]
+        public void AddAccomodationWithNullImagesNames()
+        {
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
+
+            accomodation.Images = null;
+            var res = handler.Add(accomodation, touristSpot.Id, null);
+        }
+
+        [TestMethod]
         public void DeleteAccomodation()
         {
             accomodationMock.Setup(x => x.Delete(accomodation)).Returns(true);
