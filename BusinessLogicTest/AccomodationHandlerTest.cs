@@ -238,7 +238,6 @@ namespace BusinessLogicTest
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
-            accomodation.Images = null;
             var res = handler.Add(accomodation, touristSpot.Id, null);
         }
 
