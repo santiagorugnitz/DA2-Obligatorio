@@ -981,7 +981,7 @@
 											"description": "(Required) ",
 											"key": "id",
 											"type": "string",
-											"value": "4"
+											"value": "11"
 										}
 									]
 								}
@@ -1286,6 +1286,87 @@
 									"body": ""
 								}
 							]
+						},
+						{
+							"name": "token string",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "7f26b02b-c418-4983-ba76-69b0b9af4d3b",
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "token",
+										"value": "string",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/accomodations/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"accomodations",
+										":id"
+									],
+									"variable": [
+										{
+											"description": "(Required) ",
+											"id": "0d8d7d56-3621-4bb5-9cbb-699e6d2de151",
+											"key": "id",
+											"type": "string",
+											"value": "<integer>"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/accomodations/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"accomodations",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
 						}
 					],
 					"protocolProfileBehavior": {},
@@ -1317,7 +1398,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"<string>\",\n    \"stars\": \"1.0\",\n    \"address\": \"<string>\",\n    \"imageNames\": [\n        \"image1\",\n        \"image2\"\n    ],\n    \"fee\": \"1.0\",\n    \"description\": \"<string>\",\n    \"available\": \"true\",\n    \"telephone\": \"<string>\",\n    \"contactInformation\": \"<string>\",\n    \"touristSpotId\": \"1\"\n}",
+							"raw": "{\n    \"name\": \"Hotel nuevo\",\n    \"stars\": \"1.5\",\n    \"address\": \"nuevo 1234\",\n    \"imageNames\": [\n        \"imagenHotelNuevo\"\n    ],\n    \"fee\": \"123.0\",\n    \"description\": \"Hotel nuevo\",\n    \"available\": true,\n    \"telephone\": \"095123789\",\n    \"contactInformation\": \"Gracias por la reserva\",\n    \"touristSpotId\": \"1\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -3214,6 +3295,81 @@
 							"body": ""
 						}
 					]
+				},
+				{
+					"name": "body {}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b4de7437-2c09-477b-a11e-29cc744d2ed9",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/accomodations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"accomodations"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"<string>\",\n    \"stars\": \"<double>\",\n    \"address\": \"<string>\",\n    \"imageNames\": [\n        \"<string>\",\n        \"<string>\"\n    ],\n    \"fee\": \"<double>\",\n    \"description\": \"<string>\",\n    \"available\": \"<boolean>\",\n    \"telephone\": \"<string>\",\n    \"contactInformation\": \"<string>\",\n    \"touristSpotId\": \"<integer>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/accomodations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"accomodations"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -4187,7 +4343,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "2",
+											"value": "6",
 											"type": "string",
 											"description": "(Required) "
 										}
@@ -4869,7 +5025,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"name\",\n    \"email\": \"mail1\",\n    \"password\": \"pass1\"\n}",
+							"raw": "{\n    \"name\": \"nuevo\",\n    \"email\": \"nuevo@mail.com\",\n    \"password\": \"pass1234\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -5073,7 +5229,7 @@
 					]
 				},
 				{
-					"name": "logoutOk no token",
+					"name": "logout no token",
 					"event": [
 						{
 							"listen": "test",
@@ -5179,13 +5335,13 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/reservations/1",
+									"raw": "{{baseUrl}}/reservations/2",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"reservations",
-										"1"
+										"2"
 									]
 								}
 							},
@@ -5534,7 +5690,7 @@
 											"description": "(Required) ",
 											"key": "id",
 											"type": "string",
-											"value": "1"
+											"value": "2"
 										}
 									]
 								}
@@ -5629,7 +5785,7 @@
 											"description": "(Required) ",
 											"key": "id",
 											"type": "string",
-											"value": "1"
+											"value": "2"
 										}
 									]
 								}
@@ -5724,7 +5880,7 @@
 											"description": "(Required) ",
 											"key": "id",
 											"type": "string",
-											"value": "1"
+											"value": "2"
 										}
 									]
 								}
@@ -5819,7 +5975,7 @@
 											"description": "(Required) ",
 											"key": "id",
 											"type": "string",
-											"value": "1"
+											"value": "2"
 										}
 									]
 								}
@@ -5914,7 +6070,7 @@
 											"description": "(Required) ",
 											"key": "id",
 											"type": "string",
-											"value": "1"
+											"value": "2"
 										}
 									]
 								}
@@ -6009,7 +6165,7 @@
 											"description": "(Required) ",
 											"key": "id",
 											"type": "string",
-											"value": "1"
+											"value": "2"
 										}
 									]
 								}
@@ -6104,7 +6260,7 @@
 											"description": "(Required) ",
 											"key": "id",
 											"type": "string",
-											"value": "1"
+											"value": "2"
 										}
 									]
 								}
@@ -6382,7 +6538,102 @@
 											"description": "(Required) ",
 											"key": "id",
 											"type": "string",
-											"value": "1"
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Success",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"state\": \"<integer>\",\n    \"description\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/reservations/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"reservations",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "body {}",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3925189e-4313-4337-8c98-e0689844ffc1",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "token",
+										"type": "text",
+										"value": "{{token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{}",
+									"options": {
+										"raw": {}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/reservations/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"reservations",
+										":id"
+									],
+									"variable": [
+										{
+											"description": "(Required) ",
+											"key": "id",
+											"type": "string",
+											"value": "2"
 										}
 									]
 								}
@@ -6457,7 +6708,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"<string>\",\n    \"adultQuantity\": \"1\",\n    \"childrenQuantity\": \"0\",\n    \"babyQuantity\": \"0\",\n    \"email\": \"<string>\",\n    \"surname\": \"<string>\",\n    \"reservationState\": \"0\",\n    \"telephone\": \"<string>\",\n    \"stateDescription\": \"<string>\",\n    \"checkIn\": \"01-01-2021\",\n    \"checkOut\": \"01-02-2021\",\n    \"accomodationId\": \"3\"\n}",
+							"raw": "{\n    \"name\": \"Pepe\",\n    \"adultQuantity\": \"1\",\n    \"childrenQuantity\": \"0\",\n    \"babyQuantity\": \"0\",\n    \"email\": \"mail\",\n    \"surname\": \"gomez\",\n    \"reservationState\": \"0\",\n    \"telephone\": \"tel\",\n    \"stateDescription\": \"\",\n    \"checkIn\": \"01-01-2021\",\n    \"checkOut\": \"01-02-2021\",\n    \"accomodationId\": \"1\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -8886,6 +9137,81 @@
 							"body": ""
 						}
 					]
+				},
+				{
+					"name": "body {}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b127672-4c78-476f-bab3-44b4beed2911",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/reservations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"reservations"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"<string>\",\n    \"adultQuantity\": \"<integer>\",\n    \"childrenQuantity\": \"<integer>\",\n    \"babyQuantity\": \"<integer>\",\n    \"email\": \"<string>\",\n    \"surname\": \"<string>\",\n    \"reservationState\": \"<integer>\",\n    \"telephone\": \"<string>\",\n    \"stateDescription\": \"<string>\",\n    \"contactInformation\": \"<string>\",\n    \"reservationDescription\": \"<string>\",\n    \"checkIn\": \"<dateTime>\",\n    \"checkOut\": \"<dateTime>\",\n    \"accomodationId\": \"<integer>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/reservations",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"reservations"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -8924,7 +9250,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/spots?region=1&cat=1&cat=2",
+							"raw": "{{baseUrl}}/spots?region=3&cat=1&cat=3",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -8934,7 +9260,7 @@
 							"query": [
 								{
 									"key": "region",
-									"value": "1"
+									"value": "3"
 								},
 								{
 									"key": "cat",
@@ -8942,7 +9268,7 @@
 								},
 								{
 									"key": "cat",
-									"value": "2"
+									"value": "3"
 								}
 							]
 						}
@@ -9756,7 +10082,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"repeteated\",\n    \"description\": \"<string>\",\n    \"regionId\": \"1\",\n    \"categoryIds\": [\n        1\n    ],\n    \"image\": \"image\"\n}",
+							"raw": "{\n    \"name\": \"repetido\",\n    \"description\": \"<string>\",\n    \"regionId\": \"5\",\n    \"categoryIds\": [\n        4\n    ],\n    \"image\": \"image\"\n}",
 							"options": {
 								"raw": {}
 							}
@@ -9964,6 +10290,86 @@
 							"body": ""
 						}
 					]
+				},
+				{
+					"name": "ok",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6696d185-ecbd-4c37-9cb2-d091887a37fd",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "token",
+								"type": "text",
+								"value": "{{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Punto Nuevo\",\n    \"description\": \"Punto de Prueba\",\n    \"regionId\": \"4\",\n    \"categoryIds\": [\n        4\n    ],\n    \"image\": \"imagenPuntoPrueba\"\n}",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/spots",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"spots"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"regionId\": \"<integer>\",\n    \"categoryIds\": [\n        \"<integer>\",\n        \"<integer>\"\n    ],\n    \"image\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/spots",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"spots"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -10089,17 +10495,17 @@
 	],
 	"variable": [
 		{
-			"id": "d0bedfb7-dde6-4fb7-a40d-df9b36adc1e1",
+			"id": "3eb6eca2-a84a-4f95-8b44-95ff9b86e52d",
 			"key": "baseUrl",
 			"value": "/"
 		},
 		{
-			"id": "3d219ad9-9aec-4a72-a731-df6cccc1708f",
+			"id": "3c4235eb-c698-42b7-a17a-69ea768862e0",
 			"key": "region",
 			"value": "1"
 		},
 		{
-			"id": "89b9c628-d75c-44ee-80c8-839bc9acb7c9",
+			"id": "5b709853-880c-4118-aa1f-b24c830c7b22",
 			"key": "logoutToken",
 			"value": "<string>"
 		}
