@@ -52,7 +52,7 @@ namespace BusinessLogic
         public bool Delete(int id)
         {
             var accomodation = Get(id);
-            if (accomodation == null) throw new NotFoundException("There is no accomodation with that id");
+            if (accomodation == null) throw new NotFoundException("The accomodation does not exist");
 
             return accomodationRepository.Delete(accomodation);
         }
@@ -64,7 +64,7 @@ namespace BusinessLogic
         public bool ChangeAvailability(int id, bool availability)
         {
             var accomodation = Get(id);
-            if (accomodation == null) throw new NotFoundException("There is no accomodation with that id");
+            if (accomodation == null) throw new NotFoundException("The accomodation does not exist");
 
             accomodation.Available = availability;
             return accomodationRepository.Update(accomodation);

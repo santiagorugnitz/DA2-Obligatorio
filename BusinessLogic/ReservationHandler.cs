@@ -60,7 +60,7 @@ namespace BusinessLogic
             Reservation reservation = repository.Get(idReservation);
             if (reservation == null)
             {
-                throw new NotFoundException("The reservation does not exists");
+                throw new NotFoundException("The reservation does not exist");
             }
             reservation.ReservationState = state;
             reservation.StateDescription = description;
@@ -71,7 +71,7 @@ namespace BusinessLogic
         {
             if (accomodationHandler.Get(id) == null)
             {
-                throw new BadRequestException("The Accomodation does not exist");
+                throw new BadRequestException("The accomodation does not exist");
             }
             return repository.GetAll(x => ((Reservation)x).Accomodation.Id ==id).ToList();
         }

@@ -50,7 +50,7 @@ namespace WebApi.Controllers
         public IActionResult Get( int id)
         {
             var res = handler.Get(id);
-            if (null == res) throw new NotFoundException("The Accomodation does not exist");
+            if (null == res) throw new NotFoundException("The accomodation does not exist");
             return Ok(res);
         }
 

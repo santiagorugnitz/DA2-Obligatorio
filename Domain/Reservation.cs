@@ -95,7 +95,7 @@ namespace Domain
             {
                 if (value <= 0)
                 {
-                    throw new BadRequestException("The Reservation needs at least one adult guest");
+                    throw new BadRequestException("The reservation needs at least one adult guest");
                 }
                 else
                 {
@@ -111,7 +111,7 @@ namespace Domain
             {
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new BadRequestException("The reservation needs a non empty Name");
+                    throw new BadRequestException("The reservation needs a non empty name");
                 }
                 else
                 {

@@ -28,7 +28,7 @@ namespace WebApi.Controllers
         public IActionResult Post([FromBody] ReservationModel reservation)
         {
             var res = handler.Add(reservation.ToEntity(), reservation.AccomodationId);
-            return Ok("Reservation created, reservation number: " + res.Id);
+            return Ok(res.Id);
 
         }
 
@@ -36,7 +36,7 @@ namespace WebApi.Controllers
         public IActionResult CheckState(int id)
         {
             var res = handler.CheckState(id);
-            if (null == res) throw new NotFoundException("The Reservation does not exists");
+            if (null == res) throw new NotFoundException("The reservation does not exist");
             return Ok(res);
         }
 
