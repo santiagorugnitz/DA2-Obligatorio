@@ -27,7 +27,7 @@ namespace BusinessLogic
 
             if (imageNames == null)
             {
-                throw new BadRequestException("The accomodation needs at least one image");
+                throw new BadRequestException("The accommodation needs at least one image");
             }
 
             foreach (var imageName in imageNames)

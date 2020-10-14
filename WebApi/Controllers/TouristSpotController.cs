@@ -38,7 +38,7 @@ namespace WebApi.Controllers
         public IActionResult Get(int id)
         {
             var res = handler.Get(id);
-            if (null == res) throw new NotFoundException("The Tourist Spot does not exists");
+            if (null == res) throw new NotFoundException("The Tourist Spot does not exist");
             return Ok(res);
         }
 

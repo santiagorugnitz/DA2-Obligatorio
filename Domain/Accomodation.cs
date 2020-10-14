@@ -72,7 +72,7 @@ namespace Domain
             {
                 if (value == null || value.Count() == 0)
                 {
-                    throw new BadRequestException("The Accomodation needs at least one image");
+                    throw new BadRequestException("The accomodation needs at least one image");
                 }
                 else
                 {
