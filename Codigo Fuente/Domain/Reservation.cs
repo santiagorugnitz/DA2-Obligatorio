@@ -87,19 +87,52 @@ namespace Domain
             }
         }
 
+        private int retiredQuantity;
+        public int RetiredQuantity
+        {
+            get { return retiredQuantity; }
+            private set
+            {
+                if (value < 0)
+                {
+                    throw new BadRequestException("The retired guests quantity must be 0 or more");
+                }
+                else
+                {
+                    retiredQuantity = value;
+                }
+            }
+        }
+
         private int adultQuantity;
         public int AdultQuantity
         {
             get { return adultQuantity; }
+            private set
+            {
+                if (value < 0)
+                {
+                    throw new BadRequestException("The adult quantity must be 0 or more");
+                }
+                else
+                {
+                    adultQuantity = value;
+                }
+            }
+        }
+
+        public Tuple<int,int> Adults
+        {
             set
             {
-                if (value <= 0)
+                if (value.Item1 == 0 && value.Item2 == 0)
                 {
                     throw new BadRequestException("The reservation needs at least one adult guest");
                 }
                 else
                 {
-                    adultQuantity = value;
+                    AdultQuantity = value.Item1;
+                    RetiredQuantity = value.Item2;
                 }
             }
         }

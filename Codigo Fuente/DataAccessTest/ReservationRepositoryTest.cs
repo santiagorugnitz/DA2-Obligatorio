@@ -56,7 +56,7 @@ namespace DataAccessTest
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
 
-                AdultQuantity = 2,
+                Adults = new Tuple<int, int>(2, 0),
                 ChildrenQuantity = 1,
                 BabyQuantity = 0,
                 Name = "Martin",
@@ -119,7 +119,7 @@ namespace DataAccessTest
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
 
-                AdultQuantity = 2,
+                Adults = new Tuple<int, int>(2, 0),
                 ChildrenQuantity = 1,
                 BabyQuantity = 0,
                 Name = "Martin",
@@ -164,7 +164,7 @@ namespace DataAccessTest
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
 
-                AdultQuantity = 2,
+                Adults = new Tuple<int, int>(2, 0),
                 ChildrenQuantity = 1,
                 BabyQuantity = 0,
                 Name = "Martin",

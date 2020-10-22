@@ -33,7 +33,7 @@ namespace BusinessLogicTest
                 Name = "Beach",
                 Description = "asd",
                 Image = new Image { Name = "imagen" },
-                Region = new Region() { Name =  "Region Centro Sur" },
+                Region = new Region() { Name = "Region Centro Sur" },
             };
 
             accomodation = new Accomodation()
@@ -42,7 +42,7 @@ namespace BusinessLogicTest
                 Stars = 4.0,
                 Address = "Cuareim",
                 Images = new List<Image> { new Image { Name = "imagen" } },
-                Fee = 4000,
+                Fee = 100,
                 Description = "Hotel in Mvdeo",
                 Telephone = "+598",
                 ContactInformation = "Owner",
@@ -56,10 +56,10 @@ namespace BusinessLogicTest
                 Accomodation = accomodation,
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
-                AdultQuantity = 2,
+                Adults = new Tuple<int, int>(2, 3),
                 ChildrenQuantity = 1,
-                BabyQuantity = 0,
-                Total= 90000,
+                BabyQuantity = 4,
+                Total = 200 + 50 + 100 + 200 + 70,
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "martin.gut",
@@ -101,6 +101,7 @@ namespace BusinessLogicTest
 
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
+
 
             var res = handler.Add(reservation, accomodation.Id);
 
@@ -211,7 +212,7 @@ namespace BusinessLogicTest
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
-            reservation.AdultQuantity = 0;
+            reservation.Adults = new Tuple<int, int>(0, 0);
             var res = handler.Add(reservation, accomodation.Id);
         }
 
@@ -226,7 +227,8 @@ namespace BusinessLogicTest
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
-            reservation.AdultQuantity = -9;
+            reservation.Adults = new Tuple<int, int>(-1, 1);
+
             var res = handler.Add(reservation, accomodation.Id);
         }
 
@@ -257,6 +259,20 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.BabyQuantity = -9;
+            var res = handler.Add(reservation, accomodation.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BadRequestException))]
+        public void AddReservationWithNegativeRetiredGuests()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
+
+            reservation.Adults = new Tuple<int, int>(1, -1);
             var res = handler.Add(reservation, accomodation.Id);
         }
 
@@ -385,7 +401,7 @@ namespace BusinessLogicTest
             accomodationMock.Setup(x => x.Get(reservation.Accomodation.Id)).Returns((Accomodation)reservation.Accomodation);
 
             var res = handler.GetAllFromAccomodation(reservation.Accomodation.Id);
-            
+
             mock.VerifyAll();
             accomodationMock.VerifyAll();
         }
