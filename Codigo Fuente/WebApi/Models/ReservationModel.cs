@@ -16,6 +16,8 @@ namespace WebApi.Models
         
         public int BabyQuantity { get; set; }
 
+        public int RetiredQuantity { get; set; }
+
         public string Email { get; set; }
 
         public string Surname { get; set; }
@@ -34,7 +36,7 @@ namespace WebApi.Models
         public Reservation ToEntity() => new Reservation()
         {
             Name = this.Name,
-            AdultQuantity = this.AdultQuantity,
+            Adults = new Tuple<int,int>(AdultQuantity,RetiredQuantity),
             ChildrenQuantity = this.ChildrenQuantity,
             BabyQuantity = this.BabyQuantity,
             Email = this.Email,

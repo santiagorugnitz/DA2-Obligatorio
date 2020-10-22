@@ -28,7 +28,7 @@ namespace BusinessLogic
             {
                 reservation.Accomodation = gotAccomodation;
                 reservation.Total = CalculateTotal(reservation);
-                return  repository.Add(reservation);
+                return repository.Add(reservation);
             }
             else
             {
@@ -40,7 +40,9 @@ namespace BusinessLogic
         {
             double ret = 0;
             int days = (reservation.CheckOut - reservation.CheckIn).Days;
-            ret += reservation.AdultQuantity + reservation.ChildrenQuantity*0.5 + reservation.BabyQuantity*0.25;
+            ret += reservation.AdultQuantity + reservation.ChildrenQuantity * 0.5 + reservation.BabyQuantity * 0.25;
+            ret += ((int)reservation.RetiredQuantity / 2) * 0.7;
+            ret += reservation.RetiredQuantity % 2;
             ret *= days * reservation.Accomodation.Fee;
             return ret;
         }
@@ -73,7 +75,7 @@ namespace BusinessLogic
             {
                 throw new BadRequestException("The accomodation does not exist");
             }
-            return repository.GetAll(x => ((Reservation)x).Accomodation.Id ==id).ToList();
+            return repository.GetAll(x => ((Reservation)x).Accomodation.Id == id).ToList();
         }
     }
 }
