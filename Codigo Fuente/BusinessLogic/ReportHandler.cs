@@ -81,7 +81,8 @@ namespace BusinessLogic
 
         private bool IncludedInDates(Reservation actualReservation, DateTime startingDate, DateTime finishingDate)
         {
-            return !(actualReservation.CheckOut<startingDate || actualReservation.CheckIn>finishingDate);
+            return !(actualReservation.CheckOut.Date < startingDate.Date 
+                || actualReservation.CheckIn.Date > finishingDate.Date);
         }
     }
 }

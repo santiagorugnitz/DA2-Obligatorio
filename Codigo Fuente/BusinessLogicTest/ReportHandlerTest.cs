@@ -145,6 +145,86 @@ namespace BusinessLogicTest
             }
 
             [TestMethod]
+            public void ReportWithReservationWithIncludedDate1()
+            {
+                touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
+                accomodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accomodation);
+                accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                    Returns(new List<Accomodation> { accomodation });
+                reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                    Returns(new List<Reservation> { reservation });
+
+                reservation.CheckIn = DateTime.Now;
+                reservation.CheckOut = DateTime.Now.AddDays(2);
+
+                var result = reportHandler.AccomodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
+                accomodationMock.VerifyAll();
+                Assert.AreEqual(result.Count(), 1);
+                Assert.AreEqual(result.First().Accomodation, accomodation);
+                Assert.AreEqual(result.First().ReservationsQuantity, 1);
+            }
+
+            [TestMethod]
+            public void ReportWithReservationWithIncludedDate2()
+            {
+                touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
+                accomodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accomodation);
+                accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                    Returns(new List<Accomodation> { accomodation });
+                reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                    Returns(new List<Reservation> { reservation });
+
+                reservation.CheckIn = DateTime.Now.AddDays(2);
+                reservation.CheckOut = DateTime.Now.AddDays(4);
+
+                var result = reportHandler.AccomodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
+                accomodationMock.VerifyAll();
+                Assert.AreEqual(result.Count(), 1);
+                Assert.AreEqual(result.First().Accomodation, accomodation);
+                Assert.AreEqual(result.First().ReservationsQuantity, 1);
+            }
+
+            [TestMethod]
+            public void ReportWithReservationWithIncludedDate3()
+            {
+                touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
+                accomodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accomodation);
+                accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                    Returns(new List<Accomodation> { accomodation });
+                reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                    Returns(new List<Reservation> { reservation });
+
+                reservation.CheckIn = DateTime.Now.AddDays(2);
+                reservation.CheckOut = DateTime.Now.AddDays(4);
+
+                var result = reportHandler.AccomodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(2));
+                accomodationMock.VerifyAll();
+                Assert.AreEqual(result.Count(), 1);
+                Assert.AreEqual(result.First().Accomodation, accomodation);
+                Assert.AreEqual(result.First().ReservationsQuantity, 1);
+            }
+
+            [TestMethod]
+            public void ReportWithReservationWithIncludedDate4()
+            {
+                touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
+                accomodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accomodation);
+                accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                    Returns(new List<Accomodation> { accomodation });
+                reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                    Returns(new List<Reservation> { reservation });
+
+                reservation.CheckIn = DateTime.Now;
+                reservation.CheckOut = DateTime.Now.AddDays(1);
+
+                var result = reportHandler.AccomodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(2));
+                accomodationMock.VerifyAll();
+                Assert.AreEqual(result.Count(), 1);
+                Assert.AreEqual(result.First().Accomodation, accomodation);
+                Assert.AreEqual(result.First().ReservationsQuantity, 1);
+            }
+
+            [TestMethod]
             public void ReportWithReservationWithNonIncludedState1()
             {
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
