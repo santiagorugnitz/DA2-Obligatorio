@@ -41,7 +41,8 @@ namespace BusinessLogic
             double ret = 0;
             int days = (reservation.CheckOut - reservation.CheckIn).Days;
             ret += reservation.AdultQuantity + reservation.ChildrenQuantity * 0.5 + reservation.BabyQuantity * 0.25;
-            ret += ((int)reservation.RetiredQuantity / 2) * 0.7;
+            ret += ((int)reservation.RetiredQuantity / 2) * 1.7;
+
             ret += reservation.RetiredQuantity % 2;
             ret *= days * reservation.Accomodation.Fee;
             return ret;
@@ -55,6 +56,18 @@ namespace BusinessLogic
         public Reservation CheckState(int id)
         {
             return repository.Get(id);
+        }
+
+        public bool Review(int id, double score, string comment)
+        {
+            Reservation reservation = repository.Get(id);
+            if (reservation == null)
+            {
+                throw new NotFoundException("The reservation does not exist");
+            }
+            reservation.Score = score;
+            reservation.Comment = comment;
+            return repository.Update(reservation);
         }
 
         public bool ChangeState(int idReservation, ReservationState state, string description)
@@ -77,5 +90,7 @@ namespace BusinessLogic
             }
             return repository.GetAll(x => ((Reservation)x).Accomodation.Id == id).ToList();
         }
+
+  
     }
 }

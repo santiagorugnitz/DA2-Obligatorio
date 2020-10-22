@@ -121,7 +121,7 @@ namespace Domain
             }
         }
 
-        public Tuple<int,int> Adults
+        public Tuple<int, int> Adults
         {
             set
             {
@@ -211,5 +211,21 @@ namespace Domain
         public string StateDescription { get; set; }
 
         public double Total { get; set; }
+
+        private double? score;
+        public double? Score
+        {
+            get { return score; }
+
+            set
+            {
+                if (value == null || value < 1 || value > 5)
+                {
+                    throw new BadRequestException("Score must be between 1 and 5");
+                }
+            }
+        }
+
+        public string Comment { get;set; }
     }
 }
