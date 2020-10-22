@@ -21,6 +21,28 @@ namespace BusinessLogic
             if (startingDate > finishingDate) throw new BadRequestException("The starting date must be before the finishing one");
 
             var asociatedAccomodations = accomodationHandler.SearchByTouristSpot(spotId);
+            List<ReportItem> report = CreateReport(startingDate, finishingDate, asociatedAccomodations);
+
+            report.Sort((x, y) => Compare(x, y));
+            return report;
+        }
+
+        private int Compare(ReportItem x, ReportItem y)
+        {
+            int compareByReservations = x.ReservationsQuantity.CompareTo(y.ReservationsQuantity);
+
+            if (compareByReservations != 0)
+            {
+                return -compareByReservations;
+            }
+            else
+            {
+                return x.Accomodation.Id.CompareTo(y.Accomodation.Id);
+            }
+        }
+
+        private List<ReportItem> CreateReport(DateTime startingDate, DateTime finishingDate, List<Accomodation> asociatedAccomodations)
+        {
             List<ReportItem> report = new List<ReportItem>();
 
             foreach (var actualAccomodation in asociatedAccomodations)
@@ -40,23 +62,7 @@ namespace BusinessLogic
                 }
             }
 
-            report.Sort((x, y) => Compare(x, y));
             return report;
-        }
-
-        private int Compare(ReportItem x, ReportItem y)
-        {
-            int compareByReservations = x.ReservationsQuantity.CompareTo(y.ReservationsQuantity);
-
-            if (compareByReservations != 0)
-            {
-                return -compareByReservations;
-            }
-            else
-            {
-                return x.Accomodation.Id.CompareTo(y.Accomodation.Id);
-            }
-            
         }
 
         private bool IncludedReservation(Reservation actualReservation, DateTime startingDate, DateTime finishingDate)
