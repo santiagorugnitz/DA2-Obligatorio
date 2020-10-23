@@ -392,6 +392,56 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
+        public void Review()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            mock.Setup(x => x.Update(reservation)).Returns(true);
+            mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
+
+            var res = handler.Review(reservation.Id, 2, "ok");
+
+            mock.VerifyAll();
+            Assert.AreEqual(true, res);
+        }
+
+        [ExpectedException(typeof(NotFoundException))]
+        [TestMethod]
+        public void ReviewWrongId()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            mock.Setup(x => x.Get(reservation.Id)).Returns((Reservation)null);
+
+            var res = handler.Review(reservation.Id, 2, "ok");
+        }
+
+        [ExpectedException(typeof(BadRequestException))]
+        [TestMethod]
+        public void ReviewWrongScore()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
+
+            var res = handler.Review(reservation.Id, 0, "ok");
+
+        }
+        [ExpectedException(typeof(BadRequestException))]
+        [TestMethod]
+        public void ReviewWrongScore2()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
+
+            var res = handler.Review(reservation.Id, 5.1, "ok");
+
+        }
+
+        [TestMethod]
         public void GetAllFromAccomodationOk()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);

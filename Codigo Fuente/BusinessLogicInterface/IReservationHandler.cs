@@ -9,6 +9,7 @@ namespace BusinessLogicInterface
         bool ChangeState(int idReservation, ReservationState state, string description);
         Reservation CheckState(int id);
         bool Delete(Reservation reservation);
-        List<Reservation> GetAllFromAccomodation(int accomodationId);
+        List<Reservation> GetAllFromAccomodation(int spotId);
+        bool Review(int id, double score, string comment);
     }
 }
