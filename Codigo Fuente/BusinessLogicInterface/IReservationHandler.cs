@@ -10,5 +10,6 @@ namespace BusinessLogicInterface
         Reservation CheckState(int id);
         bool Delete(Reservation reservation);
         List<Reservation> GetAllFromAccomodation(int spotId);
+        bool Review(int id, double score, string comment);
     }
 }

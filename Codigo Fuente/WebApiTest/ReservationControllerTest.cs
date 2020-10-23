@@ -107,6 +107,41 @@ namespace WebApiTest
         }
 
         [TestMethod]
+        public void ReviewOk()
+        {
+            var mock = new Mock<IReservationHandler>(MockBehavior.Strict);
+            var controller = new ReservationController(mock.Object);
+            var reservationModel = new ReservationModel()
+            {
+                Name = "Prueba",
+                AdultQuantity = 3,
+                ChildrenQuantity = 2,
+                BabyQuantity = 1,
+                Email = "Email@prueba",
+                Surname = "Prueba",
+                ReservationState = ReservationState.Aceptada,
+                StateDescription = "Done",
+                CheckIn = DateTime.Now,
+                CheckOut = DateTime.Now.AddDays(10)
+            };
+
+            ReviewModel model = new ReviewModel()
+            {
+                Score = 2,
+                Comment = "ok"
+            };
+
+            mock.Setup(x => x.Review(It.IsAny<int>(), model.Score
+                , model.Comment)).Returns(true);
+
+            var result = controller.Review(1, model);
+            var okResult = result as OkObjectResult;
+
+            mock.VerifyAll();
+            Assert.IsNotNull(okResult);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(NotFoundException))]
         public void Get404()
         {

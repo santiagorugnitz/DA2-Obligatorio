@@ -7,6 +7,7 @@ using Domain;
 using Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using WebApi.Filters;
 using WebApi.Models;
 
@@ -52,6 +53,13 @@ namespace WebApi.Controllers
         {
             handler.ChangeState(id, change.State, change.Description);
             return Ok("Reservation state updated");
+        }
+
+        [HttpPut("{id}/review")]
+        public IActionResult Review(int id, [FromBody] ReviewModel review)
+        {
+            handler.Review(id, review.Score, review.Comment);
+            return Ok("Review submited");
         }
     }
 }
