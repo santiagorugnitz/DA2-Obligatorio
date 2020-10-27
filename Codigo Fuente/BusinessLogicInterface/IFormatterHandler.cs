@@ -8,8 +8,6 @@ namespace BusinessLogicInterface
     public interface IFormatterHandler
     {
         List<string> GetAll();
-        bool Add(int position,File file);
-
-
+        bool Add(int position,string fileName);
     }
 }
