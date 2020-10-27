@@ -9,5 +9,8 @@ namespace BusinessLogicInterface
     {
         List<string> GetAll();
         bool Add(int position,string fileName);
+        List<string> GetFileNames(int id);
+
+
     }
 }

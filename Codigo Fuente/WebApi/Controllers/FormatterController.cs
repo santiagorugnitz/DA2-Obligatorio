@@ -10,6 +10,7 @@ using WebApi.Filters;
 namespace WebApi.Controllers
 {
     [ServiceFilter(typeof(ExceptionFilter))]
+    [ServiceFilter(typeof(AuthorizationFilter))]
     [Route("formatters")]
     [ApiController]
     public class FormatterController : ControllerBase
@@ -25,13 +26,19 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            throw new NotImplementedException();
+            return Ok(handler.GetAll());
         }
 
-        [HttpPost("{id}")]
-        public IActionResult ReadFile()
+        [HttpGet("{id}/files")]
+        public IActionResult GetFiles(int id)
         {
-            throw new NotImplementedException();
+            return Ok(handler.GetFileNames(id));
+        }
+
+        [HttpGet("{id}/load")]
+        public IActionResult LoadFile(int id,string fileName)
+        {
+            return Ok(handler.Add(id,fileName));
         }
 
     }
