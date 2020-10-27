@@ -292,6 +292,24 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
+        public void SearchAllAccomodation()
+        {
+            accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Accomodation> { accomodation });
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+
+            DateTime checkIn, checkOut = new DateTime();
+            checkIn = DateTime.Now;
+            checkOut.AddDays(10);
+
+            var res = handler.SearchByTouristSpot(touristSpot.Id,false);
+
+            touristSpotMock.VerifyAll();
+            accomodationMock.VerifyAll();
+            Assert.AreEqual(new List<Accomodation> { accomodation }[0], res[0]);
+        }
+
+        [TestMethod]
         public void SearchNonAvailableAccomodation()
         {
             accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).

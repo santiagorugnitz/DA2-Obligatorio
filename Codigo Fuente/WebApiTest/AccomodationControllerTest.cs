@@ -153,7 +153,7 @@ namespace WebApiTest
                 TouristSpotId = 1
             };
 
-            mock.Setup(x => x.SearchByTouristSpot(1)).
+            mock.Setup(x => x.SearchByTouristSpot(1,true)).
                 Returns(new List<Accomodation> { accomodationModel.ToEntity() });
 
             Image image = new Image()

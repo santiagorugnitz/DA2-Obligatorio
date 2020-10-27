@@ -46,7 +46,8 @@ namespace BusinessLogicTest
                 Description = "Hotel in Mvdeo",
                 Telephone = "+598",
                 ContactInformation = "Owner",
-                TouristSpot = touristSpot
+                TouristSpot = touristSpot,
+                Available = true
             };
 
 
@@ -85,6 +86,23 @@ namespace BusinessLogicTest
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation)null);
+            mock.Setup(x => x.Add(reservation)).Returns(reservation);
+
+            var res = handler.Add(reservation, accomodation.Id);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(BadRequestException),
+"The accomodation spot does not exist")]
+        public void AddReservationWithoutAvailableAccomodation()
+        {
+            var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
+            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+
+            accomodation.Available = false;
 
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation)null);
