@@ -70,15 +70,17 @@ namespace BusinessLogic
             return accomodationRepository.Update(accomodation);
         }
 
-        public List<Accomodation> SearchByTouristSpot(int spotId)
+        public List<Accomodation> SearchByTouristSpot(int spotId,bool onlyAvailable=true)
         {
             if (touristSpotHandler.Get(spotId) == null)
             {
                 throw new BadRequestException("The spot does not exist");
             }
 
-            return accomodationRepository.GetAll(x => ((Accomodation)x).TouristSpot.Id == spotId &&
-            ((Accomodation)x).Available).ToList();
+            if(onlyAvailable)
+            return accomodationRepository.GetAll(x => ((Accomodation)x).TouristSpot.Id == spotId && ((Accomodation)x).Available).ToList();
+
+            return accomodationRepository.GetAll(x => ((Accomodation)x).TouristSpot.Id == spotId).ToList();
 
 
         }

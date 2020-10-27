@@ -24,15 +24,16 @@ namespace BusinessLogic
         public Reservation Add(Reservation reservation, int accomodationId)
         {
             var gotAccomodation = accomodationHandler.Get(accomodationId);
-            if (gotAccomodation != null)
+            if (gotAccomodation == null || !gotAccomodation.Available)
+            {
+                throw new BadRequestException("There is no available accomodation with that id");
+            
+            }
+            else
             {
                 reservation.Accomodation = gotAccomodation;
                 reservation.Total = CalculateTotal(reservation);
                 return repository.Add(reservation);
-            }
-            else
-            {
-                throw new BadRequestException("There is no accomodation with that id");
             }
         }
 

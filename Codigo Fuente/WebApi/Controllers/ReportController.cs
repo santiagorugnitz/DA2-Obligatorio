@@ -10,6 +10,7 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
+    [ServiceFilter(typeof(AuthorizationFilter))]
     [ServiceFilter(typeof(ExceptionFilter))]
     [ApiController]
     [Route("report")]

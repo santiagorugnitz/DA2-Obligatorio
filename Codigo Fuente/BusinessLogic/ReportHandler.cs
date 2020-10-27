@@ -20,7 +20,7 @@ namespace BusinessLogic
         {
             if (startingDate > finishingDate) throw new BadRequestException("The starting date must be before the finishing one");
 
-            var asociatedAccomodations = accomodationHandler.SearchByTouristSpot(spotId);
+            var asociatedAccomodations = accomodationHandler.SearchByTouristSpot(spotId,false);
             List<ReportItem> report = CreateReport(startingDate, finishingDate, asociatedAccomodations);
 
             report.Sort((x, y) => Compare(x, y));

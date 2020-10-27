@@ -159,6 +159,9 @@ namespace WebApi.Migrations
                     b.Property<int>("ChildrenQuantity")
                         .HasColumnType("int");
 
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -170,6 +173,9 @@ namespace WebApi.Migrations
 
                     b.Property<int>("RetiredQuantity")
                         .HasColumnType("int");
+
+                    b.Property<double?>("Score")
+                        .HasColumnType("float");
 
                     b.Property<string>("StateDescription")
                         .HasColumnType("nvarchar(max)");
