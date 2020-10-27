@@ -1,5 +1,6 @@
 ﻿using BusinessLogicInterface;
 using Domain;
+using Exceptions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,7 +22,15 @@ namespace BusinessLogic
         public bool Add(int position, string fileName)
         {
             var dlls = handler.GetDlls();
-            return dlls.ElementAt(position).UploadFromFile(fileName);
+            if (position > dlls.Count()-1 || position < 0) throw new BadRequestException("The dll position does not exists");
+
+            var dll = dlls.ElementAt(position);
+            if (!fileName.EndsWith("." + dll.GetName())) throw new BadRequestException("The file does not have the correct extension");
+
+            var wasUploaded = dll.UploadFromFile(fileName);
+            if (!wasUploaded) throw new BadRequestException("The file does not exists");
+
+            return wasUploaded;
         }
 
         public List<string> GetAll()
@@ -35,6 +44,11 @@ namespace BusinessLogic
             }
 
             return dllNames;
+        }
+
+        public List<string> GetFileNames(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
