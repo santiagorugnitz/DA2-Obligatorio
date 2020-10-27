@@ -21,6 +21,7 @@ namespace WebApi.Controllers
             this.handler = handler;
         }
 
+        [ServiceFilter(typeof(AuthorizationFilter))]
         [HttpGet("{spotId}, {startingDate}, {finishingDate}")]
         public IActionResult Get(int spotId, DateTime startingDate, DateTime finishingDate)
         {
