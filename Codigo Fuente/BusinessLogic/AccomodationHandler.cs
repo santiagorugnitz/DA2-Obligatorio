@@ -87,5 +87,10 @@ namespace BusinessLogic
         {
             return accomodationRepository.Get(accomodationId);
         }
+
+        public bool Add(List<Accomodation> accomodations)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

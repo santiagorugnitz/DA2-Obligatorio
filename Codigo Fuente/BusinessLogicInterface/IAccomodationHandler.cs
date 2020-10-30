@@ -7,6 +7,7 @@ namespace BusinessLogicInterface
     public interface IAccomodationHandler
     {
         Accomodation Add(Accomodation accomodation, int touristSpotId, List<string> imageNames);
+        bool Add(List<Accomodation> accomodations);
         bool ChangeAvailability(int Id, bool availability);
         bool Delete(int id);
         bool Exists(Accomodation accomodation);

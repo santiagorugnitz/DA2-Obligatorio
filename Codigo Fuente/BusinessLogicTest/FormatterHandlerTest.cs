@@ -15,6 +15,11 @@ namespace BusinessLogicTest
     [TestClass]
     public class FormatterHandlerTest
     {
+        public static Accomodation accomodation = new Accomodation
+        {
+            Name = "Accomodation"
+        };
+
         private class FormatterMock : IFormatter
         {
             public string GetName()
@@ -22,27 +27,15 @@ namespace BusinessLogicTest
                 return "json";
             }
 
-            public bool UploadFromFile(string fileName)
+            List<Accomodation> IFormatter.Upload(List<SourceParameter> sourceParameters)
             {
-                return true;
-            }
-        }
-
-        private class FormatterMock2 : IFormatter
-        {
-            public string GetName()
-            {
-                return "json";
-            }
-
-            public bool UploadFromFile(string fileName)
-            {
-                return false;
+                return new List<Accomodation> { accomodation };
             }
         }
 
         private Mock<IDllHandler> dllMock;
         private FormatterHandler handler;
+        private Mock<IAccomodationHandler> accomodationMock;
 
         [TestInitialize]
         public void SetUp()
@@ -50,13 +43,17 @@ namespace BusinessLogicTest
             dllMock = new Mock<IDllHandler>(MockBehavior.Strict);
             dllMock.Setup(x => x.GetDlls()).Returns(new List<IFormatter> { new FormatterMock()});
 
-            handler = new FormatterHandler(dllMock.Object);
+            accomodationMock = new Mock<IAccomodationHandler>(MockBehavior.Strict);
+            accomodationMock.Setup(x => x.Add(new List<Accomodation> { accomodation })).Returns(true);
+
+            handler = new FormatterHandler(dllMock.Object, accomodationMock.Object);
         }
 
         [TestMethod]
         public void AddFile()
         {
-            var result = handler.Add(0, "test.json");
+            var result = handler.Add(0, new List<SourceParameter> { new SourceParameter 
+            { Type = ParameterType.String, Name = "test.json" } });
 
             dllMock.VerifyAll();
             Assert.IsTrue(result);
@@ -66,41 +63,16 @@ namespace BusinessLogicTest
         [ExpectedException(typeof(BadRequestException))]
         public void AddFileWithBadPosition1()
         {
-            var result = handler.Add(1, "test.json");
+            var result = handler.Add(1, new List<SourceParameter> { new SourceParameter
+            { Type = ParameterType.String, Name = "test.json" } });
         }
 
         [TestMethod]
         [ExpectedException(typeof(BadRequestException))]
         public void AddFileWithBadPosition2()
         {
-            var result = handler.Add(-1, "test");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(BadRequestException))]
-        public void AddFileWithBadName1()
-        {
-            dllMock.Setup(x => x.GetDlls()).Returns(new List<IFormatter> { new FormatterMock2() });
-
-            var result = handler.Add(0, "test.exe");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(BadRequestException))]
-        public void AddFileWithBadName2()
-        {
-            dllMock.Setup(x => x.GetDlls()).Returns(new List<IFormatter> { new FormatterMock2() });
-
-            var result = handler.Add(0, "");
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(BadRequestException))]
-        public void AddUnexistingFile()
-        {
-            dllMock.Setup(x => x.GetDlls()).Returns(new List<IFormatter> { new FormatterMock2() });
-
-            var result = handler.Add(0, "test.json");
+            var result = handler.Add(-1, new List<SourceParameter> { new SourceParameter
+            { Type = ParameterType.String, Name = "test.json" } });
         }
 
         [TestMethod]

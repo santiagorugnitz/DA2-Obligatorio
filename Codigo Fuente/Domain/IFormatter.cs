@@ -7,6 +7,6 @@ namespace Domain
     public interface IFormatter
     {
         string GetName();
-        bool UploadFromFile(string fileName);
+        List<Accomodation> Upload(List<SourceParameter> sourceParameters);
     }
 }

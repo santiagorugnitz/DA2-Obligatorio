@@ -55,10 +55,13 @@ namespace WebApiTest
         {
             var mock = new Mock<IFormatterHandler>(MockBehavior.Strict);
             var controller = new FormatterController(mock.Object);
+            
+            List<SourceParameter> parameters = new List<SourceParameter> { new SourceParameter
+            { Type = ParameterType.String, Name = "archivo" } };
 
-            mock.Setup(x => x.Add(1,"archivo")).Returns(true);
+            mock.Setup(x => x.Add(1, parameters)).Returns(true);
 
-            var result = controller.LoadFile(1,"archivo");
+            var result = controller.LoadFile(1,parameters);
             var okResult = result as OkObjectResult;
 
             mock.VerifyAll();

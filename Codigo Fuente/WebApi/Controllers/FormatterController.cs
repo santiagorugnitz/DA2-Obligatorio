@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogicInterface;
+using Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Filters;
@@ -36,9 +37,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}/load")]
-        public IActionResult LoadFile(int id,string fileName)
+        public IActionResult LoadFile(int id, List<SourceParameter> parameters)
         {
-            return Ok(handler.Add(id,fileName));
+            return Ok(handler.Add(id,parameters));
         }
 
     }

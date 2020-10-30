@@ -13,24 +13,24 @@ namespace BusinessLogic
     public class FormatterHandler : IFormatterHandler
     {
         private IDllHandler handler;
+        private IAccomodationHandler accomodationHandler;
 
-        public FormatterHandler(IDllHandler hand)
+        public FormatterHandler(IDllHandler hand, IAccomodationHandler accomodationHand)
         {
             handler = hand;
+            accomodationHandler = accomodationHand;
         }
 
-        public bool Add(int position, string fileName)
+        public bool Add(int position, List<SourceParameter> parameters)
         {
             var dlls = handler.GetDlls();
             if (position > dlls.Count()-1 || position < 0) throw new BadRequestException("The dll position does not exists");
 
             var dll = dlls.ElementAt(position);
-            if (!fileName.EndsWith("." + dll.GetName())) throw new BadRequestException("The file does not have the correct extension");
 
-            var wasUploaded = dll.UploadFromFile(fileName);
-            if (!wasUploaded) throw new BadRequestException("The file does not exists");
-
-            return wasUploaded;
+            var accomodations = dll.Upload(parameters);
+            var wasSuccesfull = accomodationHandler.Add(accomodations);
+            return wasSuccesfull;
         }
 
         public List<string> GetAll()
