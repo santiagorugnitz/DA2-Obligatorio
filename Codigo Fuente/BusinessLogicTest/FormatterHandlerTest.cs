@@ -9,13 +9,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DataImport;
+
 
 namespace BusinessLogicTest
 {
     [TestClass]
     public class FormatterHandlerTest
     {
-        public static Accomodation accomodation = new Accomodation
+        public static AccomodationImport accomodation = new AccomodationImport
         {
             Name = "Accomodation"
         };
@@ -27,9 +29,9 @@ namespace BusinessLogicTest
                 return "json";
             }
 
-            List<Accomodation> IFormatter.Upload(List<SourceParameter> sourceParameters)
+            List<AccomodationImport> IFormatter.Upload(List<SourceParameter> sourceParameters)
             {
-                return new List<Accomodation> { accomodation };
+                return new List<AccomodationImport> { accomodation };
             }
         }
 
@@ -44,7 +46,7 @@ namespace BusinessLogicTest
             dllMock.Setup(x => x.GetDlls()).Returns(new List<IFormatter> { new FormatterMock()});
 
             accomodationMock = new Mock<IAccomodationHandler>(MockBehavior.Strict);
-            accomodationMock.Setup(x => x.Add(new List<Accomodation> { accomodation })).Returns(true);
+            accomodationMock.Setup(x => x.Add(new List<AccomodationImport> { accomodation })).Returns(true);
 
             handler = new FormatterHandler(dllMock.Object, accomodationMock.Object);
         }

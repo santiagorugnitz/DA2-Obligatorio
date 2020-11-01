@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using BusinessLogicInterface;
 using Exceptions;
+using DataImport;
 
 namespace BusinessLogic
 {
@@ -88,7 +89,7 @@ namespace BusinessLogic
             return accomodationRepository.Get(accomodationId);
         }
 
-        public bool Add(List<Accomodation> accomodations)
+        public bool Add(List<AccomodationImport> accomodations)
         {
             throw new NotImplementedException();
         }
