@@ -11,8 +11,5 @@ namespace BusinessLogicInterface
     {
         List<string> GetAll();
         bool Add(int position, List<SourceParameter> parameters);
-        List<string> GetFileNames(int id);
-
-
     }
 }

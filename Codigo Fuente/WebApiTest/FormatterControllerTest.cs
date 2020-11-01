@@ -36,22 +36,6 @@ namespace WebApiTest
         }
 
         [TestMethod]
-        public void GetFiles()
-        {
-            var mock = new Mock<IFormatterHandler>(MockBehavior.Strict);
-            var controller = new FormatterController(mock.Object);
-
-            mock.Setup(x => x.GetFileNames(1)).Returns(new List<string>() { "respaldo.json", "colonia.json" });
-
-            var result = controller.GetFiles(1);
-            var okResult = result as OkObjectResult;
-            var value = okResult.Value as List<string>;
-
-            mock.VerifyAll();
-            Assert.IsNotNull(value);
-        }
-
-        [TestMethod]
         public void LoadFile()
         {
             var mock = new Mock<IFormatterHandler>(MockBehavior.Strict);
@@ -62,7 +46,7 @@ namespace WebApiTest
 
             mock.Setup(x => x.Add(1, parameters)).Returns(true);
 
-            var result = controller.LoadFile(1,parameters);
+            var result = controller.Upload(1,parameters);
             var okResult = result as OkObjectResult;
 
             mock.VerifyAll();

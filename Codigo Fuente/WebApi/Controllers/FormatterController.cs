@@ -32,14 +32,8 @@ namespace WebApi.Controllers
             return Ok(handler.GetAll());
         }
 
-        [HttpGet("{id}/files")]
-        public IActionResult GetFiles(int id)
-        {
-            return Ok(handler.GetFileNames(id));
-        }
-
-        [HttpGet("{id}/load")]
-        public IActionResult LoadFile(int id, List<SourceParameter> parameters)
+        [HttpPost("{id}/upload")]
+        public IActionResult Upload(int id, List<SourceParameter> parameters)
         {
             return Ok(handler.Add(id,parameters));
         }

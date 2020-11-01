@@ -47,10 +47,5 @@ namespace BusinessLogic
 
             return dllNames;
         }
-
-        public List<string> GetFileNames(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
