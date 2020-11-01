@@ -34,14 +34,14 @@ namespace XmlFormatter
                     Available = Boolean.Parse(el.Attribute("available").Value),
                     Telephone = el.Attribute("telephone").Value,
                     ContactInformation = el.Attribute("contact_information").Value,
-                    TouristSpot = getSpot(el.Element("TouristSpotImport"))
+                    TouristSpot = GetSpot(el.Element("TouristSpotImport"))
                 }) ;
             }
             return ret;
 
         }
 
-        private TouristSpotImport getSpot(XElement spot)
+        private TouristSpotImport GetSpot(XElement spot)
         {
             return new TouristSpotImport
             {

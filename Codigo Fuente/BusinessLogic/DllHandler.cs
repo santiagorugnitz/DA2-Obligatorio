@@ -20,7 +20,14 @@ namespace BusinessLogic
         }
         public IEnumerable<IFormatter> GetDlls()
         {
-            throw new NotImplementedException();
+            string[] files = Directory.GetFiles(ImportersPath, "*.dll");
+            foreach (string file in files)
+            {
+                Assembly dll = Assembly.UnsafeLoadFrom(file);
+                Type type = dll.GetTypes().Where(i => typeof(IFormatter).IsAssignableFrom(i)).FirstOrDefault();
+                if (type != null)
+                    yield return Activator.CreateInstance(type) as IFormatter;
+            }
         }
     }
 }
