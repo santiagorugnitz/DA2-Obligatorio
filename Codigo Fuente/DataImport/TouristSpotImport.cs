@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,5 +16,14 @@ namespace DataImport
         public List<int> CategoryIds { get; set; }
 
         public string Image { get; set; }
+
+        public TouristSpot ToEntity()
+        {
+            return new TouristSpot
+            {
+                Name = this.Name,
+                Description = this.Description,
+            };
+        }
     }
 }

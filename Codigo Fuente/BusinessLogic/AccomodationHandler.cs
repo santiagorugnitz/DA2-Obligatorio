@@ -91,7 +91,31 @@ namespace BusinessLogic
 
         public bool Add(List<AccomodationImport> accomodations)
         {
-            throw new NotImplementedException();
+            var ret = true;
+            foreach (var accomodation in accomodations)
+            {
+                var spotImport = accomodation.TouristSpot;
+
+                var spot = touristSpotHandler.Get(spotImport.Name);
+
+                if (spot == null)
+                {
+                    spot = touristSpotHandler.Add(spotImport.ToEntity(), spotImport.RegionId, spotImport.CategoryIds, spotImport.Image);
+                }
+                try
+                {
+                    if (spot == null) throw new BadRequestException();
+                    Add(accomodation.ToEntity(), spot.Id, accomodation.ImageNames);
+                }
+                catch (BadRequestException)
+                {
+                    ret = false;
+                }
+            }
+
+            return ret;
         }
+
+
     }
 }

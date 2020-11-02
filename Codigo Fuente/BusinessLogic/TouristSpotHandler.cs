@@ -17,7 +17,7 @@ namespace BusinessLogic
         private IRepository<Region> regionRepository;
         private IRepository<TouristSpotCategory> joinedRepository;
 
-        public TouristSpotHandler(IRepository<TouristSpot> repo, 
+        public TouristSpotHandler(IRepository<TouristSpot> repo,
             IRepository<Category> categoryRepo, IRepository<Region> regionRepo
             , IRepository<TouristSpotCategory> joinedRepo)
         {
@@ -31,8 +31,7 @@ namespace BusinessLogic
         {
             if (categoryIds.Count == 0) throw new BadRequestException("The spot needs at least one category");
 
-            if (spotsRepository.GetAll(x => ((TouristSpot)x).Name == spot.Name).
-                ToList().Count() > 0)
+            if (Get(spot.Name) != null)
             {
                 throw new BadRequestException("The name already exists");
             }
@@ -148,6 +147,16 @@ namespace BusinessLogic
             }
 
             return spotsList;
+        }
+
+        public TouristSpot Get(string name)
+        {
+            var list = spotsRepository.GetAll(x => ((TouristSpot)x).Name == name);
+            if (list.Count() > 0)
+            {
+                return list.ElementAt(0);
+            }
+            return null;
         }
     }
 }
