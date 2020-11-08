@@ -2,9 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { MenuType } from '../models/menu-type.enum';
+import { MenuType } from 'src/models/menu-type.enum';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AdministratorsService } from '../services/administrators.service';
+import { AdministratorsService } from 'src/services/administrators.service';
 
 
 @Component({

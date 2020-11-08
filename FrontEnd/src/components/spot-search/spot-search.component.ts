@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Region } from 'src/app/models/region';
-import { RegionService } from 'src/app/services/region.service';
+import { Region } from 'src/models/region';
+import { RegionService } from 'src/services/region.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Category } from 'src/app/models/category';
-import { CategoryService } from 'src/app/services/category.service';
+import { Category } from 'src/models/category';
+import { CategoryService } from 'src/services/category.service';
 
 @Component({
   selector: 'app-spot-search',
