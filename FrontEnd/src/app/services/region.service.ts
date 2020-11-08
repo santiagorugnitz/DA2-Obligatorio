@@ -10,9 +10,9 @@ export class RegionService {
 
   getRegions(): Region[]{
     const regions : Region[] = [];
-    regions.push({Id:1,Name:"Ciudad"})      
-    regions.push({Id:2,Name:"Campo"})      
-    regions.push({Id:3,Name:"Playa"})      
+    regions.push({Id:1,Name:"Metropolitana"})      
+    regions.push({Id:2,Name:"Pajaros Pintados"})      
+    regions.push({Id:3,Name:"Este"})      
 
     return regions
   }

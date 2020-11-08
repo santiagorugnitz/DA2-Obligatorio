@@ -1,11 +1,4 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list *ngFor='let region of regions'>
-      <a mat-list-item href="#regionId={{region.Id}}">{{region.Name}}</a>
-    </mat-nav-list>
-  </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
@@ -56,7 +49,7 @@
 
     <body>
       <div [ngSwitch]='menuType'>
-        <div *ngSwitchCase='0'><app-spot-search></app-spot-search></div>
+        <div *ngSwitchCase='0' class="main-component"><app-spot-search></app-spot-search></div>
         <div *ngSwitchDefault>{{menuType.toString()}} and {{isLoggued}} and {{Username.value}} and {{Password.value}}</div>
       </div>
     </body>

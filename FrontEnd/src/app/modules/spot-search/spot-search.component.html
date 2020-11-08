@@ -1,1 +1,16 @@
-<p>spot-search works!</p>
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Regions</mat-toolbar>
+    <mat-nav-list *ngFor='let region of regions'>
+      <a mat-list-item href="#regionId={{region.Id}}">{{region.Name}}</a>
+    </mat-nav-list>
+    <mat-toolbar>Categories</mat-toolbar>
+    <mat-nav-list *ngFor='let category of categories'>
+      <a mat-list-item href="#categoryId={{category.Id}}">{{category.Name}}</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!--Here comes the body-->
+  </mat-sidenav-content>
+</mat-sidenav-container>

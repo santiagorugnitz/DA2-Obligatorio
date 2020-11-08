@@ -2,8 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { RegionService } from '../services/region.service';
-import { Region } from '../models/region';
 import { MenuType } from '../models/menu-type.enum';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AdministratorsService } from '../services/administrators.service';
@@ -24,14 +22,12 @@ export class HomeComponent {
     );
 
     menuType: MenuType;
-    regions: Region[];
     isLoggued:boolean;
     username: string;
     Username = new FormControl('')
     Password = new FormControl('')
     
-  constructor(private breakpointObserver: BreakpointObserver, private regionService: RegionService, private administratorService: AdministratorsService) {
-    this.regions = regionService.getRegions()
+  constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService) {
     this.menuType = MenuType.SearchingMenu
     this.isLoggued = false
     this.username = ''
