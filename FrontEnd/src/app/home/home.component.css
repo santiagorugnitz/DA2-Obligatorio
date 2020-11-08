@@ -14,4 +14,33 @@
   position: sticky;
   top: 0;
   z-index: 1;
+  width: 100%;
+}
+
+.buttons {
+  border: none;
+  padding: 10px 50px;
+}
+
+.button {
+  background-color: #180311;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 20px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  width: 180px;
+}
+
+.button:hover {
+  background-color: #c110d8; /* Green */
+  color: white;
+}
+
+.loginForm{
+  display: inline-block;
 }
