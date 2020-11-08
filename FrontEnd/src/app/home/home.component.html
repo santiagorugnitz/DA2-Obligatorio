@@ -27,9 +27,11 @@
         <div class="loginForm">
           <ng-container *ngIf="isLoggued then ok; else fail"></ng-container>
           <ng-template #ok>
+            <a>You are now logged as: {{Username.value}}</a>
             <label>
-              You are now logged as: {{Username.value}}
-              <button type="submit" class="button" (click)="logout()">Logout</button>
+              <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="logout()">
+                Logout
+              </button>
             </label>
           </ng-template>
           <ng-template #fail>
@@ -43,7 +45,9 @@
               <input type="text" [formControl]="Password">
             </label>
 
-            <button type="submit" class="button" (click)="login()">Submit</button>
+            <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="login()">
+              Login
+            </button>
           </ng-template>
         </div>
 
