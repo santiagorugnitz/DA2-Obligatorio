@@ -1,0 +1,53 @@
+.sidenav-container {
+    height: 100%;
+  }
+  
+  .sidenav {
+    width: 200px;
+  }
+  
+  .sidenav .mat-toolbar {
+    background: inherit;
+  }
+  
+  .mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+  }
+  
+  .buttons {
+    border: none;
+    display: inline-block;
+    padding: 10px 30px;
+  }
+  
+  .button {
+    background-color: #180311;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 20px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    width: 110px;
+  }
+  
+  .button:hover {
+    background-color: #c110d8; /* Green */
+    color: white;
+  }
+  
+  .loginForm{
+    text-align: center;
+    font-size: 12px;
+    display: inline-block;
+  }
+  
+  .main-component{
+    display: inline-block;
+  }
