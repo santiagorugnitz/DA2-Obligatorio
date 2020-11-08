@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { Region } from 'src/models/region';
 import { RegionService } from 'src/services/region.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -27,9 +27,6 @@ export class SpotSearchComponent {
   constructor(private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService) { 
     this.regions = regionService.getRegions()
     this.categories = categoryService.getCategories()
-  }
-
-  ngOnInit(): void {
   }
 
 }

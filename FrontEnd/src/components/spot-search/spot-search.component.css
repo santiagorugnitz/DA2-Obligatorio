@@ -1,13 +1,16 @@
-.sidenav-container{
-    display: block;
-    margin-top: 65px;
-}
+ 
 
-.sidenav {
-   width: 200px;
-   display: block;
-   margin-top: 65px;
-}
+ul {
+    list-style-type: none;
+    margin-top: 4px;
+  }
 
-
-
+  .example-card {
+      margin: 5%;
+    max-width: 400px;
+  }
+  
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }

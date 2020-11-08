@@ -1,16 +1,47 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Regions</mat-toolbar>
-    <mat-nav-list *ngFor='let region of regions'>
-      <a mat-list-item href="#regionId={{region.Id}}">{{region.Name}}</a>
-    </mat-nav-list>
-    <mat-toolbar>Categories</mat-toolbar>
-    <mat-nav-list *ngFor='let category of categories'>
-      <a mat-list-item href="#categoryId={{category.Id}}">{{category.Name}}</a>
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <!--Here comes the body-->
-  </mat-sidenav-content>
+
+    <mat-form-field appearance="fill" style="margin-top: 20%;">
+      <mat-label>Region</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let region of regions" [value]="region.Id">
+          {{region.Name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <p style="margin-left: 5%;">Categories</p>
+    <ul>
+      <li *ngFor='let category of categories'>
+        <mat-checkbox>
+          {{category.Name}}
+        </mat-checkbox>
+      </li>
+    </ul>
+
+    </mat-sidenav>
+
+
+    <mat-sidenav-content>
+      <mat-grid-list cols="2" rowHeight="2:1">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <mat-card-title>Shiba Inu</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+          <mat-card-content>
+            <p>
+              The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+              A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+              bred for hunting.
+            </p>
+          </mat-card-content>
+        </mat-card>
+        <mat-grid-tile>2</mat-grid-tile>
+        <mat-grid-tile>3</mat-grid-tile>
+        <mat-grid-tile>4</mat-grid-tile>
+      </mat-grid-list>
+    </mat-sidenav-content>
+
 </mat-sidenav-container>

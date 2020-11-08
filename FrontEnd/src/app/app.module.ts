@@ -8,6 +8,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -15,6 +16,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpotSearchComponent } from '../components/spot-search/spot-search.component';
 import { ToolBarComponent } from '../components/tool-bar/tool-bar.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card';
+
+
 
 
 @NgModule({
@@ -27,13 +33,17 @@ import { ToolBarComponent } from '../components/tool-bar/tool-bar.component';
     BrowserModule,
     AppRoutingModule,
     MatSliderModule,
+    MatCardModule,
     BrowserAnimationsModule,
     LayoutModule,
     MatToolbarModule,
+    MatGridListModule,
     MatButtonModule,
+    MatSelectModule,
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    MatCheckboxModule,
     CommonModule,
     ReactiveFormsModule
   ],
