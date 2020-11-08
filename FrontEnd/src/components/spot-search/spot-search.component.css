@@ -1,8 +1,13 @@
-.main-component{
+.sidenav-container{
     display: block;
+    margin-top: 65px;
 }
-  
+
 .sidenav {
    width: 200px;
+   display: block;
    margin-top: 65px;
 }
+
+
+
