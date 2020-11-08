@@ -1,8 +1,6 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list *ngFor='let region of regions'>
       <a mat-list-item href="#regionId={{region.Id}}">{{region.Name}}</a>
@@ -10,56 +8,56 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span>FrontEnd</span>
       <div class="buttons">
-      <button 
-      class="button"
-      type="button"
-      aria-label="Toggle sidenav"
-      mat-icon-button
-      (click)="updateMenu(0)">
-    Tourist Spot Search
-    </button>
-    <button 
-      class="button"
-      type="button"
-      aria-label="Toggle sidenav"
-      mat-icon-button
-      (click)="updateMenu(1)">
-    Add Users    
-  </button>
+        <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="updateMenu(0)">
+          Tourist Spot Search
+        </button>
+        <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="updateMenu(1)">
+          Add Users
+        </button>
 
-  
-  <div class="loginForm">
-  
-    <!--focus para ir mostrando errores basicos-->
-    <label>
-      Username:
-      <input type="text" [formControl]="Username">
-    </label>
-  
-    <label>
-      Password:
-      <input type="text" [formControl]="Password">
-    </label>
-  
-  </div>
+        <ng-container *ngIf="isLoggued then ok; else fail"></ng-container>
+        <ng-template #ok>
+          <div>
+            <label>
+              <div class="loginForm">
+                You are now logged as: {{Username.value}}
+                <button type="submit" class="button" (click)="logout()">Logout</button>
+              </div>
+            </label>
+          </div>
+        </ng-template>
+        <ng-template #fail>
+          <div class="loginForm">
 
-  <button type="submit" class="button" (click)="login()">Submit</button>
+            <!--focus para ir mostrando errores basicos-->
+            <label>
+              Username:
+              <input type="text" [formControl]="Username">
+            </label>
 
-  </div>
+            <label>
+              Password:
+              <input type="text" [formControl]="Password">
+            </label>
+
+          </div>
+
+          <button type="submit" class="button" (click)="login()">Submit</button>
+        </ng-template>
+
+
+      </div>
     </mat-toolbar>
+
     <body>
-      
-{{menuType.toString()}} and {{isLoggued}} and {{Username.value}} and {{Password.value}}
+
+      {{menuType.toString()}} and {{isLoggued}} and {{Username.value}} and {{Password.value}}
     </body>
   </mat-sidenav-content>
 </mat-sidenav-container>

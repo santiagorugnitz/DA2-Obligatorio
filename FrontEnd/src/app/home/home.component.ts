@@ -6,6 +6,7 @@ import { RegionService } from '../services/region.service';
 import { Region } from '../models/region';
 import { MenuType } from '../models/menu-type.enum';
 import { FormControl, FormGroup } from '@angular/forms';
+import { AdministratorsService } from '../services/administrators.service';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class HomeComponent {
     Username = new FormControl('')
     Password = new FormControl('')
     
-  constructor(private breakpointObserver: BreakpointObserver, private regionService: RegionService) {
+  constructor(private breakpointObserver: BreakpointObserver, private regionService: RegionService, private administratorService: AdministratorsService) {
     this.regions = regionService.getRegions()
     this.menuType = MenuType.SearchingMenu
     this.isLoggued = false
@@ -40,8 +41,17 @@ export class HomeComponent {
     this.menuType = menu;
   }
 
-  login() {
-    
-    this.isLoggued = true;
+  login(): void {
+    if  (this.administratorService.login(this.Username.value, this.Password.value))
+    {
+      this.isLoggued = true;
+    }
+  }
+
+  logout(): void {
+    this.administratorService.logout(this.Username.value)
+    this.Username.setValue('')
+    this.Password.setValue('')
+    this.isLoggued = false
   }
 }
