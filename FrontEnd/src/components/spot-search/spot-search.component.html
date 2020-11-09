@@ -4,7 +4,7 @@
 
     <mat-form-field appearance="fill" style="margin-top: 20%;">
       <mat-label>Region</mat-label>
-      <mat-select>
+      <mat-select [(value)]="selectedRegion" (selectionChange)="getSpots()">
         <mat-option *ngFor="let region of regions" [value]="region.Id">
           {{region.Name}}
         </mat-option>
@@ -14,7 +14,7 @@
     <p style="margin-left: 5%;">Categories</p>
     <ul>
       <li *ngFor='let category of categories'>
-        <mat-checkbox>
+        <mat-checkbox (change)="onCategoryClick($event.checked,category.Id)">
           {{category.Name}}
         </mat-checkbox>
       </li>
@@ -24,23 +24,18 @@
 
 
     <mat-sidenav-content>
-      <mat-grid-list cols="2" rowHeight="2:1">
-        <mat-card class="example-card">
+      <mat-grid-list cols="2" rowHeight="2:1"  *ngFor="let spot of spots">
+        <mat-card class="spot-card">
           <mat-card-header>
-            <mat-card-title>Shiba Inu</mat-card-title>
+            <mat-card-title>{{spot.Name}}</mat-card-title>
           </mat-card-header>
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+          <img mat-card-image src={{spot.Image}} alt="Photo of {{spot.Name}}">
           <mat-card-content>
             <p>
-              The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-              A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-              bred for hunting.
+              {{spot.Description}}
             </p>
           </mat-card-content>
         </mat-card>
-        <mat-grid-tile>2</mat-grid-tile>
-        <mat-grid-tile>3</mat-grid-tile>
-        <mat-grid-tile>4</mat-grid-tile>
       </mat-grid-list>
     </mat-sidenav-content>
 
