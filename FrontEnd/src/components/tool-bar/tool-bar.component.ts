@@ -21,6 +21,7 @@ export class ToolBarComponent  {
 
     @Output() sendMenuType = new EventEmitter<MenuType>();
     menuType : MenuType;
+    
     isLoggued:boolean;
     Username = new FormControl('')
     Password = new FormControl('')
@@ -50,4 +51,5 @@ export class ToolBarComponent  {
       this.menuType = menu;
       this.sendMenuType.emit(this.menuType);
     }
+
 }

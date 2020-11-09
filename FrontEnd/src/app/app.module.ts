@@ -16,18 +16,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpotSearchComponent } from '../components/spot-search/spot-search.component';
 import { ToolBarComponent } from '../components/tool-bar/tool-bar.component';
+import { AccommodationSearchComponent} from '../components/accommodation-search/accommodation-search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
-
-
-
 
 @NgModule({
   declarations: [
     AppComponent,
     SpotSearchComponent,
-    ToolBarComponent
+    ToolBarComponent,
+    AccommodationSearchComponent
   ],
   imports: [
     BrowserModule,

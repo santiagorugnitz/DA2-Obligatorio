@@ -3,7 +3,10 @@
 </div>
 <div class="main-component" [ngSwitch]='menuType'>
     <div *ngSwitchCase='0'>
-        <app-spot-search></app-spot-search>
+        <app-spot-search (sendSpot)="getSpot($event)"></app-spot-search>
+    </div>
+    <div *ngSwitchCase='2'>
+        <app-accommodation-search [spot]="spot"></app-accommodation-search>
     </div>
     <div *ngSwitchDefault>{{menuType.toString()}} and {{isLoggued}} and {{Username.value}} and {{Password.value}}</div>
 </div>

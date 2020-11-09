@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, EventEmitter, Output} from '@angular/core';
 import { Region } from 'src/models/region';
 import { RegionService } from 'src/services/region.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -7,6 +7,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Category } from 'src/models/category';
 import { CategoryService } from 'src/services/category.service';
+import { TouristSpot } from 'src/models/tourist-spot';
 
 @Component({
   selector: 'app-spot-search',
@@ -21,12 +22,21 @@ export class SpotSearchComponent {
       shareReplay()
     );
     
+    
   regions: Region[];
   categories: Category[];
+  @Output() sendSpot = new EventEmitter<TouristSpot>();
+    spot : TouristSpot;
   
   constructor(private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService) { 
     this.regions = regionService.getRegions()
     this.categories = categoryService.getCategories()
+    this.spot = {Id:1,Name:"Montevideo",Description:"Capital de Uruguay", Image:"Nueva"}
+  }
+
+  searchAccomodations(sendingSpot:TouristSpot, $event){
+    //this.spot = sendingSpot
+    this.sendSpot.emit(this.spot);
   }
 
 }
