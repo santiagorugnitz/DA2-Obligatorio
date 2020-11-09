@@ -1,11 +1,9 @@
-<mat-sidenav-container class="sidenav-container">
-    <mat-sidenav-content>
-        <app-tool-bar (sendMenuType)="actualMenuType($event)"></app-tool-bar>
-      <body>
-        <div class="main-component" [ngSwitch]='menuType'>
-          <div *ngSwitchCase='0' class="main-component"><app-spot-search></app-spot-search></div>
-          <div *ngSwitchDefault>{{menuType.toString()}} and {{isLoggued}} and {{Username.value}} and {{Password.value}}</div>
-        </div>
-      </body>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+<div class="tool-bar">
+    <app-tool-bar (sendMenuType)="actualMenuType($event)"></app-tool-bar>
+</div>
+<div class="main-component" [ngSwitch]='menuType'>
+    <div *ngSwitchCase='0'>
+        <app-spot-search></app-spot-search>
+    </div>
+    <div *ngSwitchDefault>{{menuType.toString()}} and {{isLoggued}} and {{Username.value}} and {{Password.value}}</div>
+</div>

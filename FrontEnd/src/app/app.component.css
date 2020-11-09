@@ -1,9 +1,8 @@
-.sidenav-container {
-    height: 100%;
+.main-component {
   }
 
-.main-component {
-    display: block;
-    margin-top: 65px;
-    float: left;
- }
+.tool-bar{
+  display: fixed;
+  height: 70px;
+
+}
