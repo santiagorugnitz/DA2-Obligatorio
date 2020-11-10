@@ -84,5 +84,9 @@ export class AccommodationsSearchComponent implements OnInit {
     }
   }
 
+  search(){
+
+  }
+
 
 }

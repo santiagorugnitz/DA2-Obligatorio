@@ -2,6 +2,26 @@
   width: 100%;
 }
 
+.button {
+  background-color: #180311;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin-left: 70%;
+  margin-top: 100%;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  height: 50%;
+}
+
+.button:hover {
+  background-color: #c110d8; /* Green */
+  color: white;
+} 
+
 .shipping-card {
   min-width: 120px;
   margin: 20px auto;
@@ -46,13 +66,9 @@ mat-form-field{
   margin-right: 0;
 }
 
-.button{
-  margin-top: 1%;
-}
-
 section {
   display: table;
-  margin: 8px;
+
 }
 
 .example-label {
@@ -86,4 +102,8 @@ section {
 p{
   text-align: center;
   margin-top: 15%;
+}
+
+.search{
+  margin-top: 10%;
 }

@@ -7,13 +7,13 @@
     </button>
     <ng-container *ngIf="userLoggued.isLoggued then adminFeatures"></ng-container>
     <ng-template #adminFeatures>
-      <button class="button" routerLink="accommodation-search/1" mat-icon-button  aria-label="Toggle sidenav">
+      <button mat-flat-button class="button" routerLink="accommodation-search/1">
         <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Add Users</a>
       </button>
     </ng-template>
 
     <div class="buttons">
-      <button class="button" routerLink="spot-search" mat-icon-button  aria-label="Toggle sidenav">
+      <button mat-flat-button class="button" routerLink="spot-search">
         <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Tourist Spot Search</a>
       </button>
       <div class="loginForm">
@@ -21,8 +21,8 @@
         <ng-template #ok>
           <a>You are now logged as: {{Username.value}}</a>
           <label>
-            <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button routerLink="spot-search" (click)="logout($event)">
-              Logout
+            <button mat-flat-button class="button" routerLink="spot-search" (click)="logout($event)">
+              <a>Logout</a>
             </button>
           </label>
         </ng-template>
@@ -37,8 +37,8 @@
             <input type="text" [formControl]="Password">
           </label>
 
-          <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="login($event)">
-            Login
+          <button mat-flat-button class="button" (click)="login($event)">
+            <a>Login</a>
           </button>
         </ng-template>
       </div>
