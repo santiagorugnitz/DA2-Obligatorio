@@ -9,19 +9,21 @@
       
       <mat-form-field>
         <mat-label>Starting Date</mat-label>
-        <input matInput [matDatepicker]="picker1" [value]="startingDate.value">
+        <input matInput [matDatepicker]="picker1" [value]="startingDate"
+        (dateInput)="changeStartingDate($event)" (dateChange)="changeStartingDate($event)">
         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
         <mat-datepicker #picker1></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Finishing Date</mat-label>
-        <input matInput [matDatepicker]="picker2" [value]="finishingDate.value">
+        <input matInput [matDatepicker]="picker2" [value]="finishingDate"
+        (dateInput)="changeFinishingDate($event)" (dateChange)="changeFinishingDate($event)">
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
       </mat-form-field>
   
-      <p>{{startingDate.value}} and {{finishingDate.value}}</p>
+      <p>{{startingDate}} and {{finishingDate}}</p>
 
     </mat-card-content>
   </mat-card>
