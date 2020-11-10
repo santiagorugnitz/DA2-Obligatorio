@@ -21,7 +21,7 @@
         <ng-template #ok>
           <a>You are now logged as: {{Username.value}}</a>
           <label>
-            <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="logout($event)">
+            <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button routerLink="spot-search" (click)="logout($event)">
               Logout
             </button>
           </label>

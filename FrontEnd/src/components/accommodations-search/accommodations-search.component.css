@@ -22,6 +22,68 @@
   margin-right: 20px;
 }
 
+mat-form-field{
+  display: inline-block;
+  margin: 10px 10px;  
+}
+
+.title{
+  text-align: center;
+  font-size: 20px;
+  margin-right: 2%;
+  margin-top: 6%;
+}
+
+.date{
+  margin-top: 5%;
+}
+
+.subtitle{
+  text-align: center;
+}
+
 .col:last-child {
   margin-right: 0;
+}
+
+.button{
+  margin-top: 1%;
+}
+
+section {
+  display: table;
+  margin: 8px;
+}
+
+.example-label {
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  width: 120px;
+}
+
+.example-button-row {
+  display: table-cell;
+}
+
+.example-button-row button {
+  display: table-cell;
+  margin-right: 8px;
+}
+
+.example-flex-container {
+  display: flex;
+  justify-content: space-between;
+  width: 480px;
+}
+
+.example-button-container {
+  display: flex;
+  justify-content: center;
+  width: 120px;
+}
+
+p{
+  text-align: center;
+  margin-top: 15%;
 }
