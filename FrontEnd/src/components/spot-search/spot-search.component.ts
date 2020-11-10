@@ -28,7 +28,7 @@ export class SpotSearchComponent {
   spots: TouristSpot[];
 
   selectedCategories: Number[] = []
-  selectedRegion: 0
+  selectedRegion: Number
 
 
   constructor(private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
