@@ -107,3 +107,8 @@ p{
 .search{
   margin-top: 10%;
 }
+
+.accommodation-card {
+  margin: 5%;
+max-width: 400px;
+}
