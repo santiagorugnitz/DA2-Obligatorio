@@ -24,7 +24,7 @@
 
 
     <mat-sidenav-content>
-      <mat-grid-list cols="2" rowHeight="2:1"  *ngFor="let spot of spots">
+      <mat-grid-list class="container" cols="2" rowHeight="2:1"  *ngFor="let spot of spots">
         <mat-card class="spot-card" routerLink="../accommodation-search/{{spot.Id}}">
           <mat-card-header>
             <mat-card-title>{{spot.Name}}</mat-card-title>
