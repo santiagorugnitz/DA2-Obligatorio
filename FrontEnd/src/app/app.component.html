@@ -1,9 +1,6 @@
 <div class="tool-bar">
-    <app-tool-bar (sendMenuType)="actualMenuType($event)"></app-tool-bar>
+    <app-tool-bar (sentUser)="modifyLogguedUser($event)" [userLoggued]="logguedUser"></app-tool-bar>
 </div>
-<div class="main-component" [ngSwitch]='menuType'>
-    <div *ngSwitchCase='0'>
-        <app-spot-search></app-spot-search>
-    </div>
-    <div *ngSwitchDefault>{{menuType.toString()}} and {{isLoggued}} and {{Username.value}} and {{Password.value}}</div>
+<div class="main-component">
+    <router-outlet></router-outlet>
 </div>

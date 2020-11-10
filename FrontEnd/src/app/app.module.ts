@@ -12,22 +12,27 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpotSearchComponent } from '../components/spot-search/spot-search.component';
 import { ToolBarComponent } from '../components/tool-bar/tool-bar.component';
+import { AccommodationsSearchComponent} from '../components/accommodations-search/accommodations-search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
-
-
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import {MatNativeDateModule} from '@angular/material/core';
+import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MatRippleModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
     AppComponent,
     SpotSearchComponent,
-    ToolBarComponent
+    ToolBarComponent,
+    AccommodationsSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -45,9 +50,17 @@ import {MatCardModule} from '@angular/material/card';
     MatListModule,
     MatCheckboxModule,
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    MatRippleModule
   ],
-  providers: [],
+  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

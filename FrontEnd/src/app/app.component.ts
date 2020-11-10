@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { NumberValueAccessor } from '@angular/forms';
 import { MenuType } from 'src/models/menu-type.enum';
+import { TouristSpot } from 'src/models/tourist-spot';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-root',
@@ -9,13 +12,16 @@ import { MenuType } from 'src/models/menu-type.enum';
 export class AppComponent {
   title = 'FrontEnd';
 
-  menuType: MenuType;
+  logguedUser: User; 
+  spot: TouristSpot;
 
   constructor() {
-    this.menuType = 0
+    this.spot = new TouristSpot
+    this.logguedUser = new User
+    this.logguedUser.isLoggued = false;
   }
 
-  actualMenuType(recivedMenu: MenuType) {
-    this.menuType = recivedMenu;
+  modifyLogguedUser(receivedUser: User) {
+    this.logguedUser = receivedUser;
   }
 }

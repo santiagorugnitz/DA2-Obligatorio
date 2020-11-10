@@ -1,4 +1,7 @@
 .main-component {
+  background-image: url(../assets/images/fondo.jpg);
+  background-color: #dfabab;
+  height: 100%;
   }
 
 .tool-bar{
