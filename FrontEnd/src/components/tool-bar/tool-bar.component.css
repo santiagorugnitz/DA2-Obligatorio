@@ -34,6 +34,25 @@
     width: 110px;
   }
   
+  .toolbar-element {
+    display: inline-block;
+    height: 40px;
+    margin: 0 16px;
+    font-size: 30px;
+    padding: 10px 10px;
+    background-color: #030100;
+  }
+  
+  .toolbar-element:hover {
+    opacity: 0.8;
+    cursor: pointer;
+    color: #e706d5;
+  }
+  
+  .active {
+    color: #d335a3;
+  }
+
   .button:hover {
     background-color: #c110d8; /* Green */
     color: white;

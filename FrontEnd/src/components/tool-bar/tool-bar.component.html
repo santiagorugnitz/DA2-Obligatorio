@@ -5,19 +5,19 @@
       *ngIf="isHandset$ | async">
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
-    <ng-container *ngIf="isLoggued then adminFeatures"></ng-container>
+    <ng-container *ngIf="userLoggued.isLoggued then adminFeatures"></ng-container>
     <ng-template #adminFeatures>
-      <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="updateMenu(1, $event)">
-        Add Users
+      <button class="button" routerLink="accommodation-search/1" mat-icon-button  aria-label="Toggle sidenav">
+        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Add Users</a>
       </button>
     </ng-template>
 
     <div class="buttons">
-      <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="updateMenu(0, $event)">
-        Tourist Spot Search
+      <button class="button" routerLink="spot-search" mat-icon-button  aria-label="Toggle sidenav">
+        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Tourist Spot Search</a>
       </button>
       <div class="loginForm">
-        <ng-container *ngIf="isLoggued then ok; else fail"></ng-container>
+        <ng-container *ngIf="userLoggued.isLoggued then ok; else fail"></ng-container>
         <ng-template #ok>
           <a>You are now logged as: {{Username.value}}</a>
           <label>
@@ -37,7 +37,7 @@
             <input type="text" [formControl]="Password">
           </label>
 
-          <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="login()">
+          <button class="button" type="button" aria-label="Toggle sidenav" mat-icon-button (click)="login($event)">
             Login
           </button>
         </ng-template>

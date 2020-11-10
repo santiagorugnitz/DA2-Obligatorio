@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NumberValueAccessor } from '@angular/forms';
 import { MenuType } from 'src/models/menu-type.enum';
 import { TouristSpot } from 'src/models/tourist-spot';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-root',
@@ -11,20 +12,16 @@ import { TouristSpot } from 'src/models/tourist-spot';
 export class AppComponent {
   title = 'FrontEnd';
 
-  menuType: MenuType;
+  logguedUser: User; 
   spot: TouristSpot;
 
   constructor() {
-    this.menuType = 0
     this.spot = new TouristSpot
+    this.logguedUser = new User
+    this.logguedUser.isLoggued = false;
   }
 
-  actualMenuType(recivedMenu: MenuType) {
-    this.menuType = recivedMenu;
-  }
-
-  getSpot(receivedSpot: TouristSpot) {
-    this.spot = receivedSpot;
-    this.menuType = MenuType.AccomodationSearch
+  modifyLogguedUser(receivedUser: User) {
+    this.logguedUser = receivedUser;
   }
 }
