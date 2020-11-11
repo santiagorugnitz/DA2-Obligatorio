@@ -8,6 +8,8 @@ import { MatSelectModule } from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 import { AccommodationsSearchComponent } from './accommodations-search.component';
 
@@ -29,7 +31,8 @@ describe('AccommodationsSearchComponent', () => {
         MatSelectModule,
         MatDatepickerModule,
         MatNativeDateModule,
-        MatRippleModule
+        MatRippleModule,
+        MatSnackBar
       ]
     }).compileComponents();
   }));

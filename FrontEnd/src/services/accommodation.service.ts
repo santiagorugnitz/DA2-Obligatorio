@@ -21,6 +21,9 @@ export class AccommodationService {
 
     const stars = 2.5;
     this.accommodations.push({Name:'Hotel 2', Id:2, Images:this.images, Adress:'Hotel 2', Stars:stars, Description:''})
+
+    const stars2 = 3.5;
+    this.accommodations.push({Name:'Hotel 3', Id:3, Images:this.images, Adress:'Hotel 3', Stars:stars2, Description:''})
     return this.accommodations; 
   }
 }

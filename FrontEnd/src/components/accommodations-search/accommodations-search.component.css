@@ -22,6 +22,25 @@
   color: white;
 } 
 
+.button-reservation {
+  background-color: #180311;
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  transition-duration: 0.4s;
+  height: 50%;
+  margin-left: 32.5%;
+}
+
+.button-reservation:hover {
+  background-color: #c110d8; /* Green */
+  color: white;
+} 
+
 .shipping-card {
   min-width: 120px;
   margin: 20px auto;
@@ -51,11 +70,11 @@ mat-form-field{
   text-align: center;
   font-size: 20px;
   margin-right: 2%;
-  margin-top: 6%;
+  margin-top: 5%;
 }
 
 .date{
-  margin-top: 5%;
+  margin-top: 4%;
 }
 
 .subtitle{
@@ -111,4 +130,15 @@ p{
 .accommodation-card {
   margin: 5%;
 max-width: 400px;
+}
+
+.accommo{
+  float: left;
+  margin-left: 13%;
+}
+
+.image{
+  height: 300px;
+  width: 250px;
+  margin-left: 38px;
 }

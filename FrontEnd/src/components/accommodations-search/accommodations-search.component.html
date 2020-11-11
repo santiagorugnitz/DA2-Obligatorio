@@ -171,19 +171,24 @@
       <ng-container *ngIf="hasSearched then searched; else not"></ng-container>
       <ng-template #searched>
         
-        <mat-grid-list cols="2" rowHeight="2:1"  *ngFor="let accommodation of accommodations">
+        <mat-grid-list class="accommo" cols="2" rowHeight="2:1"  *ngFor="let accommodation of accommodations">
           <mat-card class="accommodation-card">
             <mat-card-header>
               <mat-card-title>{{accommodation.Name}}</mat-card-title>
             </mat-card-header>
-            <img mat-card-image src={{accommodation.Images[0]}} alt="Photo of {{spot.Name}}">
+            <img mat-card-image class="image" src={{accommodation.Images[getSelectedImage(accommodation.Id)]}}  alt="Photo of {{accommodation.Name}}">
+            <button mat-flat-button class="button-reservation" (click)="nextImage(accommodation.Id)">
+              <a>More images</a>
+            </button>
+            
             <mat-card-content>
-              <p>
-                {{accommodation.Description}}
-              </p>
+              Description: {{accommodation.Description}}
               <p>
                 Stars: {{accommodation.Stars}}
               </p>
+              <button mat-flat-button class="button-reservation" >
+                <a>Make reservation</a>
+              </button>
             </mat-card-content>
           </mat-card>
         </mat-grid-list>
