@@ -25,6 +25,8 @@ export class ToolBarComponent  {
     Username = new FormControl('')
     Password = new FormControl('')
 
+    reservationNumber = ""
+
     constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService) {
     }
   
