@@ -180,6 +180,10 @@
             <button mat-flat-button class="button-reservation" (click)="nextImage(accommodation.Id)">
               <a>More images</a>
             </button>
+
+            <button mat-flat-button class="button-reservation" (click)="getAccommodationComments(accommodation.Id, accommodation.Name)">
+              <a>Show Comments</a>
+            </button>
             
             <mat-card-content>
               Description: {{accommodation.Description}}

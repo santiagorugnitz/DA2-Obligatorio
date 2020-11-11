@@ -1,0 +1,7 @@
+<h2>{{data.accommodationName}}</h2>
+
+<ul>
+    <li *ngFor="let comment of comments">Comment: {{comment}}</li>
+  </ul>
+  
+  <button mat-rised-button class="button" (click)="onCloseClick()">Close</button>

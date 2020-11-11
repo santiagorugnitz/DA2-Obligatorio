@@ -33,7 +33,9 @@
   cursor: pointer;
   transition-duration: 0.4s;
   height: 50%;
-  margin-left: 32.5%;
+  margin-left: 24%;
+  margin-top: 2%;
+  width: 50%;
 }
 
 .button-reservation:hover {

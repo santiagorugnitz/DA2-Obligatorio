@@ -35,8 +35,6 @@ export class SpotSearchComponent {
     this.regions = regionService.getRegions()
     this.categories = categoryService.getCategories()
     this.getSpots()
-
-
   }
 
   onCategoryClick(checked: Boolean, id: Number) {
