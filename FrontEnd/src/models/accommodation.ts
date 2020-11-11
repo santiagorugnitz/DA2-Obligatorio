@@ -1,5 +1,5 @@
 export class Accommodation {
-    Id:Number
+    Id:number
     Name:string
     Images:string[]
     Adress:string

@@ -26,6 +26,7 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatRippleModule} from '@angular/material/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {MatRippleModule} from '@angular/material/core';
     FormsModule,
     MatNativeDateModule,
     ReactiveFormsModule,
-    MatRippleModule
+    MatRippleModule,
+    MatSnackBarModule
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]
