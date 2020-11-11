@@ -105,6 +105,9 @@ export class AccommodationsSearchComponent implements OnInit {
         for (var _i = 0; _i < this.accommodations.length; _i++) {
           this.selectedImages.push({accommodationId:this.accommodations[_i].Id, imageNumber:0})
         }
+        for (let accommodation of this.accommodations){
+          this.calculateTotal(accommodation.Id)
+        }
         this.hasSearched = !this.hasSearched
       }else{
         alert('The dates are incorrect');
@@ -114,6 +117,14 @@ export class AccommodationsSearchComponent implements OnInit {
       this.accommodations = []
       this.selectedImages = []
     }  
+  }
+  
+  calculateTotal(Id: number): void {
+    
+    this.getAccommodationById(Id).Total = this.accommodationService.calculateTotal(
+      Id, this.startingDate, this.finishingDate, 
+      this.adultQuantity, this.retiredQuantity,
+      this.childrenQuantity, this.babyQuantity)
   }
 
   getSelectedImage(accomodationId:number){
