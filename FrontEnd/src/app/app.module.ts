@@ -29,6 +29,7 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog';
 import {AccommodationCommentsComponent} from '../components/accommodation-comments/accommodation-comments.component'
+import { SpotReportComponent } from '../components/spot-report/spot-report.component'
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {AccommodationCommentsComponent} from '../components/accommodation-commen
     SpotSearchComponent,
     ToolBarComponent,
     AccommodationsSearchComponent,
-    AccommodationCommentsComponent
+    AccommodationCommentsComponent,
+    SpotReportComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 export class TouristSpot {
     
-    Id: Number
+    Id: number
     Name: String
     Description: String
     Image: String
