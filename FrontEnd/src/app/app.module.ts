@@ -27,13 +27,16 @@ import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatRippleModule} from '@angular/material/core';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
+import {AccommodationCommentsComponent} from '../components/accommodation-comments/accommodation-comments.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     SpotSearchComponent,
     ToolBarComponent,
-    AccommodationsSearchComponent
+    AccommodationsSearchComponent,
+    AccommodationCommentsComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +63,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatNativeDateModule,
     ReactiveFormsModule,
     MatRippleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule,
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]

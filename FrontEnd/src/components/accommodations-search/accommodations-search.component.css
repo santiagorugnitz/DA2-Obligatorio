@@ -33,7 +33,9 @@
   cursor: pointer;
   transition-duration: 0.4s;
   height: 50%;
-  margin-left: 32.5%;
+  margin-left: 26%;
+  margin-top: 2%;
+  width: 50%;
 }
 
 .button-reservation:hover {
@@ -118,9 +120,14 @@ section {
   width: 120px;
 }
 
-p{
+.example-button-row  p{
   text-align: center;
   margin-top: 15%;
+}
+
+p{
+  text-align: center;
+  padding-top: 3%;
 }
 
 .search{
@@ -140,5 +147,5 @@ max-width: 400px;
 .image{
   height: 300px;
   width: 250px;
-  margin-left: 38px;
+  margin-left: 15%;
 }

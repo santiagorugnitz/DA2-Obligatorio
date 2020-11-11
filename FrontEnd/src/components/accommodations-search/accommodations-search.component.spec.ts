@@ -5,10 +5,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 
 
 import { AccommodationsSearchComponent } from './accommodations-search.component';
@@ -19,7 +20,7 @@ describe('AccommodationsSearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccommodationsSearchComponent ],
+      declarations: [AccommodationsSearchComponent],
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,
@@ -32,7 +33,8 @@ describe('AccommodationsSearchComponent', () => {
         MatDatepickerModule,
         MatNativeDateModule,
         MatRippleModule,
-        MatSnackBar
+        MatSnackBar,
+        MatDialog
       ]
     }).compileComponents();
   }));

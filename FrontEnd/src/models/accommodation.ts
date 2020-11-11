@@ -5,4 +5,6 @@ export class Accommodation {
     Adress:string
     Stars:Number
     Description: string
+    Fee: Number
+    Total: Number
 }
