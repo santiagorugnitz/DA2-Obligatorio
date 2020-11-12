@@ -26,7 +26,6 @@ import {MatNativeDateModule} from '@angular/material/core';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatRippleModule} from '@angular/material/core';
-import { ReservationComponent } from 'src/components/reservation/reservation.component';
 
 
 @NgModule({
@@ -35,7 +34,6 @@ import { ReservationComponent } from 'src/components/reservation/reservation.com
     SpotSearchComponent,
     ToolBarComponent,
     AccommodationsSearchComponent,
-    ReservationComponent
   ],
   imports: [
     BrowserModule,
