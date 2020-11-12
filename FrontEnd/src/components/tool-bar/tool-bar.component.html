@@ -19,8 +19,8 @@
         <mat-form-field class="reservationNumber">
           <mat-label>Check your reservation</mat-label>
           <input matInput placeholder="Ex. 12364" type="number" [(ngModel)]="reservationNumber">
-          <button mat-button matSuffix mat-icon-button >
-            <mat-icon routerLink="reservations/{{reservationNumber}}">search</mat-icon>
+          <button mat-button matSuffix mat-icon-button (click)="openReservation()">
+            <mat-icon >search</mat-icon>
           </button>
         </mat-form-field>
       </div>

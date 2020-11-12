@@ -1,11 +1,14 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Inject,EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MenuType } from 'src/models/menu-type.enum';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AdministratorsService } from 'src/services/administrators.service';
 import { User } from 'src/models/user';
+import { MatDialog,MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-tool-bar',
@@ -27,7 +30,7 @@ export class ToolBarComponent  {
 
     reservationNumber = ""
 
-    constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService) {
+    constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService, public dialog:MatDialog) {
     }
   
     login($event): void {
@@ -50,4 +53,47 @@ export class ToolBarComponent  {
       this.sentUser.emit(this.userLoggued);
     }
 
+    openReservation(){
+      const dialogRef = this.dialog.open(ReservationDialog,{
+        data:{
+          state:"Procesada",
+          description:"xd",
+          comment:"comentario",
+          noComment:true,
+          score:-1,
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        result;
+      });
+    };
 }
+
+export interface ReservationData {
+  state: string;
+  description: string;
+  noComment:Boolean;
+  comment:string;
+  score:number;
+}
+
+@Component({
+  selector: 'reservation-state-dialog',
+  templateUrl: 'reservation-state-dialog.html',
+})
+export class ReservationDialog {
+  constructor(public dialogRef: MatDialogRef<ReservationDialog>,@Inject(MAT_DIALOG_DATA) public data: ReservationData) {
+    this.comment="asd";
+  }
+
+  comment:string;
+  onSubmit( data:ReservationData,$event){
+    data
+      //servicio y pum
+
+    this.dialogRef.close()
+
+  }
+}
+

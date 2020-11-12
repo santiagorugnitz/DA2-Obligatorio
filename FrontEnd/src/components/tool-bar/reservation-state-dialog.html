@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>{{data.state}}</h1>
+<div mat-dialog-content>
+  My favorite animal is: {{data.message}}
+  <mat-form-field>
+    <mat-label>Leave a comment</mat-label>
+    <textarea matInput [(ngModel)]="comment"></textarea>
+  </mat-form-field>
+  <button mat-button (click)="onSubmit(data)" cdkFocusInitial>Ok</button>
+
+</div>
