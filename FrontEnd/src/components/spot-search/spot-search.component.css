@@ -13,4 +13,22 @@ ul {
     float: left;
   }
   
+  .button {
+    background-color: #180311;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin-left: 31%;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    height: 50%;
+  }
+  
+  .button:hover {
+    background-color: #c110d8; /* Green */
+    color: white;
+  } 
   

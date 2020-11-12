@@ -52,10 +52,6 @@ export class AccommodationsSearchComponent implements OnInit {
   changeFinishingDate(event: MatDatepickerInputEvent<Date>){
     this.finishingDate = event.value
   }
-  
-  onSubmit() {
-    alert('Thanks!');
-  }
 
   addAdult(){
     this.adultQuantity++;
