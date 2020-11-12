@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Modify User ({{data.Id}})</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Name:</mat-label>
+    <input placeholder="data.Name" matInput [(ngModel)]="data.Name" [formControl]="notEmptyUser" required>
+    <mat-error *ngIf="notEmptyUser.invalid">{{getErrorMessageUser()}}</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password:</mat-label>
+    <input placeholder="data.Password" matInput [(ngModel)]="data.Password" [formControl]="notEmptyPassword" required>
+    <mat-error *ngIf="notEmptyPassword.invalid">{{getErrorMessagePass()}}</mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Modify</button>
+</div>

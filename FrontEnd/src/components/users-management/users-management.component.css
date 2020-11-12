@@ -1,0 +1,39 @@
+.button {
+    background-color: #9b0368b6;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+  }
+  
+  .button:hover {
+    background-color: #c110d8; /* Green */
+    color: white;
+  } 
+
+  mat-form-field{
+    display: inline-block;
+    margin: 10px 10px;  
+  }
+
+  .administrator-card {
+    margin: 5%;
+  }
+  
+  .administrator{
+    float: left;
+    margin-left: 13%;
+  }
+
+  .add-users-button{
+    display: inline-block;
+    width: 100%;
+  }
+
+  .add-users-button .button{
+    margin-left: 45%;
+  }

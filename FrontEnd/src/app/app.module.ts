@@ -28,7 +28,8 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
 import {MatRippleModule} from '@angular/material/core';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog';
-import {AccommodationCommentsComponent} from '../components/accommodation-comments/accommodation-comments.component'
+import {AccommodationCommentsComponent} from '../components/accommodation-comments/accommodation-comments.component';
+import { DialogModifyUser, DialogAddUser,UsersManagementComponent } from '../components/users-management/users-management.component';
 import { SpotReportComponent } from '../components/spot-report/spot-report.component'
 
 @NgModule({
@@ -38,6 +39,9 @@ import { SpotReportComponent } from '../components/spot-report/spot-report.compo
     ToolBarComponent,
     AccommodationsSearchComponent,
     AccommodationCommentsComponent,
+    UsersManagementComponent,
+    DialogAddUser,
+    DialogModifyUser
     SpotReportComponent
   ],
   imports: [
