@@ -1,17 +1,15 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav-content>
-<mat-toolbar color="primary">
-    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
-      *ngIf="isHandset$ | async">
-      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-    </button>
-    <ng-container *ngIf="userLoggued.isLoggued then adminFeatures"></ng-container>
-    <ng-template #adminFeatures>
-      <button mat-flat-button class="button" routerLink="../users-management">
-        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Manage Users</a>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <ng-container *ngIf="userLoggued.isLoggued then adminFeatures"></ng-container>
       <ng-template #adminFeatures>
+        <button mat-flat-button class="button" routerLink="../users-management">
+          <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Manage Users</a>
+        </button>
         <button mat-flat-button routerLink="accommodation-search/1">
           <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Add Users</a>
         </button>
@@ -25,7 +23,7 @@
           <mat-label>Check your reservation</mat-label>
           <input matInput placeholder="Ex. 12364" type="number" [(ngModel)]="reservationNumber">
           <button mat-button matSuffix mat-icon-button (click)="openReservation()">
-            <mat-icon >search</mat-icon>
+            <mat-icon>search</mat-icon>
           </button>
         </mat-form-field>
       </div>
