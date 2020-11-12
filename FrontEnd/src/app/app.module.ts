@@ -15,7 +15,7 @@ import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpotSearchComponent } from '../components/spot-search/spot-search.component';
-import { ToolBarComponent } from '../components/tool-bar/tool-bar.component';
+import { ToolBarComponent,ReservationDialog } from '../components/tool-bar/tool-bar.component';
 import { AccommodationsSearchComponent} from '../components/accommodations-search/accommodations-search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -24,8 +24,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import {MatNativeDateModule} from '@angular/material/core';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
-import {MatRippleModule} from '@angular/material/core';
+import {MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MatRippleModule} from '@angular/material/core'
 
 
 @NgModule({
@@ -33,9 +33,38 @@ import {MatRippleModule} from '@angular/material/core';
     AppComponent,
     SpotSearchComponent,
     ToolBarComponent,
+    ReservationDialog,
     AccommodationsSearchComponent,
   ],
   imports: [
+    MatFormFieldModule,
+    BrowserModule,
+    AppRoutingModule,
+    MatSliderModule,
+    MatCardModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatGridListModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatCheckboxModule,
+    CommonModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    MatRippleModule
+  ],
+  exports:[
+    MatFormFieldModule,
     BrowserModule,
     AppRoutingModule,
     MatSliderModule,

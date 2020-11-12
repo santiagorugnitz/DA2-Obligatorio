@@ -6,8 +6,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ToolBarComponent } from './tool-bar.component';
+import { MatDialog } from '@angular/material/dialog';
+
 
 describe('ToolBarComponent', () => {
   let component: ToolBarComponent;
@@ -19,11 +21,14 @@ describe('ToolBarComponent', () => {
       imports: [
         NoopAnimationsModule,
         LayoutModule,
+        FormsModule,
+        ReactiveFormsModule,
         MatButtonModule,
         MatIconModule,
         MatListModule,
         MatSidenavModule,
         MatToolbarModule,
+        MatDialog,
       ]
     }).compileComponents();
   }));

@@ -2,12 +2,10 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject,EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { MenuType } from 'src/models/menu-type.enum';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { AdministratorsService } from 'src/services/administrators.service';
 import { User } from 'src/models/user';
 import { MatDialog,MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
 
 
 @Component({
@@ -22,6 +20,7 @@ export class ToolBarComponent  {
       map(result => result.matches),
       shareReplay()
     );
+    
     
     @Output() sentUser = new EventEmitter<User>()
     @Input() userLoggued: User;
@@ -59,8 +58,8 @@ export class ToolBarComponent  {
           state:"Procesada",
           description:"xd",
           comment:"comentario",
-          noComment:true,
-          score:-1,
+          noComment:false,
+          score:1,
         }
       });
 
@@ -83,17 +82,26 @@ export interface ReservationData {
   templateUrl: 'reservation-state-dialog.html',
 })
 export class ReservationDialog {
-  constructor(public dialogRef: MatDialogRef<ReservationDialog>,@Inject(MAT_DIALOG_DATA) public data: ReservationData) {
-    this.comment="asd";
-  }
+  constructor(
+    public dialogRef: MatDialogRef<ReservationDialog>,
+    @Inject(MAT_DIALOG_DATA) 
+    public data: ReservationData) {}
 
   comment:string;
-  onSubmit( data:ReservationData,$event){
+  onSubmit( data:ReservationData){
     data
       //servicio y pum
 
     this.dialogRef.close()
 
+  }
+
+  decreaseScore(){
+    this.data.score--
+  }
+  
+  increaseScore(){
+    this.data.score++
   }
 }
 
