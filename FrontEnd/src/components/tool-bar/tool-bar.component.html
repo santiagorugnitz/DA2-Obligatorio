@@ -7,8 +7,8 @@
     </button>
     <ng-container *ngIf="userLoggued.isLoggued then adminFeatures"></ng-container>
     <ng-template #adminFeatures>
-      <button mat-flat-button class="button" routerLink="accommodation-search/1">
-        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Add Users</a>
+      <button mat-flat-button class="button" routerLink="../users-management">
+        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Manage Users</a>
       </button>
     </ng-template>
 
