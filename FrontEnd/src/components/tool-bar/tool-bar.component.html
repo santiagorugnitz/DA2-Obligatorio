@@ -10,39 +10,49 @@
       <button mat-flat-button class="button" routerLink="../users-management">
         <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Manage Users</a>
       </button>
-    </ng-template>
+      <ng-container *ngIf="userLoggued.isLoggued then adminFeatures"></ng-container>
+      <ng-template #adminFeatures>
+        <button mat-flat-button routerLink="accommodation-search/1">
+          <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Add Users</a>
+        </button>
+      </ng-template>
 
-    <div class="buttons">
-      <button mat-flat-button class="button" routerLink="spot-search">
-        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Tourist Spot Search</a>
-      </button>
+      <div class="buttons">
+        <button mat-flat-button routerLink="spot-search">
+          <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Tourist Spot Search</a>
+        </button>
+        <mat-form-field class="reservationNumber">
+          <mat-label>Check your reservation</mat-label>
+          <input matInput placeholder="Ex. 12364" type="number" [(ngModel)]="reservationNumber">
+          <button mat-button matSuffix mat-icon-button (click)="openReservation()">
+            <mat-icon >search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
       <div class="loginForm">
         <ng-container *ngIf="userLoggued.isLoggued then ok; else fail"></ng-container>
         <ng-template #ok>
           <a>You are now logged as: {{Username.value}}</a>
           <label>
-            <button mat-flat-button class="button" routerLink="spot-search" (click)="logout($event)">
+            <button mat-flat-button routerLink="spot-search" (click)="logout($event)">
               <a>Logout</a>
             </button>
           </label>
         </ng-template>
         <ng-template #fail>
-          <!--focus para ir mostrando errores basicos-->
-          <label>
-            Username:
-            <input type="text" [formControl]="Username">
-          </label>
-          <label>
-            Password:
-            <input type="text" [formControl]="Password">
-          </label>
-
-          <button mat-flat-button class="button" (click)="login($event)">
+          <mat-form-field class="loginInput">
+            <mat-label>Username</mat-label>
+            <input matInput type="text" [formControl]="Username">
+          </mat-form-field>
+          <mat-form-field class="loginInput">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" [formControl]="Password">
+          </mat-form-field>
+          <button mat-flat-button (click)="login($event)">
             <a>Login</a>
           </button>
         </ng-template>
       </div>
-    </div>
-  </mat-toolbar>
-</mat-sidenav-content>
+    </mat-toolbar>
+  </mat-sidenav-content>
 </mat-sidenav-container>

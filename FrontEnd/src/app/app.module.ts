@@ -15,7 +15,7 @@ import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpotSearchComponent } from '../components/spot-search/spot-search.component';
-import { ToolBarComponent } from '../components/tool-bar/tool-bar.component';
+import { ToolBarComponent,ReservationDialog } from '../components/tool-bar/tool-bar.component';
 import { AccommodationsSearchComponent} from '../components/accommodations-search/accommodations-search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -32,11 +32,13 @@ import {AccommodationCommentsComponent} from '../components/accommodation-commen
 import { DialogModifyUser, DialogAddUser,UsersManagementComponent } from '../components/users-management/users-management.component';
 import { SpotReportComponent } from '../components/spot-report/spot-report.component'
 
+
 @NgModule({
   declarations: [
     AppComponent,
     SpotSearchComponent,
     ToolBarComponent,
+    ReservationDialog,
     AccommodationsSearchComponent,
     AccommodationCommentsComponent,
     UsersManagementComponent,
@@ -45,6 +47,7 @@ import { SpotReportComponent } from '../components/spot-report/spot-report.compo
     SpotReportComponent
   ],
   imports: [
+    MatFormFieldModule,
     BrowserModule,
     AppRoutingModule,
     MatSliderModule,
@@ -71,6 +74,33 @@ import { SpotReportComponent } from '../components/spot-report/spot-report.compo
     MatRippleModule,
     MatSnackBarModule,
     MatDialogModule,
+  ],
+  exports:[
+    MatFormFieldModule,
+    BrowserModule,
+    AppRoutingModule,
+    MatSliderModule,
+    MatCardModule,
+    BrowserAnimationsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatGridListModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule,
+    MatCheckboxModule,
+    CommonModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    MatRippleModule
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]

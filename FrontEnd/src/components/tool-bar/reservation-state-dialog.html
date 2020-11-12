@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>{{data.state}}</h1>
+<div mat-dialog-content>
+  {{data.description}}
+  <mat-form-field>
+    <mat-label>Leave a comment</mat-label>
+    <textarea matInput  [(ngModel)]="data.comment"></textarea>
+  </mat-form-field>
+    <p>Score</p>
+    <button mat-mini-fab color="primary"  (click)="increaseScore()">
+      +
+    </button>
+    <p>{{data.score}}</p>
+    <button mat-mini-fab color="primary"  (click)="decreaseScore()">
+      -
+    </button>
+  <button mat-button (click)="onSubmit(data)" cdkFocusInitial>Ok</button>
+
+</div>

@@ -6,6 +6,7 @@ import { AccommodationsSearchComponent} from '../components/accommodations-searc
 import { UsersManagementComponent } from 'src/components/users-management/users-management.component';
 import { SpotReportComponent } from 'src/components/spot-report/spot-report.component';
 
+
 const routes: Routes = [
   { path: 'spot-search', component: SpotSearchComponent },
   { path: 'accommodation-search/:spotId', component: AccommodationsSearchComponent },
