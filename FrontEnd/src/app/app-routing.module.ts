@@ -9,7 +9,7 @@ import { SpotReportComponent } from 'src/components/spot-report/spot-report.comp
 const routes: Routes = [
   { path: 'spot-search', component: SpotSearchComponent },
   { path: 'accommodation-search/:spotId', component: AccommodationsSearchComponent },
-  { path: 'users-management', component: UsersManagementComponent }
+  { path: 'users-management', component: UsersManagementComponent },
   { path: 'spot-report/:spotId', component: SpotReportComponent }
   //, canActivate: [BeerNotExistGuard] },
 ];

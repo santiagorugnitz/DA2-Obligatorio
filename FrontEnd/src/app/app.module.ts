@@ -41,7 +41,7 @@ import { SpotReportComponent } from '../components/spot-report/spot-report.compo
     AccommodationCommentsComponent,
     UsersManagementComponent,
     DialogAddUser,
-    DialogModifyUser
+    DialogModifyUser,
     SpotReportComponent
   ],
   imports: [
