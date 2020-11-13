@@ -8,7 +8,7 @@ import { AdministratorsService } from 'src/services/administrators.service';
 import { User } from 'src/models/user';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TouristSpotService } from 'src/services/tourist-spot.service';
-import { TouristSpot } from 'src/models/tourist-spot';
+import { TouristSpotDTO } from 'src/models/tourist-spot-dto';
 import { Region } from 'src/models/region';
 import { Category } from 'src/models/category';
 import { RegionService } from 'src/services/region.service';
@@ -72,7 +72,7 @@ export class ToolBarComponent  {
       });
     }
   
-    addSpot(spot:TouristSpot): void{
+    addSpot(spot:TouristSpotDTO): void{
       this.spotService.AddSpot(spot)
     }
 
@@ -94,7 +94,7 @@ export class ToolBarComponent  {
 }
 
 export interface DialogSpotData{
-  spot: TouristSpot
+  spot: TouristSpotDTO
 }
 
 @Component({
@@ -105,7 +105,7 @@ export class DialogAddSpot {
 
   regions: Region[];
   categories: Category[];
-  spots: TouristSpot[];
+  spots: TouristSpotDTO[];
   userControl = new FormControl('', Validators.required);
   imageControl = new FormControl('', Validators.required);
   descriptionControl = new FormControl('', Validators.required);

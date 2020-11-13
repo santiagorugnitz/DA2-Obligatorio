@@ -7,8 +7,8 @@
   </mat-form-field>
   <mat-form-field>
   <mat-label>Adress:</mat-label>
-    <input matInput [(ngModel)]="data.accommodation.Adress" [formControl]="adressControl" required>
-    <mat-error *ngIf="adressControl.invalid || data.accommodation.Adress.trim().length == 0">Enter a non empty adress</mat-error>
+    <input matInput [(ngModel)]="data.accommodation.Address" [formControl]="adressControl" required>
+    <mat-error *ngIf="adressControl.invalid || data.accommodation.Address.trim().length == 0">Enter a non empty adress</mat-error>
   </mat-form-field>
 <div>
     <mat-label>Stars: {{data.accommodation.Stars}}</mat-label>

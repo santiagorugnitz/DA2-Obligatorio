@@ -1,10 +1,10 @@
-export class TouristSpot {
+export class TouristSpotDTO {
     
     Id: number
     Name: String
     Description: String
     Image: String
     Region: number
-    Categories: String[]
+    Categories: number[]
 
 }

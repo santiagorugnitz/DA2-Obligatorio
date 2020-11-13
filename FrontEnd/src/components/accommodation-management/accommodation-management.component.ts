@@ -76,7 +76,7 @@ export class DialogAddAccommodation {
     @Inject(MAT_DIALOG_DATA) public data: DialogAccommodationData,
     spotService: TouristSpotService) {
       this.spots = spotService.getAllSpots()
-      this.data.accommodation = {Name:'', Adress:'', Id:0, Images:[]
+      this.data.accommodation = {Name:'', Address:'', Id:0, Images:[]
       ,Stars:1,Description:'', Fee:100, Total:0, SpotId:0, State:false}
       this.actualStars = 1
       this.actualFee = 100
@@ -147,7 +147,7 @@ export class DialogAddAccommodation {
     && this.imageUploaded && this.spotControl.valid &&
     this.userControl.valid && this.adressControl.valid &&
     this.data.accommodation.Name.trim().length != 0 &&
-    this.data.accommodation.Adress.trim().length == 0
+    this.data.accommodation.Address.trim().length == 0
   }
 
 }
