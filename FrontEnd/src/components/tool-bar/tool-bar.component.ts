@@ -1,11 +1,14 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MenuType } from 'src/models/menu-type.enum';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AdministratorsService } from 'src/services/administrators.service';
 import { User } from 'src/models/user';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TouristSpotService } from 'src/services/tourist-spot.service';
+import { TouristSpot } from 'src/models/tourist-spot';
 
 @Component({
   selector: 'app-tool-bar',
@@ -25,7 +28,8 @@ export class ToolBarComponent  {
     Username = new FormControl('')
     Password = new FormControl('')
 
-    constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService) {
+    constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
+      public addDialog: MatDialog, private spotService: TouristSpotService) {
     }
   
     login($event): void {
@@ -47,5 +51,43 @@ export class ToolBarComponent  {
         this.userLoggued.isLoggued = false;
       this.sentUser.emit(this.userLoggued);
     }
+
+    addSpotAppear(): void{
+      const dialogRef = this.addDialog.open(DialogAddSpot, {
+        width: '250px',
+        data: {spot: {}}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.addSpot(result.spot)
+      });
+    }
+  
+    addSpot(spot:TouristSpot): void{
+      this.spotService.AddSpot(spot)
+    }
+
+}
+
+export interface DialogSpotData{
+  spot: TouristSpot
+}
+
+@Component({
+  selector: 'add-spot',
+  templateUrl: 'add-spot.html'
+})
+export class DialogAddSpot {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogAddSpot>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogSpotData) {
+      data.spot = {Id:0,Name:"",Description:"",Image:"https://montevideo.gub.uy/sites/default/files/styles/noticias_twitter/public/biblioteca/dsc0263_4.jpg?itok=am2Xii7V"}
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }

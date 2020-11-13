@@ -15,7 +15,7 @@ import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpotSearchComponent } from '../components/spot-search/spot-search.component';
-import { ToolBarComponent } from '../components/tool-bar/tool-bar.component';
+import { DialogAddSpot, ToolBarComponent } from '../components/tool-bar/tool-bar.component';
 import { AccommodationsSearchComponent} from '../components/accommodations-search/accommodations-search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -47,6 +47,7 @@ import { MatRadioButton } from '@angular/material/radio';
     SpotReportComponent,
     DialogAddAccommodation,
     AccommodationManagementComponent,
+    DialogAddSpot
   ],
   imports: [
     BrowserModule,
