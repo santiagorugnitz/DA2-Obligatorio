@@ -24,7 +24,7 @@ export class AccommodationManagementComponent implements OnInit {
 
   addAccommodationAppear(): void{
     const dialogRef = this.addDialog.open(DialogAddAccommodation, {
-      width: '250px',
+      width: '300px',
       data: {accommodation: {}}
     });
 
@@ -62,7 +62,14 @@ export class DialogAddAccommodation {
   selectedSpot: number
   enableButton: boolean
   selectedAv: string = ""
-  actualImageLink: string
+  actualImageLink: string = ""
+  actualStars: Number
+  actualFee: Number
+  availabilityControl = new FormControl('', Validators.required);
+  spotControl = new FormControl('', Validators.required);
+  userControl = new FormControl('', Validators.required);
+  adressControl = new FormControl('', Validators.required);
+  imageUploaded: boolean
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddAccommodation>,
@@ -70,7 +77,10 @@ export class DialogAddAccommodation {
     spotService: TouristSpotService) {
       this.spots = spotService.getAllSpots()
       this.data.accommodation = {Name:'', Adress:'', Id:0, Images:[]
-      ,Stars:0,Description:'', Fee:0, Total:0, SpotId:0, State:false}
+      ,Stars:1,Description:'', Fee:100, Total:0, SpotId:0, State:false}
+      this.actualStars = 1
+      this.actualFee = 100
+      this.imageUploaded = false
     }
 
   onNoClick(): void {
@@ -114,8 +124,28 @@ export class DialogAddAccommodation {
   }
 
   addImage(){
-    this.data.accommodation.Images.push(this.actualImageLink)
+    if(this.actualImageLink.trim().length == 0){
+      alert('The image was empty, please, try again')
+    }else{
+      this.data.accommodation.Images.push(this.actualImageLink)
+      this.imageUploaded = true
+      this.actualImageLink = ''
+      alert('The image was added, you can continue adding images')
+    }  
   }
 
+  changeStars(){
+    this.data.accommodation.Stars = this.actualStars
+  }
+
+  changeFee(){
+    this.data.accommodation.Fee = this.actualFee
+  }
+  
+  buttonEnabled(){
+    return this.buttonEnabled && this.availabilityControl.valid 
+    && this.imageUploaded && this.spotControl.valid &&
+    this.userControl.valid && this.adressControl.valid
+  }
 
 }
