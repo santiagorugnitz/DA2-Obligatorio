@@ -1,0 +1,39 @@
+.button {
+    background-color: #9b0368b6;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+  }
+  
+  .button:hover {
+    background-color: #c110d8; /* Green */
+    color: white;
+  } 
+
+  mat-form-field{
+    display: inline-block;
+    margin: 10px 10px;  
+  }
+
+  .accommodation-card {
+    margin: 5%;
+  }
+  
+  .accommodation{
+    float: left;
+    margin-left: 13%;
+  }
+
+  .add-accommodation-button{
+    display: inline-block;
+    width: 100%;
+  }
+
+  .add-accommodation-button .button{
+    margin-left: 45%;
+  }

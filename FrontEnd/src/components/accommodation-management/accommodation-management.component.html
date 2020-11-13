@@ -1,0 +1,25 @@
+<mat-grid-list cols="3" class="accommodation"  *ngFor="let accommodation of accommodations">
+    <mat-card class="accommodation-card">
+      
+      <mat-card-content>
+        <p>Name: {{accommodation.Name}}</p>
+        <p>Is available: {{accommodation.State}}</p>
+
+        <button mat-flat-button class="button" (click)="modifyAccommodation(accommodation)">
+            <a>Change Availability</a>
+          </button>
+    
+          <button mat-flat-button class="button" (click)="deleteAccommodation(accommodation.Id)">
+            <a>Delete Accomodation</a>
+          </button>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-list>
+
+    <div class="add-accommodation-button">
+    <button mat-flat-button class="button" (click)="addAccommodationAppear()">
+        <a>Add Accomodation</a>
+      </button>
+      </div>
+    
+  

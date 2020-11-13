@@ -7,4 +7,6 @@ export class Accommodation {
     Description: string
     Fee: Number
     Total: Number
+    State: boolean
+  SpotId: number
 }

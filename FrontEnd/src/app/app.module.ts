@@ -16,6 +16,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpotSearchComponent } from '../components/spot-search/spot-search.component';
 import { ToolBarComponent,ReservationDialog } from '../components/tool-bar/tool-bar.component';
+import { DialogAddSpot, ToolBarComponent } from '../components/tool-bar/tool-bar.component';
 import { AccommodationsSearchComponent} from '../components/accommodations-search/accommodations-search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -31,6 +32,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {AccommodationCommentsComponent} from '../components/accommodation-comments/accommodation-comments.component';
 import { DialogModifyUser, DialogAddUser,UsersManagementComponent } from '../components/users-management/users-management.component';
 import { SpotReportComponent } from '../components/spot-report/spot-report.component'
+import { AccommodationManagementComponent, DialogAddAccommodation } from 'src/components/accommodation-management/accommodation-management.component';
+import { MatRadioButton } from '@angular/material/radio';
 
 
 @NgModule({
@@ -44,7 +47,10 @@ import { SpotReportComponent } from '../components/spot-report/spot-report.compo
     UsersManagementComponent,
     DialogAddUser,
     DialogModifyUser,
-    SpotReportComponent
+    SpotReportComponent,
+    DialogAddAccommodation,
+    AccommodationManagementComponent,
+    DialogAddSpot
   ],
   imports: [
     BrowserModule,

@@ -10,10 +10,11 @@
         <button mat-flat-button class="button" routerLink="../users-management">
           <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Manage Users</a>
         </button>
-        <button mat-flat-button routerLink="accommodation-search/1">
-          <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Add Users</a>
-        </button>
-      </ng-template>
+      <button mat-flat-button class="button" routerLink="../accommodation-management">
+        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Manage Accommodations</a>
+      </button>
+      <button mat-flat-button class="button" (click)="addSpotAppear()">Add Tourist Spot</button>
+    </ng-template>
 
       <div class="buttons">
         <button mat-flat-button routerLink="spot-search">

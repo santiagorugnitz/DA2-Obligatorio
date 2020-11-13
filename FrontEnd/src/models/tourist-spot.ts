@@ -4,6 +4,7 @@ export class TouristSpot {
     Name: String
     Description: String
     Image: String
-    Categories: String[]
+    Region: number
+    Categories: Category[]
 
 }

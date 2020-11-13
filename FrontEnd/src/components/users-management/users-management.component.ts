@@ -22,7 +22,7 @@ export class UsersManagementComponent implements OnInit {
 
   addUserAppear(): void{
     const dialogRef = this.addDialog.open(DialogAddUser, {
-      width: '250px',
+      width: '300px',
       data: {Id: 0, Name:'', Password:''}
     });
 
@@ -38,7 +38,7 @@ export class UsersManagementComponent implements OnInit {
 
   modifyUserAppear(Id: number, Name:string, Password:string){
     const dialogRef = this.addDialog.open(DialogModifyUser, {
-      width: '250px',
+      width: '300px',
       data: {Id: Id, Name:Name, Password:Password}
     });
 
@@ -70,6 +70,10 @@ export interface DialogUserData{
 })
 export class DialogAddUser {
 
+  hide = true;
+  notEmptyUser = new FormControl('', [Validators.required]);
+  notEmptyPassword = new FormControl('', [Validators.required]);
+
   constructor(
     public dialogRef: MatDialogRef<DialogAddUser>,
     @Inject(MAT_DIALOG_DATA) public data: DialogUserData) {}
@@ -77,22 +81,27 @@ export class DialogAddUser {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
-  notEmptyUser = new FormControl('', [Validators.required]);
-  notEmptyPassword = new FormControl('', [Validators.required]);
+  
+  buttonEnabled(){
+    return this.notEmptyPassword.valid && this.notEmptyUser.valid && 
+    this.data.Password.trim().length != 0 && this.data.Name.trim().length != 0
+  }
 
   getErrorMessageUser() {
     if (this.notEmptyUser.hasError('required')) {
       return 'You must enter a value';
+    } else if (this.data.Name.trim().length == 0){
+      return 'You must enter a non empty value';
     }
   }
 
   getErrorMessagePass() {
     if (this.notEmptyPassword.hasError('required')) {
       return 'You must enter a value';
+    } else if (this.data.Password.trim().length == 0){
+      return 'You must enter a non empty value';
     }
   }
-
 }
 
 @Component({
@@ -100,6 +109,8 @@ export class DialogAddUser {
   templateUrl: 'modify-user.html',
 })
 export class DialogModifyUser {
+
+  hide = true;
 
   constructor(
     public dialogRef: MatDialogRef<DialogModifyUser>,
@@ -112,15 +123,25 @@ export class DialogModifyUser {
   notEmptyUser = new FormControl('', [Validators.required]);
   notEmptyPassword = new FormControl('', [Validators.required]);
 
+  
+  buttonEnabled(){
+    return this.notEmptyPassword.valid && this.notEmptyUser.valid && 
+    this.data.Password.trim().length != 0 && this.data.Name.trim().length != 0
+  }
+
   getErrorMessageUser() {
     if (this.notEmptyUser.hasError('required')) {
       return 'You must enter a value';
+    } else if (this.data.Name.trim().length == 0){
+      return 'You must enter a non empty value';
     }
   }
 
   getErrorMessagePass() {
     if (this.notEmptyPassword.hasError('required')) {
       return 'You must enter a value';
+    } else if (this.data.Password.trim().length == 0){
+      return 'You must enter a non empty value';
     }
   }
 

@@ -1,11 +1,18 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Inject,EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { MenuType } from 'src/models/menu-type.enum';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdministratorsService } from 'src/services/administrators.service';
 import { User } from 'src/models/user';
-import { MatDialog,MatDialogRef,MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TouristSpotService } from 'src/services/tourist-spot.service';
+import { TouristSpot } from 'src/models/tourist-spot';
+import { Region } from 'src/models/region';
+import { Category } from 'src/models/category';
+import { RegionService } from 'src/services/region.service';
+import { CategoryService } from 'src/services/category.service';
 
 
 @Component({
@@ -29,7 +36,8 @@ export class ToolBarComponent  {
 
     reservationNumber = ""
 
-    constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService, public dialog:MatDialog) {
+    constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
+      public addDialog: MatDialog, private spotService: TouristSpotService,public dialog:MatDialog) {
     }
   
     login($event): void {
@@ -52,6 +60,22 @@ export class ToolBarComponent  {
       this.sentUser.emit(this.userLoggued);
     }
 
+    addSpotAppear(): void{
+      const dialogRef = this.addDialog.open(DialogAddSpot, {
+        width: '250px',
+        data: {spot: {}}
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.addSpot(result.spot)
+      });
+    }
+  
+    addSpot(spot:TouristSpot): void{
+      this.spotService.AddSpot(spot)
+    }
+
     openReservation(){
       const dialogRef = this.dialog.open(ReservationDialog,{
         data:{
@@ -69,6 +93,61 @@ export class ToolBarComponent  {
     };
 }
 
+export interface DialogSpotData{
+  spot: TouristSpot
+}
+
+@Component({
+  selector: 'add-spot',
+  templateUrl: 'add-spot.html'
+})
+export class DialogAddSpot {
+
+  regions: Region[];
+  categories: Category[];
+  spots: TouristSpot[];
+  userControl = new FormControl('', Validators.required);
+  imageControl = new FormControl('', Validators.required);
+  descriptionControl = new FormControl('', Validators.required);
+  regionControl = new FormControl('', Validators.required);
+  categoriesCount: number = 0
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogAddSpot>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogSpotData,
+    private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
+      data.spot = {Id:0,Name:"",Description:"",Image:"", Categories:[], Region:0}
+      this.regions = regionService.getRegions()
+      this.categories = categoryService.getCategories()
+    }
+
+    onCategoryClick(checked: Boolean, id: number) {
+      if (checked) {
+        this.data.spot.Categories.push(id)
+        this.categoriesCount ++
+      }
+      else {
+        for (var i = 0; i < this.data.spot.Categories.length; i++) {
+          if (this.data.spot.Categories[i] == id) {
+            this.data.spot.Categories.splice(i);
+            this.categoriesCount --
+          }
+        }
+      }
+    }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  buttonEnabled(){
+    return this.userControl.valid && this.imageControl.valid && this.descriptionControl.valid &&
+    this.regionControl.valid && this.data.spot.Name.trim().length != 0 && 
+    this.data.spot.Image.trim().length != 0 && this.data.spot.Description.trim().length != 0 && 
+    this.categoriesCount > 0 
+  }
+
+}
 export interface ReservationData {
   state: string;
   description: string;

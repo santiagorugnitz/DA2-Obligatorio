@@ -11,15 +11,15 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 
-import { UsersManagementComponent } from './users-management.component';
+import { AccommodationManagementComponent } from './accommodation-management.component';
 
-describe('UsersManagementComponent', () => {
-  let component: UsersManagementComponent;
-  let fixture: ComponentFixture<UsersManagementComponent>;
+describe('AccommodationManagementComponent', () => {
+  let component: AccommodationManagementComponent;
+  let fixture: ComponentFixture<AccommodationManagementComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UsersManagementComponent],
+      declarations: [AccommodationManagementComponent],
       imports: [
         NoopAnimationsModule,
         ReactiveFormsModule,
@@ -39,7 +39,7 @@ describe('UsersManagementComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UsersManagementComponent);
+    fixture = TestBed.createComponent(AccommodationManagementComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
