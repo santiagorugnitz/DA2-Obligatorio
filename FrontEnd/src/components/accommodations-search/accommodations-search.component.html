@@ -174,7 +174,10 @@
         <mat-grid-list class="accommo" cols="2" rowHeight="2:1"  *ngFor="let accommodation of accommodations">
           <mat-card class="accommodation-card">
             <mat-card-header>
-              <mat-card-title>{{accommodation.Name}}</mat-card-title>
+              <mat-card-title>
+                <h1>{{accommodation.Name}}</h1>
+                <h3>{{accommodation.Address}}</h3>
+              </mat-card-title>
             </mat-card-header>
             <img mat-card-image class="image" src={{accommodation.Images[getSelectedImage(accommodation.Id)]}}  alt="Photo of {{accommodation.Name}}">
             <button mat-flat-button class="button-reservation" (click)="nextImage(accommodation.Id)">
