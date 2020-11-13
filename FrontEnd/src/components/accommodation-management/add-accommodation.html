@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>Add Accommodation</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Name:</mat-label>
+    <input matInput [(ngModel)]="data.accommodation.Name">
+  </mat-form-field>
+  <mat-form-field>
+      <mat-label>Adress:</mat-label>
+      <input matInput [(ngModel)]="data.accommodation.Adress" >
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Stars:</mat-label>
+    <input matInput type="number" [(ngModel)]="data.accommodation.Stars" >
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Description:</mat-label>
+  <input matInput [(ngModel)]="data.accommodation.Description" >
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Fee:</mat-label>
+  <input matInput type="number" [(ngModel)]="data.accommodation.Fee" >
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Availability:</mat-label>
+  <mat-select [(value)]="selectedAv" (selectionChange)="changeAv()">
+    <mat-option value="Yes">
+      Yes
+    </mat-option>
+    <mat-option value="No">
+      No
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Spot: </mat-label>
+      <mat-select [(value)]="selectedSpot" (selectionChange)="changeSpot()">
+        <mat-option *ngFor="let spot of spots" [value]="spot.Id">
+          {{spot.Name}}
+        </mat-option>
+      </mat-select>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Image:</mat-label>
+  <input matInput placeholder="Insert image Url" [(ngModel)]="actualImageLink">
+</mat-form-field>
+<button mat-button (click)="addImage()">Add Image</button>
+  
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add Accommodation</button>
+</div>

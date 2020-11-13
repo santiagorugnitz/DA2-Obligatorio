@@ -31,6 +31,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {AccommodationCommentsComponent} from '../components/accommodation-comments/accommodation-comments.component';
 import { DialogModifyUser, DialogAddUser,UsersManagementComponent } from '../components/users-management/users-management.component';
 import { SpotReportComponent } from '../components/spot-report/spot-report.component'
+import { AccommodationManagementComponent, DialogAddAccommodation } from 'src/components/accommodation-management/accommodation-management.component';
+import { MatRadioButton } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { SpotReportComponent } from '../components/spot-report/spot-report.compo
     UsersManagementComponent,
     DialogAddUser,
     DialogModifyUser,
-    SpotReportComponent
+    SpotReportComponent,
+    DialogAddAccommodation,
+    AccommodationManagementComponent,
   ],
   imports: [
     BrowserModule,

@@ -54,7 +54,6 @@ export class SpotSearchComponent {
   getSpots() {
     if (this.selectedRegion == undefined) return
     this.spots = this.spotService.getSpots(this.selectedRegion, this.selectedCategories)
-
   }
 
 }

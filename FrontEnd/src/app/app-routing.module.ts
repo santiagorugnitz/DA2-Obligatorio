@@ -5,12 +5,14 @@ import { ToolBarComponent } from '../components/tool-bar/tool-bar.component';
 import { AccommodationsSearchComponent} from '../components/accommodations-search/accommodations-search.component';
 import { UsersManagementComponent } from 'src/components/users-management/users-management.component';
 import { SpotReportComponent } from 'src/components/spot-report/spot-report.component';
+import { AccommodationManagementComponent } from 'src/components/accommodation-management/accommodation-management.component';
 
 const routes: Routes = [
   { path: 'spot-search', component: SpotSearchComponent },
   { path: 'accommodation-search/:spotId', component: AccommodationsSearchComponent },
   { path: 'users-management', component: UsersManagementComponent },
-  { path: 'spot-report/:spotId', component: SpotReportComponent }
+  { path: 'spot-report/:spotId', component: SpotReportComponent },
+  { path: 'accommodation-management', component: AccommodationManagementComponent }
   //, canActivate: [BeerNotExistGuard] },
 ];
 

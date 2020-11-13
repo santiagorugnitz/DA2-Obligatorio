@@ -15,13 +15,13 @@ export class ReportService {
     images.push('https://imgcy.trivago.com/c_limit,d_dummy.jpeg,f_auto,h_1300,q_auto,w_2000/itemimages/20/31/2031907_v2.jpeg')
     images.push('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT4nY1kUBFbEje1IUEXPPLvyAEnO2CRBXXMqA&usqp=CAU')
 
-    var accommodation1 = ({ Name: 'Hotel 1', Id: 1, Images: images, Adress: 'Hotel 1', Stars: 2, Description: '', Fee: 300, Total: 0 })
+    var accommodation1 = ({ SpotId: 1, Name: 'Hotel 1', Id: 1, Images: images, Adress: 'Hotel 1', Stars: 2, Description: '', Fee: 300, Total: 0, State: true })
 
     const stars = 2.5;
-    var accommodation2 = ({ Name: 'Hotel 2', Id: 2, Images: images, Adress: 'Hotel 2', Stars: stars, Description: '', Fee: 100, Total: 0 })
+    var accommodation2 = ({ SpotId: 1, Name: 'Hotel 2', Id: 2, Images: images, Adress: 'Hotel 2', Stars: stars, Description: '', Fee: 100, Total: 0, State: true })
 
     const stars2 = 3.5;
-    var accommodation3 = ({ Name: 'Hotel 3', Id: 3, Images: images, Adress: 'Hotel 3', Stars: stars2, Description: '', Fee: 200, Total: 0 })
+    var accommodation3 = ({ SpotId: 1, Name: 'Hotel 3', Id: 3, Images: images, Adress: 'Hotel 3', Stars: stars2, Description: '', Fee: 200, Total: 0, State: true })
     items.push({Accommodation: accommodation1, ReservationQuantity:8})
     items.push({Accommodation: accommodation2, ReservationQuantity:4})
     items.push({Accommodation: accommodation3, ReservationQuantity:2})
