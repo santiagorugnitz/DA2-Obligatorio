@@ -9,6 +9,10 @@ import { User } from 'src/models/user';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TouristSpotService } from 'src/services/tourist-spot.service';
 import { TouristSpot } from 'src/models/tourist-spot';
+import { Region } from 'src/models/region';
+import { Category } from 'src/models/category';
+import { RegionService } from 'src/services/region.service';
+import { CategoryService } from 'src/services/category.service';
 
 @Component({
   selector: 'app-tool-bar',
@@ -80,10 +84,30 @@ export interface DialogSpotData{
 })
 export class DialogAddSpot {
 
+  regions: Region[];
+  categories: Category[];
+  spots: TouristSpot[];
+
   constructor(
     public dialogRef: MatDialogRef<DialogAddSpot>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogSpotData) {
-      data.spot = {Id:0,Name:"",Description:"",Image:"https://montevideo.gub.uy/sites/default/files/styles/noticias_twitter/public/biblioteca/dsc0263_4.jpg?itok=am2Xii7V"}
+    @Inject(MAT_DIALOG_DATA) public data: DialogSpotData,
+    private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
+      data.spot = {Id:0,Name:"",Description:"",Image:"https://montevideo.gub.uy/sites/default/files/styles/noticias_twitter/public/biblioteca/dsc0263_4.jpg?itok=am2Xii7V", Categories:[], Region:0}
+      this.regions = regionService.getRegions()
+      this.categories = categoryService.getCategories()
+    }
+
+    onCategoryClick(checked: Boolean, id: number) {
+      if (checked) {
+        this.data.spot.Categories.push(id)
+      }
+      else {
+        for (var i = 0; i < this.data.spot.Categories.length; i++) {
+          if (this.data.spot.Categories[i] === id) {
+            this.data.spot.Categories.splice(i);
+          }
+        }
+      }
     }
 
   onNoClick(): void {

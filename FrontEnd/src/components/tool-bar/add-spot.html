@@ -12,6 +12,23 @@
   <mat-label>Description:</mat-label>
   <input matInput [(ngModel)]="data.spot.Description" >
 </mat-form-field>
+<mat-form-field appearance="fill" style="margin-top: 20%;">
+  <mat-label>Region</mat-label>
+  <mat-select [(value)]="data.spot.Region">
+    <mat-option *ngFor="let region of regions" [value]="region.Id">
+      {{region.Name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+
+<p>Categories</p>
+<ul>
+  <li *ngFor='let category of categories'>
+    <mat-checkbox (change)="onCategoryClick($event.checked,category.Id)">
+      {{category.Name}}
+    </mat-checkbox>
+  </li>
+</ul>
   
 </div>
 <div mat-dialog-actions>
