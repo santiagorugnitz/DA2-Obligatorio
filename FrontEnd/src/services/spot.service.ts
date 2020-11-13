@@ -9,6 +9,6 @@ export class SpotService {
   constructor() { }
 
   getSpotById(id:Number): TouristSpot{
-    return {Name: 'Montevideo', Id: 1, Description: 'Description', Image: ''}
+    return {Name: 'Montevideo', Id: 1, Description: 'Description', Image: '', Categories:["asd","asd"]}
   }
 }

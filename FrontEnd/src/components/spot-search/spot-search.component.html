@@ -13,7 +13,7 @@
 
     <p style="margin-left: 5%;">Categories</p>
     <ul>
-      <li *ngFor='let category of categories'>
+      <li class="categories" *ngFor='let category of categories'>
         <mat-checkbox (change)="onCategoryClick($event.checked,category.Id)">
           {{category.Name}}
         </mat-checkbox>
@@ -34,6 +34,9 @@
             <p>
               {{spot.Description}}
             </p>
+            <ul  *ngFor='let category of spot.Categories'>
+              <li>{{category}}</li>
+            </ul>
             <button mat-flat-button class="button" routerLink="../spot-report/{{spot.Id}}">
               <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Reservations report</a>
             </button>
