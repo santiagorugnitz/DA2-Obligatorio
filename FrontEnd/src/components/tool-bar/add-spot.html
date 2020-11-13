@@ -2,23 +2,27 @@
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Name:</mat-label>
-    <input matInput [(ngModel)]="data.spot.Name">
+    <input matInput [(ngModel)]="data.spot.Name" [formControl]="userControl" required>
+    <mat-error *ngIf="userControl.invalid || data.spot.Name.trim().length == 0">Enter a non empty name</mat-error>
   </mat-form-field>
   <mat-form-field>
       <mat-label>Image:</mat-label>
-      <input matInput placeholder="Insert image Url" [(ngModel)]="data.spot.Image" >
+      <input matInput placeholder="Insert image Url" [(ngModel)]="data.spot.Image" [formControl]="imageControl" required>
+    <mat-error *ngIf="imageControl.invalid || data.spot.Image.trim().length == 0">Enter a non empty image</mat-error>
   </mat-form-field>
 <mat-form-field>
   <mat-label>Description:</mat-label>
-  <input matInput [(ngModel)]="data.spot.Description" >
+  <input matInput [(ngModel)]="data.spot.Description" [formControl]="descriptionControl" required>
+    <mat-error *ngIf="descriptionControl.invalid || data.spot.Description.trim().length == 0">Enter a non empty description</mat-error>
 </mat-form-field>
 <mat-form-field appearance="fill" style="margin-top: 20%;">
   <mat-label>Region</mat-label>
-  <mat-select [(value)]="data.spot.Region">
+  <mat-select [formControl]="regionControl" required [(value)]="data.spot.Region">
     <mat-option *ngFor="let region of regions" [value]="region.Id">
       {{region.Name}}
     </mat-option>
   </mat-select>
+  <mat-error *ngIf="regionControl.hasError('required')">Please select an option</mat-error>
 </mat-form-field>
 
 <p>Categories</p>
@@ -29,9 +33,17 @@
     </mat-checkbox>
   </li>
 </ul>
+<mat-error *ngIf="categoriesCount == 0">Enter at least one category</mat-error>
   
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
+  <div *ngIf="buttonEnabled()">
   <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add Spot</button>
 </div>
+<div *ngIf="!buttonEnabled()">
+  <button mat-button disabled [mat-dialog-close]="data" cdkFocusInitial>Add Spot</button>
+  <div *ngIf="!buttonEnabled()">
+    <mat-error>Enter all required values</mat-error>
+  </div>
+  </div>

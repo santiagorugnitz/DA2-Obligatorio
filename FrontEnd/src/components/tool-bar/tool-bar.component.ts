@@ -3,7 +3,7 @@ import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { MenuType } from 'src/models/menu-type.enum';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdministratorsService } from 'src/services/administrators.service';
 import { User } from 'src/models/user';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -87,12 +87,17 @@ export class DialogAddSpot {
   regions: Region[];
   categories: Category[];
   spots: TouristSpot[];
+  userControl = new FormControl('', Validators.required);
+  imageControl = new FormControl('', Validators.required);
+  descriptionControl = new FormControl('', Validators.required);
+  regionControl = new FormControl('', Validators.required);
+  categoriesCount: number = 0
 
   constructor(
     public dialogRef: MatDialogRef<DialogAddSpot>,
     @Inject(MAT_DIALOG_DATA) public data: DialogSpotData,
     private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
-      data.spot = {Id:0,Name:"",Description:"",Image:"https://montevideo.gub.uy/sites/default/files/styles/noticias_twitter/public/biblioteca/dsc0263_4.jpg?itok=am2Xii7V", Categories:[], Region:0}
+      data.spot = {Id:0,Name:"",Description:"",Image:"", Categories:[], Region:0}
       this.regions = regionService.getRegions()
       this.categories = categoryService.getCategories()
     }
@@ -100,11 +105,13 @@ export class DialogAddSpot {
     onCategoryClick(checked: Boolean, id: number) {
       if (checked) {
         this.data.spot.Categories.push(id)
+        this.categoriesCount ++
       }
       else {
         for (var i = 0; i < this.data.spot.Categories.length; i++) {
-          if (this.data.spot.Categories[i] === id) {
+          if (this.data.spot.Categories[i] == id) {
             this.data.spot.Categories.splice(i);
+            this.categoriesCount --
           }
         }
       }
@@ -112,6 +119,13 @@ export class DialogAddSpot {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  buttonEnabled(){
+    return this.userControl.valid && this.imageControl.valid && this.descriptionControl.valid &&
+    this.regionControl.valid && this.data.spot.Name.trim().length != 0 && 
+    this.data.spot.Image.trim().length != 0 && this.data.spot.Description.trim().length != 0 && 
+    this.categoriesCount > 0 
   }
 
 }

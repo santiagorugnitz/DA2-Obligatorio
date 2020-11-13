@@ -145,7 +145,9 @@ export class DialogAddAccommodation {
   buttonEnabled(){
     return this.buttonEnabled && this.availabilityControl.valid 
     && this.imageUploaded && this.spotControl.valid &&
-    this.userControl.valid && this.adressControl.valid
+    this.userControl.valid && this.adressControl.valid &&
+    this.data.accommodation.Name.trim().length != 0 &&
+    this.data.accommodation.Adress.trim().length == 0
   }
 
 }
