@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RouterStateSnapshot } from '@angular/router';
+import { PendingReservation } from 'src/models/pending-reservation';
 import {Reservation} from "../models/reservation";
 
 
@@ -20,8 +21,8 @@ export class ReservationService {
   changeState(id:number,state:string,description:string){
   }
 
-  postReservation(Reservation){
-    
+  postReservation(reservation:PendingReservation):number{
+    return 77
   }
 
   getFromAccomodation(id:number):Reservation[]{
