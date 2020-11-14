@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Accommodation } from 'src/models/accommodation';
+import { Comment } from 'src/models/comment' ;
 
 @Injectable({
   providedIn: 'root'
@@ -43,12 +44,12 @@ export class AccommodationService {
     return this.accommodations;
   }
 
-  getAccommodationComments(accommodationId: Number): string[] {
+  getAccommodationComments(accommodationId: Number): Comment[] {
 
-    var comments: string[] = []
-    comments.push("Excelent sevice")
-    comments.push("Has no room, but is excelent")
-    comments.push("Excelent facilities")
+    var comments: Comment[] = []
+    comments.push({Text: "Excelent sevice", Name:"Martin", Surname:'Martin', Email:'Martin.gut', Score:5} )
+    comments.push({Text: "Has no room, but is excelent", Name:"Martin", Surname:'Martin', Email:'Martin.gut', Score:4})
+    comments.push({Text: "Excelent facilities", Name:"Martin", Surname:'Martin', Email:'Martin.gut', Score:3})
     return comments;
   }
 

@@ -168,7 +168,8 @@ export class AccommodationsSearchComponent implements OnInit {
   getAccommodationComments(id: number, name: string): void{
     const commentList = this.accommodationService.getAccommodationComments(id)  
     const dialogRef = this.dialog.open(AccommodationCommentsComponent, {
-        width: '250px',
+        width: '300px',
+        height: '500px',
         data: {comments: commentList, accommodationName: name}
       });
   }

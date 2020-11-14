@@ -14,7 +14,7 @@ export class Reservation {
     StateDescription: string;
     Total: number;
     Score: number;
-    Comment: number;
+    Comment: string;
 
 }
 

@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Comment } from 'src/models/comment' ;
 
 export interface DialogData {
-  comments: string[];
+  comments: Comment[];
   accommodationName: string;
 }
 
@@ -13,7 +14,7 @@ export interface DialogData {
 })
 export class AccommodationCommentsComponent {
 
-  comments:string[] = []
+  comments:Comment[] = []
   
   constructor(
     public dialogRef: MatDialogRef<AccommodationCommentsComponent>,
