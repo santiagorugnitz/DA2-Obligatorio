@@ -16,7 +16,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpotSearchComponent } from '../components/spot-search/spot-search.component';
 import { ToolBarComponent,ReservationDialog } from '../components/tool-bar/tool-bar.component';
-import { AccommodationsSearchComponent, MakeReservationDialog} from '../components/accommodations-search/accommodations-search.component';
+import { AccommodationsSearchComponent, MakeReservationDialog, ReservationConfirmationDialog} from '../components/accommodations-search/accommodations-search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
@@ -39,6 +39,7 @@ import { SpotReportComponent } from '../components/spot-report/spot-report.compo
     SpotSearchComponent,
     ToolBarComponent,
     ReservationDialog,
+    ReservationConfirmationDialog,
     AccommodationsSearchComponent,
     MakeReservationDialog,
     AccommodationCommentsComponent,

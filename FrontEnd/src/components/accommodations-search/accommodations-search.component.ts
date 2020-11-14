@@ -10,12 +10,20 @@ import { PendingReservation } from 'src/models/pending-reservation';
 import { SelectedImage } from 'src/models/selected-image';
 import { TouristSpot } from 'src/models/tourist-spot';
 import { AccommodationService } from 'src/services/accommodation.service';
+import { ReservationService } from 'src/services/reservation.service';
 import { SpotService } from 'src/services/spot.service';
 import { AccommodationCommentsComponent } from '../accommodation-comments/accommodation-comments.component';
 
 export interface DialogData {
-  accomodation: Accommodation;
   reservation: PendingReservation;
+  telephone: string
+  contactInfo: string
+}
+
+export interface ConfirmationData {
+  reservationNumber: number
+  telephone: string
+  contactInfo: string
 }
 
 @Component({
@@ -174,43 +182,87 @@ export class AccommodationsSearchComponent implements OnInit {
   getAccommodationComments(id: number, name: string): void {
     const commentList = this.accommodationService.getAccommodationComments(id)
     const dialogRef = this.dialog.open(AccommodationCommentsComponent, {
-      width: '250px',
+      width: '350px',
       data: { comments: commentList, accommodationName: name }
     });
   }
 
-  openDialog(id:number): void {
-
-    // res:PendingReservation
-    // res:{
-    //   AccommodationId: id,
-    //   CheckIn: this.startingDate,
-    //   CheckOut: this.finishingDate,
-    //   BabyQty: this.babyQuantity,
-    //   ChildrenQty: this.childrenQuantity,
-    //   AdultQty: this.adultQuantity,
-    //   RetiredQty: this.retiredQuantity,
-    // };
+  openReservationDialog(id: number): void {
 
     const dialogRef = this.dialog.open(MakeReservationDialog, {
       width: '250px',
-      data: { reservation={}}
+      data: {
+        reservation: {
+          AccommodationId: id,
+          CheckIn: this.startingDate,
+          CheckOut: this.finishingDate,
+          BabyQty: this.babyQuantity,
+          ChildrenQty: this.childrenQuantity,
+          AdultQty: this.adultQuantity,
+          RetiredQty: this.retiredQuantity,
+        },
+        telephone: "+59812343",
+        contactInfo:"Thank you for your reservation, see you soon!"
+      }
     });
   }
 }
 
 @Component({
-  selector: 'dialog-overview-example-dialog',
-  templateUrl: 'dialog-overview-example-dialog.html',
+  selector: 'make-reservation-dialog',
+  templateUrl: 'make-reservation-dialog.html',
 })
 export class MakeReservationDialog {
 
   constructor(
     public dialogRef: MatDialogRef<MakeReservationDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private reservationService: ReservationService, public dialog: MatDialog) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  onSubmit(reservation: PendingReservation) {
+    //servicio mensaje y pum
+    this.dialogRef.close()
+
+    var reservationNumber = this.reservationService.postReservation(this.data.reservation)
+
+    if (reservationNumber > 0) {
+      this.openConfirmationDialog(reservationNumber, this.data.telephone, this.data.contactInfo)
+    }
+    else {
+      //TODO: tirar un toast con un error o capaz que hay un errorhandler re copado y esto no se usa
+    }
+
+  }
+
+  openConfirmationDialog(id: number, tel: string, info: string) {
+    const dialogRef = this.dialog.open(ReservationConfirmationDialog, {
+      width: '350px',
+      data: {
+        reservationNumber: id,
+        telephone: tel,
+        contactInfo: info
+      }
+    });
+  }
+
+};
+
+@Component({
+  selector: 'reservation-confirmation-dialog',
+  templateUrl: 'reservation-confirmation-dialog.html',
+})
+export class ReservationConfirmationDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<ReservationConfirmationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: ConfirmationData) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 
 };

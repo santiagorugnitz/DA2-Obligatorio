@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Almost done!</h1>
+<div mat-dialog-content>
+  <p>Fill in your contact information</p>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.reservation.Name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Surname</mat-label>
+    <input matInput [(ngModel)]="data.reservation.Surname">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Mail</mat-label>
+    <input matInput [(ngModel)]="data.reservation.Email">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onSubmit(data.reservation)" cdkFocusInitial>Ok</button>
+</div>
