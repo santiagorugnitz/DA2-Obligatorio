@@ -13,7 +13,6 @@ import { Region } from 'src/models/region';
 import { Category } from 'src/models/category';
 import { RegionService } from 'src/services/region.service';
 import { CategoryService } from 'src/services/category.service';
-import { Administrator } from 'src/models/administrator';
 import { Router } from '@angular/router';
 
 

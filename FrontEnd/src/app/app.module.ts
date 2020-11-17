@@ -33,6 +33,7 @@ import { DialogModifyUser, DialogAddUser,UsersManagementComponent } from '../com
 import { SpotReportComponent } from '../components/spot-report/spot-report.component'
 import { AccommodationManagementComponent, DialogAddAccommodation } from 'src/components/accommodation-management/accommodation-management.component';
 import { MatRadioButton } from '@angular/material/radio';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 @NgModule({
@@ -80,6 +81,7 @@ import { MatRadioButton } from '@angular/material/radio';
     MatRippleModule,
     MatSnackBarModule,
     MatDialogModule,
+    NgxSpinnerModule
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]

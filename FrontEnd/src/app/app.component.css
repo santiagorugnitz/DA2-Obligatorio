@@ -9,3 +9,8 @@
   display: fixed;
   height: 70px;
 }
+
+@keyframes rotate360 {
+  to { transform: rotate(360deg); }
+}
+.spinner { animation: 6s rotate360 infinite linear; }
