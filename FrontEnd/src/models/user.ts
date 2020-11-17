@@ -1,5 +1,5 @@
 export class User {
     Name : string;
-    Password : Number;
+    Password : string;
     isLoggued : boolean;
 }

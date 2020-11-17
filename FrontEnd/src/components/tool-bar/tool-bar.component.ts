@@ -13,6 +13,8 @@ import { Region } from 'src/models/region';
 import { Category } from 'src/models/category';
 import { RegionService } from 'src/services/region.service';
 import { CategoryService } from 'src/services/category.service';
+import { Administrator } from 'src/models/administrator';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -28,25 +30,25 @@ export class ToolBarComponent  {
       shareReplay()
     );
     
-    
-    @Output() sentUser = new EventEmitter<User>()
-    @Input() userLoggued: User;
+    userLoggued: User;
     Username = new FormControl('')
     Password = new FormControl('')
 
     reservationNumber = ""
 
     constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
-      public addDialog: MatDialog, private spotService: TouristSpotService,public dialog:MatDialog) {
+      public addDialog: MatDialog, private spotService: TouristSpotService,public dialog:MatDialog, private router: Router) {
+        this.userLoggued = this.administratorService.isLogued()
     }
   
     login($event): void {
-      if  (this.administratorService.login(this.Username.value, this.Password.value))
+      if  (this.administratorService.login(this.Username.value, this.Password.value) == "Token")
       {
-        this.userLoggued.Name = this.Username.value;
-        this.userLoggued.Password = this.Password.value;
-        this.userLoggued.isLoggued = true;
-        this.sentUser.emit(this.userLoggued);
+        localStorage.setItem('token', "Token");
+        //this.router.navigate(['/spot-search']);
+        this.userLoggued = this.administratorService.isLogued()
+      }else{
+        alert("Login failed, please, try again")
       }
     }
   
@@ -54,10 +56,9 @@ export class ToolBarComponent  {
       this.administratorService.logout(this.Username.value)
       this.Username.setValue('')
       this.Password.setValue('')
-      this.userLoggued.Name = this.Username.value;
-        this.userLoggued.Password = this.Password.value;
-        this.userLoggued.isLoggued = false;
-      this.sentUser.emit(this.userLoggued);
+      localStorage.clear();
+      this.userLoggued = this.administratorService.isLogued()
+      this.router.navigate(['/spot-search']);
     }
 
     addSpotAppear(): void{
