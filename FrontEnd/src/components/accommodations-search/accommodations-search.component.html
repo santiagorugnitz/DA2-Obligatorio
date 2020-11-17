@@ -179,11 +179,8 @@
                 <h3>{{accommodation.Address}}</h3>
               </mat-card-title>
             </mat-card-header>
-            <img mat-card-image class="image" src={{accommodation.Images[getSelectedImage(accommodation.Id)]}}  alt="Photo of {{accommodation.Name}}">
-            <button mat-flat-button class="button-reservation" (click)="nextImage(accommodation.Id)">
-              <a>More images</a>
-            </button>
-
+            <img mat-card-image class="image" src={{accommodation.Images[accommodation.selectedImage]}} (click)="nextImage(accommodation)"  alt="Photo of {{accommodation.Name}}">
+            <span>{{accommodation.selectedImage+1}}/{{accommodation.Images.length}}</span>
             <button mat-flat-button class="button-reservation" (click)="getAccommodationComments(accommodation.Id, accommodation.Name)">
               <a>Show Comments</a>
             </button>

@@ -77,7 +77,7 @@ export class DialogAddAccommodation {
     spotService: TouristSpotService) {
       this.spots = spotService.getAllSpots()
       this.data.accommodation = {Name:'', Address:'', Id:0, Images:[]
-      ,Stars:1,Description:'', Fee:100, Total:0, SpotId:0, State:false}
+      ,Stars:1,Description:'', Fee:100, Total:0, SpotId:0, State:false,selectedImage:0}
       this.actualStars = 1
       this.actualFee = 100
       this.imageUploaded = false

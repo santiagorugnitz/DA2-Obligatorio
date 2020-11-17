@@ -42,7 +42,6 @@ export class AccommodationsSearchComponent implements OnInit {
   babyQuantity: number
   hasSearched: boolean
   accommodations: Accommodation[]
-  selectedImages: SelectedImage[]
 
   constructor(private fb: FormBuilder, private currentRoute: ActivatedRoute, private spotService: SpotService,
     private accommodationService: AccommodationService, private _snackBar: MatSnackBar, public dialog: MatDialog) {
@@ -111,10 +110,6 @@ export class AccommodationsSearchComponent implements OnInit {
     if (!this.hasSearched) {
       if (this.startingDate >= new Date() && this.startingDate < this.finishingDate) {
         this.accommodations = this.accommodationService.getAccommodationByTouristSpot(this.spot.Id)
-        this.selectedImages = []
-        for (var _i = 0; _i < this.accommodations.length; _i++) {
-          this.selectedImages.push({ accommodationId: this.accommodations[_i].Id, imageNumber: 0 })
-        }
         for (let accommodation of this.accommodations) {
           this.calculateTotal(accommodation.Id)
         }
@@ -125,7 +120,6 @@ export class AccommodationsSearchComponent implements OnInit {
     } else {
       this.hasSearched = !this.hasSearched
       this.accommodations = []
-      this.selectedImages = []
     }
   }
 
@@ -137,36 +131,13 @@ export class AccommodationsSearchComponent implements OnInit {
       this.childrenQuantity, this.babyQuantity)
   }
 
-  getSelectedImage(accomodationId: number) {
-    var selectedImage: number
-    for (let image of this.selectedImages) {
-      if (image.accommodationId == accomodationId) {
-        selectedImage = image.imageNumber
-      }
-    }
-    return selectedImage
+
+  nextImage(accommodation: Accommodation) {
+    accommodation.selectedImage = (accommodation.selectedImage + 1) % accommodation.Images.length
   }
 
-  nextImage(accomodationId: number) {
-    if (this.moreImagesLeft(accomodationId)) {
-      for (let image of this.selectedImages) {
-        if (image.accommodationId == accomodationId) {
-          image.imageNumber++
-        }
-      }
-    } else {
-      alert('There is no more images')
-    }
-  }
-
-  moreImagesLeft(accomodationId: number): boolean {
-    var selectedImage: number
-    for (let image of this.selectedImages) {
-      if (image.accommodationId == accomodationId) {
-        selectedImage = image.imageNumber
-      }
-    }
-    return selectedImage < this.getAccommodationById(accomodationId).Images.length - 1
+  getSelectedImage(accommodation: Accommodation) {
+    return accommodation.selectedImage
   }
 
   getAccommodationById(id: number) {
