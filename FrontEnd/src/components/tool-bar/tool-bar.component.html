@@ -22,7 +22,7 @@
         </button>
         <mat-form-field class="reservationNumber">
           <mat-label>Check your reservation</mat-label>
-          <input matInput placeholder="Ex. 12364" type="number" [(ngModel)]="reservationNumber">
+          <input matInput placeholder="Ex. 12364" type="number" onkeypress="return event.charCode >= 48" min="1" [(ngModel)]="reservationNumber">
           <button mat-button matSuffix mat-icon-button (click)="openReservation()">
             <mat-icon>search</mat-icon>
           </button>
