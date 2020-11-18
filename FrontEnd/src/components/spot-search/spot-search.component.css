@@ -28,7 +28,11 @@
   }
   
   .button:hover {
-    background-color: #c110d8; /* Green */
+    background-color: #c110d8;
     color: white;
   } 
+
+  .sidenav-container {
+    position: sticky;
+  }
   

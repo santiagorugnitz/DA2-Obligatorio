@@ -5,6 +5,7 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
+      <div class="buttons">
       <ng-container *ngIf="userLoggued.isLoggued then adminFeatures"></ng-container>
       <ng-template #adminFeatures>
         <button mat-flat-button class="button" routerLink="../users-management">
@@ -16,8 +17,8 @@
       <button mat-flat-button class="button" (click)="addSpotAppear()">Add Tourist Spot</button>
     </ng-template>
 
-      <div class="buttons">
-        <button mat-flat-button routerLink="spot-search">
+      
+        <button mat-flat-button class="button" routerLink="spot-search">
           <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Tourist Spot Search</a>
         </button>
         <mat-form-field class="reservationNumber">
@@ -33,7 +34,7 @@
         <ng-template #ok>
           <a>You are now logged as: {{userLoggued.Name}}</a>
           <label>
-            <button mat-flat-button routerLink="spot-search" (click)="logout($event)">
+            <button mat-flat-button routerLink="spot-search" class="button" (click)="logout($event)">
               <a>Logout</a>
             </button>
           </label>
