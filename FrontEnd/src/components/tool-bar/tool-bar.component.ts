@@ -15,6 +15,7 @@ import { RegionService } from 'src/services/region.service';
 import { CategoryService } from 'src/services/category.service';
 import { Router } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
+import { Importer } from 'src/models/importer';
 
 
 @Component({
@@ -89,6 +90,18 @@ export class ToolBarComponent {
       result;
     });
   };
+
+
+  showImporters() {
+    const importerdialogRef = this.dialog.open(ImportersDialog, {
+      data: {
+        importers: [{ Name: "Xml", Id: 1 }]
+      }
+    });
+  }
+
+
+
 }
 
 export interface DialogSpotData {
@@ -152,6 +165,10 @@ export interface ReservationData {
   noComment: Boolean;
 }
 
+export interface ImportersData {
+  importers: Importer[];
+}
+
 @Component({
   selector: 'reservation-state-dialog',
   templateUrl: 'reservation-state-dialog.html',
@@ -172,6 +189,38 @@ export class ReservationDialog {
     this.dialogRef.close()
 
   }
+}
+@Component({
+  selector: 'importers-dialog',
+  templateUrl: 'importers.html',
+})
+export class ImportersDialog {
+  constructor(
+    public dialogRef: MatDialogRef<ImportersDialog>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: ImportersData) { }
+
+  fileName = ""
+
+  onFileChange(evt): void {
+
+    if (evt.target.files[0].name == undefined) {
+      this.fileName = ""
+    }
+    else {
+      this.fileName = evt.target.files[0].name;
+    }
+  }
+
+  onImport(id: number) {
+    if (this.fileName != "") {
+      //servicio
+    }
+    this.dialogRef.close();
+
+  }
 
 }
+
+
 
