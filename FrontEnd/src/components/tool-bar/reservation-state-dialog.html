@@ -1,17 +1,27 @@
 <h1 mat-dialog-title>{{data.state}}</h1>
-<div mat-dialog-content>
-  {{data.description}}
-  <mat-form-field>
-    <mat-label>Leave a comment</mat-label>
-    <textarea matInput  [(ngModel)]="data.comment"></textarea>
-  </mat-form-field>
-    <p>Score</p>
-    <button mat-mini-fab color="primary"  (click)="increaseScore()">
-      +
-    </button>
-    <p>{{data.score}}</p>
-    <button mat-mini-fab color="primary"  (click)="decreaseScore()">
-      -
-    </button>
-  <button mat-button (click)="onSubmit(data)" cdkFocusInitial>Ok</button>
+<div mat-dialog-content style="height: 100%;">
+  <p>{{data.description}}</p>
+  <ng-container *ngIf="data.noComment then show; else hide"></ng-container>
+  <ng-template #show>
+    <div>
+      <mat-form-field>
+        <mat-label>Leave us a review</mat-label>
+        <textarea matInput [(ngModel)]="this.comment"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-label>Stars: {{this.score}}</mat-label>
+      <mat-slider [min]="1" [max]="5" [step]="1" [(ngModel)]="this.score" [thumbLabel]="true"></mat-slider>
+    </div>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button (click)="onSubmit(data)" cdkFocusInitial>Ok</button>
+    </mat-dialog-actions>
+  </ng-template>
+  <ng-template #hide>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Ok</button>
+    </mat-dialog-actions>
+  </ng-template>
+
 </div>
