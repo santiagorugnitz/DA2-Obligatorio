@@ -1,6 +1,12 @@
 <div class="table-container mat-elevation-z8">
   <table mat-table #table [dataSource]="accommodations">
 
+
+    <ng-container matColumnDef="spot">
+      <th mat-header-cell *matHeaderCellDef> Spot Id </th>
+      <td mat-cell *matCellDef="let accommodation"> {{accommodation.SpotId}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
       <td mat-cell *matCellDef="let accommodation"> {{accommodation.Name}} </td>

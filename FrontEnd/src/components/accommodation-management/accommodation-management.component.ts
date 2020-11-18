@@ -15,7 +15,7 @@ import { TouristSpotService } from 'src/services/tourist-spot.service';
 export class AccommodationManagementComponent implements OnInit {
 
   accommodations: Accommodation[]
-  displayedColumns: string[] = ['name', 'isAvailable', 'modify', 'delete'];
+  displayedColumns: string[] = ['spot','name', 'isAvailable', 'modify', 'delete'];
   @ViewChild('table') table: MatTable<Accommodation>;
   
   constructor(private accommodationService: AccommodationService, public addDialog: MatDialog) {
@@ -110,6 +110,13 @@ export class DialogAddAccommodation {
     if (this.notEmptyName.hasError('required')) {
       return 'You must enter a value';
     }
+  }
+
+  getSpotName(id:Number){
+    this.spots.forEach(element => {
+      if(element.Id==id)return element.Name
+    });
+    return ""
   }
 
   getErrorMessagePass() {

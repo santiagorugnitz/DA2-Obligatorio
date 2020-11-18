@@ -14,7 +14,7 @@ import { Category } from 'src/models/category';
 import { RegionService } from 'src/services/region.service';
 import { CategoryService } from 'src/services/category.service';
 import { Router } from '@angular/router';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
 
 
 @Component({
@@ -22,77 +22,76 @@ import {MatSliderModule} from '@angular/material/slider';
   templateUrl: './tool-bar.component.html',
   styleUrls: ['./tool-bar.component.css']
 })
-export class ToolBarComponent  {
+export class ToolBarComponent {
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
-    
-    userLoggued: User;
-    Username = new FormControl('')
-    Password = new FormControl('')
 
-    reservationNumber = ""
+  userLoggued: User;
+  Username = new FormControl('')
+  Password = new FormControl('')
 
-    constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
-      public addDialog: MatDialog, private spotService: TouristSpotService,public dialog:MatDialog, private router: Router) {
-        this.userLoggued = this.administratorService.isLogued()
-    }
-  
-    login($event): void {
-      if  (this.administratorService.login(this.Username.value, this.Password.value) == "Token")
-      {
-        localStorage.setItem('token', "Token");
-        //this.router.navigate(['/spot-search']);
-        this.userLoggued = this.administratorService.isLogued()
-      }else{
-        alert("Login failed, please, try again")
-      }
-    }
-  
-    logout($event): void {
-      this.administratorService.logout(this.Username.value)
-      this.Username.setValue('')
-      this.Password.setValue('')
-      localStorage.clear();
+  reservationNumber = ""
+
+  constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
+    public addDialog: MatDialog, private spotService: TouristSpotService, public dialog: MatDialog, private router: Router) {
+    this.userLoggued = this.administratorService.isLogued()
+  }
+
+  login($event): void {
+    if (this.administratorService.login(this.Username.value, this.Password.value) == "Token") {
+      localStorage.setItem('token', "Token");
+      //this.router.navigate(['/spot-search']);
       this.userLoggued = this.administratorService.isLogued()
-      this.router.navigate(['/spot-search']);
+    } else {
+      alert("Login failed, please, try again")
     }
+  }
 
-    addSpotAppear(): void{
-      const dialogRef = this.addDialog.open(DialogAddSpot, {
-        width: '250px',
-        data: {spot: {}}
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        this.addSpot(result.spot)
-      });
-    }
-  
-    addSpot(spot:TouristSpotDTO): void{
-      this.spotService.AddSpot(spot)
-    }
+  logout($event): void {
+    this.administratorService.logout(this.Username.value)
+    this.Username.setValue('')
+    this.Password.setValue('')
+    localStorage.clear();
+    this.userLoggued = this.administratorService.isLogued()
+    this.router.navigate(['/spot-search']);
+  }
 
-    openReservation(){
-      const dialogRef = this.dialog.open(ReservationDialog,{
-        data:{
-          state:"Procesada",
-          description:"Esperando a confirmacion",
-          noComment:false,
-        }
-      });
+  addSpotAppear(): void {
+    const dialogRef = this.addDialog.open(DialogAddSpot, {
+      width: '250px',
+      data: { spot: {} }
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-        result;
-      });
-    };
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.addSpot(result.spot)
+    });
+  }
+
+  addSpot(spot: TouristSpotDTO): void {
+    this.spotService.AddSpot(spot)
+  }
+
+  openReservation() {
+    const dialogRef = this.dialog.open(ReservationDialog, {
+      data: {
+        state: "Procesada",
+        description: "Esperando a confirmacion",
+        noComment: false,
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      result;
+    });
+  };
 }
 
-export interface DialogSpotData{
+export interface DialogSpotData {
   spot: TouristSpotDTO
 }
 
@@ -115,42 +114,42 @@ export class DialogAddSpot {
     public dialogRef: MatDialogRef<DialogAddSpot>,
     @Inject(MAT_DIALOG_DATA) public data: DialogSpotData,
     private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
-      data.spot = {Id:0,Name:"",Description:"",Image:"", Categories:[], Region:0}
-      this.regions = regionService.getRegions()
-      this.categories = categoryService.getCategories()
-    }
+    data.spot = { Id: 0, Name: "", Description: "", Image: "", Categories: [], Region: 0 }
+    this.regions = regionService.getRegions()
+    this.categories = categoryService.getCategories()
+  }
 
-    onCategoryClick(checked: Boolean, id: number) {
-      if (checked) {
-        this.data.spot.Categories.push(id)
-        this.categoriesCount ++
-      }
-      else {
-        for (var i = 0; i < this.data.spot.Categories.length; i++) {
-          if (this.data.spot.Categories[i] == id) {
-            this.data.spot.Categories.splice(i);
-            this.categoriesCount --
-          }
+  onCategoryClick(checked: Boolean, id: number) {
+    if (checked) {
+      this.data.spot.Categories.push(id)
+      this.categoriesCount++
+    }
+    else {
+      for (var i = 0; i < this.data.spot.Categories.length; i++) {
+        if (this.data.spot.Categories[i] == id) {
+          this.data.spot.Categories.splice(i);
+          this.categoriesCount--
         }
       }
     }
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  buttonEnabled(){
+  buttonEnabled() {
     return this.userControl.valid && this.imageControl.valid && this.descriptionControl.valid &&
-    this.regionControl.valid && this.data.spot.Name.trim().length != 0 && 
-    this.data.spot.Image.trim().length != 0 && this.data.spot.Description.trim().length != 0 && 
-    this.categoriesCount > 0 
+      this.regionControl.valid && this.data.spot.Name.trim().length != 0 &&
+      this.data.spot.Image.trim().length != 0 && this.data.spot.Description.trim().length != 0 &&
+      this.categoriesCount > 0
   }
 
 }
 export interface ReservationData {
   state: string;
   description: string;
-  noComment:Boolean;
+  noComment: Boolean;
 }
 
 @Component({
@@ -160,15 +159,15 @@ export interface ReservationData {
 export class ReservationDialog {
   constructor(
     public dialogRef: MatDialogRef<ReservationDialog>,
-    @Inject(MAT_DIALOG_DATA) 
-    public data: ReservationData) {}
+    @Inject(MAT_DIALOG_DATA)
+    public data: ReservationData) { }
 
-  comment:string;
-  score:number=5;
+  comment: string;
+  score: number = 5;
 
-  onSubmit( data:ReservationData){
+  onSubmit(data: ReservationData) {
     data
-      //servicio y pum
+    //servicio y pum
 
     this.dialogRef.close()
 
