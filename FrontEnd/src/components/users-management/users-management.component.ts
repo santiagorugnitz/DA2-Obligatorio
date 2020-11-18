@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
 import { Administrator } from 'src/models/administrator';
 import { AdministratorsService } from 'src/services/administrators.service';
 
@@ -12,6 +13,8 @@ import { AdministratorsService } from 'src/services/administrators.service';
 export class UsersManagementComponent implements OnInit {
 
   admins:Administrator[] = []
+  displayedColumns: string[] = ['name', 'password', 'modify', 'delete'];
+  @ViewChild('table') table: MatTable<Administrator>;
   
   constructor(private administratorsService: AdministratorsService, public addDialog: MatDialog, public modifyDialog: MatDialog) {
     this.admins = this.administratorsService.getAdministrators();
@@ -34,6 +37,7 @@ export class UsersManagementComponent implements OnInit {
 
   addUser(Name:string, Password:string): void{
     this.admins = this.administratorsService.addUser(Name, Password)
+    this.update()
   }
 
   modifyUserAppear(Id: number, Name:string, Password:string){
@@ -50,11 +54,24 @@ export class UsersManagementComponent implements OnInit {
   
   modifyUser(Id:number, Name:string, Password:string): void{
     this.admins = this.administratorsService.modifyUser(Id, Name, Password)
+    this.update()
   }
 
   deleteUser(Id:number): void{
     this.admins = this.administratorsService.deleteUser(Id)
+    this.update()
   }
+
+  update(){
+    let data: Administrator[] = [];
+    if (this.table.dataSource) {
+      data = (this.table.dataSource as Administrator[]);
+    }
+    data = this.admins
+    this.table.dataSource = data;
+    this.table.renderRows()
+  }
+
 
 }
 

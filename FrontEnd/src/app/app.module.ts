@@ -34,6 +34,7 @@ import { SpotReportComponent } from '../components/spot-report/spot-report.compo
 import { AccommodationManagementComponent, DialogAddAccommodation } from 'src/components/accommodation-management/accommodation-management.component';
 import { MatRadioButton } from '@angular/material/radio';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import {MatTableModule} from '@angular/material/table';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatRippleModule,
     MatSnackBarModule,
     MatDialogModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatTableModule,
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]
