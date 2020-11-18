@@ -12,16 +12,8 @@ import { User } from 'src/models/user';
 export class AppComponent {
   title = 'FrontEnd';
 
-  logguedUser: User; 
-  spot: TouristSpot;
-
   constructor() {
-    this.spot = new TouristSpot
-    this.logguedUser = new User
-    this.logguedUser.isLoggued = false;
+
   }
 
-  modifyLogguedUser(receivedUser: User) {
-    this.logguedUser = receivedUser;
-  }
 }
