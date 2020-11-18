@@ -9,6 +9,8 @@ import { Category } from 'src/models/category';
 import { CategoryService } from 'src/services/category.service';
 import { TouristSpot } from 'src/models/tourist-spot';
 import { TouristSpotService } from 'src/services/tourist-spot.service';
+import { Administrator } from 'src/models/administrator';
+import { AdministratorsService } from 'src/services/administrators.service';
 
 @Component({
   selector: 'app-spot-search',
@@ -31,10 +33,15 @@ export class SpotSearchComponent {
   selectedRegion: Number
 
 
-  constructor(private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
+  constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
+    private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
     this.regions = regionService.getRegions()
     this.categories = categoryService.getCategories()
     this.getSpots()
+  }
+
+  userLoggued():boolean{
+    return this.administratorService.isLogued().isLoggued
   }
 
   onCategoryClick(checked: Boolean, id: Number) {

@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'spot-search', component: SpotSearchComponent },
   { path: 'accommodation-search/:spotId', component: AccommodationsSearchComponent, canActivate: [SpotNotExistsGuard] },
   { path: 'users-management', component: UsersManagementComponent, canActivate: [UserNotLogguedGuard] },
-  { path: 'spot-report/:spotId', component: SpotReportComponent, canActivate: [SpotNotExistsGuard]  },
+  { path: 'spot-report/:spotId', component: SpotReportComponent, canActivate: [SpotNotExistsGuard, UserNotLogguedGuard]  },
   { path: 'accommodation-management', component: AccommodationManagementComponent, canActivate: [UserNotLogguedGuard] }
 ];
 

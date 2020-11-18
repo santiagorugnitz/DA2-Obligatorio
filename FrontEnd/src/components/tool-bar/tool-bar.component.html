@@ -31,7 +31,7 @@
       <div class="loginForm">
         <ng-container *ngIf="userLoggued.isLoggued then ok; else fail"></ng-container>
         <ng-template #ok>
-          <a>You are now logged as: {{Username.value}}</a>
+          <a>You are now logged as: {{userLoggued.Name}}</a>
           <label>
             <button mat-flat-button routerLink="spot-search" (click)="logout($event)">
               <a>Logout</a>

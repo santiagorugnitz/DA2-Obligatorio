@@ -37,9 +37,12 @@
             <ul  *ngFor='let category of spot.Categories'>
               <li>{{category}}</li>
             </ul>
+            <ng-container *ngIf="userLoggued() then adminFeature"></ng-container>
+            <ng-template #adminFeature>
             <button mat-flat-button class="button" routerLink="../spot-report/{{spot.Id}}">
               <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Reservations report</a>
             </button>
+          </ng-template>
           </mat-card-content>
         </mat-card>
       </mat-grid-list>
