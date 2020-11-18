@@ -14,6 +14,7 @@ import { Category } from 'src/models/category';
 import { RegionService } from 'src/services/region.service';
 import { CategoryService } from 'src/services/category.service';
 import { Router } from '@angular/router';
+import {MatSliderModule} from '@angular/material/slider';
 
 
 @Component({
@@ -80,10 +81,8 @@ export class ToolBarComponent  {
       const dialogRef = this.dialog.open(ReservationDialog,{
         data:{
           state:"Procesada",
-          description:"xd",
-          comment:"comentario",
+          description:"Esperando a confirmacion",
           noComment:false,
-          score:1,
         }
       });
 
@@ -152,8 +151,6 @@ export interface ReservationData {
   state: string;
   description: string;
   noComment:Boolean;
-  comment:string;
-  score:number;
 }
 
 @Component({
@@ -167,6 +164,8 @@ export class ReservationDialog {
     public data: ReservationData) {}
 
   comment:string;
+  score:number=5;
+
   onSubmit( data:ReservationData){
     data
       //servicio y pum
@@ -175,12 +174,5 @@ export class ReservationDialog {
 
   }
 
-  decreaseScore(){
-    this.data.score--
-  }
-  
-  increaseScore(){
-    this.data.score++
-  }
 }
 
