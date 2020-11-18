@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatTable } from '@angular/material/table';
 import { Accommodation } from 'src/models/accommodation';
 import { TouristSpot } from 'src/models/tourist-spot';
 import { AccommodationService } from 'src/services/accommodation.service';
@@ -14,7 +15,9 @@ import { TouristSpotService } from 'src/services/tourist-spot.service';
 export class AccommodationManagementComponent implements OnInit {
 
   accommodations: Accommodation[]
-
+  displayedColumns: string[] = ['name', 'isAvailable', 'modify', 'delete'];
+  @ViewChild('table') table: MatTable<Accommodation>;
+  
   constructor(private accommodationService: AccommodationService, public addDialog: MatDialog) {
     this.accommodations = this.accommodationService.getAccommodations();
    }
@@ -36,14 +39,27 @@ export class AccommodationManagementComponent implements OnInit {
 
   addAccommodation(accommodation:Accommodation): void{
     this.accommodations = this.accommodationService.addAccommodation(accommodation)
+    this.update()
   }
   
   modifyAccommodation(accommodation:Accommodation): void{
     this.accommodations = this.accommodationService.modifyAccommodation(accommodation)
+    this.update()
   }
 
   deleteAccommodation(Id:number): void{
     this.accommodations = this.accommodationService.deleteAccommodation(Id)
+    this.update()
+  }
+
+  update(){
+    let data: Accommodation[] = [];
+    if (this.table.dataSource) {
+      data = (this.table.dataSource as Accommodation[]);
+    }
+    data = this.accommodations
+    this.table.dataSource = data;
+    this.table.renderRows()
   }
 
 }

@@ -1,25 +1,41 @@
-<mat-grid-list cols="3" class="accommodation"  *ngFor="let accommodation of accommodations">
-    <mat-card class="accommodation-card">
-      
-      <mat-card-content>
-        <p>Name: {{accommodation.Name}}</p>
-        <p>Is available: {{accommodation.State}}</p>
+<div class="table-container mat-elevation-z8">
+  <table mat-table #table [dataSource]="accommodations">
 
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let accommodation"> {{accommodation.Name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isAvailable">
+      <th mat-header-cell *matHeaderCellDef> Is Available </th>
+      <td mat-cell *matCellDef="let accommodation"> {{accommodation.State}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="modify">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let accommodation">
         <button mat-flat-button class="button" (click)="modifyAccommodation(accommodation)">
-            <a>Change Availability</a>
-          </button>
-    
-          <button mat-flat-button class="button" (click)="deleteAccommodation(accommodation.Id)">
-            <a>Delete Accomodation</a>
-          </button>
-      </mat-card-content>
-    </mat-card>
-  </mat-grid-list>
+          <a>Change Availability</a>
+        </button>
+      </td>
+    </ng-container>
 
-    <div class="add-accommodation-button">
-    <button mat-flat-button class="button" (click)="addAccommodationAppear()">
-        <a>Add Accomodation</a>
-      </button>
-      </div>
-    
-  
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let accommodation">
+        <button mat-flat-button class="button" (click)="deleteAccommodation(accommodation.Id)">
+          <a>Delete Accomodation</a>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+<div class="add-accommodation-button">
+  <button mat-flat-button class="button" (click)="addAccommodationAppear()">
+    <a>Add Accomodation</a>
+  </button>
+</div>

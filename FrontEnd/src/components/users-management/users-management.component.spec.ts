@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
 
 import { UsersManagementComponent } from './users-management.component';
 
@@ -33,7 +34,8 @@ describe('UsersManagementComponent', () => {
         MatNativeDateModule,
         MatRippleModule,
         MatSnackBar,
-        MatDialog
+        MatDialog,
+        MatTableModule
       ]
     }).compileComponents();
   }));
