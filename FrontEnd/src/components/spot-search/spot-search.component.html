@@ -5,8 +5,8 @@
     <mat-form-field appearance="fill" style="margin-top: 20%;">
       <mat-label>Region</mat-label>
       <mat-select [(value)]="selectedRegion" (selectionChange)="getSpots()">
-        <mat-option *ngFor="let region of regions" [value]="region.Id">
-          {{region.Name}}
+        <mat-option *ngFor="let region of regions" [value]="region.id">
+          {{region.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>

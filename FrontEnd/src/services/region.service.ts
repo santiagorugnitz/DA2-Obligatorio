@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Region } from "../models/region";
 
 @Injectable({
@@ -6,15 +9,11 @@ import { Region } from "../models/region";
 })
 export class RegionService {
 
-  constructor() { }
+  uri = `${environment.baseUrl}/regions`;
 
-  getRegions(): Region[]{
-    const regions : Region[] = [];
-    regions.push({Id:1,Name:"Metropolitana"})      
-    regions.push({Id:2,Name:"Pajaros Pintados"})      
-    regions.push({Id:3,Name:"Este"})      
+  constructor(private http: HttpClient) {}
 
-    return regions
+  getRegions(): Observable<Region[]> {
+    return this.http.get<Region[]>(this.uri);
   }
-
 }

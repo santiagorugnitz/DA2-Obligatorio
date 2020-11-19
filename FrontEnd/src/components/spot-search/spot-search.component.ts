@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Region } from 'src/models/region';
 import { RegionService } from 'src/services/region.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -17,7 +17,7 @@ import { AdministratorsService } from 'src/services/administrators.service';
   templateUrl: './spot-search.component.html',
   styleUrls: ['./spot-search.component.css']
 })
-export class SpotSearchComponent {
+export class SpotSearchComponent implements OnInit {
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -35,9 +35,20 @@ export class SpotSearchComponent {
 
   constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
     private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
-    this.regions = regionService.getRegions()
     this.categories = categoryService.getCategories()
     this.getSpots()
+  }
+  
+  ngOnInit(): void {
+    this.regionService.getRegions().subscribe(
+      res => {
+        this.regions = res;
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
   }
 
   userLoggued():boolean{

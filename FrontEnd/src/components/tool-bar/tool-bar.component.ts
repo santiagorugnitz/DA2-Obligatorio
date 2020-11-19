@@ -128,7 +128,15 @@ export class DialogAddSpot {
     @Inject(MAT_DIALOG_DATA) public data: DialogSpotData,
     private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
     data.spot = { Id: 0, Name: "", Description: "", Image: "", Categories: [], Region: 0 }
-    this.regions = regionService.getRegions()
+    this.regionService.getRegions().subscribe(
+      res => {
+        this.regions = res;
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
     this.categories = categoryService.getCategories()
   }
 

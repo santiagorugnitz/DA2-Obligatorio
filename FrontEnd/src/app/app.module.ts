@@ -35,6 +35,7 @@ import { AccommodationManagementComponent, DialogAddAccommodation } from 'src/co
 import { MatRadioButton } from '@angular/material/radio';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {MatTableModule} from '@angular/material/table';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -85,6 +86,7 @@ import {MatTableModule} from '@angular/material/table';
     MatDialogModule,
     NgxSpinnerModule,
     MatTableModule,
+    HttpClientModule,
   ],
   providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]
