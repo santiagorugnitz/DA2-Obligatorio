@@ -61,7 +61,7 @@ export class SpotSearchComponent implements OnInit {
   }
 
   userLoggued():boolean{
-    return this.administratorService.isLogued().isLoggued
+    return localStorage.getItem('token') != ''
   }
 
   onCategoryClick(checked: Boolean, id: Number) {

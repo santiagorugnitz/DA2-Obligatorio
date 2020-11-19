@@ -17,7 +17,15 @@ export class UsersManagementComponent implements OnInit {
   @ViewChild('table') table: MatTable<Administrator>;
   
   constructor(private administratorsService: AdministratorsService, public addDialog: MatDialog, public modifyDialog: MatDialog) {
-    this.admins = this.administratorsService.getAdministrators();
+    this.administratorsService.getAdministrators().subscribe(
+      res => {
+        this.admins = res;
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
    }
 
   ngOnInit(): void {
@@ -31,12 +39,12 @@ export class UsersManagementComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.addUser(result.Name, result.Password)
+      this.addUser(result.Name, result.Email, result.Password)
     });
   }
 
-  addUser(Name:string, Password:string): void{
-    this.admins = this.administratorsService.addUser(Name, Password)
+  addUser(Name:string, Email:string, Password:string): void{
+    this.administratorsService.addUser(Name, Email, Password)
     this.update()
   }
 
@@ -48,17 +56,17 @@ export class UsersManagementComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.modifyUser(result.Id, result.Name, result.Password)
+      this.modifyUser(result.Id, result.Email, result.Name, result.Password)
     });
   }
   
-  modifyUser(Id:number, Name:string, Password:string): void{
-    this.admins = this.administratorsService.modifyUser(Id, Name, Password)
+  modifyUser(Id:number, Email:string, Name:string, Password:string): void{
+    this.administratorsService.modifyUser(Id, Name, Email, Password)
     this.update()
   }
 
   deleteUser(Id:number): void{
-    this.admins = this.administratorsService.deleteUser(Id)
+    this.administratorsService.deleteUser(Id)
     this.update()
   }
 

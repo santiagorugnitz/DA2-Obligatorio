@@ -16,6 +16,7 @@ import { CategoryService } from 'src/services/category.service';
 import { Router } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
 import { Importer } from 'src/models/importer';
+import { Administrator } from 'src/models/administrator';
 
 
 @Component({
@@ -31,25 +32,36 @@ export class ToolBarComponent {
       shareReplay()
     );
 
-  userLoggued: User;
+  userLoggued: Administrator;
   Username = new FormControl('')
   Password = new FormControl('')
+  isLoggued = false;
 
   reservationNumber = ""
 
   constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
     public addDialog: MatDialog, private spotService: TouristSpotService, public dialog: MatDialog, private router: Router) {
-    this.userLoggued = this.administratorService.isLogued()
+    this.loguedUser()
+    this.isUserLoggued
+  }
+
+  isUserLoggued(){
+    this.isLoggued = localStorage.getItem('token') != ''
   }
 
   login($event): void {
-    if (this.administratorService.login(this.Username.value, this.Password.value) == "Token") {
-      localStorage.setItem('token', "Token");
-      //this.router.navigate(['/spot-search']);
-      this.userLoggued = this.administratorService.isLogued()
-    } else {
-      alert("Login failed, please, try again")
-    }
+    this.administratorService.login(this.Username.value, this.Password.value).subscribe(
+      res => {
+        localStorage.setItem('token', res);
+        localStorage.setItem('email', this.Username.value);
+        localStorage.setItem('password', this.Username.value);
+        this.loguedUser()
+      },
+      err => {
+        alert('Username or Password are incorrect, please, try again');
+        console.log(err);
+      }
+    );
   }
 
   logout($event): void {
@@ -57,8 +69,13 @@ export class ToolBarComponent {
     this.Username.setValue('')
     this.Password.setValue('')
     localStorage.clear();
-    this.userLoggued = this.administratorService.isLogued()
     this.router.navigate(['/spot-search']);
+    this.loguedUser()
+  }
+
+  loguedUser(): void {
+    this.userLoggued = {Name:'', Email:localStorage.getItem('email'), 
+    Password:localStorage.getItem('password'), Id:0}
   }
 
   addSpotAppear(): void {

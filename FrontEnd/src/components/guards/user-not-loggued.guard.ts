@@ -11,7 +11,7 @@ export class UserNotLogguedGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (!this.administratorService.isLogued().isLoggued) {
+      if ((localStorage.getItem('token')) == null || localStorage.getItem('token') == '') {
         alert('You have to be logged to enter that feature');
         this.router.navigate(['/spot-search']);
         return false;
