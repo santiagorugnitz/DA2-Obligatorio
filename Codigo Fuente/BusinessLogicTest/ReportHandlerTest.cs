@@ -64,7 +64,7 @@ namespace BusinessLogicTest
                     Accomodation = accomodation,
                     CheckIn = DateTime.Today.AddDays(1),
                     CheckOut = DateTime.Today.AddDays(10),
-                    Adults = new Tuple<int, int>(2,1),
+                    Adults = new Tuple<int, int>(2, 1),
                     BabyQuantity = 0,
                     Total = 90000,
                     Name = "Martin",

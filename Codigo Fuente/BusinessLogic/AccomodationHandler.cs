@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using BusinessLogicInterface;
 using Exceptions;
+using DataImport;
 
 namespace BusinessLogic
 {
@@ -89,5 +90,34 @@ namespace BusinessLogic
         {
             return accomodationRepository.Get(accomodationId);
         }
+
+        public bool Add(List<AccomodationImport> accomodations)
+        {
+            var ret = true;
+            foreach (var accomodation in accomodations)
+            {
+                var spotImport = accomodation.TouristSpot;
+
+                var spot = touristSpotHandler.Get(spotImport.Name);
+
+                if (spot == null)
+                {
+                    spot = touristSpotHandler.Add(spotImport.ToEntity(), spotImport.RegionId, spotImport.CategoryIds, spotImport.Image);
+                }
+                try
+                {
+                    if (spot == null) throw new BadRequestException();
+                    Add(accomodation.ToEntity(), spot.Id, accomodation.ImageNames);
+                }
+                catch (BadRequestException)
+                {
+                    ret = false;
+                }
+            }
+
+            return ret;
+        }
+
+
     }
 }

@@ -1,5 +1,7 @@
 ﻿using BusinessLogic;
+using BusinessLogicInterface;
 using DataAccessInterface;
+using DataImport;
 using Domain;
 using Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -19,13 +21,13 @@ namespace BusinessLogicTest
         private Mock<IRepository<Accomodation>> accomodationMock;
         private Mock<IRepository<Region>> regionMock;
         private Mock<IRepository<Category>> categoryMock;
-        private Mock<IRepository<TouristSpot>> touristSpotMock;
         private Mock<IRepository<TouristSpotCategory>> joinedMock;
-        private TouristSpotHandler touristSpotHandler;
+        private Mock<ITouristSpotHandler> touristSpotHandlerMock;
         private AccomodationHandler handler;
         private List<string> imageNames;
+        private List<AccomodationImport> import;
 
-    [TestInitialize]
+        [TestInitialize]
         public void SetUp()
         {
 
@@ -42,7 +44,7 @@ namespace BusinessLogicTest
                 Name = "Beach",
                 Description = "asd",
                 Image = new Image { Name = "imagen" },
-                Region = new Region() { Name =  "Region Centro Sur" },
+                Region = new Region() { Name = "Region Centro Sur" },
                 TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry }
             };
 
@@ -53,7 +55,7 @@ namespace BusinessLogicTest
                 Stars = 4.0,
                 Address = "Cuareim",
                 Available = true,
-                Images = new List<Image> { new Image { Name = "imagen"} },
+                Images = new List<Image> { new Image { Name = "imagen" } },
                 Fee = 4000,
                 Description = "Hotel in Mvdeo",
                 Telephone = "+598",
@@ -63,27 +65,49 @@ namespace BusinessLogicTest
 
             imageNames = new List<string> { "imagen" };
 
+            import = new List<AccomodationImport>() {
+                new AccomodationImport
+                {
+                    Name = "Hotel",
+                    Stars = 4.0,
+                    Address = "Cuareim",
+                    Available = true,
+                    ImageNames = imageNames,
+                    Fee = 4000,
+                    Description = "Hotel in Mvdeo",
+                    Telephone = "+598",
+                    ContactInformation = "Owner",
+                    TouristSpot = new TouristSpotImport
+                    {
+                        Name = "Beach",
+                        Description = "asd",
+                        Image = "imagen",
+                        RegionId = 1,
+                        CategoryIds = new List<int> { 1,2 }
+                    }
+                },
+
+            };
+
             accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
             regionMock = new Mock<IRepository<Region>>(MockBehavior.Loose);
             categoryMock = new Mock<IRepository<Category>>(MockBehavior.Loose);
-            touristSpotMock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
             joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
-            touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object, 
-                categoryMock.Object, regionMock.Object, joinedMock.Object);
-            handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            touristSpotHandlerMock = new Mock<ITouristSpotHandler>(MockBehavior.Strict);
+            handler = new AccomodationHandler(accomodationMock.Object, touristSpotHandlerMock.Object);
         }
 
 
         [TestMethod]
         public void AddAccomodationWithTouristSpot()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(accomodation.TouristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(accomodation.TouristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
-            
+
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
 
             accomodationMock.VerifyAll();
-            touristSpotMock.VerifyAll();
+            touristSpotHandlerMock.VerifyAll();
             Assert.AreEqual(accomodation, res);
         }
 
@@ -92,7 +116,7 @@ namespace BusinessLogicTest
     "The tourist spot does not exists")]
         public void AddAccomodationWithoutTouristSpot()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns((TouristSpot)null);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns((TouristSpot)null);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             var res = handler.Add(accomodation, touristSpot.Id, imageNames);
@@ -103,7 +127,7 @@ namespace BusinessLogicTest
     "The Accomodation needs a non empty name")]
         public void AddAccomodationWithoutName()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Name = "";
@@ -115,7 +139,7 @@ namespace BusinessLogicTest
     "The Accomodation needs a non empty name")]
         public void AddAccomodationWithoutName2()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Name = "   ";
@@ -127,7 +151,7 @@ namespace BusinessLogicTest
     "The Accomodation needs a non empty address")]
         public void AddAccomodationWithoutDirection()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Address = "";
@@ -139,7 +163,7 @@ namespace BusinessLogicTest
     "The Accomodation needs a non empty address")]
         public void AddAccomodationWithoutDirection2()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Address = "   ";
@@ -151,7 +175,7 @@ namespace BusinessLogicTest
     "The Accomodation stars needs to be between 1 and 5")]
         public void AddAccomodationWithNegativeStars()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Stars = -1;
@@ -163,7 +187,7 @@ namespace BusinessLogicTest
     "The Accomodation stars needs to be between 1 and 5")]
         public void AddAccomodationWithMoreThan5Stars()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Stars = 5.1;
@@ -175,7 +199,7 @@ namespace BusinessLogicTest
     "The Accomodation stars needs to be between 1 and 5")]
         public void AddAccomodationWith0Stars()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Stars = 0;
@@ -187,7 +211,7 @@ namespace BusinessLogicTest
     "The Accomodation fee needs to be more than 0")]
         public void AddAccomodationWith0Fee()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Fee = 0;
@@ -199,7 +223,7 @@ namespace BusinessLogicTest
     "The Accomodation fee needs to be more than 0")]
         public void AddAccomodationWithNegativeFee()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Fee = -10;
@@ -211,7 +235,7 @@ namespace BusinessLogicTest
     "The Accomodation needs at least one image")]
         public void AddAccomodationWithoutImages()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Images = new List<Image>();
@@ -223,7 +247,7 @@ namespace BusinessLogicTest
     "The Accomodation needs at least one image")]
         public void AddAccomodationWithNullImages()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             accomodation.Images = null;
@@ -235,7 +259,7 @@ namespace BusinessLogicTest
     "The Accomodation needs at least one image")]
         public void AddAccomodationWithNullImagesNames()
         {
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accomodationMock.Setup(x => x.Add(accomodation)).Returns(accomodation);
 
             var res = handler.Add(accomodation, touristSpot.Id, null);
@@ -278,15 +302,15 @@ namespace BusinessLogicTest
         {
             accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accomodation> { accomodation });
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
 
             DateTime checkIn, checkOut = new DateTime();
             checkIn = DateTime.Now;
             checkOut.AddDays(10);
-         
+
             var res = handler.SearchByTouristSpot(touristSpot.Id);
 
-            touristSpotMock.VerifyAll();
+            touristSpotHandlerMock.VerifyAll();
             accomodationMock.VerifyAll();
             Assert.AreEqual(new List<Accomodation> { accomodation }[0], res[0]);
         }
@@ -314,8 +338,8 @@ namespace BusinessLogicTest
         {
             accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accomodation> { });
-            
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
 
 
             DateTime checkIn, checkOut = new DateTime();
@@ -324,7 +348,7 @@ namespace BusinessLogicTest
 
             var res = handler.SearchByTouristSpot(touristSpot.Id);
 
-            touristSpotMock.VerifyAll();
+            touristSpotHandlerMock.VerifyAll();
             accomodationMock.VerifyAll();
             Assert.AreEqual(0, res.Count);
         }
@@ -333,7 +357,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void SearchNonExistingSpot()
         {
-            touristSpotMock.Setup(x => x.Get(0)).Returns((TouristSpot)null);
+            touristSpotHandlerMock.Setup(x => x.Get(0)).Returns((TouristSpot)null);
 
             var res = handler.SearchByTouristSpot(0);
 
@@ -356,7 +380,7 @@ namespace BusinessLogicTest
         public void ChangeAccomodationAvaliabilityBadAccomodation()
         {
             accomodationMock.Setup(x => x.Update(accomodation)).Returns(true);
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation) null);
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation)null);
 
             var res = handler.ChangeAvailability(accomodation.Id, false);
 
@@ -367,7 +391,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void GetAccomodationFalse()
         {
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation) null);
+            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation)null);
 
             var res = handler.Get(accomodation.Id);
 
@@ -384,6 +408,76 @@ namespace BusinessLogicTest
 
             accomodationMock.VerifyAll();
             Assert.AreEqual(accomodation, res);
+        }
+
+
+        [TestMethod]
+        public void ImportAccomodations()
+        {
+            var accomodation = import.ElementAt(0);
+            var spot = accomodation.TouristSpot.ToEntity();
+
+            touristSpotHandlerMock.Setup(x => x.Get(accomodation.TouristSpot.Name)).Returns(spot);
+            touristSpotHandlerMock.Setup(x => x.Get(spot.Id)).Returns(spot);
+            accomodationMock.Setup(x => x.Add(It.IsAny<Accomodation>())).Returns(accomodation.ToEntity());
+
+            var res = handler.Add(import);
+
+            accomodationMock.VerifyAll();
+            touristSpotHandlerMock.VerifyAll();
+            Assert.AreEqual(true, res);
+        }
+
+        [TestMethod]
+        public void ImportAccomodationsNewSpot()
+        {
+            var accomodation = import.ElementAt(0);
+            var spot = accomodation.TouristSpot.ToEntity();
+
+            touristSpotHandlerMock.Setup(x => x.Get(accomodation.TouristSpot.Name)).Returns((TouristSpot)null);
+            touristSpotHandlerMock.Setup(x => x.Add(It.IsAny<TouristSpot>(), accomodation.TouristSpot.RegionId,accomodation.TouristSpot.CategoryIds, accomodation.TouristSpot.Image)).Returns(spot);
+            touristSpotHandlerMock.Setup(x => x.Get(spot.Id)).Returns(spot);
+            accomodationMock.Setup(x => x.Add(It.IsAny<Accomodation>())).Returns(accomodation.ToEntity());
+
+            var res = handler.Add(import);
+
+            accomodationMock.VerifyAll();
+            touristSpotHandlerMock.VerifyAll();
+            Assert.AreEqual(true, res);
+        }
+
+        [TestMethod]
+        public void ImportAccomodationsWrongDataAccomodation()
+        {
+            var accomodation = import.ElementAt(0);
+            var spot = accomodation.TouristSpot.ToEntity();
+
+            touristSpotHandlerMock.Setup(x => x.Get(accomodation.TouristSpot.Name)).Returns((TouristSpot)null);
+            touristSpotHandlerMock.Setup(x => x.Add(It.IsAny<TouristSpot>(), accomodation.TouristSpot.RegionId, accomodation.TouristSpot.CategoryIds, accomodation.TouristSpot.Image)).Returns(spot);
+            touristSpotHandlerMock.Setup(x => x.Get(spot.Id)).Returns(spot);
+            accomodationMock.Setup(x => x.Add(It.IsAny<Accomodation>())).Throws(new BadRequestException());
+
+            var res = handler.Add(import);
+
+            accomodationMock.VerifyAll();
+            touristSpotHandlerMock.VerifyAll();
+            Assert.AreEqual(false, res);
+        }
+
+        [TestMethod]
+        public void ImportAccomodationsWrongDataSpot()
+        {
+            var accomodation = import.ElementAt(0);
+            var spot = accomodation.TouristSpot.ToEntity();
+
+            touristSpotHandlerMock.Setup(x => x.Get(accomodation.TouristSpot.Name)).Returns((TouristSpot)null);
+            touristSpotHandlerMock.Setup(x => x.Add(It.IsAny<TouristSpot>(), accomodation.TouristSpot.RegionId, accomodation.TouristSpot.CategoryIds, accomodation.TouristSpot.Image)).Returns((TouristSpot)null);
+
+            var res = handler.Add(import);
+
+            accomodationMock.VerifyAll();
+            touristSpotHandlerMock.VerifyAll();
+            Assert.AreEqual(false, res);
         }
     }
 }
