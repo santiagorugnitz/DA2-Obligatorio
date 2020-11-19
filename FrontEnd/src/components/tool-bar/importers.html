@@ -1,13 +1,19 @@
-<h1 mat-dialog-title>Choose an importer</h1>
+<h1 mat-dialog-title>Choose an importer and the file route</h1>
 <div mat-dialog-content style="height: 100%;">
     <mat-selection-list #importers [multiple]="false">
         <mat-list-option *ngFor="let importer of data.importers" [value]="importer.Id">
+          <mat-icon mat-list-icon>note</mat-icon>
           {{importer.Name}}
         </mat-list-option>
       </mat-selection-list>
       <p></p>
-      <input type="file" (change)="onFileChange($event)">
+      <mat-form-field>
+        <mat-label>File route</mat-label>
+        <input matInput  type="text" [(ngModel)]="fileName">
+      </mat-form-field>
+
       <mat-dialog-actions align="end">
         <button mat-button  (click)="onImport(importers.selectedOptions.selected[0]?.value)"> Import</button>
       </mat-dialog-actions>
+      
 </div>

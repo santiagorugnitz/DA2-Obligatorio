@@ -95,7 +95,7 @@ export class ToolBarComponent {
   showImporters() {
     const importerdialogRef = this.dialog.open(ImportersDialog, {
       data: {
-        importers: [{ Name: "Xml", Id: 1 }]
+        importers: [{ Name: "Xml", Id: 1 },{ Name: "Json", Id: 2 }]
       }
     });
   }
@@ -200,17 +200,8 @@ export class ImportersDialog {
     @Inject(MAT_DIALOG_DATA)
     public data: ImportersData) { }
 
-  fileName = ""
+  fileName:string
 
-  onFileChange(evt): void {
-
-    if (evt.target.files[0].name == undefined) {
-      this.fileName = ""
-    }
-    else {
-      this.fileName = evt.target.files[0].name;
-    }
-  }
 
   onImport(id: number) {
     if (this.fileName != "") {
