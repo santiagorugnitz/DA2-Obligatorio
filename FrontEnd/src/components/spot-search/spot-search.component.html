@@ -14,8 +14,8 @@
     <p style="margin-left: 5%;">Categories</p>
     <ul>
       <li class="categories" *ngFor='let category of categories'>
-        <mat-checkbox (change)="onCategoryClick($event.checked,category.Id)">
-          {{category.Name}}
+        <mat-checkbox (change)="onCategoryClick($event.checked,category.id)">
+          {{category.name}}
         </mat-checkbox>
       </li>
     </ul>

@@ -137,7 +137,15 @@ export class DialogAddSpot {
         console.log(err);
       }
     );
-    this.categories = categoryService.getCategories()
+    this.categoryService.getCategories().subscribe(
+      res => {
+        this.categories = res;
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
   }
 
   onCategoryClick(checked: Boolean, id: number) {
