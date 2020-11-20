@@ -31,8 +31,8 @@
           <p>
             {{ spot.description }}
           </p>
-          <ul *ngFor="let category of spot.categories()">
-            <li>{{ category }}</li>
+          <ul *ngFor="let item of spot.touristSpotCategories">
+            <li>{{ item.category.name }}</li>
           </ul>
           <ng-container *ngIf="userLoggued(); then adminFeature"></ng-container>
           <ng-template #adminFeature>

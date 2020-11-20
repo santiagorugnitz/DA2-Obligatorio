@@ -7,9 +7,4 @@ export class TouristSpot {
     region: { id: number, name: string }
     touristSpotCategories: { category: { id: number, name: string } }[]
 
-    public categories() : String[] {
-        return this.touristSpotCategories.map(function(x) {
-            return x.category.name
-        })
-    }
 }
