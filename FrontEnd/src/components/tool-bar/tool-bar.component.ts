@@ -121,10 +121,10 @@ export class ToolBarComponent {
 
     const dialogRef = this.dialog.open(ReservationDialog, {
       data: {
-        id:reservation.Id,
-        state: reservation.ReservationState,
-        description: reservation.StateDescription,
-        noComment: reservation.Score==0,
+        id:reservation.id,
+        state: reservation.reservationState,
+        description: reservation.stateDescription,
+        noComment: reservation.score==0,
       }
     });
 

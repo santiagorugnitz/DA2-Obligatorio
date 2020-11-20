@@ -1,20 +1,20 @@
 export class Reservation {
 
-    Id: number;
-    CheckIn: Date;
-    CheckOut: Date;
-    BabyQty: number;
-    ChildrenQty: number;
-    AdultQty: number;
-    RetiredQty: number;
-    Name: string;
-    Surname: string;
-    Email: string;
-    ReservationState: string;
-    StateDescription: string;
-    Total: number;
-    Score: number;
-    Comment: string;
+    id: number;
+    checkIn: Date;
+    checkOut: Date;
+    babyQty: number;
+    childrenQty: number;
+    adultQty: number;
+    retiredQty: number;
+    name: string;
+    surname: string;
+    email: string;
+    reservationState: string;
+    stateDescription: string;
+    total: number;
+    score: number;
+    comment: string;
 
 }
 
