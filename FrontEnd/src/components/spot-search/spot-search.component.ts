@@ -7,7 +7,7 @@ import { map, shareReplay } from 'rxjs/operators';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Category } from 'src/models/category';
 import { CategoryService } from 'src/services/category.service';
-import { TouristSpot } from 'src/models/tourist-spot';
+import { TouristSpot} from 'src/models/tourist-spot';
 import { TouristSpotService } from 'src/services/tourist-spot.service';
 import { Administrator } from 'src/models/administrator';
 import { AdministratorsService } from 'src/services/administrators.service';
@@ -71,7 +71,16 @@ export class SpotSearchComponent implements OnInit {
 
   getSpots() {
     if (this.selectedRegion == undefined) return
-    this.spots = this.spotService.getSpots(this.selectedRegion, this.selectedCategories)
+    this.spotService.getSpots(this.selectedRegion, this.selectedCategories).subscribe(
+      res => {
+        this.spots= res;
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
+  
   }
 
 }

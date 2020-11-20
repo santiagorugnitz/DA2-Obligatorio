@@ -6,6 +6,7 @@ import { Accommodation } from 'src/models/accommodation';
 import { TouristSpot } from 'src/models/tourist-spot';
 import { AccommodationService } from 'src/services/accommodation.service';
 import { TouristSpotService } from 'src/services/tourist-spot.service';
+import { SpotNotExistsGuard } from '../guards/spot-not-exists.guard';
 
 @Component({
   selector: 'accommodation-management',
@@ -91,12 +92,24 @@ export class DialogAddAccommodation {
     public dialogRef: MatDialogRef<DialogAddAccommodation>,
     @Inject(MAT_DIALOG_DATA) public data: DialogAccommodationData,
     spotService: TouristSpotService) {
-      this.spots = spotService.getAllSpots()
+      spotService.getAllSpots().subscribe(
+        res => {
+          this.spots= res
+        },
+        err => {
+          alert('There was an unexpected error, please, try again');
+          console.log(err);
+        }
+      );
       this.data.accommodation = {Name:'', Address:'', Id:0, Images:[]
       ,Stars:1,Description:'', Fee:100, Total:0, SpotId:0, State:false,selectedImage:0}
       this.actualStars = 1
       this.actualFee = 100
       this.imageUploaded = false
+    }
+
+    ngOnInit(): void {
+      
     }
 
   onNoClick(): void {
@@ -114,7 +127,7 @@ export class DialogAddAccommodation {
 
   getSpotName(id:Number){
     this.spots.forEach(element => {
-      if(element.Id==id)return element.Name
+      if(element.id==id)return element.name
     });
     return ""
   }

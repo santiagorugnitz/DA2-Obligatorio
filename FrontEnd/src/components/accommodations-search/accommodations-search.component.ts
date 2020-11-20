@@ -1,17 +1,15 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Accommodation } from 'src/models/accommodation';
 import { PendingReservation } from 'src/models/pending-reservation';
-import { SelectedImage } from 'src/models/selected-image';
 import { TouristSpot } from 'src/models/tourist-spot';
 import { AccommodationService } from 'src/services/accommodation.service';
 import { ReservationService } from 'src/services/reservation.service';
-import { SpotService } from 'src/services/spot.service';
+import { TouristSpotService } from 'src/services/tourist-spot.service';
 import { AccommodationCommentsComponent } from '../accommodation-comments/accommodation-comments.component';
 
 export interface DialogData {
@@ -43,7 +41,7 @@ export class AccommodationsSearchComponent implements OnInit {
   hasSearched: boolean
   accommodations: Accommodation[]
 
-  constructor(private fb: FormBuilder, private currentRoute: ActivatedRoute, private spotService: SpotService,
+  constructor(private fb: FormBuilder, private currentRoute: ActivatedRoute, private spotService: TouristSpotService,
     private accommodationService: AccommodationService, private _snackBar: MatSnackBar, public dialog: MatDialog) {
     this.adultQuantity = 1
     this.retiredQuantity = 0
@@ -109,7 +107,7 @@ export class AccommodationsSearchComponent implements OnInit {
   search() {
     if (!this.hasSearched) {
       if (this.startingDate >= new Date() && this.startingDate < this.finishingDate) {
-        this.accommodations = this.accommodationService.getAccommodationByTouristSpot(this.spot.Id)
+        this.accommodations = this.accommodationService.getAccommodationByTouristSpot(this.spot.id)
         for (let accommodation of this.accommodations) {
           this.calculateTotal(accommodation.Id)
         }

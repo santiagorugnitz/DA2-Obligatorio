@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TouristSpot } from 'src/models/tourist-spot';
-import { SpotService } from 'src/services/spot.service';
 import { ReportItem } from 'src/models/report-item';
 import { ReportService } from 'src/services/report.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { TouristSpotService } from 'src/services/tourist-spot.service';
 
 @Component({
   selector: 'app-spot-report',
@@ -19,7 +19,7 @@ export class SpotReportComponent implements OnInit {
   hasSearched: boolean;
   reportList: ReportItem[]
 
-  constructor(private currentRoute: ActivatedRoute, private spotService: SpotService, private reportService: ReportService) {
+  constructor(private currentRoute: ActivatedRoute, private spotService: TouristSpotService, private reportService: ReportService) {
     this.hasSearched = false
    }
 
@@ -39,7 +39,7 @@ export class SpotReportComponent implements OnInit {
   search(){
     if(!this.hasSearched){
       if(this.startingDate <= this.finishingDate){
-        this.reportList = this.reportService.getAccommodationsForReport(this.spot.Id, this.startingDate, this.finishingDate)
+        this.reportList = this.reportService.getAccommodationsForReport(this.spot.id, this.startingDate, this.finishingDate)
         this.hasSearched = !this.hasSearched
       }else{
         alert('The dates are incorrect');
