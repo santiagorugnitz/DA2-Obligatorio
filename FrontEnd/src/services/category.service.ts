@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Category } from '../models/category';
 
 @Injectable({
@@ -6,14 +9,11 @@ import { Category } from '../models/category';
 })
 export class CategoryService {
 
-  constructor() { }
+  uri = `${environment.baseUrl}/categories`;
 
-  getCategories(): Category[]{
-    const categories : Category[] = [];
-    categories.push({Id:1,Name:"Ciudad"})      
-    categories.push({Id:2,Name:"Campo"})      
-    categories.push({Id:3,Name:"Playa"})      
+  constructor(private http: HttpClient) {}
 
-    return categories
+  getCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(this.uri);
   }
 }

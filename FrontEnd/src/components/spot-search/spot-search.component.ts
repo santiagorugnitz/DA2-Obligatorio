@@ -35,10 +35,9 @@ export class SpotSearchComponent implements OnInit {
 
   constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
     private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
-    this.categories = categoryService.getCategories()
     this.getSpots()
   }
-  
+
   ngOnInit(): void {
     this.regionService.getRegions().subscribe(
       res => {
@@ -49,10 +48,20 @@ export class SpotSearchComponent implements OnInit {
         console.log(err);
       }
     );
+
+    this.categoryService.getCategories().subscribe(
+      res => {
+        this.categories = res;
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
   }
 
   userLoggued():boolean{
-    return this.administratorService.isLogued().isLoggued
+    return localStorage.getItem('token') != ''
   }
 
   onCategoryClick(checked: Boolean, id: Number) {
