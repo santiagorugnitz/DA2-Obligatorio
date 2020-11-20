@@ -201,10 +201,20 @@ export class MakeReservationDialog {
   }
 
   onSubmit(reservation: PendingReservation) {
-    //servicio mensaje y pum
     this.dialogRef.close()
 
-    var reservationNumber = this.reservationService.postReservation(this.data.reservation)
+    var reservationNumber = -1
+    this.reservationService.postReservation(this.data.reservation).subscribe(
+      res => {
+        reservationNumber = res
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
+
+
 
     if (reservationNumber > 0) {
       this.openConfirmationDialog(reservationNumber, this.data.telephone, this.data.contactInfo)

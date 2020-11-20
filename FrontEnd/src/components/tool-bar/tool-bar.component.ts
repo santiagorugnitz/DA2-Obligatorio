@@ -17,6 +17,8 @@ import { Router } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
 import { Importer } from 'src/models/importer';
 import { Administrator } from 'src/models/administrator';
+import { ReservationService } from 'src/services/reservation.service';
+import { Reservation } from 'src/models/reservation';
 
 
 @Component({
@@ -37,10 +39,10 @@ export class ToolBarComponent {
   Password = new FormControl('')
   isLoggued = false;
 
-  reservationNumber = ""
+  reservationNumber :number
 
   constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
-    public addDialog: MatDialog, private spotService: TouristSpotService, public dialog: MatDialog, private router: Router) {
+    public addDialog: MatDialog,private reservationService:ReservationService, private spotService: TouristSpotService, public dialog: MatDialog, private router: Router) {
     this.loguedUser()
     this.isUserLoggued
   }
@@ -103,11 +105,26 @@ export class ToolBarComponent {
   }
 
   openReservation() {
+
+    var reservation: Reservation
+
+    this.reservationService.getReservation(this.reservationNumber).subscribe(
+      res => {
+        reservation= res
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
+
+
     const dialogRef = this.dialog.open(ReservationDialog, {
       data: {
-        state: "Procesada",
-        description: "Esperando a confirmacion",
-        noComment: false,
+        id:reservation.Id,
+        state: reservation.ReservationState,
+        description: reservation.StateDescription,
+        noComment: reservation.Score==0,
       }
     });
 
@@ -201,6 +218,7 @@ export class DialogAddSpot {
 
 }
 export interface ReservationData {
+  id:number
   state: string;
   description: string;
   noComment: Boolean;
@@ -218,15 +236,16 @@ export class ReservationDialog {
   constructor(
     public dialogRef: MatDialogRef<ReservationDialog>,
     @Inject(MAT_DIALOG_DATA)
-    public data: ReservationData) { }
+    public data: ReservationData,
+    private reservationService: ReservationService
+    ) { }
 
   comment: string;
   score: number = 5;
 
   onSubmit(data: ReservationData) {
-    data
-    //servicio y pum
-
+    
+    this.reservationService.review(data.id,this.comment,this.score)
     this.dialogRef.close()
 
   }
