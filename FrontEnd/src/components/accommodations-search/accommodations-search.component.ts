@@ -53,7 +53,15 @@ export class AccommodationsSearchComponent implements OnInit {
 
   ngOnInit(): void {
     let id = +this.currentRoute.snapshot.params['spotId'];
-    this.spot = this.spotService.getSpotById(id);
+    this.spotService.getSpotById(id).subscribe(
+      res => {
+        this.spot = res
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
   }
 
   changeStartingDate(event: MatDatepickerInputEvent<Date>) {

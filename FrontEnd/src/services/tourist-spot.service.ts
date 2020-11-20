@@ -16,11 +16,8 @@ export class TouristSpotService {
 
   constructor(private http: HttpClient) {}
 
-  getSpotById(id:Number): TouristSpot{
-    if(id > 3){
-      return null
-    }
-    return null
+  getSpotById(id:Number): Observable<TouristSpot>{
+    return this.http.get<TouristSpot>(`${this.uri}/${id}`)
   }
 
   getAllSpots(): Observable<TouristSpot[]> {
@@ -28,7 +25,6 @@ export class TouristSpotService {
   }
 
   getSpots(regionId:Number,categories:Number[]): Observable<TouristSpot[]> {
-    //TODO: fix this
     let params = new HttpParams().set("region",regionId.toString());
     categories.forEach(element => {
       params = params.append("cat",element.toString())
@@ -37,13 +33,6 @@ export class TouristSpotService {
   }
 
   AddSpot(spot: TouristSpotDTO) {
-    const spots : TouristSpotDTO[] = [];
-    spots.push({Id:1,Name:"Montevideo",Description:"Capital de Uruguay",Image:"https://montevideo.gub.uy/sites/default/files/styles/noticias_twitter/public/biblioteca/dsc0263_4.jpg?itok=am2Xii7V",
-    Categories:[], Region:0})
-    spots.push({Id:2,Name:"Region",Description:"Largo cat:",Image:"https://montevideo.gub.uy/sites/default/files/styles/noticias_twitter/public/biblioteca/dsc0263_4.jpg?itok=am2Xii7V",
-    Categories:[], Region:0})
-    spots.push(spot)
-
-    return spots
+    return this.http.post<TouristSpotDTO>(this.uri, spot);
   }
 }

@@ -91,7 +91,15 @@ export class ToolBarComponent {
   }
 
   addSpot(spot: TouristSpotDTO): void {
-    this.spotService.AddSpot(spot)
+    this.spotService.AddSpot(spot).subscribe(
+      res => {
+        alert("Yay")
+      },
+      err =>{
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    )
   }
 
   openReservation() {
