@@ -56,7 +56,7 @@ export class UsersManagementComponent implements OnInit {
         this.refreshAdministrators()
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.error);
         console.log(err);
       }
     );
@@ -81,7 +81,7 @@ export class UsersManagementComponent implements OnInit {
         this.refreshAdministrators()
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.error);
         console.log(err);
       }
     );
@@ -94,7 +94,7 @@ export class UsersManagementComponent implements OnInit {
         this.refreshAdministrators()
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.error);
         console.log(err);
       }
     );
