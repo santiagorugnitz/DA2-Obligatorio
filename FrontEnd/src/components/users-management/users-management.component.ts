@@ -27,6 +27,7 @@ export class UsersManagementComponent implements OnInit {
     this.administratorsService.getAdministrators().subscribe(
       res => {
         this.admins = res;
+        this.admins = this.admins.filter(item => item.email !== localStorage.getItem('email'));
         this.update()
       },
       err => {
