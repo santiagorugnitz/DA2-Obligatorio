@@ -37,7 +37,6 @@ namespace WebApi.Controllers
         public IActionResult Login([FromBody] LoginModel loginModel)
         {
             return Ok(handler.Login(loginModel.Email, loginModel.Password));
-
         }
 
         [ServiceFilter(typeof(AuthorizationFilter))]

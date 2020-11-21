@@ -19,7 +19,10 @@ export class AdministratorsService {
   }
 
   login(email: string, password: string): Observable<string> {
-    return this.http.post<string>(`${this.uri}/${"login"}`, {Email: email, Password: password});
+    const myHeaders = new HttpHeaders();
+    myHeaders.append('Accept', 'application/text');
+    return this.http.post<string>(`${this.uri}/${"login"}`, {Email: email, Password: password}, 
+    { headers: myHeaders, responseType: 'text' as 'json' });
   }
 
   logout(token: string): Observable<void> {

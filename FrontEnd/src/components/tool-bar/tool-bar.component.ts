@@ -35,7 +35,7 @@ export class ToolBarComponent {
     );
 
   userLoggued: Administrator;
-  Username = new FormControl('')
+  Email = new FormControl('')
   Password = new FormControl('')
   isLoggued = false;
 
@@ -44,22 +44,18 @@ export class ToolBarComponent {
   constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
     public addDialog: MatDialog,private reservationService:ReservationService, private spotService: TouristSpotService, public dialog: MatDialog, private router: Router) {
     this.loguedUser()
-    this.isUserLoggued
-  }
-
-  isUserLoggued(){
-    this.isLoggued = localStorage.getItem('token') != ''
   }
 
   login($event): void {
-    this.administratorService.login(this.Username.value, this.Password.value).subscribe(
+    this.administratorService.login(this.Email.value, this.Password.value).subscribe(
       res => {
         localStorage.setItem('token', res);
-        localStorage.setItem('email', this.Username.value);
-        localStorage.setItem('password', this.Username.value);
+        localStorage.setItem('email', this.Email.value);
+        localStorage.setItem('password', this.Password.value);
         this.loguedUser()
       },
       err => {
+        
         alert('Username or Password are incorrect, please, try again');
         console.log(err);
       }
@@ -67,17 +63,24 @@ export class ToolBarComponent {
   }
 
   logout($event): void {
-    this.administratorService.logout(this.Username.value)
-    this.Username.setValue('')
+    this.administratorService.logout(localStorage.getItem('email'))
+    this.Email.setValue('')
     this.Password.setValue('')
     localStorage.clear();
     this.router.navigate(['/spot-search']);
     this.loguedUser()
+    this.isLoggued = false
   }
 
   loguedUser(): void {
     this.userLoggued = {Name:'', Email:localStorage.getItem('email'), 
     Password:localStorage.getItem('password'), Id:0}
+    this.isUserLoggued()
+  }
+
+  isUserLoggued(){
+    const token = localStorage.token;
+    this.isLoggued = (token != null && token !== undefined && token !== '');
   }
 
   addSpotAppear(): void {
