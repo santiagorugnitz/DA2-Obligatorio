@@ -5,6 +5,12 @@
     <input matInput [(ngModel)]="data.Name" [formControl]="notEmptyUser" required>
     <mat-error *ngIf="notEmptyUser.invalid || data.Name.trim().length == 0">{{getErrorMessageUser()}}</mat-error>
   </mat-form-field>
+  <mat-form-field>
+  <mat-label>Email:</mat-label>
+  <input matInput [(ngModel)]="data.Email" [formControl]="notEmptyMail" required>
+  <mat-error *ngIf="notEmptyMail.invalid || data.Email.trim().length == 0">{{getErrorMessageMail()}}</mat-error>
+</mat-form-field>
+
   <mat-form-field appearance="fill">
     <mat-label>Enter your password</mat-label>
     <input matInput [(ngModel)]="data.Password" [formControl]="notEmptyPassword" required [type]="hide ? 'password' : 'text'">

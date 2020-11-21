@@ -63,7 +63,15 @@ export class ToolBarComponent {
   }
 
   logout($event): void {
-    this.administratorService.logout(localStorage.getItem('email'))
+    this.administratorService.logout().subscribe(
+      res => {
+        //alert(res)
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
     this.Email.setValue('')
     this.Password.setValue('')
     localStorage.clear();
@@ -73,8 +81,8 @@ export class ToolBarComponent {
   }
 
   loguedUser(): void {
-    this.userLoggued = {Name:'', Email:localStorage.getItem('email'), 
-    Password:localStorage.getItem('password'), Id:0}
+    this.userLoggued = {name:'', email:localStorage.getItem('email'), 
+    password:localStorage.getItem('password'), id:0}
     this.isUserLoggued()
   }
 

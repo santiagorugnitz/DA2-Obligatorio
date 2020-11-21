@@ -1,11 +1,11 @@
 export class Administrator {
-    Id:number
-    Name:string
-    Email:string
-    Password:string
+    id:number
+    name:string
+    email:string
+    password:string
 
     constructor(name: string, pass: string) {
-        this.Name = name;
-        this.Password = pass;
+        this.name = name;
+        this.password = pass;
       }
 }
