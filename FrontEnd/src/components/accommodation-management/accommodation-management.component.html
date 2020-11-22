@@ -4,23 +4,23 @@
 
     <ng-container matColumnDef="spot">
       <th mat-header-cell *matHeaderCellDef> Spot Id </th>
-      <td mat-cell *matCellDef="let accommodation"> {{accommodation.SpotId}} </td>
+      <td mat-cell *matCellDef="let accommodation"> {{accommodation.touristSpotId}} </td>
     </ng-container>
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let accommodation"> {{accommodation.Name}} </td>
+      <td mat-cell *matCellDef="let accommodation"> {{accommodation.name}} </td>
     </ng-container>
 
     <ng-container matColumnDef="isAvailable">
       <th mat-header-cell *matHeaderCellDef> Is Available </th>
-      <td mat-cell *matCellDef="let accommodation"> {{accommodation.State}} </td>
+      <td mat-cell *matCellDef="let accommodation"> {{accommodation.available}} </td>
     </ng-container>
 
     <ng-container matColumnDef="modify">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let accommodation">
-        <button mat-flat-button class="button" (click)="modifyAccommodation(accommodation)">
+        <button mat-flat-button class="button" (click)="changeAvailability(accommodation)">
           <a>Change Availability</a>
         </button>
       </td>
@@ -29,7 +29,7 @@
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let accommodation">
-        <button mat-flat-button class="button" (click)="deleteAccommodation(accommodation.Id)">
+        <button mat-flat-button class="button" (click)="deleteAccommodation(accommodation.id)">
           <a>Delete Accomodation</a>
         </button>
       </td>

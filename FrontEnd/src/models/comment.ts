@@ -1,7 +1,6 @@
 export class Comment {
-    Name: string;
-    Surname: string;
-    Email: string;
-    Score: number;
-    Text: string;
+    name: string;
+    surname: string;
+    score: number;
+    text: string;
 }

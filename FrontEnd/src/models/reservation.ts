@@ -3,10 +3,10 @@ export class Reservation {
     id: number;
     checkIn: Date;
     checkOut: Date;
-    babyQty: number;
-    childrenQty: number;
-    adultQty: number;
-    retiredQty: number;
+    babyQuantity: number;
+    childrenQuantity: number;
+    adultQuantity: number;
+    retiredQuantity: number;
     name: string;
     surname: string;
     email: string;

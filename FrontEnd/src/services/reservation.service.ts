@@ -22,13 +22,13 @@ export class ReservationService {
 
   review(id:number,comment:string,score:number){
     let body = {comment:comment,score:score}
-    return this.http.put(this.uri, body);
+    return this.http.put(`${this.uri}/${id}`, body);
 
   }
   
   changeState(id:number,state:string,description:string){
     let body = {state:state,description:description}
-    return this.http.put(this.uri, body);
+    return this.http.put(`${this.uri}/${id}`, body);
   }
 
   postReservation(reservation:PendingReservation):Observable<number>{

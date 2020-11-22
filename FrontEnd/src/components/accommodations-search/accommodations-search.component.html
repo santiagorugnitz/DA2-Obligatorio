@@ -175,30 +175,30 @@
           <mat-card class="accommodation-card">
             <mat-card-header>
               <mat-card-title>
-                <h1>{{accommodation.Name}}</h1>
-                <h3>{{accommodation.Address}}</h3>
+                <h1>{{accommodation.name}}</h1>
+                <h3>{{accommodation.address}}</h3>
               </mat-card-title>
             </mat-card-header>
-            <img mat-card-image class="image" src={{accommodation.Images[accommodation.selectedImage]}} (click)="nextImage(accommodation)"  alt="Photo of {{accommodation.Name}}">
-            <span>{{accommodation.selectedImage+1}}/{{accommodation.Images.length}}</span>
-            <button mat-flat-button class="button-reservation" (click)="getAccommodationComments(accommodation.Id, accommodation.Name)">
+            <img mat-card-image class="image" src={{accommodation.images[accommodation.selectedImage]}} (click)="nextImage(accommodation)"  alt="Photo of {{accommodation.name}}">
+            <span>{{accommodation.selectedImage+1}}/{{accommodation.images.length}}</span>
+            <button mat-flat-button class="button-reservation" (click)="getAccommodationComments(accommodation.id, accommodation.name)">
               <a>Show Comments</a>
             </button>
             
             <mat-card-content>
               <p>
-              Description: {{accommodation.Description}}
+              Description: {{accommodation.description}}
             </p>
               <p>
-                Stars: {{accommodation.Stars}}
+                Stars: {{accommodation.stars}}
               </p>
               <p>
-                Fee: {{accommodation.Fee}}
+                Fee: {{accommodation.fee}}
               </p>
               <p>
-                Total Price: {{accommodation.Total}}
+                Total Price: {{accommodation.total}}
               </p>
-              <button mat-flat-button class="button-reservation" (click)="openReservationDialog()">
+              <button mat-flat-button class="button-reservation" (click)="openReservationDialog(accommodation.id)">
                 <a>Make reservation</a>
               </button>
             </mat-card-content>
