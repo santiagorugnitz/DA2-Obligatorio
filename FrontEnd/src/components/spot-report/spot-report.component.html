@@ -68,18 +68,18 @@
           <mat-grid-list class="reportList" cols="2" rowHeight="2:1"  *ngFor="let item of reportList">
             <mat-card class="reportList-card">
               <mat-card-header>
-                <mat-card-title>{{item.Accommodation.Name}}</mat-card-title>
+                <mat-card-title>{{item.accommodation.Name}}</mat-card-title>
               </mat-card-header>
               
               <mat-card-content>
                 <p>
-                Description: {{item.Accommodation.Description}}
+                Description: {{item.accommodation.Description}}
               </p>
                 <p>
-                  Stars: {{item.Accommodation.Stars}}
+                  Stars: {{item.accommodation.Stars}}
                 </p>
                   <h4>
-                  Reservations Quantity: {{item.ReservationQuantity}}
+                  Reservations Quantity: {{item.reservationsQuantity}}
                 </h4>
 
                 

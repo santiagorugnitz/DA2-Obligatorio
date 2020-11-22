@@ -46,9 +46,17 @@ export class SpotReportComponent implements OnInit {
 
   search(){
     if(!this.hasSearched){
-      if(this.startingDate <= this.finishingDate){
-        this.reportList = this.reportService.getAccommodationsForReport(this.spot.id, this.startingDate, this.finishingDate)
-        this.hasSearched = !this.hasSearched
+      if(this.startingDate <= this.finishingDate){  
+        this.reportService.getAccommodationsForReport(this.spot.id, this.startingDate, this.finishingDate).subscribe(
+          res => {
+            this.reportList = res
+            this.hasSearched = !this.hasSearched
+          },
+          err => {
+            alert('There was an unexpected error, please, try again');
+            console.log(err);
+          }
+        );
       }else{
         alert('The dates are incorrect');
       }
