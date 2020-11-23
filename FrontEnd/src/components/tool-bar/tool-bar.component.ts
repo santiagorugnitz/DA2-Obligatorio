@@ -19,6 +19,7 @@ import { Importer } from 'src/models/importer';
 import { Administrator } from 'src/models/administrator';
 import { ReservationService } from 'src/services/reservation.service';
 import { Reservation } from 'src/models/reservation';
+import { ImportersService } from 'src/services/importers.service';
 
 
 @Component({
@@ -249,7 +250,7 @@ export class ReservationDialog {
     public dialogRef: MatDialogRef<ReservationDialog>,
     @Inject(MAT_DIALOG_DATA)
     public data: ReservationData,
-    private reservationService: ReservationService
+    private reservationService: ReservationService,
     ) { }
 
   comment: string;
@@ -270,7 +271,9 @@ export class ImportersDialog {
   constructor(
     public dialogRef: MatDialogRef<ImportersDialog>,
     @Inject(MAT_DIALOG_DATA)
-    public data: ImportersData) { }
+    public data: ImportersData,
+    private importersService: ImportersService
+    ) { }
 
   fileName = ""
 
@@ -286,7 +289,15 @@ export class ImportersDialog {
 
   onImport(id: number) {
     if (this.fileName != "") {
-      //servicio
+      this.importersService.import(id,this.fileName).subscribe(
+        res =>{
+          alert(res)
+        },
+        err =>{
+          alert(err.message)
+          console.log(err);
+        }
+      )
     }
     this.dialogRef.close();
 
