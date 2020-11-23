@@ -15,7 +15,7 @@ import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpotSearchComponent } from '../components/spot-search/spot-search.component';
-import { DialogAddSpot, ToolBarComponent, ReservationDialog, ImportersDialog } from '../components/tool-bar/tool-bar.component';
+import { DialogAddSpot, ToolBarComponent, ReservationDialog, ReservationStateDialog, ImportersDialog } from '../components/tool-bar/tool-bar.component';
 import { AccommodationsSearchComponent, MakeReservationDialog, ReservationConfirmationDialog} from '../components/accommodations-search/accommodations-search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -55,7 +55,8 @@ import { HttpClientModule } from '@angular/common/http';
     SpotReportComponent,
     DialogAddAccommodation,
     AccommodationManagementComponent,
-    DialogAddSpot
+    DialogAddSpot,
+    ReservationStateDialog
   ],
   imports: [
     BrowserModule,

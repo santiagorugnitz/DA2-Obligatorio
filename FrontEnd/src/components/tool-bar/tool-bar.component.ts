@@ -40,10 +40,10 @@ export class ToolBarComponent {
   Password = new FormControl('')
   isLoggued = false;
 
-  reservationNumber :number
+  reservationNumber: number
 
   constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
-    public addDialog: MatDialog,private reservationService:ReservationService, private spotService: TouristSpotService, public dialog: MatDialog, private router: Router) {
+    public addDialog: MatDialog, private reservationService: ReservationService, private spotService: TouristSpotService, public dialog: MatDialog, private router: Router) {
     this.loguedUser()
   }
 
@@ -56,7 +56,7 @@ export class ToolBarComponent {
         this.loguedUser()
       },
       err => {
-        
+
         alert('Username or Password are incorrect, please, try again');
         console.log(err);
       }
@@ -82,12 +82,14 @@ export class ToolBarComponent {
   }
 
   loguedUser(): void {
-    this.userLoggued = {name:'', email:localStorage.getItem('email'), 
-    password:localStorage.getItem('password'), id:0}
+    this.userLoggued = {
+      name: '', email: localStorage.getItem('email'),
+      password: localStorage.getItem('password'), id: 0
+    }
     this.isUserLoggued()
   }
 
-  isUserLoggued(){
+  isUserLoggued() {
     const token = localStorage.token;
     this.isLoggued = (token != null && token !== undefined && token !== '');
   }
@@ -107,9 +109,9 @@ export class ToolBarComponent {
   addSpot(spot: TouristSpotDTO): void {
     this.spotService.AddSpot(spot).subscribe(
       res => {
-        alert("Yay")
+        //alert(res)
       },
-      err =>{
+      err => {
         alert('There was an unexpected error, please, try again');
         console.log(err);
       }
@@ -117,21 +119,19 @@ export class ToolBarComponent {
   }
 
   openReservation() {
-
     var reservation: Reservation
-
     this.reservationService.getReservation(this.reservationNumber).subscribe(
       res => {
-        reservation= res
+        reservation = res
         const dialogRef = this.dialog.open(ReservationDialog, {
           data: {
-            id:reservation.id,
+            id: reservation.id,
             state: reservation.reservationState,
             description: reservation.stateDescription,
-            noComment: reservation.score==0,
+            noComment: reservation.score == 0,
           }
         });
-    
+
         dialogRef.afterClosed().subscribe(result => {
           result;
         });
@@ -141,22 +141,40 @@ export class ToolBarComponent {
         console.log(err);
       }
     );
-
-
-    
   };
 
+  openReservationStateChange() {
+    var reservation: Reservation
+    this.reservationService.getReservation(this.reservationNumber).subscribe(
+      res => {
+        reservation = res
+        const dialogRef = this.dialog.open(ReservationStateDialog, {
+          data: {
+            id: reservation.id,
+            state: reservation.reservationState,
+            description: reservation.stateDescription,
+            noComment: reservation.score == 0,
+          }
+        });
+
+        dialogRef.afterClosed().subscribe(result => {
+          result;
+        });
+      },
+      err => {
+        alert(err.message);
+        console.log(err);
+      }
+    );
+  };
 
   showImporters() {
     const importerdialogRef = this.dialog.open(ImportersDialog, {
       data: {
-        importers: [{ Name: "Xml", Id: 1 },{ Name: "Json", Id: 2 }]
+        importers: [{ Name: "Xml", Id: 1 }, { Name: "Json", Id: 2 }]
       }
     });
   }
-
-
-
 }
 
 export interface DialogSpotData {
@@ -231,7 +249,7 @@ export class DialogAddSpot {
 
 }
 export interface ReservationData {
-  id:number
+  id: number
   state: string;
   description: string;
   noComment: Boolean;
@@ -246,23 +264,72 @@ export interface ImportersData {
   templateUrl: 'reservation-state-dialog.html',
 })
 export class ReservationDialog {
+  
+  posibleStates: string[] = ['Creada', 'Pendiente_Pago', 'Aceptada','Rechazada','Expirada']
+  comment: string;
+  score: number = 5;
+  state:string
+
   constructor(
     public dialogRef: MatDialogRef<ReservationDialog>,
     @Inject(MAT_DIALOG_DATA)
     public data: ReservationData,
     private reservationService: ReservationService,
-    ) { }
+  ) {
+    this.state = this.posibleStates[this.data.state]
+   } 
 
-  comment: string;
-  score: number = 5;
-
+  
   onSubmit(data: ReservationData) {
-    
-    this.reservationService.review(data.id,this.comment,this.score)
+
+    this.reservationService.review(data.id, this.comment, this.score)
     this.dialogRef.close()
 
   }
 }
+
+@Component({
+  selector: 'reservation-change-state-dialog',
+  templateUrl: 'reservation-change-state-dialog.html',
+})
+export class ReservationStateDialog {
+  
+  posibleStates: string[] = ['Creada', 'Pendiente_Pago', 'Aceptada','Rechazada','Expirada']
+  score: number = 5;
+  descriptionControl = new FormControl('', Validators.required);
+  stateControl = new FormControl('', Validators.required);
+  
+  constructor(
+    public dialogRef: MatDialogRef<ReservationDialog>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: ReservationData,
+    private reservationService: ReservationService,
+  ) { }
+
+  onSubmit(data: ReservationData) {
+    this.reservationService.changeState(data.id, this.posibleStates.indexOf(this.data.state), this.data.description).subscribe(
+      res => {
+        alert(res)
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    )
+    this.dialogRef.close()
+  }
+  
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  buttonEnabled() {
+    return this.descriptionControl.valid && this.data.description.trim().length != 0 &&
+    this.stateControl.valid
+  }
+}
+
+
 @Component({
   selector: 'importers-dialog',
   templateUrl: 'importers.html',
@@ -273,18 +340,18 @@ export class ImportersDialog {
     @Inject(MAT_DIALOG_DATA)
     public data: ImportersData,
     private importersService: ImportersService
-    ) { }
+  ) { }
 
-  fileName:string
+  fileName: string
 
 
   onImport(id: number) {
     if (this.fileName != "") {
-      this.importersService.import(id,this.fileName).subscribe(
-        res =>{
+      this.importersService.import(id, this.fileName).subscribe(
+        res => {
           alert(res)
         },
-        err =>{
+        err => {
           alert(err.message)
           console.log(err);
         }

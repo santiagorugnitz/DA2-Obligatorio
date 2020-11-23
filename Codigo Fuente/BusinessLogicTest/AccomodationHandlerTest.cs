@@ -320,7 +320,7 @@ namespace BusinessLogicTest
         {
             accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accomodation> { accomodation });
-            touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
 
             DateTime checkIn, checkOut = new DateTime();
             checkIn = DateTime.Now;
@@ -328,7 +328,7 @@ namespace BusinessLogicTest
 
             var res = handler.SearchByTouristSpot(touristSpot.Id,false);
 
-            touristSpotMock.VerifyAll();
+            touristSpotHandlerMock.VerifyAll();
             accomodationMock.VerifyAll();
             Assert.AreEqual(new List<Accomodation> { accomodation }[0], res[0]);
         }

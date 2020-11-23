@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>{{data.state}}</h1>
+<h1 mat-dialog-title>{{state}}</h1>
 <div mat-dialog-content style="height: 100%;">
-  <p>{{data.description}}</p>
+  <p>Description: {{data.description}}</p>
   <ng-container *ngIf="data.noComment then show; else hide"></ng-container>
   <ng-template #show>
     <div>
