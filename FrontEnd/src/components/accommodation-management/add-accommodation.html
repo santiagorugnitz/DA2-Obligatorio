@@ -2,24 +2,24 @@
 <div mat-dialog-content>
   <mat-form-field>
     <mat-label>Name:</mat-label>
-    <input matInput [(ngModel)]="data.accommodation.Name" [formControl]="userControl" required>
-    <mat-error *ngIf="userControl.invalid || data.accommodation.Name.trim().length == 0">Enter a non empty name</mat-error>
+    <input matInput [(ngModel)]="data.accommodation.name" [formControl]="userControl" required>
+    <mat-error *ngIf="userControl.invalid || data.accommodation.name.trim().length == 0">Enter a non empty name</mat-error>
   </mat-form-field>
   <mat-form-field>
   <mat-label>Adress:</mat-label>
-    <input matInput [(ngModel)]="data.accommodation.Address" [formControl]="adressControl" required>
-    <mat-error *ngIf="adressControl.invalid || data.accommodation.Address.trim().length == 0">Enter a non empty adress</mat-error>
+    <input matInput [(ngModel)]="data.accommodation.address" [formControl]="adressControl" required>
+    <mat-error *ngIf="adressControl.invalid || data.accommodation.address.trim().length == 0">Enter a non empty adress</mat-error>
   </mat-form-field>
 <div>
-    <mat-label>Stars: {{data.accommodation.Stars}}</mat-label>
+    <mat-label>Stars: {{data.accommodation.stars}}</mat-label>
     <mat-slider  [min]="1" [max]="5" [step]="1" [(value)]="actualStars" (change)="changeStars()"></mat-slider>
   </div>
 <mat-form-field>
   <mat-label>Description:</mat-label>
-  <input matInput [(ngModel)]="data.accommodation.Description" >
+  <input matInput [(ngModel)]="data.accommodation.description" >
 </mat-form-field>
 <div>
-<mat-label>Fee: {{data.accommodation.Fee}}</mat-label>
+<mat-label>Fee: {{data.accommodation.fee}}</mat-label>
     <mat-slider  [min]="100" [max]="1000000" [step]="100" [(value)]="actualFee" (change)="changeFee()"></mat-slider>
   </div>
 <mat-form-field>
@@ -35,10 +35,18 @@
   <mat-error *ngIf="availabilityControl.hasError('required')">Please select an option</mat-error>
 </mat-form-field>
 <mat-form-field>
+  <mat-form-field>
+    <mat-label>Telephone:</mat-label>
+    <input matInput [(ngModel)]="data.accommodation.telephone" >
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Contact Information:</mat-label>
+    <input matInput [(ngModel)]="data.accommodation.contactInformation" >
+  </mat-form-field>
   <mat-label>Spot: </mat-label>
       <mat-select [formControl]="spotControl" required [(value)]="selectedSpot" (selectionChange)="changeSpot()">
-        <mat-option *ngFor="let spot of spots" [value]="spot.Id">
-          {{spot.Name}}
+        <mat-option *ngFor="let spot of spots" [value]="spot.id">
+          {{spot.name}}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="spotControl.hasError('required')">Please select an option</mat-error>

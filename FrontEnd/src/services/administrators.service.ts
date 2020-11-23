@@ -1,4 +1,7 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { Administrator } from 'src/models/administrator';
 import { User } from 'src/models/user';
 
@@ -7,59 +10,54 @@ import { User } from 'src/models/user';
 })
 export class AdministratorsService {
 
-  admins: Administrator[] = []
-  constructor() {
-    this.admins.push({Id:1, Name:'Martin', Password:'Martin'})
-    this.admins.push({Id:2, Name:'Santiago', Password:'Santiago'})
-   }
+  uri = `${environment.baseUrl}/administrators`;
 
-  login(username: string, password: string): string {
-    if (username == 'admin' && password == 'admin') {
-      return "Token"
-    } else {
-      return ""
-    }
+  constructor(private http: HttpClient) {}
+
+  addUser(name:string, email:string, password:string): Observable<any> {
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token);
+    const user:Administrator = {name: name, email: email, password: password, id:0}
+    return this.http.post<string>(this.uri, user, { headers: myHeaders, responseType: 'text' as 'json' });
   }
 
-  logout(username: string): void {
-     
+  login(email: string, password: string): Observable<string> {
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('Accept', 'application/text');
+    return this.http.post<string>(`${this.uri}/${"login"}`, {Email: email, Password: password}, 
+    { headers: myHeaders, responseType: 'text' as 'json' });
   }
 
-  isLogued(): User {
-    var admin: User = new User();
-    const token = localStorage.token;
-    if (token != null && token !== undefined && token !== ''){
-      admin = {
-        Name :'admin',
-        Password : 'admin',
-        isLoggued : true }
-    } else {
-      admin = {
-        Name :'',
-        Password : '',
-        isLoggued : false }
-    }
-    return admin;
+  logout(): Observable<string> {
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token);
+    return this.http.delete<string>(`${this.uri}/${"logout"}`, { headers: myHeaders, responseType: 'text' as 'json' });
   }
 
-  getAdministrators(): Administrator[] {
-    return this.admins
+  getAdministrators(): Observable<Administrator[]> {
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token);
+    return this.http.get<Administrator[]>(this.uri, { headers: myHeaders });
   }
 
-  addUser(Name:string, Password:string): Administrator[]{
-    this.admins.push({Id:3, Name:Name, Password:Password})
-    return this.admins
+  getAdministrator(id:number): Observable<Administrator> {
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token);
+    return this.http.get<Administrator>(`${this.uri}/${id}`, { headers: myHeaders });
   }
 
-  modifyUser(Id:number, Name:string, Password:string): Administrator[]{
-    this.admins = this.admins.filter(obj => obj.Id !== Id)
-    this.admins.push({Id:Id, Name:Name, Password:Password})
-    return this.admins
+  modifyUser(Id:number, name:string, email:string, password:string): Observable<any>{
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token);
+    return this.http.put<void>(`${this.uri}/${Id}`, {Name:name, Email:email, Password:password}, 
+    { headers: myHeaders, responseType: 'text' as 'json' });
   }
 
-  deleteUser(Id:number): Administrator[]{
-    this.admins.pop()
-    return this.admins
+  deleteUser(Id:number): Observable<any>{
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token);
+    var uri = `${this.uri}/${Id}`
+    return this.http.delete<void>(uri, { headers: myHeaders, responseType: 'text' as 'json' });
   }
 }
 

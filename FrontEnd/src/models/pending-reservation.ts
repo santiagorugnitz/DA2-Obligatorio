@@ -2,10 +2,10 @@ export class PendingReservation   {
     AccommodationId: number;
     CheckIn: Date;
     CheckOut: Date;
-    BabyQty: number;
-    ChildrenQty: number;
-    AdultQty: number;
-    RetiredQty: number;
+    BabyQuantity: number;
+    ChildrenQuantity: number;
+    AdultQuantity: number;
+    RetiredQuantity: number;
     Name: ""
     Surname: "";
     Email: "";

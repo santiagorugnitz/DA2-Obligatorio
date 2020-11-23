@@ -15,4 +15,5 @@ export class InterceptorService {
     return next.handle(req).pipe(
       finalize(() => this.spinnerService.stopSpinner())
     );
+  }
 }

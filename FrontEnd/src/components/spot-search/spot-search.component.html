@@ -1,50 +1,47 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false" style="margin-top:64px">
-
-    <mat-form-field appearance="fill" style="margin-top: 20%;">
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false" style="margin-top: 64px">
+    <mat-form-field appearance="fill" style="margin-top: 20%">
       <mat-label>Region</mat-label>
       <mat-select [(value)]="selectedRegion" (selectionChange)="getSpots()">
-        <mat-option *ngFor="let region of regions" [value]="region.Id">
-          {{region.Name}}
+        <mat-option *ngFor="let region of regions" [value]="region.id">
+          {{ region.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
-    <p style="margin-left: 5%;">Categories</p>
+    <p style="margin-left: 5%">Categories</p>
     <ul>
       <li class="categories" *ngFor='let category of categories'>
-        <mat-checkbox (change)="onCategoryClick($event.checked,category.Id)">
-          {{category.Name}}
+        <mat-checkbox (change)="onCategoryClick($event.checked,category.id)">
+          {{category.name}}
         </mat-checkbox>
       </li>
     </ul>
+  </mat-sidenav>
 
-    </mat-sidenav>
-
-
-    <mat-sidenav-content>
-      <mat-grid-list class="container" cols="2" rowHeight="2:1"  *ngFor="let spot of spots">
-        <mat-card class="spot-card" routerLink="../accommodation-search/{{spot.Id}}">
-          <mat-card-header>
-            <mat-card-title>{{spot.Name}}</mat-card-title>
-          </mat-card-header>
-          <img mat-card-image src={{spot.Image}} alt="Photo of {{spot.Name}}">
-          <mat-card-content>
-            <p>
-              {{spot.Description}}
-            </p>
-            <ul  *ngFor='let category of spot.Categories'>
-              <li>{{category}}</li>
-            </ul>
-            <ng-container *ngIf="userLoggued() then adminFeature"></ng-container>
-            <ng-template #adminFeature>
-            <button mat-flat-button class="button" routerLink="../spot-report/{{spot.Id}}">
+  <mat-sidenav-content>
+    <mat-grid-list class="container" cols="2" rowHeight="2:1" *ngFor="let spot of spots">
+      <mat-card class="spot-card" routerLink="../accommodation-search/{{ spot.id }}">
+        <mat-card-header>
+          <mat-card-title>{{ spot.name }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="{{ spot.image.name }}" alt="Photo of {{ spot.name }}" />
+        <mat-card-content>
+          <p>
+            {{ spot.description }}
+          </p>
+          <ul *ngFor="let item of spot.touristSpotCategories">
+            <li>{{ item.category.name }}</li>
+          </ul>
+          <ng-container *ngIf="userLoggued(); then adminFeature"></ng-container>
+          <ng-template #adminFeature>
+            <button mat-flat-button class="button" routerLink="../spot-report/{{ spot.id }}">
               <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Reservations report</a>
             </button>
           </ng-template>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-list>
-    </mat-sidenav-content>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-list>
+  </mat-sidenav-content>
 </mat-sidenav-container>

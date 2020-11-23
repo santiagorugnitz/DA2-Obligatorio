@@ -1,19 +1,18 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { dateInputsHaveChanged } from '@angular/material/datepicker/datepicker-input-base';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { Accommodation } from 'src/models/accommodation';
 import { PendingReservation } from 'src/models/pending-reservation';
-import { SelectedImage } from 'src/models/selected-image';
+import { Reservation } from 'src/models/reservation';
 import { TouristSpot } from 'src/models/tourist-spot';
 import { AccommodationService } from 'src/services/accommodation.service';
 import { ReservationService } from 'src/services/reservation.service';
-import { SpotService } from 'src/services/spot.service';
+import { TouristSpotService } from 'src/services/tourist-spot.service';
 import { AccommodationCommentsComponent } from '../accommodation-comments/accommodation-comments.component';
-
+import { Comment } from 'src/models/comment';
 export interface DialogData {
   reservation: PendingReservation;
   telephone: string
@@ -43,7 +42,7 @@ export class AccommodationsSearchComponent implements OnInit {
   hasSearched: boolean
   accommodations: Accommodation[]
 
-  constructor(private fb: FormBuilder, private currentRoute: ActivatedRoute, private spotService: SpotService,
+  constructor(private fb: FormBuilder, private currentRoute: ActivatedRoute, private spotService: TouristSpotService, private reservationService: ReservationService,
     private accommodationService: AccommodationService, private _snackBar: MatSnackBar, public dialog: MatDialog) {
     this.adultQuantity = 1
     this.retiredQuantity = 0
@@ -55,7 +54,15 @@ export class AccommodationsSearchComponent implements OnInit {
 
   ngOnInit(): void {
     let id = +this.currentRoute.snapshot.params['spotId'];
-    this.spot = this.spotService.getSpotById(id);
+    this.spotService.getSpotById(id).subscribe(
+      res => {
+        this.spot = res
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
   }
 
   changeStartingDate(event: MatDatepickerInputEvent<Date>) {
@@ -109,10 +116,19 @@ export class AccommodationsSearchComponent implements OnInit {
   search() {
     if (!this.hasSearched) {
       if (this.startingDate >= new Date() && this.startingDate < this.finishingDate) {
-        this.accommodations = this.accommodationService.getAccommodationByTouristSpot(this.spot.Id)
-        for (let accommodation of this.accommodations) {
-          this.calculateTotal(accommodation.Id)
-        }
+        this.accommodationService.getAccommodationByTouristSpot(this.spot.id).subscribe(
+          res => {
+            this.accommodations = res
+            for (let accommodation of this.accommodations) {
+              this.calculateTotal(accommodation.id)
+            }
+          },
+          err => {
+            alert('There was an unexpected error, please, try again');
+            console.log(err);
+          })
+
+
         this.hasSearched = !this.hasSearched
       } else {
         alert('The dates are incorrect');
@@ -125,7 +141,7 @@ export class AccommodationsSearchComponent implements OnInit {
 
   calculateTotal(Id: number): void {
 
-    this.getAccommodationById(Id).Total = this.accommodationService.calculateTotal(
+    this.getAccommodationById(Id).total = this.accommodationService.calculateTotal(
       Id, this.startingDate, this.finishingDate,
       this.adultQuantity, this.retiredQuantity,
       this.childrenQuantity, this.babyQuantity)
@@ -133,7 +149,7 @@ export class AccommodationsSearchComponent implements OnInit {
 
 
   nextImage(accommodation: Accommodation) {
-    accommodation.selectedImage = (accommodation.selectedImage + 1) % accommodation.Images.length
+    accommodation.selectedImage = (accommodation.selectedImage + 1) % accommodation.images.length
   }
 
   getSelectedImage(accommodation: Accommodation) {
@@ -143,7 +159,7 @@ export class AccommodationsSearchComponent implements OnInit {
   getAccommodationById(id: number) {
     var accomodation: Accommodation
     for (var _i = 0; _i < this.accommodations.length; _i++) {
-      if (this.accommodations[_i].Id == id) {
+      if (this.accommodations[_i].id == id) {
         accomodation = this.accommodations[_i]
       }
     }
@@ -151,12 +167,29 @@ export class AccommodationsSearchComponent implements OnInit {
   }
 
   getAccommodationComments(id: number, name: string): void {
-    const commentList = this.accommodationService.getAccommodationComments(id)
+    var reservations: Comment[]
+    this.reservationService.getFromAccomodation(id).subscribe(
+      res => {
+        reservations = res.map(function (x) {
+          var comment: Comment
+          comment = {
+            name: x.name,
+            surname: x.surname,
+            score: x.score,
+            text: x.comment,
+          }
+          return comment
+        })
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      })
     const dialogRef = this.dialog.open(AccommodationCommentsComponent, {
-        width: '300px',
-        height: '500px',
-        data: {comments: commentList, accommodationName: name}
-      });
+      width: '300px',
+      height: '500px',
+      data: { comments: reservations, accommodationName: name }
+    });
   }
 
   openReservationDialog(id: number): void {
@@ -168,13 +201,15 @@ export class AccommodationsSearchComponent implements OnInit {
           AccommodationId: id,
           CheckIn: this.startingDate,
           CheckOut: this.finishingDate,
-          BabyQty: this.babyQuantity,
-          ChildrenQty: this.childrenQuantity,
-          AdultQty: this.adultQuantity,
-          RetiredQty: this.retiredQuantity,
+          BabyQuantity: this.babyQuantity,
+          ChildrenQuantity: this.childrenQuantity,
+          AdultQuantity: this.adultQuantity,
+          RetiredQuantity: this.retiredQuantity,
+          ReservationState: "Creada",
+          StateDescription: "",
         },
         telephone: "+59812343",
-        contactInfo:"Thank you for your reservation, see you soon!"
+        contactInfo: "Thank you for your reservation, see you soon!"
       }
     });
   }
@@ -195,17 +230,25 @@ export class MakeReservationDialog {
   }
 
   onSubmit(reservation: PendingReservation) {
-    //servicio mensaje y pum
     this.dialogRef.close()
 
-    var reservationNumber = this.reservationService.postReservation(this.data.reservation)
+    var reservationNumber = -1
 
-    if (reservationNumber > 0) {
-      this.openConfirmationDialog(reservationNumber, this.data.telephone, this.data.contactInfo)
-    }
-    else {
-      //TODO: tirar un toast con un error o capaz que hay un errorhandler re copado y esto no se usa
-    }
+
+    this.reservationService.postReservation(this.data.reservation).subscribe(
+      res => {
+        reservationNumber = res
+        this.openConfirmationDialog(reservationNumber, this.data.telephone, this.data.contactInfo)
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
+
+
+
+
 
   }
 

@@ -28,7 +28,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ReservationModel reservation)
         {
-            var res = handler.Add(reservation.ToEntity(), reservation.AccomodationId);
+            var res = handler.Add(reservation.ToEntity(), reservation.AccommodationId);
             return Ok(res.Id);
 
         }

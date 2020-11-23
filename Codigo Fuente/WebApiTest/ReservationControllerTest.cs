@@ -35,7 +35,7 @@ namespace WebApiTest
             };
 
             mock.Setup(x => x.Add(It.IsAny<Reservation>(),
-                reservationModel.AccomodationId)).Returns(reservationModel.ToEntity());
+                reservationModel.AccommodationId)).Returns(reservationModel.ToEntity());
 
             var result = controller.Post(reservationModel);
             var okResult = result as OkObjectResult;

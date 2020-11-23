@@ -13,53 +13,91 @@ import { AdministratorsService } from 'src/services/administrators.service';
 export class UsersManagementComponent implements OnInit {
 
   admins:Administrator[] = []
-  displayedColumns: string[] = ['name', 'password', 'modify', 'delete'];
+  displayedColumns: string[] = ['name', 'email', 'password', 'modify', 'delete'];
   @ViewChild('table') table: MatTable<Administrator>;
   
   constructor(private administratorsService: AdministratorsService, public addDialog: MatDialog, public modifyDialog: MatDialog) {
-    this.admins = this.administratorsService.getAdministrators();
+    this.refreshAdministrators()
    }
 
   ngOnInit(): void {
   }
 
+  refreshAdministrators(){
+    this.administratorsService.getAdministrators().subscribe(
+      res => {
+        this.admins = res;
+        this.admins = this.admins.filter(item => item.email !== localStorage.getItem('email'));
+        this.update()
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
+  }
+
   addUserAppear(): void{
     const dialogRef = this.addDialog.open(DialogAddUser, {
       width: '300px',
-      data: {Id: 0, Name:'', Password:''}
+      data: {Id: 0, Name:'', Email: '', Password:''}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.addUser(result.Name, result.Password)
+      this.addUser(result.Name, result.Email, result.Password)
     });
   }
 
-  addUser(Name:string, Password:string): void{
-    this.admins = this.administratorsService.addUser(Name, Password)
-    this.update()
+  addUser(Name:string, Email:string, Password:string): void{
+    this.administratorsService.addUser(Name, Email, Password).subscribe(
+      res => {
+        //alert(res)
+        this.refreshAdministrators()
+      },
+      err => {
+        alert(err.error);
+        console.log(err);
+      }
+    );
   }
 
-  modifyUserAppear(Id: number, Name:string, Password:string){
+  modifyUserAppear(Id: number, Name:string, Email:string, Password:string){
     const dialogRef = this.addDialog.open(DialogModifyUser, {
       width: '300px',
-      data: {Id: Id, Name:Name, Password:Password}
+      data: {Id: Id, Name:Name, Email:Email, Password:Password}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.modifyUser(result.Id, result.Name, result.Password)
+      this.modifyUser(result.Id, result.Email, result.Name, result.Password)
     });
   }
   
-  modifyUser(Id:number, Name:string, Password:string): void{
-    this.admins = this.administratorsService.modifyUser(Id, Name, Password)
-    this.update()
+  modifyUser(Id:number, Email:string, Name:string, Password:string): void{
+    this.administratorsService.modifyUser(Id, Name, Email, Password).subscribe(
+      res => {
+        //alert(res)
+        this.refreshAdministrators()
+      },
+      err => {
+        alert(err.error);
+        console.log(err);
+      }
+    );
   }
 
   deleteUser(Id:number): void{
-    this.admins = this.administratorsService.deleteUser(Id)
-    this.update()
+    this.administratorsService.deleteUser(Id).subscribe(
+      res => {
+        //alert(res)
+        this.refreshAdministrators()
+      },
+      err => {
+        alert(err.error);
+        console.log(err);
+      }
+    );
   }
 
   update(){
@@ -78,6 +116,7 @@ export class UsersManagementComponent implements OnInit {
 export interface DialogUserData{
   Id:number,
   Name:string,
+  Email:string,
   Password:string
 }
 
@@ -89,6 +128,7 @@ export class DialogAddUser {
 
   hide = true;
   notEmptyUser = new FormControl('', [Validators.required]);
+  notEmptyMail = new FormControl('', [Validators.required]);
   notEmptyPassword = new FormControl('', [Validators.required]);
 
   constructor(
@@ -100,14 +140,22 @@ export class DialogAddUser {
   }
   
   buttonEnabled(){
-    return this.notEmptyPassword.valid && this.notEmptyUser.valid && 
-    this.data.Password.trim().length != 0 && this.data.Name.trim().length != 0
+    return this.notEmptyPassword.valid && this.notEmptyUser.valid &&  this.notEmptyMail.valid &&
+    this.data.Password.trim().length != 0 && this.data.Name.trim().length != 0 && this.data.Email.trim().length != 0
   }
 
   getErrorMessageUser() {
     if (this.notEmptyUser.hasError('required')) {
       return 'You must enter a value';
     } else if (this.data.Name.trim().length == 0){
+      return 'You must enter a non empty value';
+    }
+  }
+
+  getErrorMessageMail() {
+    if (this.notEmptyUser.hasError('required')) {
+      return 'You must enter a value';
+    } else if (this.data.Email.trim().length == 0){
       return 'You must enter a non empty value';
     }
   }
@@ -138,18 +186,27 @@ export class DialogModifyUser {
   }
 
   notEmptyUser = new FormControl('', [Validators.required]);
+  notEmptyMail = new FormControl('', [Validators.required]);
   notEmptyPassword = new FormControl('', [Validators.required]);
 
   
   buttonEnabled(){
-    return this.notEmptyPassword.valid && this.notEmptyUser.valid && 
-    this.data.Password.trim().length != 0 && this.data.Name.trim().length != 0
+    return this.notEmptyPassword.valid && this.notEmptyUser.valid &&  this.notEmptyMail.valid &&
+    this.data.Password.trim().length != 0 && this.data.Name.trim().length != 0 && this.data.Email.trim().length != 0
   }
 
   getErrorMessageUser() {
     if (this.notEmptyUser.hasError('required')) {
       return 'You must enter a value';
     } else if (this.data.Name.trim().length == 0){
+      return 'You must enter a non empty value';
+    }
+  }
+
+  getErrorMessageMail() {
+    if (this.notEmptyUser.hasError('required')) {
+      return 'You must enter a value';
+    } else if (this.data.Email.trim().length == 0){
       return 'You must enter a non empty value';
     }
   }

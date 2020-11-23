@@ -6,7 +6,7 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <div class="buttons">
-      <ng-container *ngIf="userLoggued.isLoggued then adminFeatures"></ng-container>
+      <ng-container *ngIf="isLoggued then adminFeatures"></ng-container>
       <ng-template #adminFeatures>
         <button mat-flat-button class="button" routerLink="../users-management">
           <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Manage Users</a>
@@ -32,9 +32,9 @@
         </mat-form-field>
       </div>
       <div class="loginForm">
-        <ng-container *ngIf="userLoggued.isLoggued then ok; else fail"></ng-container>
+        <ng-container *ngIf="isLoggued then ok; else fail"></ng-container>
         <ng-template #ok>
-          <a>You are now logged as: {{userLoggued.Name}}</a>
+          <a>You are now logged as: {{userLoggued.email}}</a>
           <label>
             <button mat-flat-button routerLink="spot-search" class="button" (click)="logout($event)">
               <a>Logout</a>
@@ -43,8 +43,8 @@
         </ng-template>
         <ng-template #fail>
           <mat-form-field class="loginInput">
-            <mat-label>Username</mat-label>
-            <input matInput type="text" [formControl]="Username">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" [formControl]="Email">
           </mat-form-field>
           <mat-form-field class="loginInput">
             <mat-label>Password</mat-label>

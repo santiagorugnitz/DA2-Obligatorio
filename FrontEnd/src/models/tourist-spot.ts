@@ -1,10 +1,10 @@
 export class TouristSpot {
-    
-    Id: number
-    Name: String
-    Description: String
-    Image: String
-    Region: number
-    Categories: String[]
+
+    id: number
+    name: String
+    description: String
+    image: { id: number, name: string }
+    region: { id: number, name: string }
+    touristSpotCategories: { category: { id: number, name: string } }[]
 
 }

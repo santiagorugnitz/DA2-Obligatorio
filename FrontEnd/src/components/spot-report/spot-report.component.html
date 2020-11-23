@@ -1,7 +1,7 @@
 <form>
     <mat-card class="shipping-card">
       <mat-card-header>
-        <h1 class="title">{{spot.Name}}</h1>
+        <h1 class="title">{{spot.name}}</h1>
         
         <ng-container *ngIf="hasSearched then has; else notSearched"></ng-container>
           <ng-template #has>
@@ -68,18 +68,18 @@
           <mat-grid-list class="reportList" cols="2" rowHeight="2:1"  *ngFor="let item of reportList">
             <mat-card class="reportList-card">
               <mat-card-header>
-                <mat-card-title>{{item.Accommodation.Name}}</mat-card-title>
+                <mat-card-title>{{item.accommodation.name}}</mat-card-title>
               </mat-card-header>
               
               <mat-card-content>
                 <p>
-                Description: {{item.Accommodation.Description}}
+                Description: {{item.accommodation.description}}
               </p>
                 <p>
-                  Stars: {{item.Accommodation.Stars}}
+                  Stars: {{item.accommodation.stars}}
                 </p>
                   <h4>
-                  Reservations Quantity: {{item.ReservationQuantity}}
+                  Reservations Quantity: {{item.reservationsQuantity}}
                 </h4>
 
                 

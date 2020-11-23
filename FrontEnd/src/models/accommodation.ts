@@ -1,13 +1,30 @@
+import { TouristSpot } from './tourist-spot'
+
 export class Accommodation {
-  Id: number
-  Name: string
-  Images: string[]
-  Address: string
-  Stars: Number
-  Description: string
-  Fee: Number
-  Total: Number
-  State: boolean
-  SpotId: number
+  id: number
+  name: string
+  images: string[]
+  address: string
+  stars: Number
+  description: string
+  fee: Number
+  total: Number
+  available: boolean
+  telephone: string
+  contactInformation: string
+  touristSpot: TouristSpot
   selectedImage: number = 0
+}
+
+export class AccommodationDTO{
+  name: string
+  imageNames: string[]
+  address: string
+  stars: Number
+  description: string
+  fee: Number
+  available: boolean
+  telephone: string
+  contactInformation: string
+  touristSpotId: number
 }

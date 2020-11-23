@@ -16,6 +16,10 @@ import { CategoryService } from 'src/services/category.service';
 import { Router } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
 import { Importer } from 'src/models/importer';
+import { Administrator } from 'src/models/administrator';
+import { ReservationService } from 'src/services/reservation.service';
+import { Reservation } from 'src/models/reservation';
+import { ImportersService } from 'src/services/importers.service';
 
 
 @Component({
@@ -31,34 +35,61 @@ export class ToolBarComponent {
       shareReplay()
     );
 
-  userLoggued: User;
-  Username = new FormControl('')
+  userLoggued: Administrator;
+  Email = new FormControl('')
   Password = new FormControl('')
+  isLoggued = false;
 
-  reservationNumber = ""
+  reservationNumber :number
 
   constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
-    public addDialog: MatDialog, private spotService: TouristSpotService, public dialog: MatDialog, private router: Router) {
-    this.userLoggued = this.administratorService.isLogued()
+    public addDialog: MatDialog,private reservationService:ReservationService, private spotService: TouristSpotService, public dialog: MatDialog, private router: Router) {
+    this.loguedUser()
   }
 
   login($event): void {
-    if (this.administratorService.login(this.Username.value, this.Password.value) == "Token") {
-      localStorage.setItem('token', "Token");
-      //this.router.navigate(['/spot-search']);
-      this.userLoggued = this.administratorService.isLogued()
-    } else {
-      alert("Login failed, please, try again")
-    }
+    this.administratorService.login(this.Email.value, this.Password.value).subscribe(
+      res => {
+        localStorage.setItem('token', res);
+        localStorage.setItem('email', this.Email.value);
+        localStorage.setItem('password', this.Password.value);
+        this.loguedUser()
+      },
+      err => {
+        
+        alert('Username or Password are incorrect, please, try again');
+        console.log(err);
+      }
+    );
   }
 
   logout($event): void {
-    this.administratorService.logout(this.Username.value)
-    this.Username.setValue('')
+    this.administratorService.logout().subscribe(
+      res => {
+        //alert(res)
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
+    this.Email.setValue('')
     this.Password.setValue('')
     localStorage.clear();
-    this.userLoggued = this.administratorService.isLogued()
     this.router.navigate(['/spot-search']);
+    this.loguedUser()
+    this.isLoggued = false
+  }
+
+  loguedUser(): void {
+    this.userLoggued = {name:'', email:localStorage.getItem('email'), 
+    password:localStorage.getItem('password'), id:0}
+    this.isUserLoggued()
+  }
+
+  isUserLoggued(){
+    const token = localStorage.token;
+    this.isLoggued = (token != null && token !== undefined && token !== '');
   }
 
   addSpotAppear(): void {
@@ -74,21 +105,45 @@ export class ToolBarComponent {
   }
 
   addSpot(spot: TouristSpotDTO): void {
-    this.spotService.AddSpot(spot)
+    this.spotService.AddSpot(spot).subscribe(
+      res => {
+        alert("Yay")
+      },
+      err =>{
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    )
   }
 
   openReservation() {
-    const dialogRef = this.dialog.open(ReservationDialog, {
-      data: {
-        state: "Procesada",
-        description: "Esperando a confirmacion",
-        noComment: false,
-      }
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      result;
-    });
+    var reservation: Reservation
+
+    this.reservationService.getReservation(this.reservationNumber).subscribe(
+      res => {
+        reservation= res
+        const dialogRef = this.dialog.open(ReservationDialog, {
+          data: {
+            id:reservation.id,
+            state: reservation.reservationState,
+            description: reservation.stateDescription,
+            noComment: reservation.score==0,
+          }
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          result;
+        });
+      },
+      err => {
+        alert(err.message);
+        console.log(err);
+      }
+    );
+
+
+    
   };
 
 
@@ -128,8 +183,24 @@ export class DialogAddSpot {
     @Inject(MAT_DIALOG_DATA) public data: DialogSpotData,
     private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
     data.spot = { Id: 0, Name: "", Description: "", Image: "", Categories: [], Region: 0 }
-    this.regions = regionService.getRegions()
-    this.categories = categoryService.getCategories()
+    this.regionService.getRegions().subscribe(
+      res => {
+        this.regions = res;
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
+    this.categoryService.getCategories().subscribe(
+      res => {
+        this.categories = res;
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    );
   }
 
   onCategoryClick(checked: Boolean, id: number) {
@@ -160,6 +231,7 @@ export class DialogAddSpot {
 
 }
 export interface ReservationData {
+  id:number
   state: string;
   description: string;
   noComment: Boolean;
@@ -177,15 +249,16 @@ export class ReservationDialog {
   constructor(
     public dialogRef: MatDialogRef<ReservationDialog>,
     @Inject(MAT_DIALOG_DATA)
-    public data: ReservationData) { }
+    public data: ReservationData,
+    private reservationService: ReservationService,
+    ) { }
 
   comment: string;
   score: number = 5;
 
   onSubmit(data: ReservationData) {
-    data
-    //servicio y pum
-
+    
+    this.reservationService.review(data.id,this.comment,this.score)
     this.dialogRef.close()
 
   }
@@ -198,14 +271,24 @@ export class ImportersDialog {
   constructor(
     public dialogRef: MatDialogRef<ImportersDialog>,
     @Inject(MAT_DIALOG_DATA)
-    public data: ImportersData) { }
+    public data: ImportersData,
+    private importersService: ImportersService
+    ) { }
 
   fileName:string
 
 
   onImport(id: number) {
     if (this.fileName != "") {
-      //servicio
+      this.importersService.import(id,this.fileName).subscribe(
+        res =>{
+          alert(res)
+        },
+        err =>{
+          alert(err.message)
+          console.log(err);
+        }
+      )
     }
     this.dialogRef.close();
 
