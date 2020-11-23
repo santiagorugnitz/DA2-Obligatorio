@@ -122,26 +122,27 @@ export class ToolBarComponent {
     this.reservationService.getReservation(this.reservationNumber).subscribe(
       res => {
         reservation= res
+        const dialogRef = this.dialog.open(ReservationDialog, {
+          data: {
+            id:reservation.id,
+            state: reservation.reservationState,
+            description: reservation.stateDescription,
+            noComment: reservation.score==0,
+          }
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          result;
+        });
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     );
 
 
-    const dialogRef = this.dialog.open(ReservationDialog, {
-      data: {
-        id:reservation.id,
-        state: reservation.reservationState,
-        description: reservation.stateDescription,
-        noComment: reservation.score==0,
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      result;
-    });
+    
   };
 
 
