@@ -1,0 +1,54 @@
+  
+  
+  
+  .mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: fit-content;
+  }
+  
+  
+  .reservationNumber {
+    margin-left: 10px;
+    margin-top: 10px;
+
+    font-size: small;
+  }
+  
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+      /* display: none; <- Crashes Chrome on hover */
+      -webkit-appearance: none;
+      margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  }
+  
+  input[type=number] {
+      -moz-appearance:textfield; /* Firefox */
+  }
+
+  .buttons{
+    padding: 0;
+  }
+
+  .button{
+    width: auto;
+    margin: 1%;
+  }
+
+  .loginInput{
+    font-size: small;
+    padding-right: 10px;
+  }
+  
+  .loginForm{
+    padding-right: 10px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+  }
+  
+  .main-component{
+    display: inline-block;
+  }

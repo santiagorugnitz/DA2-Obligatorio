@@ -1,0 +1,15 @@
+<h2>{{data.accommodationName}}</h2>
+
+  
+  <mat-grid-list cols="3" class="comment"  *ngFor="let comment of comments">
+    <mat-card class="comment-card">
+      
+      <mat-card-content>
+        <p>Name: {{comment.name}} {{comment.surname}}</p>
+        <p>Score: {{comment.score}}</p>
+        <p>Text: {{comment.text}}</p>
+        
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-list>
+  <button mat-rised-button class="button" (click)="onCloseClick()">Close</button>

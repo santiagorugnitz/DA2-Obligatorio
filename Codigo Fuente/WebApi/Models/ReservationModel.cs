@@ -31,7 +31,7 @@ namespace WebApi.Models
 
         public DateTime CheckOut { get; set; }
 
-        public int AccomodationId { get; set; }
+        public int AccommodationId { get; set; }
 
         public Reservation ToEntity() => new Reservation()
         {

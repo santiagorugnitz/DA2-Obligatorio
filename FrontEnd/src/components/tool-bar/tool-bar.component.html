@@ -1,0 +1,60 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+        *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <div class="buttons">
+      <ng-container *ngIf="isLoggued then adminFeatures"></ng-container>
+      <ng-template #adminFeatures>
+        <button mat-flat-button class="button" routerLink="../users-management">
+          <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Manage Users</a>
+        </button>
+      <button mat-flat-button class="button" routerLink="../accommodation-management">
+        <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Manage Accommodations</a>
+      </button>
+      <button mat-flat-button class="button" (click)="addSpotAppear()">Add Tourist Spot</button>
+      <button mat-flat-button class="button" (click)="showImporters()">Import Accommodations</button>
+
+    </ng-template>
+
+      
+        <button mat-flat-button class="button" routerLink="spot-search">
+          <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Tourist Spot Search</a>
+        </button>
+        <mat-form-field class="reservationNumber">
+          <mat-label>Check your reservation</mat-label>
+          <input matInput placeholder="Ex. 12364" type="number" onkeypress="return event.charCode >= 48" min="1" [(ngModel)]="reservationNumber">
+          <button mat-button matSuffix mat-icon-button (click)="openReservation()">
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+      <div class="loginForm">
+        <ng-container *ngIf="isLoggued then ok; else fail"></ng-container>
+        <ng-template #ok>
+          <a>You are now logged as: {{userLoggued.email}}</a>
+          <label>
+            <button mat-flat-button routerLink="spot-search" class="button" (click)="logout($event)">
+              <a>Logout</a>
+            </button>
+          </label>
+        </ng-template>
+        <ng-template #fail>
+          <mat-form-field class="loginInput">
+            <mat-label>Email</mat-label>
+            <input matInput type="text" [formControl]="Email">
+          </mat-form-field>
+          <mat-form-field class="loginInput">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" [formControl]="Password">
+          </mat-form-field>
+          <button mat-flat-button (click)="login($event)">
+            <a>Login</a>
+          </button>
+        </ng-template>
+      </div>
+    </mat-toolbar>
+  </mat-sidenav-content>
+</mat-sidenav-container>

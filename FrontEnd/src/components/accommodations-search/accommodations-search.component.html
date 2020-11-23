@@ -1,0 +1,217 @@
+<form>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <h1 class="title">{{spot.name}}</h1>
+      
+      <ng-container *ngIf="hasSearched then has; else notSearched"></ng-container>
+        <ng-template #has>
+          
+          <mat-form-field class="date">
+            <mat-label>Starting Date</mat-label>
+            <input matInput [matDatepicker]="picker1" [value]="startingDate"
+            (dateInput)="changeStartingDate($event)" (dateChange)="changeStartingDate($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker disabled #picker1></mat-datepicker>
+          </mat-form-field>
+    
+          <mat-form-field class="date">
+            <mat-label>Finishing Date</mat-label>
+            <input matInput [matDatepicker]="picker2" [value]="finishingDate"
+            (dateInput)="changeFinishingDate($event)" (dateChange)="changeFinishingDate($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker disabled #picker2></mat-datepicker>
+          </mat-form-field>
+          
+          <section>
+            <div class="example-label"></div>
+            <div class="example-button-row">
+              <p>Adults</p>
+              <button disabled mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="addAdult()">
+                +
+              </button>
+              <p>{{adultQuantity}}</p>
+              <button disabled mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="removeAdult()">
+                -
+              </button>
+            </div>
+          </section>
+          <section>
+            <div class="example-label"></div>
+            <div class="example-button-row">
+              <p>Retired</p>
+              <button disabled mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="addRetired()">
+                +
+              </button>
+              <p>{{retiredQuantity}}</p>
+              <button disabled mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="removeRetired()">
+                -
+              </button>
+            </div>
+          </section>
+          <section>
+            <div class="example-label"></div>
+            <div class="example-button-row">
+              <p>Children</p>
+              <button disabled mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="addChild()">
+                +
+              </button>
+              <p>{{childrenQuantity}}</p>
+              <button disabled mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="removeChild()">
+                -
+              </button>
+            </div>
+          </section>
+          <section>
+            <div class="example-label"></div>
+            <div class="example-button-row">
+              <p>Baby</p>
+              <button disabled mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="addBaby()">
+                +
+              </button>
+              <p>{{babyQuantity}}</p>
+              <button disabled mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="removeBaby()">
+                -
+              </button>
+            </div>
+          </section>
+          
+          <section>
+          <button mat-flat-button class="button" (click)="search()">
+            <a>Cancel</a>
+          </button>
+          </section>
+
+        </ng-template>
+
+        <ng-template #notSearched>
+
+          <mat-form-field class="date">
+            <mat-label>Starting Date</mat-label>
+            <input matInput [matDatepicker]="picker1" [value]="startingDate"
+            (dateInput)="changeStartingDate($event)" (dateChange)="changeStartingDate($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+    
+          <mat-form-field class="date">
+            <mat-label>Finishing Date</mat-label>
+            <input matInput [matDatepicker]="picker2" [value]="finishingDate"
+            (dateInput)="changeFinishingDate($event)" (dateChange)="changeFinishingDate($event)">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          
+          <section>
+            <div class="example-label"></div>
+            <div class="example-button-row">
+              <p>Adults</p>
+              <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="addAdult()">
+                +
+              </button>
+              <p>{{adultQuantity}}</p>
+              <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="removeAdult()">
+                -
+              </button>
+            </div>
+          </section>
+          <section>
+            <div class="example-label"></div>
+            <div class="example-button-row">
+              <p>Retired</p>
+              <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="addRetired()">
+                +
+              </button>
+              <p>{{retiredQuantity}}</p>
+              <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="removeRetired()">
+                -
+              </button>
+            </div>
+          </section>
+          <section>
+            <div class="example-label"></div>
+            <div class="example-button-row">
+              <p>Children</p>
+              <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="addChild()">
+                +
+              </button>
+              <p>{{childrenQuantity}}</p>
+              <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="removeChild()">
+                -
+              </button>
+            </div>
+          </section>
+          <section>
+            <div class="example-label"></div>
+            <div class="example-button-row">
+              <p>Baby</p>
+              <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="addBaby()">
+                +
+              </button>
+              <p>{{babyQuantity}}</p>
+              <button mat-mini-fab color="primary" aria-label="Example icon button with a plus one icon" (click)="removeBaby()">
+                -
+              </button>
+            </div>
+          </section>
+          
+          <section>
+          <button mat-flat-button class="button" (click)="search()">
+            <a>Search</a>
+          </button>
+          </section>
+
+          </ng-template>
+
+      
+
+    </mat-card-header>
+    <mat-card-content>
+      
+      
+      <ng-container *ngIf="hasSearched then searched; else not"></ng-container>
+      <ng-template #searched>
+        
+        <mat-grid-list class="accommo" cols="2" rowHeight="2:1"  *ngFor="let accommodation of accommodations">
+          <mat-card class="accommodation-card">
+            <mat-card-header>
+              <mat-card-title>
+                <h1>{{accommodation.name}}</h1>
+                <h3>{{accommodation.address}}</h3>
+              </mat-card-title>
+            </mat-card-header>
+            <img mat-card-image class="image" src={{accommodation.images[accommodation.selectedImage]}} (click)="nextImage(accommodation)"  alt="Photo of {{accommodation.name}}">
+            <span>{{accommodation.selectedImage+1}}/{{accommodation.images.length}}</span>
+            <button mat-flat-button class="button-reservation" (click)="getAccommodationComments(accommodation.id, accommodation.name)">
+              <a>Show Comments</a>
+            </button>
+            
+            <mat-card-content>
+              <p>
+              Description: {{accommodation.description}}
+            </p>
+              <p>
+                Stars: {{accommodation.stars}}
+              </p>
+              <p>
+                Fee: {{accommodation.fee}}
+              </p>
+              <p>
+                Total Price: {{accommodation.total}}
+              </p>
+              <button mat-flat-button class="button-reservation" (click)="openReservationDialog(accommodation.id)">
+                <a>Make reservation</a>
+              </button>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-list>
+
+      </ng-template>
+
+      <ng-template #not>
+        <h2 class="subtitle">Complete the fields to start searching!</h2>
+        </ng-template>
+      
+
+    </mat-card-content>
+  </mat-card>
+</form>

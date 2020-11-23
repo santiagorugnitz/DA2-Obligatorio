@@ -1,0 +1,25 @@
+.button {
+    background-color: #180311;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+  }
+  
+  .button:hover {
+    background-color: #c110d8; /* Green */
+    color: white;
+  } 
+
+  .comment-card {
+    margin: 5%;
+  }
+  
+  .comment{
+    float: left;
+    margin-left: 13%;
+  }
