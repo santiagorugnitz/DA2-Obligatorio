@@ -74,6 +74,7 @@ namespace BusinessLogic
         {
             var admin = Get(administrator.Id);
             if (admin == null) throw new NotFoundException("There is no administrator with that id");
+            if (admin.Email.Equals(administrator.Email)) throw new BadRequestException("The email has to be replaced");
             if (RepeatedEmail(administrator.Email)) throw new BadRequestException("The email is repeated, please, modify the user with a new email");
             admin.Name = administrator.Name;
             admin.Email = administrator.Email;
@@ -83,7 +84,7 @@ namespace BusinessLogic
 
         private bool RepeatedEmail(string email)
         {
-            return repository.GetAll(x => ((Administrator)x).Email == email).Count() > 1;
+            return repository.GetAll(x => ((Administrator)x).Email == email).Count() >= 1;
         }
     }
 }

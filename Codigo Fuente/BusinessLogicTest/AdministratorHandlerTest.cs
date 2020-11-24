@@ -199,7 +199,7 @@ namespace BusinessLogicTest
             Assert.AreNotEqual(null, res);
         }
 
-        [ExpectedException(typeof(BadRequestException),"The Administrator needs a non empty password")]
+        [ExpectedException(typeof(BadRequestException), "The Administrator needs a non empty password")]
         [TestMethod]
         public void LoginBad()
         {
@@ -262,7 +262,7 @@ namespace BusinessLogicTest
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Find(administrator.Token)).Returns(administrator);
-            
+
             var res = handler.IsLogged(administrator.Token);
 
             mock.VerifyAll();
@@ -296,19 +296,27 @@ namespace BusinessLogicTest
             mock.VerifyAll();
             Assert.AreEqual(administrator, res[0]);
         }
+
         [TestMethod]
         public void Update()
         {
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
             List<Administrator> returnedList = new List<Administrator>();
-            returnedList.Add(administrator);
+
+            var admin2 = new Administrator
+            {
+                Name = "Santiago",
+                Email = "newMail",
+                Password = "1234",
+                Token = "asdg25-f812j"
+            };
 
             mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(returnedList);
             mock.Setup(x => x.Update(administrator)).Returns(true);
 
-            var res = handler.Update(administrator);
+            var res = handler.Update(admin2);
 
             mock.VerifyAll();
             Assert.AreEqual(true, res);
@@ -323,14 +331,14 @@ namespace BusinessLogicTest
             List<Administrator> returnedList = new List<Administrator>();
             returnedList.Add(administrator);
 
-            mock.Setup(x => x.Get(administrator.Id)).Returns((Administrator) null);
+            var admin2 = new Administrator();
+            admin2.Email = "newEmail";
+
+            mock.Setup(x => x.Get(administrator.Id)).Returns((Administrator)null);
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(returnedList);
             mock.Setup(x => x.Update(administrator)).Returns(true);
 
-            var res = handler.Update(administrator);
-
-            mock.VerifyAll();
-            Assert.AreEqual(true, res);
+            var res = handler.Update(admin2);
         }
 
         [ExpectedException(typeof(BadRequestException))]
@@ -339,19 +347,33 @@ namespace BusinessLogicTest
         {
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
-            
+
             List<Administrator> returnedList = new List<Administrator>();
             returnedList.Add(administrator);
             var admin2 = new Administrator();
             admin2 = administrator;
-            returnedList.Add(admin2);
+            
+            mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(returnedList);
+            //mock.Setup(x => x.Update(administrator)).Returns(true);
+
+            var res = handler.Update(admin2);
+        } 
+
+        [ExpectedException(typeof(BadRequestException))]
+        [TestMethod]
+        public void UpdateUnsuccesfullBySameEmail()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            List<Administrator> returnedList = new List<Administrator>();
 
             mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
-            mock.Setup(x => x.GetAll(It.IsAny<Func<object,bool>>())).Returns(returnedList);
+            //mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(returnedList);
             //mock.Setup(x => x.Update(administrator)).Returns(true);
 
             var res = handler.Update(administrator);
-
         }
 
         [ExpectedException(typeof(NotFoundException))]
