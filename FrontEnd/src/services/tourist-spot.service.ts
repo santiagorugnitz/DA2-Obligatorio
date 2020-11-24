@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TouristSpot } from '../models/tourist-spot';
 import { TouristSpotDTO } from '../models/tourist-spot-dto';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
@@ -33,6 +33,8 @@ export class TouristSpotService {
   }
 
   AddSpot(spot: TouristSpotDTO) {
-    return this.http.post<TouristSpotDTO>(this.uri, spot);
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token)
+    return this.http.post<TouristSpotDTO>(this.uri, spot,{headers:myHeaders})
   }
 }
