@@ -27,7 +27,7 @@ export class ReservationService {
   
   changeState(id:number,state:number,description:string):Observable<string>{
     let myHeaders = new HttpHeaders();
-    myHeaders = myHeaders.set('token', localStorage.token);
+    myHeaders = myHeaders.set('token', localStorage.token).set("Content-Type","application/json");
     let body = {state:state,description:description}
     return this.http.put<string>(`${this.uri}/${id}`, body, {headers:myHeaders, responseType: 'text' as 'json'});
   }
