@@ -70,7 +70,7 @@ namespace BusinessLogicTest
                     Name = "Martin",
                     Surname = "Gutman",
                     Email = "martin.gut",
-                    ReservationState = ReservationState.Aceptada,
+                    ReservationState = ReservationState.Accepted,
                 };
 
                 accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
@@ -233,7 +233,7 @@ namespace BusinessLogicTest
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
-                reservation.ReservationState = ReservationState.Rechazada;
+                reservation.ReservationState = ReservationState.Rejected;
 
                 var result = reportHandler.AccomodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1));
                 accomodationMock.VerifyAll();
@@ -250,7 +250,7 @@ namespace BusinessLogicTest
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
-                reservation.ReservationState = ReservationState.Expirada;
+                reservation.ReservationState = ReservationState.Expired;
 
                 var result = reportHandler.AccomodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1));
                 accomodationMock.VerifyAll();
@@ -289,7 +289,7 @@ namespace BusinessLogicTest
                     Name = "Martin",
                     Surname = "Gutman",
                     Email = "martin.gut",
-                    ReservationState = ReservationState.Aceptada,
+                    ReservationState = ReservationState.Accepted,
                 };
 
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
