@@ -57,7 +57,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetByTouristSpot(int spotId,bool onlyAvailable)
         {
-            return Ok(handler.SearchByTouristSpot(spotId));
+            return Ok(handler.SearchByTouristSpot(spotId,onlyAvailable));
         }
 
         [HttpPost("{id}/calculateTotal")]

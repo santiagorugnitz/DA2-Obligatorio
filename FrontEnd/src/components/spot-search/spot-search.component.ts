@@ -44,7 +44,7 @@ export class SpotSearchComponent implements OnInit {
         this.regions = res;
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     );
@@ -54,7 +54,7 @@ export class SpotSearchComponent implements OnInit {
         this.categories = res;
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     );
@@ -86,7 +86,7 @@ export class SpotSearchComponent implements OnInit {
         this.spots= res;
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     );

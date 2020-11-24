@@ -450,8 +450,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<TouristSpot> { spot, spot2 });
 
-            List<TouristSpot> res = handler.Search(new List<int>() { 1, 2 },
-                0);
+            List<TouristSpot> res = handler.Search(new List<int>() { 1, 2 },-1);
         }
 
         [TestMethod]
@@ -468,7 +467,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<TouristSpot> { spot, spot2 });
 
-            List<TouristSpot> res = handler.Search(null, 0);
+            List<TouristSpot> res = handler.Search(null, -1);
         }
 
         [TestMethod]

@@ -23,7 +23,8 @@ export class AccommodationManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAccommodations
+    this.getAccommodations()
+    this.update()
   }
 
   getAccommodations(){
@@ -32,7 +33,7 @@ export class AccommodationManagementComponent implements OnInit {
         this.accommodations = res
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       })
   }
@@ -53,42 +54,44 @@ export class AccommodationManagementComponent implements OnInit {
     this.accommodationService.addAccommodation(accommodation).subscribe(
       res => {
         alert(res)
+        this.getAccommodations()
+        this.update()
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       })
 
-    this.getAccommodations
-    this.update()
+  
   }
 
   changeAvailability(accommodation: Accommodation): void {
     this.accommodationService.changeAvailability(accommodation.id, !accommodation.available).subscribe(
     res => {
       alert(res)
+      this.getAccommodations()
+      this.update()
     },
     err => {
-      alert('There was an unexpected error, please, try again');
+      alert(err.message);
       console.log(err);
     })
 
-    this.getAccommodations
-    this.update()
   }
 
   deleteAccommodation(Id: number): void {
     this.accommodationService.deleteAccommodation(Id).subscribe(
     res => {
       alert(res)
+      this.getAccommodations()
+    this.update()
     },
     err => {
-      alert('There was an unexpected error, please, try again');
+      alert(err.message);
       console.log(err);
     })
     
-    this.getAccommodations
-    this.update()
+    
   }
 
   update() {
@@ -135,7 +138,7 @@ export class DialogAddAccommodation {
         this.spots = res
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     );
@@ -227,11 +230,18 @@ export class DialogAddAccommodation {
   }
 
   buttonEnabled() {
-    return this.buttonEnabled && this.availabilityControl.valid
-      && this.imageUploaded && this.spotControl.valid &&
-      this.userControl.valid && this.adressControl.valid &&
-      this.data.accommodation.name.trim().length != 0 &&
-      this.data.accommodation.address.trim().length == 0
+
+    var xd = true;
+    xd = xd && this.availabilityControl.valid;
+    xd = xd && this.imageUploaded
+    xd = xd && this.spotControl.valid
+    xd = xd && this.userControl.valid
+    xd = xd &&  this.adressControl.valid
+    xd = xd && this.data.accommodation.name.trim().length != 0
+    xd = xd && this.data.accommodation.address.trim().length != 0
+
+    return xd
+      
   }
 
 }

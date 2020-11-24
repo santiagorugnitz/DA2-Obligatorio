@@ -59,7 +59,7 @@ export class AccommodationsSearchComponent implements OnInit {
         this.spot = res
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     );
@@ -124,7 +124,7 @@ export class AccommodationsSearchComponent implements OnInit {
             }
           },
           err => {
-            alert('There was an unexpected error, please, try again');
+            alert(err.message);
             console.log(err);
           })
 
@@ -182,7 +182,7 @@ export class AccommodationsSearchComponent implements OnInit {
         })
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       })
     const dialogRef = this.dialog.open(AccommodationCommentsComponent, {
@@ -243,7 +243,7 @@ export class MakeReservationDialog {
         this.openConfirmationDialog(reservationNumber, this.data.telephone, this.data.contactInfo)
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     );

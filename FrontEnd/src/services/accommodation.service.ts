@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Accommodation, AccommodationDTO } from 'src/models/accommodation';
 import { Comment } from 'src/models/comment';
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,21 +11,30 @@ import { Observable } from 'rxjs';
 export class AccommodationService {
 
 
-  uri = `${environment.baseUrl}/accomodations`;
+  uri = `${environment.baseUrl}/accommodations`;
 
   constructor(private http: HttpClient) { }
 
 
   deleteAccommodation(id: number): Observable<String> {
-    return this.http.delete<String>(`${this.uri}/${id}`)
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token);
+
+    return this.http.delete<String>(`${this.uri}/${id}`,{headers:myHeaders,responseType: 'text' as 'json'})
   }
 
   changeAvailability(Id: number, state: boolean): Observable<String> {
-    return this.http.put<String>(`${this.uri}/${Id}`, state)
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token).set("Content-Type","application/json");
+
+    return this.http.put<String>(`${this.uri}/${Id}`, state,{headers:myHeaders,responseType: 'text' as 'json'})
   }
 
   addAccommodation(accommodation: AccommodationDTO): Observable<string> {
-    return this.http.post<string>(this.uri, accommodation);
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token);
+    
+    return this.http.post<string>(this.uri, accommodation,{headers:myHeaders,responseType: 'text' as 'json'});
 
   }
   getAccommodations(): Observable<Accommodation[]> {

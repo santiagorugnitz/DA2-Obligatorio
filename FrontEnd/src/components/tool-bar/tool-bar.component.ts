@@ -69,7 +69,7 @@ export class ToolBarComponent {
         //alert(res)
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     );
@@ -112,7 +112,7 @@ export class ToolBarComponent {
         //alert(res)
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     )
@@ -213,7 +213,7 @@ export class DialogAddSpot {
         this.regions = res;
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     );
@@ -222,7 +222,7 @@ export class DialogAddSpot {
         this.categories = res;
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     );
@@ -296,7 +296,7 @@ export class ReservationDialog {
         alert(res)
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     )
@@ -329,7 +329,7 @@ export class ReservationStateDialog {
         alert(res)
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(err.message);
         console.log(err);
       }
     )
