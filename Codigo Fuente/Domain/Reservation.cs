@@ -17,7 +17,7 @@ namespace Domain
     {
         public int Id { get; set; }
 
-        public virtual Accomodation Accomodation { get; set; }
+        public virtual accommodation accommodation { get; set; }
 
         private DateTime checkIn;
         public DateTime CheckIn

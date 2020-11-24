@@ -13,17 +13,17 @@ namespace XmlImporter
             return "xml";
         }
 
-        public List<AccomodationImport> Upload(List<SourceParameter> sourceParameters)
+        public List<accommodationImport> Upload(List<SourceParameter> sourceParameters)
         {
             var param = sourceParameters[0];
 
-            var ret = new List<AccomodationImport>();
+            var ret = new List<accommodationImport>();
 
             XDocument doc = XDocument.Load(param.Value);
 
             foreach (XElement el in doc.Root.Elements())
             {
-                ret.Add(new AccomodationImport
+                ret.Add(new accommodationImport
                 {
                     Name = el.Attribute("name").Value,
                     Stars = Double.Parse(el.Attribute("stars").Value),
@@ -64,11 +64,11 @@ namespace XmlImporter
             return ret;
         }
 
-        private List<string> GetImages(XElement accomodation)
+        private List<string> GetImages(XElement accommodation)
         {
             var ret = new List<string>();
 
-            foreach (var image in accomodation.Element("Images").Elements())
+            foreach (var image in accommodation.Element("Images").Elements())
             {
                 ret.Add(image.Attribute("name").Value);
             }

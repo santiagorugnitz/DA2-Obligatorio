@@ -10,18 +10,18 @@ namespace BusinessLogic
     public class ReportHandler : IReportHandler
     {
         private IReservationHandler reservationHandler;
-        private IAccomodationHandler accomodationHandler;
-        public ReportHandler(IAccomodationHandler accomodationHand, IReservationHandler reservationHand)
+        private IaccommodationHandler accommodationHandler;
+        public ReportHandler(IaccommodationHandler accommodationHand, IReservationHandler reservationHand)
         {
-            accomodationHandler = accomodationHand;
+            accommodationHandler = accommodationHand;
             reservationHandler = reservationHand;
         }
-        public List<ReportItem> AccomodationsReport(int spotId, DateTime startingDate, DateTime finishingDate)
+        public List<ReportItem> accommodationsReport(int spotId, DateTime startingDate, DateTime finishingDate)
         {
             if (startingDate > finishingDate) throw new BadRequestException("The starting date must be before the finishing one");
 
-            var asociatedAccomodations = accomodationHandler.SearchByTouristSpot(spotId,false);
-            List<ReportItem> report = CreateReport(startingDate, finishingDate, asociatedAccomodations);
+            var asociatedaccommodations = accommodationHandler.SearchByTouristSpot(spotId,false);
+            List<ReportItem> report = CreateReport(startingDate, finishingDate, asociatedaccommodations);
 
             report.Sort((x, y) => Compare(x, y));
             return report;
@@ -37,20 +37,20 @@ namespace BusinessLogic
             }
             else
             {
-                return x.Accomodation.Id.CompareTo(y.Accomodation.Id);
+                return x.accommodation.Id.CompareTo(y.accommodation.Id);
             }
         }
 
-        private List<ReportItem> CreateReport(DateTime startingDate, DateTime finishingDate, List<Accomodation> asociatedAccomodations)
+        private List<ReportItem> CreateReport(DateTime startingDate, DateTime finishingDate, List<accommodation> asociatedaccommodations)
         {
             List<ReportItem> report = new List<ReportItem>();
 
-            foreach (var actualAccomodation in asociatedAccomodations)
+            foreach (var actualaccommodation in asociatedaccommodations)
             {
-                var reservationsFromAccomodation = reservationHandler.GetAllFromAccomodation(actualAccomodation.Id);
+                var reservationsFromaccommodation = reservationHandler.GetAllFromaccommodation(actualaccommodation.Id);
                 int reservationsNumber = 0;
 
-                foreach (var actualReservation in reservationsFromAccomodation)
+                foreach (var actualReservation in reservationsFromaccommodation)
                 {
                     if (IncludedReservation(actualReservation, startingDate, finishingDate))
                         reservationsNumber++;
@@ -58,7 +58,7 @@ namespace BusinessLogic
 
                 if (reservationsNumber > 0)
                 {
-                    report.Add(new ReportItem { Accomodation = actualAccomodation, ReservationsQuantity = reservationsNumber });
+                    report.Add(new ReportItem { accommodation = actualaccommodation, ReservationsQuantity = reservationsNumber });
                 }
             }
 

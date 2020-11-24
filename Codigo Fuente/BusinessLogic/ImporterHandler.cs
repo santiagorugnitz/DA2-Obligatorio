@@ -15,12 +15,12 @@ namespace BusinessLogic
     public class ImporterHandler : IImporterHandler
     {
         private IDllHandler handler;
-        private IAccomodationHandler accomodationHandler;
+        private IaccommodationHandler accommodationHandler;
 
-        public ImporterHandler(IDllHandler hand, IAccomodationHandler accomodationHand)
+        public ImporterHandler(IDllHandler hand, IaccommodationHandler accommodationHand)
         {
             handler = hand;
-            accomodationHandler = accomodationHand;
+            accommodationHandler = accommodationHand;
         }
 
         public bool Add(int position, List<SourceParameter> parameters)
@@ -30,8 +30,8 @@ namespace BusinessLogic
 
             var dll = dlls.ElementAt(position);
 
-            var accomodations = dll.Upload(parameters);
-            var wasSuccesfull = accomodationHandler.Add(accomodations);
+            var accommodations = dll.Upload(parameters);
+            var wasSuccesfull = accommodationHandler.Add(accommodations);
             return wasSuccesfull;
         }
 

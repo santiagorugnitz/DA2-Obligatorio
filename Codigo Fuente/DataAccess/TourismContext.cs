@@ -8,7 +8,7 @@ namespace DataAccess
     public class TourismContext : DbContext
     {
         public DbSet<Administrator> Administrators { get; set; }
-        public DbSet<Accomodation> Accomodations { get; set; }
+        public DbSet<accommodation> accommodations { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<TouristSpot> TouristSpots { get; set; }
         public DbSet<Region> Regions { get; set; }
@@ -58,27 +58,27 @@ namespace DataAccess
             modelBuilder.Entity<Administrator>()
                 .HasKey(x => x.Id);
 
-            modelBuilder.Entity<Accomodation>()
+            modelBuilder.Entity<accommodation>()
                 .HasKey(x => x.Id);
 
-            modelBuilder.Entity<Accomodation>()
+            modelBuilder.Entity<accommodation>()
                 .HasOne(x => x.TouristSpot);
 
             modelBuilder.Entity<Reservation>()
                 .HasKey(x => x.Id);
 
             modelBuilder.Entity<Reservation>()
-                .HasOne(x => x.Accomodation);
+                .HasOne(x => x.accommodation);
 
-            modelBuilder.Entity<Accomodation>()
+            modelBuilder.Entity<accommodation>()
                 .HasMany<Reservation>()
-                .WithOne(l => l.Accomodation)
+                .WithOne(l => l.accommodation)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Accomodation>()
+            modelBuilder.Entity<accommodation>()
                 .HasOne(x => x.TouristSpot);
 
-            modelBuilder.Entity<Accomodation>()
+            modelBuilder.Entity<accommodation>()
                .HasMany(x => x.Images)
                .WithOne()
                .OnDelete(DeleteBehavior.Cascade);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebApi.Models
 {
-    public class AccomodationModel
+    public class accommodationModel
     {
         public string Name { get; set; }
 
@@ -28,7 +28,7 @@ namespace WebApi.Models
 
         public int TouristSpotId { get; set; }
 
-        public Accomodation ToEntity() => new Accomodation()
+        public accommodation ToEntity() => new accommodation()
         {
             Name = this.Name,
             Stars = this.Stars,

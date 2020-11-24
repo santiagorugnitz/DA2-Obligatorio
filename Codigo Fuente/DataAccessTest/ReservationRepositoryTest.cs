@@ -12,7 +12,7 @@ namespace DataAccessTest
     [TestClass]
     public class ReservationRepositoryTest
     {
-        private Accomodation accomodation;
+        private accommodation accommodation;
         private TouristSpot touristSpot;
         private Reservation reservation;
 
@@ -35,7 +35,7 @@ namespace DataAccessTest
 
             };
 
-            accomodation = new Accomodation()
+            accommodation = new accommodation()
             {
                 Name = "Hotel",
                 Stars = 4.0,
@@ -52,7 +52,7 @@ namespace DataAccessTest
             reservation = new Reservation()
             {
                 Id = 1,
-                Accomodation = accomodation,
+                accommodation = accommodation,
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
 
@@ -75,13 +75,13 @@ namespace DataAccessTest
                 var repo = new Repository<Reservation>(context);
 
                 context.Set<TouristSpot>().Add(touristSpot);
-                context.Set<Accomodation>().Add(accomodation);
+                context.Set<accommodation>().Add(accommodation);
                 repo.Add(reservation);
 
                 Assert.AreEqual("martin.gut", repo.GetAll().First().Email);
 
                 context.Set<Reservation>().Remove(reservation);
-                context.Set<Accomodation>().Remove(accomodation);
+                context.Set<accommodation>().Remove(accommodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
             }
@@ -95,12 +95,12 @@ namespace DataAccessTest
                 var repo = new Repository<Reservation>(context);
 
                 context.Set<TouristSpot>().Add(touristSpot);
-                context.Set<Accomodation>().Add(accomodation);
+                context.Set<accommodation>().Add(accommodation);
                 context.Set<Reservation>().Add(reservation);
                 context.SaveChanges();
 
                 repo.Delete(reservation);
-                context.Set<Accomodation>().Remove(accomodation);
+                context.Set<accommodation>().Remove(accommodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
 
@@ -115,7 +115,7 @@ namespace DataAccessTest
             Reservation reservation2 = new Reservation()
             {
                 Id = 2,
-                Accomodation = accomodation,
+                accommodation = accommodation,
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
 
@@ -133,7 +133,7 @@ namespace DataAccessTest
                 var repo = new Repository<Reservation>(context);
 
                 context.Set<TouristSpot>().Add(touristSpot);
-                context.Set<Accomodation>().Add(accomodation);
+                context.Set<accommodation>().Add(accommodation);
                 context.Set<Reservation>().Add(reservation);
                 context.Set<Reservation>().Add(reservation2);
 
@@ -147,7 +147,7 @@ namespace DataAccessTest
 
                 context.Set<Reservation>().Remove(reservation);
                 context.Set<Reservation>().Remove(reservation2);
-                context.Set<Accomodation>().Remove(accomodation);
+                context.Set<accommodation>().Remove(accommodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
             }
@@ -160,7 +160,7 @@ namespace DataAccessTest
             Reservation reservation2 = new Reservation()
             {
                 Id = 2,
-                Accomodation = accomodation,
+                accommodation = accommodation,
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
 
@@ -178,7 +178,7 @@ namespace DataAccessTest
                 var repo = new Repository<Reservation>(context);
 
                 context.Set<TouristSpot>().Add(touristSpot);
-                context.Set<Accomodation>().Add(accomodation);
+                context.Set<accommodation>().Add(accommodation);
                 context.Set<Reservation>().Add(reservation);
                 context.Set<Reservation>().Add(reservation2);
 
@@ -189,7 +189,7 @@ namespace DataAccessTest
                 
                 context.Set<Reservation>().Remove(reservation);
                 context.Set<Reservation>().Remove(reservation2);
-                context.Set<Accomodation>().Remove(accomodation);
+                context.Set<accommodation>().Remove(accommodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
             }
@@ -203,7 +203,7 @@ namespace DataAccessTest
                 var repo = new Repository<Reservation>(context);
 
                 context.Set<TouristSpot>().Add(touristSpot);
-                context.Set<Accomodation>().Add(accomodation);
+                context.Set<accommodation>().Add(accommodation);
                 context.Set<Reservation>().Add(reservation);
                 context.SaveChanges();
 
@@ -214,7 +214,7 @@ namespace DataAccessTest
                 Assert.AreEqual("santi.rug", repo.GetAll().First().Email);
 
                 context.Set<Reservation>().Remove(reservation);
-                context.Set<Accomodation>().Remove(accomodation);
+                context.Set<accommodation>().Remove(accommodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
             }

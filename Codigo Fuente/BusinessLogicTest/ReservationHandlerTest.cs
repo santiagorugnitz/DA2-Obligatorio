@@ -13,17 +13,17 @@ namespace BusinessLogicTest
     public class ReservationHandlerTest
     {
 
-        private Accomodation accomodation;
+        private accommodation accommodation;
         private TouristSpot touristSpot;
         private Reservation reservation;
-        private Mock<IRepository<Accomodation>> accomodationMock;
+        private Mock<IRepository<accommodation>> accommodationMock;
         private Mock<IRepository<Region>> regionMock;
         private Mock<IRepository<Category>> categoryMock;
         private Mock<IRepository<Image>> imageMock;
         private Mock<IRepository<TouristSpot>> touristSpotMock;
         private Mock<IRepository<TouristSpotCategory>> joinedMock;
         private TouristSpotHandler touristSpotHandler;
-        private AccomodationHandler accomodationHandler;
+        private accommodationHandler accommodationHandler;
 
         [TestInitialize]
         public void SetUp()
@@ -36,7 +36,7 @@ namespace BusinessLogicTest
                 Region = new Region() { Name = "Region Centro Sur" },
             };
 
-            accomodation = new Accomodation()
+            accommodation = new accommodation()
             {
                 Name = "Hotel",
                 Stars = 4.0,
@@ -54,7 +54,7 @@ namespace BusinessLogicTest
             reservation = new Reservation()
             {
                 Id = 1,
-                Accomodation = accomodation,
+                accommodation = accommodation,
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
                 Adults = new Tuple<int, int>(2, 3),
@@ -67,7 +67,7 @@ namespace BusinessLogicTest
                 ReservationState = ReservationState.Accepted,
             };
 
-            accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
+            accommodationMock = new Mock<IRepository<accommodation>>(MockBehavior.Loose);
             regionMock = new Mock<IRepository<Region>>(MockBehavior.Loose);
             categoryMock = new Mock<IRepository<Category>>(MockBehavior.Loose);
             imageMock = new Mock<IRepository<Image>>(MockBehavior.Loose);
@@ -75,56 +75,56 @@ namespace BusinessLogicTest
             joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
             touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object,
                 categoryMock.Object, regionMock.Object, joinedMock.Object);
-            accomodationHandler = new AccomodationHandler(accomodationMock.Object, touristSpotHandler);
+            accommodationHandler = new accommodationHandler(accommodationMock.Object, touristSpotHandler);
 
         }
 
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
-    "The accomodation spot does not exist")]
-        public void AddReservationWithoutAccomodation()
+    "The accommodation spot does not exist")]
+        public void AddReservationWithoutaccommodation()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation)null);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns((accommodation)null);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
-"The accomodation spot does not exist")]
-        public void AddReservationWithoutAvailableAccomodation()
+"The accommodation spot does not exist")]
+        public void AddReservationWithoutAvailableaccommodation()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodation.Available = false;
+            accommodation.Available = false;
 
             touristSpotMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns((Accomodation)null);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns((accommodation)null);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
-        public void AddReservationWithAccomodation()
+        public void AddReservationWithaccommodation()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
 
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
 
             mock.VerifyAll();
-            accomodationMock.VerifyAll();
+            accommodationMock.VerifyAll();
             Assert.AreEqual(reservation, res);
             Assert.AreEqual(reservation.Total, res.Total);
         }
@@ -135,13 +135,13 @@ namespace BusinessLogicTest
         public void AddReservationWithoutName()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Name = "";
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -150,13 +150,13 @@ namespace BusinessLogicTest
         public void AddReservationWithoutName2()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Name = "    ";
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -165,13 +165,13 @@ namespace BusinessLogicTest
         public void AddReservationWithoutSurname()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Surname = "";
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -180,13 +180,13 @@ namespace BusinessLogicTest
         public void AddReservationWithoutSurname2()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Surname = "    ";
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -195,13 +195,13 @@ namespace BusinessLogicTest
         public void AddReservationWithoutEmail()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Email = "";
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -210,13 +210,13 @@ namespace BusinessLogicTest
         public void AddReservationWithoutEmail2()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Email = "    ";
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -225,13 +225,13 @@ namespace BusinessLogicTest
         public void AddReservationWithoutGuests()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Adults = new Tuple<int, int>(0, 0);
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -240,14 +240,14 @@ namespace BusinessLogicTest
         public void AddReservationWithNegativeGuests()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Adults = new Tuple<int, int>(-1, 1);
 
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -256,13 +256,13 @@ namespace BusinessLogicTest
         public void AddReservationWithNegativeChildren()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.ChildrenQuantity = -9;
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -271,13 +271,13 @@ namespace BusinessLogicTest
         public void AddReservationWithNegativeBabies()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.BabyQuantity = -9;
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -285,13 +285,13 @@ namespace BusinessLogicTest
         public void AddReservationWithNegativeRetiredGuests()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.Adults = new Tuple<int, int>(1, -1);
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -300,13 +300,13 @@ namespace BusinessLogicTest
         public void AddReservationWithIncorrectCheckInDate()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.CheckIn = DateTime.Today.AddDays(-1);
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -315,15 +315,15 @@ namespace BusinessLogicTest
         public void AddReservationWithIncorrectCheckOutDate()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
 
             reservation.CheckOut = DateTime.Today.AddDays(1);
             reservation.CheckOut = DateTime.Today;
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
@@ -332,20 +332,20 @@ namespace BusinessLogicTest
         public void AddReservationWithIncorrectState()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
-            accomodationMock.Setup(x => x.Get(accomodation.Id)).Returns(accomodation);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
             mock.Setup(x => x.Add(reservation)).Returns(reservation);
 
             reservation.ReservationState = (ReservationState)10;
-            var res = handler.Add(reservation, accomodation.Id);
+            var res = handler.Add(reservation, accommodation.Id);
         }
 
         [TestMethod]
         public void DeleteReservation()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
             mock.Setup(x => x.Delete(reservation)).Returns(true);
 
@@ -360,7 +360,7 @@ namespace BusinessLogicTest
         public void CheckReservationState()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
             mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
 
@@ -374,7 +374,7 @@ namespace BusinessLogicTest
         public void ChangeReservationState()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
             mock.Setup(x => x.Update(reservation)).Returns(true);
             mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
@@ -390,7 +390,7 @@ namespace BusinessLogicTest
         public void ChangeReservationStateWrongId()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
             mock.Setup(x => x.Get(reservation.Id)).Returns((Reservation)null);
 
@@ -402,7 +402,7 @@ namespace BusinessLogicTest
         public void ChangeReservationStateWrongState()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
             mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
 
             var res = handler.ChangeState(reservation.Id, (ReservationState)5, "Cambio de estado");
@@ -413,7 +413,7 @@ namespace BusinessLogicTest
         public void Review()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
             mock.Setup(x => x.Update(reservation)).Returns(true);
             mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
@@ -429,7 +429,7 @@ namespace BusinessLogicTest
         public void ReviewWrongId()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
             mock.Setup(x => x.Get(reservation.Id)).Returns((Reservation)null);
 
@@ -441,7 +441,7 @@ namespace BusinessLogicTest
         public void ReviewWrongScore()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
             mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
 
             var res = handler.Review(reservation.Id, 0, "ok");
@@ -452,7 +452,7 @@ namespace BusinessLogicTest
         public void ReviewWrongScore2()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
             mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
 
             var res = handler.Review(reservation.Id, 5.1, "ok");
@@ -460,31 +460,31 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void GetAllFromAccomodationOk()
+        public void GetAllFromaccommodationOk()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<Reservation>() { reservation });
-            accomodationMock.Setup(x => x.Get(reservation.Accomodation.Id)).Returns((Accomodation)reservation.Accomodation);
+            accommodationMock.Setup(x => x.Get(reservation.accommodation.Id)).Returns((accommodation)reservation.accommodation);
 
-            var res = handler.GetAllFromAccomodation(reservation.Accomodation.Id);
+            var res = handler.GetAllFromaccommodation(reservation.accommodation.Id);
 
             mock.VerifyAll();
-            accomodationMock.VerifyAll();
+            accommodationMock.VerifyAll();
         }
 
         [TestMethod]
         [ExpectedException(typeof(BadRequestException))]
-        public void GetAllFromNonExistingAccomodation()
+        public void GetAllFromNonExistingaccommodation()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
-            var handler = new ReservationHandler(mock.Object, accomodationHandler);
+            var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<Reservation>() { reservation });
-            accomodationMock.Setup(x => x.Get(reservation.Accomodation.Id)).Returns((Accomodation)null);
+            accommodationMock.Setup(x => x.Get(reservation.accommodation.Id)).Returns((accommodation)null);
 
-            var res = handler.GetAllFromAccomodation(reservation.Accomodation.Id);
+            var res = handler.GetAllFromaccommodation(reservation.accommodation.Id);
         }
 
     }

@@ -13,25 +13,25 @@ namespace BusinessLogic
     {
 
         private IRepository<Reservation> repository;
-        private IAccomodationHandler accomodationHandler;
+        private IaccommodationHandler accommodationHandler;
 
-        public ReservationHandler(IRepository<Reservation> repo, IAccomodationHandler accomodationHand)
+        public ReservationHandler(IRepository<Reservation> repo, IaccommodationHandler accommodationHand)
         {
             repository = repo;
-            accomodationHandler = accomodationHand;
+            accommodationHandler = accommodationHand;
         }
 
-        public Reservation Add(Reservation reservation, int accomodationId)
+        public Reservation Add(Reservation reservation, int accommodationId)
         {
-            var gotAccomodation = accomodationHandler.Get(accomodationId);
-            if (gotAccomodation == null || !gotAccomodation.Available)
+            var gotaccommodation = accommodationHandler.Get(accommodationId);
+            if (gotaccommodation == null || !gotaccommodation.Available)
             {
-                throw new BadRequestException("There is no available accomodation with that id");
+                throw new BadRequestException("There is no available accommodation with that id");
             
             }
             else
             {
-                reservation.Accomodation = gotAccomodation;
+                reservation.accommodation = gotaccommodation;
 
                 var stay = new Stay
                 {
@@ -42,7 +42,7 @@ namespace BusinessLogic
                     CheckOut = reservation.CheckOut
                 };
 
-                reservation.Total = accomodationHandler.CalculateTotal(accomodationId,stay);
+                reservation.Total = accommodationHandler.CalculateTotal(accommodationId,stay);
                 return repository.Add(reservation);
             }
         }
@@ -81,13 +81,13 @@ namespace BusinessLogic
             return repository.Update(reservation);
         }
 
-        public List<Reservation> GetAllFromAccomodation(int id)
+        public List<Reservation> GetAllFromaccommodation(int id)
         {
-            if (accomodationHandler.Get(id) == null)
+            if (accommodationHandler.Get(id) == null)
             {
-                throw new BadRequestException("The accomodation does not exist");
+                throw new BadRequestException("The accommodation does not exist");
             }
-            return repository.GetAll(x => ((Reservation)x).Accomodation.Id == id).ToList();
+            return repository.GetAll(x => ((Reservation)x).accommodation.Id == id).ToList();
         }
 
   

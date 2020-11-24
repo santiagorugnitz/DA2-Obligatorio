@@ -7,7 +7,7 @@ namespace DataImport
     public interface IImporter
     {
         string GetName();
-        List<AccomodationImport> Upload(List<SourceParameter> sourceParameters);
+        List<accommodationImport> Upload(List<SourceParameter> sourceParameters);
     }
 
     public class SourceParameter

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataImport
 {
-    public class AccomodationImport
+    public class accommodationImport
     {
         public string Name { get; set; }
 
@@ -27,7 +27,7 @@ namespace DataImport
 
         public TouristSpotImport TouristSpot { get; set; }
 
-        public Accomodation ToEntity() => new Accomodation()
+        public accommodation ToEntity() => new accommodation()
         {
             Name = this.Name,
             Stars = this.Stars,

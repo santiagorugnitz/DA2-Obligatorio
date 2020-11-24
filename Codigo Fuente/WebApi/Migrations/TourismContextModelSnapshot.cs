@@ -19,47 +19,6 @@ namespace WebApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Domain.Accomodation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Available")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ContactInformation")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Fee")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Stars")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Telephone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TouristSpotId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TouristSpotId");
-
-                    b.ToTable("Accomodations");
-                });
-
             modelBuilder.Entity("Domain.Administrator", b =>
                 {
                     b.Property<int>("Id")
@@ -106,15 +65,15 @@ namespace WebApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AccomodationId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("accommodationId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AccomodationId");
+                    b.HasIndex("accommodationId");
 
                     b.ToTable("Images");
                 });
@@ -140,9 +99,6 @@ namespace WebApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AccomodationId")
-                        .HasColumnType("int");
 
                     b.Property<int>("AdultQuantity")
                         .HasColumnType("int");
@@ -186,9 +142,12 @@ namespace WebApi.Migrations
                     b.Property<double>("Total")
                         .HasColumnType("float");
 
+                    b.Property<int?>("accommodationId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AccomodationId");
+                    b.HasIndex("accommodationId");
 
                     b.ToTable("Reservations");
                 });
@@ -236,26 +195,60 @@ namespace WebApi.Migrations
                     b.ToTable("TouristSpotCategory");
                 });
 
-            modelBuilder.Entity("Domain.Accomodation", b =>
+            modelBuilder.Entity("Domain.accommodation", b =>
                 {
-                    b.HasOne("Domain.TouristSpot", "TouristSpot")
-                        .WithMany()
-                        .HasForeignKey("TouristSpotId");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Available")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ContactInformation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Fee")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Stars")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Telephone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TouristSpotId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TouristSpotId");
+
+                    b.ToTable("accommodations");
                 });
 
             modelBuilder.Entity("Domain.Image", b =>
                 {
-                    b.HasOne("Domain.Accomodation", null)
+                    b.HasOne("Domain.accommodation", null)
                         .WithMany("Images")
-                        .HasForeignKey("AccomodationId")
+                        .HasForeignKey("accommodationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Domain.Reservation", b =>
                 {
-                    b.HasOne("Domain.Accomodation", "Accomodation")
+                    b.HasOne("Domain.accommodation", "accommodation")
                         .WithMany()
-                        .HasForeignKey("AccomodationId")
+                        .HasForeignKey("accommodationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -283,6 +276,13 @@ namespace WebApi.Migrations
                         .HasForeignKey("TouristSpotId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.accommodation", b =>
+                {
+                    b.HasOne("Domain.TouristSpot", "TouristSpot")
+                        .WithMany()
+                        .HasForeignKey("TouristSpotId");
                 });
 #pragma warning restore 612, 618
         }

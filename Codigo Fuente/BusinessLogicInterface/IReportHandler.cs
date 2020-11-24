@@ -7,6 +7,6 @@ namespace BusinessLogicInterface
 {
     public interface IReportHandler
     {
-        List<ReportItem> AccomodationsReport(int spotId, DateTime startingDate, DateTime finishingDate);
+        List<ReportItem> accommodationsReport(int spotId, DateTime startingDate, DateTime finishingDate);
     }
 }

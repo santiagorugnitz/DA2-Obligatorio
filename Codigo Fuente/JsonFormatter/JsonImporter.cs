@@ -14,11 +14,11 @@ namespace JsonImporter
             return "json";
         }
 
-        public List<AccomodationImport> Upload(List<SourceParameter> sourceParameters)
+        public List<accommodationImport> Upload(List<SourceParameter> sourceParameters)
         {
             var param = sourceParameters[0];
 
-            return JsonConvert.DeserializeObject<List<AccomodationImport>>(File.ReadAllText(param.Value));
+            return JsonConvert.DeserializeObject<List<accommodationImport>>(File.ReadAllText(param.Value));
         }
     }
 }
