@@ -3,14 +3,12 @@ using DataAccessInterface;
 using DataImport;
 using Domain;
 using Exceptions;
-using JsonFormatter;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using XmlFormatter;
 
 namespace BusinessLogicTest
 {
@@ -28,10 +26,10 @@ namespace BusinessLogicTest
         [TestMethod]
         public void GetDllsTest()
         {
-            JsonFormatter.JsonFormatter json = new JsonFormatter.JsonFormatter();
-            XmlFormatter.XmlFormatter xml = new XmlFormatter.XmlFormatter();
+            JsonImporter.JsonImporter json = new JsonImporter.JsonImporter();
+            XmlImporter.XmlImporter xml = new XmlImporter.XmlImporter();
 
-            List<IFormatter> list = new List<IFormatter> { json, xml };
+            List<IImporter> list = new List<IImporter> { json, xml };
             var dlls = handler.GetDlls();
 
             Assert.AreEqual(dlls.ToList()[0].GetType(), list[0].GetType());

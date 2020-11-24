@@ -7,7 +7,7 @@ using DataImport;
 
 namespace BusinessLogicInterface
 {
-    public interface IFormatterHandler
+    public interface IImporterHandler
     {
         List<string> GetAll();
         bool Add(int position, List<SourceParameter> parameters);

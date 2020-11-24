@@ -26,13 +26,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiTest", "WebApiTest\We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Exceptions", "Exception\Exceptions.csproj", "{A68658FB-251D-449C-9815-97953CB3FDAD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Formatters", "Formatters", "{0632D62A-2424-447C-96D9-7306DA112A17}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Importers", "Importers", "{0632D62A-2424-447C-96D9-7306DA112A17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonFormatter", "JsonFormatter\JsonFormatter.csproj", "{E0061C3B-DF9C-4A8F-A907-D926CDD716C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JsonImporter", "JsonFormatter\JsonImporter.csproj", "{E0061C3B-DF9C-4A8F-A907-D926CDD716C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmlFormatter", "XmlFormatter\XmlFormatter.csproj", "{19D2C9C2-3DE7-4AD4-8414-E4944C599A08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XmlImporter", "XmlFormatter\XmlImporter.csproj", "{19D2C9C2-3DE7-4AD4-8414-E4944C599A08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataImport", "DataImport\DataImport.csproj", "{5DB89CE9-A20E-4CEB-900A-90CBBBBA7748}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataImport", "DataImport\DataImport.csproj", "{5DB89CE9-A20E-4CEB-900A-90CBBBBA7748}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

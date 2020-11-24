@@ -8,6 +8,6 @@ namespace BusinessLogicInterface
 {
     public interface IDllHandler
     {
-        IEnumerable<IFormatter> GetDlls();
+        IEnumerable<IImporter> GetDlls();
     }
 }

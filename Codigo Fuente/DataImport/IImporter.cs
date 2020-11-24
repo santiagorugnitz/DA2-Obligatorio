@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataImport
 {
-    public interface IFormatter
+    public interface IImporter
     {
         string GetName();
         List<AccomodationImport> Upload(List<SourceParameter> sourceParameters);
