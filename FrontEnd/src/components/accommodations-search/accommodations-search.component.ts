@@ -180,16 +180,17 @@ export class AccommodationsSearchComponent implements OnInit {
           }
           return comment
         })
+        const dialogRef = this.dialog.open(AccommodationCommentsComponent, {
+          width: '300px',
+          height: '500px',
+          data: { comments: reservations, accommodationName: name }
+        });
       },
       err => {
         alert(err.message);
         console.log(err);
       })
-    const dialogRef = this.dialog.open(AccommodationCommentsComponent, {
-      width: '300px',
-      height: '500px',
-      data: { comments: reservations, accommodationName: name }
-    });
+    
   }
 
   openReservationDialog(accommodation: Accommodation): void {
