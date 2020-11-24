@@ -61,7 +61,8 @@ export class SpotSearchComponent implements OnInit {
   }
 
   userLoggued():boolean{
-    return localStorage.getItem('token') != ''
+    const token = localStorage.token;
+    return (token != null && token !== undefined && token !== '');
   }
 
   onCategoryClick(checked: Boolean, id: Number) {

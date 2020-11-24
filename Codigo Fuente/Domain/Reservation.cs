@@ -222,6 +222,10 @@ namespace Domain
                 if (value == null || value < 1 || value > 5)
                 {
                     throw new BadRequestException("Score must be between 1 and 5");
+                } 
+                else
+                {
+                    score = value;
                 }
             }
         }

@@ -128,7 +128,8 @@ export class ToolBarComponent {
             id: reservation.id,
             state: reservation.reservationState,
             description: reservation.stateDescription,
-            noComment: reservation.score == 0,
+            userComment: reservation.comment,
+            score: reservation.score
           }
         });
 
@@ -141,7 +142,12 @@ export class ToolBarComponent {
         console.log(err);
       }
     );
-  };
+  }
+  
+  getUserComment(reservation: Reservation, email: string): string {
+    return reservation.comment
+  }
+;
 
   openReservationStateChange() {
     var reservation: Reservation
@@ -153,7 +159,8 @@ export class ToolBarComponent {
             id: reservation.id,
             state: reservation.reservationState,
             description: reservation.stateDescription,
-            noComment: reservation.score == 0,
+            userComment: '',
+            score: reservation.score
           }
         });
 
@@ -252,7 +259,8 @@ export interface ReservationData {
   id: number
   state: string;
   description: string;
-  noComment: Boolean;
+  userComment: string;
+  score: number;
 }
 
 export interface ImportersData {
@@ -277,12 +285,21 @@ export class ReservationDialog {
     private reservationService: ReservationService,
   ) {
     this.state = this.posibleStates[this.data.state]
+    this.score = this.data.score
    } 
 
   
   onSubmit(data: ReservationData) {
 
-    this.reservationService.review(data.id, this.comment, this.score)
+    this.reservationService.review(data.id, this.score, this.comment).subscribe(
+      res => {
+        alert(res)
+      },
+      err => {
+        alert('There was an unexpected error, please, try again');
+        console.log(err);
+      }
+    )
     this.dialogRef.close()
 
   }

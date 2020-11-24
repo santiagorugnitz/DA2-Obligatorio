@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ReservationService {
-
+  
   uri = `${environment.baseUrl}/reservations`;
 
   constructor(private http: HttpClient) {}
@@ -20,9 +20,9 @@ export class ReservationService {
     return this.http.get<Reservation>(`${this.uri}/${id}`)
   }
 
-  review(id:number,comment:string,score:number){
-    let body = {comment:comment,score:score}
-    return this.http.put(`${this.uri}/${id}`, body);
+  review(id:number,score:number, comment:string): Observable<string>{
+    let body = {score:score, comment:comment}
+    return this.http.put<string>(`${this.uri}/${id}/review`, body, {responseType: 'text' as 'json'});
   }
   
   changeState(id:number,state:number,description:string):Observable<string>{
