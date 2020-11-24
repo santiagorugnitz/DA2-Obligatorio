@@ -301,8 +301,11 @@ namespace BusinessLogicTest
         {
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
+            List<Administrator> returnedList = new List<Administrator>();
+            returnedList.Add(administrator);
 
             mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(returnedList);
             mock.Setup(x => x.Update(administrator)).Returns(true);
 
             var res = handler.Update(administrator);
@@ -317,8 +320,11 @@ namespace BusinessLogicTest
         {
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
+            List<Administrator> returnedList = new List<Administrator>();
+            returnedList.Add(administrator);
 
             mock.Setup(x => x.Get(administrator.Id)).Returns((Administrator) null);
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(returnedList);
             mock.Setup(x => x.Update(administrator)).Returns(true);
 
             var res = handler.Update(administrator);
@@ -327,9 +333,30 @@ namespace BusinessLogicTest
             Assert.AreEqual(true, res);
         }
 
+        [ExpectedException(typeof(BadRequestException))]
+        [TestMethod]
+        public void UpdateUnsuccesfullByRepeatedEmail()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+            
+            List<Administrator> returnedList = new List<Administrator>();
+            returnedList.Add(administrator);
+            var admin2 = new Administrator();
+            admin2 = administrator;
+            returnedList.Add(admin2);
+
+            mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object,bool>>())).Returns(returnedList);
+            //mock.Setup(x => x.Update(administrator)).Returns(true);
+
+            var res = handler.Update(administrator);
+
+        }
+
         [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
-        public void UpdateWrongId()
+        public void DeleteWrongId()
         {
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
@@ -337,8 +364,22 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Get(administrator.Id)).Returns((Administrator)null);
 
             var res = handler.Delete(administrator.Id);
-
         }
+
+        [TestMethod]
+        public void DeleteSuccesfull()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
+            mock.Setup(x => x.Delete(administrator)).Returns(true);
+
+            var res = handler.Delete(administrator.Id);
+            mock.VerifyAll();
+            Assert.AreEqual(true, res);
+        }
+
 
     }
 }

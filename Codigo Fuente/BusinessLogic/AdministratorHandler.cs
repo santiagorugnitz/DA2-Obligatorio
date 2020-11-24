@@ -74,10 +74,16 @@ namespace BusinessLogic
         {
             var admin = Get(administrator.Id);
             if (admin == null) throw new NotFoundException("There is no administrator with that id");
+            if (RepeatedEmail(administrator.Email)) throw new BadRequestException("The email is repeated, please, modify the user with a new email");
             admin.Name = administrator.Name;
             admin.Email = administrator.Email;
             admin.Password = administrator.Password;
             return repository.Update(admin);
+        }
+
+        private bool RepeatedEmail(string email)
+        {
+            return repository.GetAll(x => ((Administrator)x).Email == email).Count() > 1;
         }
     }
 }
