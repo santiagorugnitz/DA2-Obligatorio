@@ -186,7 +186,7 @@ namespace WebApiTest
 
             };
 
-            var result = controller.GetByTouristSpot(spot.Id);
+            var result = controller.GetByTouristSpot(spot.Id,true);
             var okResult = result as OkObjectResult;
             var value = okResult.Value as bool?;
 
@@ -203,5 +203,29 @@ namespace WebApiTest
 
             var result = controller.Get(1);
         }
+
+        [TestMethod]
+        public void CalculateTotal()
+        {
+            var mock = new Mock<IAccomodationHandler>(MockBehavior.Strict);
+            var controller = new AccomodationController(mock.Object);
+            var stay = new StayModel()
+            {
+                AdultQuantity = 3,
+                ChildrenQuantity = 2,
+                BabyQuantity = 1,
+                CheckIn = DateTime.Now,
+                CheckOut = DateTime.Now.AddDays(10)
+            };
+
+            mock.Setup(x => x.CalculateTotal(1, It.IsAny<Stay>())).Returns(500.2);
+
+            var result = controller.CalculateTotal(1,stay);
+            var okResult = result as OkObjectResult;
+
+            mock.VerifyAll();
+            Assert.IsTrue(okResult.Value is double);
+        }
+
     }
 }

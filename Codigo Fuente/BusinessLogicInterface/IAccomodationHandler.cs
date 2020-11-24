@@ -14,5 +14,6 @@ namespace BusinessLogicInterface
         bool Exists(Accomodation accomodation);
         List<Accomodation> SearchByTouristSpot(int touristSpotId, bool onlyAvailable = true);
         Accomodation Get(int accomodationId);
+        double CalculateTotal(int id, Stay stay);
     }
 }

@@ -32,21 +32,19 @@ namespace BusinessLogic
             else
             {
                 reservation.Accomodation = gotAccomodation;
-                reservation.Total = CalculateTotal(reservation);
+
+                var stay = new Stay
+                {
+                    Adults = new Tuple<int, int>(reservation.AdultQuantity, reservation.RetiredQuantity),
+                    ChildrenQuantity = reservation.ChildrenQuantity,
+                    BabyQuantity = reservation.BabyQuantity,
+                    CheckIn = reservation.CheckIn,
+                    CheckOut = reservation.CheckOut
+                };
+
+                reservation.Total = accomodationHandler.CalculateTotal(accomodationId,stay);
                 return repository.Add(reservation);
             }
-        }
-
-        private double CalculateTotal(Reservation reservation)
-        {
-            double ret = 0;
-            int days = (reservation.CheckOut - reservation.CheckIn).Days;
-            ret += reservation.AdultQuantity + reservation.ChildrenQuantity * 0.5 + reservation.BabyQuantity * 0.25;
-            ret += ((int)reservation.RetiredQuantity / 2) * 1.7;
-
-            ret += reservation.RetiredQuantity % 2;
-            ret *= days * reservation.Accomodation.Fee;
-            return ret;
         }
 
         public bool Delete(Reservation reservation)

@@ -73,6 +73,14 @@ namespace BusinessLogic
 
         public List<Accomodation> SearchByTouristSpot(int spotId,bool onlyAvailable=true)
         {
+            if (spotId == 0)
+            {
+                if(onlyAvailable)
+                    return accomodationRepository.GetAll(x =>((Accomodation)x).Available).ToList();
+
+                return accomodationRepository.GetAll().ToList();
+            }
+
             if (touristSpotHandler.Get(spotId) == null)
             {
                 throw new BadRequestException("The spot does not exist");
@@ -118,6 +126,19 @@ namespace BusinessLogic
             return ret;
         }
 
+        public double CalculateTotal(int id, Stay stay)
+        {
+            var accommodation = Get(id);
+            if(accommodation==null) throw new NotFoundException("The accomodation does not exist");
 
+            double ret = 0;
+            int days = (stay.CheckOut - stay.CheckIn).Days;
+            ret += stay.AdultQuantity + stay.ChildrenQuantity * 0.5 + stay.BabyQuantity * 0.25;
+            ret += ((int)stay.RetiredQuantity / 2) * 1.7;
+
+            ret += stay.RetiredQuantity % 2;
+            ret *= days * accommodation.Fee;
+            return ret;
+        }
     }
 }

@@ -55,9 +55,15 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetByTouristSpot(int spotId)
+        public IActionResult GetByTouristSpot(int spotId,bool onlyAvailable)
         {
             return Ok(handler.SearchByTouristSpot(spotId));
+        }
+
+        [HttpPost("{id}/calculateTotal")]
+        public IActionResult CalculateTotal(int id, [FromBody] StayModel stay)
+        {
+            return Ok(handler.CalculateTotal(id,stay.ToEntity()));
         }
     }
 }

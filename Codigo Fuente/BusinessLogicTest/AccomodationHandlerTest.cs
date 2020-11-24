@@ -302,13 +302,13 @@ namespace BusinessLogicTest
         {
             accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accomodation> { accomodation });
-            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(1)).Returns(touristSpot);
 
             DateTime checkIn, checkOut = new DateTime();
             checkIn = DateTime.Now;
             checkOut.AddDays(10);
 
-            var res = handler.SearchByTouristSpot(touristSpot.Id);
+            var res = handler.SearchByTouristSpot(1);
 
             touristSpotHandlerMock.VerifyAll();
             accomodationMock.VerifyAll();
@@ -320,13 +320,29 @@ namespace BusinessLogicTest
         {
             accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accomodation> { accomodation });
-            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
 
             DateTime checkIn, checkOut = new DateTime();
             checkIn = DateTime.Now;
             checkOut.AddDays(10);
 
-            var res = handler.SearchByTouristSpot(touristSpot.Id,false);
+            var res = handler.SearchByTouristSpot(0,false);
+
+            touristSpotHandlerMock.VerifyAll();
+            accomodationMock.VerifyAll();
+            Assert.AreEqual(new List<Accomodation> { accomodation }[0], res[0]);
+        }
+
+        [TestMethod]
+        public void SearchAllAvailableAccomodation()
+        {
+            accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
+                Returns(new List<Accomodation> { accomodation });
+
+            DateTime checkIn, checkOut = new DateTime();
+            checkIn = DateTime.Now;
+            checkOut.AddDays(10);
+
+            var res = handler.SearchByTouristSpot(0, true);
 
             touristSpotHandlerMock.VerifyAll();
             accomodationMock.VerifyAll();
@@ -339,14 +355,14 @@ namespace BusinessLogicTest
             accomodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accomodation> { });
 
-            touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
+            touristSpotHandlerMock.Setup(x => x.Get(1)).Returns(touristSpot);
 
 
             DateTime checkIn, checkOut = new DateTime();
             checkIn = DateTime.Now;
             checkOut.AddDays(10);
 
-            var res = handler.SearchByTouristSpot(touristSpot.Id);
+            var res = handler.SearchByTouristSpot(1);
 
             touristSpotHandlerMock.VerifyAll();
             accomodationMock.VerifyAll();
@@ -357,9 +373,9 @@ namespace BusinessLogicTest
         [TestMethod]
         public void SearchNonExistingSpot()
         {
-            touristSpotHandlerMock.Setup(x => x.Get(0)).Returns((TouristSpot)null);
+            touristSpotHandlerMock.Setup(x => x.Get(-1)).Returns((TouristSpot)null);
 
-            var res = handler.SearchByTouristSpot(0);
+            var res = handler.SearchByTouristSpot(-1);
 
         }
 
@@ -478,6 +494,18 @@ namespace BusinessLogicTest
             accomodationMock.VerifyAll();
             touristSpotHandlerMock.VerifyAll();
             Assert.AreEqual(false, res);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NotFoundException))]
+        public void CalculateWrongId()
+        {
+            accomodationMock.Setup(x => x.Get(1)).Returns((Accomodation)null);
+
+            var res = handler.CalculateTotal(1,null);
+
+            accomodationMock.VerifyAll();
+            Assert.AreEqual(null, res);
         }
     }
 }
