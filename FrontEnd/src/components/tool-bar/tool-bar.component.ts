@@ -69,7 +69,7 @@ export class ToolBarComponent {
         //alert(res)
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
@@ -112,7 +112,7 @@ export class ToolBarComponent {
         //alert(res)
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     )
@@ -138,7 +138,7 @@ export class ToolBarComponent {
         });
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
@@ -169,7 +169,7 @@ export class ToolBarComponent {
         });
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
@@ -213,7 +213,7 @@ export class DialogAddSpot {
         this.regions = res;
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
@@ -222,7 +222,7 @@ export class DialogAddSpot {
         this.categories = res;
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
@@ -296,7 +296,7 @@ export class ReservationDialog {
         alert(res)
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     )
@@ -329,7 +329,7 @@ export class ReservationStateDialog {
         alert(res)
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     )
@@ -369,7 +369,7 @@ export class ImportersDialog {
           alert(res)
         },
         err => {
-          alert(err.message)
+          alert(`${err.status}: ${err.error}`)
           console.log(err);
         }
       )

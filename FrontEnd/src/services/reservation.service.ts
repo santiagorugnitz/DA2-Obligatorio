@@ -39,7 +39,7 @@ export class ReservationService {
   }
 
   getFromAccomodation(id:number):Observable<Reservation[]>{
-    let params = new HttpParams().set("accomodationId",id.toString());
+    let params = new HttpParams().set("accommodationId",id.toString());
     return this.http.get<Reservation[]>(this.uri,{params:params})
 
   }
