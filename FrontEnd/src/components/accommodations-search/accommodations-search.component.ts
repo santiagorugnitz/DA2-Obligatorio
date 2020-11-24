@@ -59,7 +59,7 @@ export class AccommodationsSearchComponent implements OnInit {
         this.spot = res
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );
@@ -124,7 +124,7 @@ export class AccommodationsSearchComponent implements OnInit {
             }
           },
           err => {
-            alert(err.message);
+            alert(`${err.status}: ${err.error}`);;
             console.log(err);
           })
 
@@ -150,7 +150,7 @@ export class AccommodationsSearchComponent implements OnInit {
           this.getAccommodationById(Id).total = res
       },
       err=>{
-          alert(err.message)
+          alert(`${err.status}: ${err.error}`);
       })
   }
 
@@ -194,7 +194,7 @@ export class AccommodationsSearchComponent implements OnInit {
         });
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       })
     
@@ -251,7 +251,7 @@ export class MakeReservationDialog {
         this.openConfirmationDialog(reservationNumber, this.data.telephone, this.data.contactInfo)
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );

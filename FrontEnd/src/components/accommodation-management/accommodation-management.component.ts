@@ -33,7 +33,7 @@ export class AccommodationManagementComponent implements OnInit {
         this.accommodations = res
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       })
   }
@@ -58,7 +58,7 @@ export class AccommodationManagementComponent implements OnInit {
         this.update()
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       })
 
@@ -73,7 +73,7 @@ export class AccommodationManagementComponent implements OnInit {
       this.update()
     },
     err => {
-      alert(err.message);
+      alert(`${err.status}: ${err.error}`);;
       console.log(err);
     })
 
@@ -87,7 +87,7 @@ export class AccommodationManagementComponent implements OnInit {
     this.update()
     },
     err => {
-      alert(err.message);
+      alert(`${err.status}: ${err.error}`);;
       console.log(err);
     })
     
@@ -138,7 +138,7 @@ export class DialogAddAccommodation {
         this.spots = res
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );

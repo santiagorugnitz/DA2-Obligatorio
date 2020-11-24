@@ -31,7 +31,7 @@ export class UsersManagementComponent implements OnInit {
         this.update()
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
@@ -56,7 +56,7 @@ export class UsersManagementComponent implements OnInit {
         this.refreshAdministrators()
       },
       err => {
-        alert(err.error);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
@@ -81,7 +81,7 @@ export class UsersManagementComponent implements OnInit {
         this.refreshAdministrators()
       },
       err => {
-        alert(err.error);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
@@ -94,7 +94,7 @@ export class UsersManagementComponent implements OnInit {
         this.refreshAdministrators()
       },
       err => {
-        alert(err.error);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );

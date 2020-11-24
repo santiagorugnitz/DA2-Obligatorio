@@ -30,7 +30,7 @@ export class SpotReportComponent implements OnInit {
         this.spot = res
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );
@@ -53,7 +53,7 @@ export class SpotReportComponent implements OnInit {
             this.hasSearched = !this.hasSearched
           },
           err => {
-            alert(err.message);
+            alert(`${err.status}: ${err.error}`);;
             console.log(err);
           }
         );

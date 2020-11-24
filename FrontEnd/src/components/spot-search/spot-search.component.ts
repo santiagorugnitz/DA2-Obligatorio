@@ -44,7 +44,7 @@ export class SpotSearchComponent implements OnInit {
         this.regions = res;
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );
@@ -54,7 +54,7 @@ export class SpotSearchComponent implements OnInit {
         this.categories = res;
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );
@@ -86,7 +86,7 @@ export class SpotSearchComponent implements OnInit {
         this.spots= res;
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );
