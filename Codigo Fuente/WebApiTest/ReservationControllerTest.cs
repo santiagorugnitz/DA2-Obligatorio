@@ -28,7 +28,7 @@ namespace WebApiTest
                 BabyQuantity = 1,
                 Email = "Email@prueba",
                 Surname = "Prueba",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
                 StateDescription = "Done",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
@@ -56,7 +56,7 @@ namespace WebApiTest
                 BabyQuantity = 1,
                 Email = "Email@prueba",
                 Surname = "Prueba",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
                 StateDescription = "Done",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
@@ -84,7 +84,7 @@ namespace WebApiTest
                 BabyQuantity = 1,
                 Email = "Email@prueba",
                 Surname = "Prueba",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
                 StateDescription = "Done",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
@@ -92,7 +92,7 @@ namespace WebApiTest
 
             ReservationChangeModel model = new ReservationChangeModel()
             {
-                State = ReservationState.Aceptada,
+                State = ReservationState.Accepted,
                 Description = "valid"
             };
 
@@ -119,7 +119,7 @@ namespace WebApiTest
                 BabyQuantity = 1,
                 Email = "Email@prueba",
                 Surname = "Prueba",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
                 StateDescription = "Done",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
@@ -165,7 +165,7 @@ namespace WebApiTest
                 BabyQuantity = 1,
                 Email = "Email@prueba",
                 Surname = "Prueba",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
                 StateDescription = "Done",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)

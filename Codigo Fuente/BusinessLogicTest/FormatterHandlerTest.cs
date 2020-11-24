@@ -22,33 +22,33 @@ namespace BusinessLogicTest
             Name = "Accomodation"
         };
 
-        private class FormatterMock : IFormatter
+        private class FormatterMock : IImporter
         {
             public string GetName()
             {
                 return "json";
             }
 
-            List<AccomodationImport> IFormatter.Upload(List<SourceParameter> sourceParameters)
+            List<AccomodationImport> IImporter.Upload(List<SourceParameter> sourceParameters)
             {
                 return new List<AccomodationImport> { accomodation };
             }
         }
 
         private Mock<IDllHandler> dllMock;
-        private FormatterHandler handler;
+        private ImporterHandler handler;
         private Mock<IAccomodationHandler> accomodationMock;
 
         [TestInitialize]
         public void SetUp()
         {
             dllMock = new Mock<IDllHandler>(MockBehavior.Strict);
-            dllMock.Setup(x => x.GetDlls()).Returns(new List<IFormatter> { new FormatterMock()});
+            dllMock.Setup(x => x.GetDlls()).Returns(new List<IImporter> { new FormatterMock()});
 
             accomodationMock = new Mock<IAccomodationHandler>(MockBehavior.Strict);
             accomodationMock.Setup(x => x.Add(new List<AccomodationImport> { accomodation })).Returns(true);
 
-            handler = new FormatterHandler(dllMock.Object, accomodationMock.Object);
+            handler = new ImporterHandler(dllMock.Object, accomodationMock.Object);
         }
 
         [TestMethod]

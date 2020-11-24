@@ -67,8 +67,8 @@ namespace BusinessLogic
 
         private bool IncludedReservation(Reservation actualReservation, DateTime startingDate, DateTime finishingDate)
         {
-            if (actualReservation.ReservationState == ReservationState.Expirada ||
-                actualReservation.ReservationState == ReservationState.Rechazada)
+            if (actualReservation.ReservationState == ReservationState.Expired ||
+                actualReservation.ReservationState == ReservationState.Rejected)
                 return false;
             
             

@@ -64,7 +64,7 @@ namespace BusinessLogicTest
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "martin.gut",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
             };
 
             accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Loose);
@@ -367,7 +367,7 @@ namespace BusinessLogicTest
             Reservation res = handler.CheckState(reservation.Id);
 
             mock.VerifyAll();
-            Assert.AreEqual(ReservationState.Aceptada, res.ReservationState);
+            Assert.AreEqual(ReservationState.Accepted, res.ReservationState);
         }
 
         [TestMethod]
@@ -379,7 +379,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Update(reservation)).Returns(true);
             mock.Setup(x => x.Get(reservation.Id)).Returns(reservation);
 
-            var res = handler.ChangeState(reservation.Id, ReservationState.Creada, "Cambio de estado");
+            var res = handler.ChangeState(reservation.Id, ReservationState.Created, "Cambio de estado");
 
             mock.VerifyAll();
             Assert.AreEqual(true, res);
@@ -394,7 +394,7 @@ namespace BusinessLogicTest
 
             mock.Setup(x => x.Get(reservation.Id)).Returns((Reservation)null);
 
-            var res = handler.ChangeState(reservation.Id, ReservationState.Creada, "Cambio de estado");
+            var res = handler.ChangeState(reservation.Id, ReservationState.Created, "Cambio de estado");
         }
 
         [ExpectedException(typeof(BadRequestException))]

@@ -62,7 +62,7 @@ namespace DataAccessTest
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "martin.gut",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
             };
         }
 
@@ -125,7 +125,7 @@ namespace DataAccessTest
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "martin.gut",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
             };
 
             using (var context = new TourismContext(options))
@@ -170,7 +170,7 @@ namespace DataAccessTest
                 Name = "Martin",
                 Surname = "Gutman",
                 Email = "santi.rug",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
             };
 
             using (var context = new TourismContext(options))

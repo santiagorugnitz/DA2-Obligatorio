@@ -16,17 +16,17 @@ namespace BusinessLogic
 
         public DllHandler()
         {
-            this.ImportersPath = Directory.GetCurrentDirectory() + "\\Formatters";
+            this.ImportersPath = Directory.GetCurrentDirectory() + "\\Importers";
         }
-        public IEnumerable<IFormatter> GetDlls()
+        public IEnumerable<IImporter> GetDlls()
         {
             string[] files = Directory.GetFiles(ImportersPath, "*.dll");
             foreach (string file in files)
             {
                 Assembly dll = Assembly.UnsafeLoadFrom(file);
-                Type type = dll.GetTypes().Where(i => typeof(IFormatter).IsAssignableFrom(i)).FirstOrDefault();
+                Type type = dll.GetTypes().Where(i => typeof(IImporter).IsAssignableFrom(i)).FirstOrDefault();
                 if (type != null)
-                    yield return Activator.CreateInstance(type) as IFormatter;
+                    yield return Activator.CreateInstance(type) as IImporter;
             }
         }
     }

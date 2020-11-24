@@ -4,9 +4,9 @@ using System.Xml.Linq;
 using DataImport;
 using Microsoft.VisualBasic.CompilerServices;
 
-namespace XmlFormatter
+namespace XmlImporter
 {
-    public class XmlFormatter: IFormatter
+    public class XmlImporter: IImporter
     {
         public string GetName()
         {

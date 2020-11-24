@@ -12,12 +12,12 @@ using DataImport;
 
 namespace BusinessLogic
 {
-    public class FormatterHandler : IFormatterHandler
+    public class ImporterHandler : IImporterHandler
     {
         private IDllHandler handler;
         private IAccomodationHandler accomodationHandler;
 
-        public FormatterHandler(IDllHandler hand, IAccomodationHandler accomodationHand)
+        public ImporterHandler(IDllHandler hand, IAccomodationHandler accomodationHand)
         {
             handler = hand;
             accomodationHandler = accomodationHand;

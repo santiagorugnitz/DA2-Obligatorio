@@ -14,14 +14,12 @@ namespace WebApi.Controllers
 {
     [ServiceFilter(typeof(ExceptionFilter))]
     [ServiceFilter(typeof(AuthorizationFilter))]
-    [Route("formatters")]
+    [Route("importers")]
     [ApiController]
-    public class FormatterController : ControllerBase
+    public class ImporterController : ControllerBase
     {
-        private readonly IFormatterHandler handler;
-
-
-        public FormatterController(IFormatterHandler handler)
+        private readonly IImporterHandler handler;
+        public ImporterController(IImporterHandler handler)
         {
             this.handler = handler;
         }

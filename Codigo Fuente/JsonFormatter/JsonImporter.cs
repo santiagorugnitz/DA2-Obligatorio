@@ -5,9 +5,9 @@ using Newtonsoft.Json;
 using DataImport;
 
 
-namespace JsonFormatter
+namespace JsonImporter
 {
-    public class JsonFormatter : IFormatter
+    public class JsonImporter : IImporter
     {
         public string GetName()
         {

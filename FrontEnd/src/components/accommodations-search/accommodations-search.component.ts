@@ -192,24 +192,24 @@ export class AccommodationsSearchComponent implements OnInit {
     });
   }
 
-  openReservationDialog(id: number): void {
+  openReservationDialog(accommodation: Accommodation): void {
 
     const dialogRef = this.dialog.open(MakeReservationDialog, {
       width: '250px',
       data: {
         reservation: {
-          AccommodationId: id,
+          AccommodationId: accommodation.id,
           CheckIn: this.startingDate,
           CheckOut: this.finishingDate,
           BabyQuantity: this.babyQuantity,
           ChildrenQuantity: this.childrenQuantity,
           AdultQuantity: this.adultQuantity,
           RetiredQuantity: this.retiredQuantity,
-          ReservationState: "Creada",
+          ReservationState: "Created",
           StateDescription: "",
         },
-        telephone: "+59812343",
-        contactInfo: "Thank you for your reservation, see you soon!"
+        telephone: accommodation.telephone,
+        contactInfo: accommodation.contactInformation
       }
     });
   }
@@ -221,6 +221,10 @@ export class AccommodationsSearchComponent implements OnInit {
 })
 export class MakeReservationDialog {
 
+  userControl = new FormControl('', Validators.required);
+  surnameControl = new FormControl('', Validators.required);
+  emailControl = new FormControl('', Validators.required);
+
   constructor(
     public dialogRef: MatDialogRef<MakeReservationDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private reservationService: ReservationService, public dialog: MatDialog) { }
@@ -231,9 +235,7 @@ export class MakeReservationDialog {
 
   onSubmit(reservation: PendingReservation) {
     this.dialogRef.close()
-
     var reservationNumber = -1
-
 
     this.reservationService.postReservation(this.data.reservation).subscribe(
       res => {
@@ -245,11 +247,12 @@ export class MakeReservationDialog {
         console.log(err);
       }
     );
+  }
 
-
-
-
-
+  buttonEnabled() {
+    return this.userControl.valid && this.data.reservation.Name.trim() != '' 
+    && this.surnameControl.valid && this.data.reservation.Surname.trim() != ''
+    && this.emailControl.valid && this.data.reservation.Email.trim() != ''
   }
 
   openConfirmationDialog(id: number, tel: string, info: string) {
