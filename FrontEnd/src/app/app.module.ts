@@ -35,7 +35,8 @@ import { AccommodationManagementComponent, DialogAddAccommodation } from 'src/co
 import { MatRadioButton } from '@angular/material/radio';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {MatTableModule} from '@angular/material/table';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from 'src/services/interceptor.service';
 
 
 @NgModule({
@@ -89,7 +90,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatTableModule,
     HttpClientModule,
   ],
-  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
+  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+                {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
