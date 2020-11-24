@@ -141,10 +141,17 @@ export class AccommodationsSearchComponent implements OnInit {
 
   calculateTotal(Id: number): void {
 
-    this.getAccommodationById(Id).total = this.accommodationService.calculateTotal(
-      Id, this.startingDate, this.finishingDate,
+    
+
+    this.accommodationService.calculateTotal(Id, this.startingDate, this.finishingDate,
       this.adultQuantity, this.retiredQuantity,
-      this.childrenQuantity, this.babyQuantity)
+      this.childrenQuantity, this.babyQuantity).subscribe(
+      res =>{
+          this.getAccommodationById(Id).total = res
+      },
+      err=>{
+          alert(err.message)
+      })
   }
 
 

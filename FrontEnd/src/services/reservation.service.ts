@@ -21,8 +21,10 @@ export class ReservationService {
   }
 
   review(id:number,score:number, comment:string): Observable<string>{
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set("Content-Type","application/json");
     let body = {score:score, comment:comment}
-    return this.http.put<string>(`${this.uri}/${id}/review`, body, {responseType: 'text' as 'json'});
+    return this.http.put<string>(`${this.uri}/${id}/review`, body, {headers:myHeaders, responseType: 'text' as 'json'});
   }
   
   changeState(id:number,state:number,description:string):Observable<string>{

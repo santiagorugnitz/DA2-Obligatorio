@@ -20,21 +20,21 @@ export class AccommodationService {
     let myHeaders = new HttpHeaders();
     myHeaders = myHeaders.set('token', localStorage.token);
 
-    return this.http.delete<String>(`${this.uri}/${id}`,{headers:myHeaders,responseType: 'text' as 'json'})
+    return this.http.delete<String>(`${this.uri}/${id}`, { headers: myHeaders, responseType: 'text' as 'json' })
   }
 
   changeAvailability(Id: number, state: boolean): Observable<String> {
     let myHeaders = new HttpHeaders();
-    myHeaders = myHeaders.set('token', localStorage.token).set("Content-Type","application/json");
+    myHeaders = myHeaders.set('token', localStorage.token).set("Content-Type", "application/json");
 
-    return this.http.put<String>(`${this.uri}/${Id}`, state,{headers:myHeaders,responseType: 'text' as 'json'})
+    return this.http.put<String>(`${this.uri}/${Id}`, state, { headers: myHeaders, responseType: 'text' as 'json' })
   }
 
   addAccommodation(accommodation: AccommodationDTO): Observable<string> {
     let myHeaders = new HttpHeaders();
     myHeaders = myHeaders.set('token', localStorage.token);
-    
-    return this.http.post<string>(this.uri, accommodation,{headers:myHeaders,responseType: 'text' as 'json'});
+
+    return this.http.post<string>(this.uri, accommodation, { headers: myHeaders, responseType: 'text' as 'json' });
 
   }
   getAccommodations(): Observable<Accommodation[]> {
@@ -48,15 +48,18 @@ export class AccommodationService {
 
 
   calculateTotal(Id: number, startingDate: Date, finishingDate: Date, adultQuantity: number,
-    retiredQuantity: number, childrenQuantity: number, babyQuantity: number): Number {
-    if (Id == 1) {
-      return 5000;
-    } else if (Id == 2) {
-      return 1000;
-    } else if (Id == 3) {
-      return 3000;
+    retiredQuantity: number, childrenQuantity: number, babyQuantity: number): Observable<number> {
+
+    var body = {
+      adultQuantity: adultQuantity,
+      childrenQuantity: childrenQuantity,
+      babyQuantity: babyQuantity,
+      retiredQuantity: retiredQuantity,
+      checkIn: startingDate,
+      checkOut: finishingDate
     }
-    //return this.http.get<number>(`${this.uri}/${id}/calculatetotal`)
-    
+
+    return this.http.post<number>(`${this.uri}/${Id}/calculatetotal`,body)
+
   }
 }
