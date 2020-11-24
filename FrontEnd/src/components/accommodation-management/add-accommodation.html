@@ -34,7 +34,6 @@
   </mat-select>
   <mat-error *ngIf="availabilityControl.hasError('required')">Please select an option</mat-error>
 </mat-form-field>
-<mat-form-field>
   <mat-form-field>
     <mat-label>Telephone:</mat-label>
     <input matInput [(ngModel)]="data.accommodation.telephone" >
@@ -43,6 +42,7 @@
     <mat-label>Contact Information:</mat-label>
     <input matInput [(ngModel)]="data.accommodation.contactInformation" >
   </mat-form-field>
+  <mat-form-field>
   <mat-label>Spot: </mat-label>
       <mat-select [formControl]="spotControl" required [(value)]="selectedSpot" (selectionChange)="changeSpot()">
         <mat-option *ngFor="let spot of spots" [value]="spot.id">
