@@ -12,6 +12,10 @@ namespace BusinessLogic
 {
     public class AccommodationHandler : IAccommodationHandler
     {
+        private static readonly double CHILDREN_FEE = 0.5;
+        private static readonly double BABY_FEE = 0.25;
+        private static readonly double RETIRED_FEE = 1.7;
+
         private ITouristSpotHandler touristSpotHandler;
         private IRepository<Accommodation> accommodationRepository;
 
@@ -133,12 +137,16 @@ namespace BusinessLogic
 
             double ret = 0;
             int days = (stay.CheckOut - stay.CheckIn).Days;
-            ret += stay.AdultQuantity + stay.ChildrenQuantity * 0.5 + stay.BabyQuantity * 0.25;
-            ret += ((int)stay.RetiredQuantity / 2) * 1.7;
+            ret += stay.AdultQuantity + stay.ChildrenQuantity * CHILDREN_FEE + stay.BabyQuantity * BABY_FEE;
+            ret += ((int)stay.RetiredQuantity / 2) * RETIRED_FEE;
 
             ret += stay.RetiredQuantity % 2;
             ret *= days * accommodation.Fee;
             return ret;
         }
+
+
+
+
     }
 }

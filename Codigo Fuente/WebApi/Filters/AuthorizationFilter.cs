@@ -10,6 +10,8 @@ namespace WebApi.Filters
 {
     public class AuthorizationFilter : Attribute, IAuthorizationFilter
     {
+        private static readonly int UNAUTHORIZED_STATUS_CODE = 401; 
+
         private readonly IAdministratorHandler handler;
         public AuthorizationFilter(IAdministratorHandler handler)
         {
@@ -23,7 +25,7 @@ namespace WebApi.Filters
             {
                 context.Result = new ContentResult()
                 {
-                    StatusCode = 401,
+                    StatusCode = UNAUTHORIZED_STATUS_CODE,
                     Content = "You must be logged as an administrator to access"
                 };
                 return;
@@ -32,7 +34,7 @@ namespace WebApi.Filters
             {
                 context.Result = new ContentResult()
                 {
-                    StatusCode = 401,
+                    StatusCode = UNAUTHORIZED_STATUS_CODE,
                     Content = "You must be logged as an administrator to access"
                 };
                 return;

@@ -65,10 +65,10 @@
       <ng-container *ngIf="hasSearched then searched; else not"></ng-container>
       <ng-template #searched>
 
-        <h1>Report result:</h1>
+        <h1 style="margin-left: 10%;">Report result:</h1>
 
         <mat-list role="list" *ngFor="let item of reportList"  style="margin-left: 25%;">
-          <mat-list-item role="listitem">{{item.accommodation.name}}:{{item.reservationsQuantity}} Reservas</mat-list-item>
+          <mat-list-item role="listitem">{{item.accommodation.name}} : {{item.reservationsQuantity}} Reservations</mat-list-item>
         </mat-list>
 
       </ng-template>
