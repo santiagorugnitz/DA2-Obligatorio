@@ -349,32 +349,21 @@ namespace BusinessLogicTest
             var handler = new AdministratorHandler(mock.Object);
 
             List<Administrator> returnedList = new List<Administrator>();
+            var admin2 = new Administrator {
+                Id=7,
+                Email = "admin2@mail.com"
+            };
             returnedList.Add(administrator);
-            var admin2 = new Administrator();
-            admin2 = administrator;
+            returnedList.Add(admin2);
+
+            administrator.Email = admin2.Email;
             
             mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(returnedList);
             //mock.Setup(x => x.Update(administrator)).Returns(true);
 
-            var res = handler.Update(admin2);
-        } 
-
-        [ExpectedException(typeof(BadRequestException))]
-        [TestMethod]
-        public void UpdateUnsuccesfullBySameEmail()
-        {
-            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
-            var handler = new AdministratorHandler(mock.Object);
-
-            List<Administrator> returnedList = new List<Administrator>();
-
-            mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
-            //mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(returnedList);
-            //mock.Setup(x => x.Update(administrator)).Returns(true);
-
             var res = handler.Update(administrator);
-        }
+        } 
 
         [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
