@@ -33,7 +33,16 @@ namespace WebApi.Controllers
         [HttpPost("{id}/upload")]
         public IActionResult Upload(int id, List<SourceParameter> parameters)
         {
-            return Ok(handler.Add(id,parameters));
+            if (handler.Add(id, parameters))
+            {
+                return Ok("All accommodations were added");
+            }
+            else
+            {
+                return Ok("Some accommodations couldn't be added");
+
+            }
+
         }
 
     }

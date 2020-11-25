@@ -10,10 +10,10 @@ using System.Security.Cryptography.X509Certificates;
 namespace DataAccessTest
 {
     [TestClass]
-    public class accommodationRepositoryTest
+    public class AccommodationRepositoryTest
     {
         DbContextOptions<TourismContext> options;
-        private accommodation accommodation;
+        private Accommodation accommodation;
         private TouristSpot touristSpot;
         private Region region;
         private Image image;
@@ -38,7 +38,7 @@ namespace DataAccessTest
                 Region = region
             };
 
-            accommodation = new accommodation()
+            accommodation = new Accommodation()
             {
                 Id = 1,
                 Name = "Hotel",
@@ -70,7 +70,7 @@ namespace DataAccessTest
         {
             using (var context = new TourismContext(options))
             {
-                var repo = new Repository<accommodation>(context);
+                var repo = new Repository<Accommodation>(context);
 
 
                 context.Set<TouristSpot>().Add(touristSpot);
@@ -79,7 +79,7 @@ namespace DataAccessTest
 
                 Assert.AreEqual(accommodation.Name, repo.GetAll().First().Name);
 
-                context.Set<accommodation>().Remove(accommodation);
+                context.Set<Accommodation>().Remove(accommodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
 
@@ -91,10 +91,10 @@ namespace DataAccessTest
         {
             using (var context = new TourismContext(options))
             {
-                var repo = new Repository<accommodation>(context);
+                var repo = new Repository<Accommodation>(context);
 
                 context.Set<TouristSpot>().Add(touristSpot);
-                context.Set<accommodation>().Add(accommodation);
+                context.Set<Accommodation>().Add(accommodation);
                 context.SaveChanges();
 
                 repo.Delete(accommodation);
@@ -110,17 +110,17 @@ namespace DataAccessTest
         {
             using (var context = new TourismContext(options))
             {
-                var repo = new Repository<accommodation>(context);
+                var repo = new Repository<Accommodation>(context);
 
                 context.Set<TouristSpot>().Add(touristSpot);
-                context.Set<accommodation>().Add(accommodation);
+                context.Set<Accommodation>().Add(accommodation);
                 context.SaveChanges();
 
                 var res = repo.Get(accommodation.Id);
 
                 Assert.AreEqual(accommodation.Id, res.Id);
 
-                context.Set<accommodation>().Remove(accommodation);
+                context.Set<Accommodation>().Remove(accommodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
             }
@@ -131,19 +131,19 @@ namespace DataAccessTest
         {
             using (var context = new TourismContext(options))
             {
-                var repo = new Repository<accommodation>(context);
+                var repo = new Repository<Accommodation>(context);
 
                 context.Set<TouristSpot>().Add(touristSpot);
-                context.Set<accommodation>().Add(accommodation);
+                context.Set<Accommodation>().Add(accommodation);
                 context.SaveChanges();
 
                 accommodation.Available = false;
 
                 repo.Update(accommodation);
 
-                Assert.AreEqual(false, context.Set<accommodation>().Find(accommodation.Id).Available);
+                Assert.AreEqual(false, context.Set<Accommodation>().Find(accommodation.Id).Available);
 
-                context.Set<accommodation>().Remove(accommodation);
+                context.Set<Accommodation>().Remove(accommodation);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.SaveChanges();
             }
@@ -155,7 +155,7 @@ namespace DataAccessTest
         {
             using (var context = new TourismContext(options))
             {
-                var repo = new Repository<accommodation>(context);
+                var repo = new Repository<Accommodation>(context);
 
                 var region1 = new Region() { Name =  "Region Litoral Norte" };
 
@@ -168,7 +168,7 @@ namespace DataAccessTest
                     Region = region1
                 };
 
-                var accommodation1 = new accommodation()
+                var accommodation1 = new Accommodation()
                 {
                     Id = 2,
                     Name = "Hotel",
@@ -185,18 +185,18 @@ namespace DataAccessTest
                 context.Set<TouristSpot>().Add(touristSpot1);
 
                 context.Set<TouristSpot>().Add(touristSpot);
-                context.Set<accommodation>().Add(accommodation);
-                context.Set<accommodation>().Add(accommodation1);
+                context.Set<Accommodation>().Add(accommodation);
+                context.Set<Accommodation>().Add(accommodation1);
 
                 context.SaveChanges();
 
 
-                var res = repo.GetAll(x => ((accommodation)x).TouristSpot.Equals(touristSpot) && ((accommodation)x).Available).ToList();
+                var res = repo.GetAll(x => ((Accommodation)x).TouristSpot.Equals(touristSpot) && ((Accommodation)x).Available).ToList();
 
                 Assert.AreEqual(1, res[0].Id);
 
-                context.Set<accommodation>().Remove(accommodation);
-                context.Set<accommodation>().Remove(accommodation1);
+                context.Set<Accommodation>().Remove(accommodation);
+                context.Set<Accommodation>().Remove(accommodation1);
                 context.Set<TouristSpot>().Remove(touristSpot);
                 context.Set<TouristSpot>().Remove(touristSpot1);
                 context.Set<Region>().Remove(region1);

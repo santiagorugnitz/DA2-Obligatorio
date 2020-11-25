@@ -10,8 +10,8 @@ namespace BusinessLogic
     public class ReportHandler : IReportHandler
     {
         private IReservationHandler reservationHandler;
-        private IaccommodationHandler accommodationHandler;
-        public ReportHandler(IaccommodationHandler accommodationHand, IReservationHandler reservationHand)
+        private IAccommodationHandler accommodationHandler;
+        public ReportHandler(IAccommodationHandler accommodationHand, IReservationHandler reservationHand)
         {
             accommodationHandler = accommodationHand;
             reservationHandler = reservationHand;
@@ -41,7 +41,7 @@ namespace BusinessLogic
             }
         }
 
-        private List<ReportItem> CreateReport(DateTime startingDate, DateTime finishingDate, List<accommodation> asociatedaccommodations)
+        private List<ReportItem> CreateReport(DateTime startingDate, DateTime finishingDate, List<Accommodation> asociatedaccommodations)
         {
             List<ReportItem> report = new List<ReportItem>();
 

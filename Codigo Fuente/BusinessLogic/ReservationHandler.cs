@@ -13,9 +13,9 @@ namespace BusinessLogic
     {
 
         private IRepository<Reservation> repository;
-        private IaccommodationHandler accommodationHandler;
+        private IAccommodationHandler accommodationHandler;
 
-        public ReservationHandler(IRepository<Reservation> repo, IaccommodationHandler accommodationHand)
+        public ReservationHandler(IRepository<Reservation> repo, IAccommodationHandler accommodationHand)
         {
             repository = repo;
             accommodationHandler = accommodationHand;

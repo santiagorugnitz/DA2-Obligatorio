@@ -5,21 +5,21 @@ using System.Text;
 
 namespace DataImport
 {
-    public class accommodationImport
+    public class AccommodationImport
     {
         public string Name { get; set; }
+
+        public string Description { get; set; }
 
         public double Stars { get; set; }
 
         public string Address { get; set; }
+        
+        public bool Available { get; set; }
 
-        public List<string> ImageNames { get; set; }
+        public List<string> Images { get; set; }
 
         public double Fee { get; set; }
-
-        public string Description { get; set; }
-
-        public bool Available { get; set; }
 
         public string Telephone { get; set; }
 
@@ -27,7 +27,7 @@ namespace DataImport
 
         public TouristSpotImport TouristSpot { get; set; }
 
-        public accommodation ToEntity() => new accommodation()
+        public Accommodation ToEntity() => new Accommodation()
         {
             Name = this.Name,
             Stars = this.Stars,

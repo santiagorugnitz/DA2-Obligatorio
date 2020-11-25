@@ -14,17 +14,17 @@ namespace WebApi.Controllers
     [ServiceFilter(typeof(ExceptionFilter))]
     [ApiController]
     [Route("accommodations")]
-    public class accommodationController : Controller
+    public class AccommodationController : Controller
     {
-        private readonly IaccommodationHandler handler;
+        private readonly IAccommodationHandler handler;
 
-        public accommodationController(IaccommodationHandler handler)
+        public AccommodationController(IAccommodationHandler handler)
         {
             this.handler = handler;
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] accommodationModel accommodation)
+        public IActionResult Post([FromBody] AccommodationModel accommodation)
         {
             handler.Add(accommodation.ToEntity(), accommodation.TouristSpotId, accommodation.ImageNames);
             return Ok("accommodation added");

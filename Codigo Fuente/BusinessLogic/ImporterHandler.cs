@@ -15,9 +15,9 @@ namespace BusinessLogic
     public class ImporterHandler : IImporterHandler
     {
         private IDllHandler handler;
-        private IaccommodationHandler accommodationHandler;
+        private IAccommodationHandler accommodationHandler;
 
-        public ImporterHandler(IDllHandler hand, IaccommodationHandler accommodationHand)
+        public ImporterHandler(IDllHandler hand, IAccommodationHandler accommodationHand)
         {
             handler = hand;
             accommodationHandler = accommodationHand;

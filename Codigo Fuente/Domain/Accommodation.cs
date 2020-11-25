@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Domain
 {
-    public class accommodation
+    public class Accommodation
     {
         public int Id { get; set; }
 

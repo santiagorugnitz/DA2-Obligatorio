@@ -5,15 +5,15 @@ using System.Collections.Generic;
 
 namespace BusinessLogicInterface
 {
-    public interface IaccommodationHandler
+    public interface IAccommodationHandler
     {
-        accommodation Add(accommodation accommodation, int touristSpotId, List<string> imageNames);
-        bool Add(List<accommodationImport> accommodations);
+        Accommodation Add(Accommodation accommodation, int touristSpotId, List<string> imageNames);
+        bool Add(List<AccommodationImport> accommodations);
         bool ChangeAvailability(int Id, bool availability);
         bool Delete(int id);
-        bool Exists(accommodation accommodation);
-        List<accommodation> SearchByTouristSpot(int touristSpotId, bool onlyAvailable = true);
-        accommodation Get(int accommodationId);
+        bool Exists(Accommodation accommodation);
+        List<Accommodation> SearchByTouristSpot(int touristSpotId, bool onlyAvailable = true);
+        Accommodation Get(int accommodationId);
         double CalculateTotal(int id, Stay stay);
     }
 }

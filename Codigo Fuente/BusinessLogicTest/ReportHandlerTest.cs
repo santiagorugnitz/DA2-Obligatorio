@@ -18,10 +18,10 @@ namespace BusinessLogicTest
         public class ReservationHandlerTest
         {
 
-            private accommodation accommodation;
+            private Accommodation accommodation;
             private TouristSpot touristSpot;
             private Reservation reservation;
-            private Mock<IRepository<accommodation>> accommodationMock;
+            private Mock<IRepository<Accommodation>> accommodationMock;
             private Mock<IRepository<Region>> regionMock;
             private Mock<IRepository<Category>> categoryMock;
             private Mock<IRepository<Image>> imageMock;
@@ -29,7 +29,7 @@ namespace BusinessLogicTest
             private Mock<IRepository<TouristSpotCategory>> joinedMock;
             private Mock<IRepository<Reservation>> reservationMock;
             private TouristSpotHandler touristSpotHandler;
-            private accommodationHandler accommodationHandler;
+            private AccommodationHandler accommodationHandler;
             private ReservationHandler reservationHandler;
             private ReportHandler reportHandler;
 
@@ -44,7 +44,7 @@ namespace BusinessLogicTest
                     Region = new Region() { Name = "Region Centro Sur" },
                 };
 
-                accommodation = new accommodation()
+                accommodation = new Accommodation()
                 {
                     Name = "Hotel",
                     Stars = 4.0,
@@ -73,7 +73,7 @@ namespace BusinessLogicTest
                     ReservationState = ReservationState.Accepted,
                 };
 
-                accommodationMock = new Mock<IRepository<accommodation>>(MockBehavior.Strict);
+                accommodationMock = new Mock<IRepository<Accommodation>>(MockBehavior.Strict);
                 regionMock = new Mock<IRepository<Region>>(MockBehavior.Loose);
                 categoryMock = new Mock<IRepository<Category>>(MockBehavior.Loose);
                 imageMock = new Mock<IRepository<Image>>(MockBehavior.Loose);
@@ -82,7 +82,7 @@ namespace BusinessLogicTest
                 reservationMock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
                 touristSpotHandler = new TouristSpotHandler(touristSpotMock.Object,
                     categoryMock.Object, regionMock.Object, joinedMock.Object);
-                accommodationHandler = new accommodationHandler(accommodationMock.Object, touristSpotHandler);
+                accommodationHandler = new AccommodationHandler(accommodationMock.Object, touristSpotHandler);
                 reservationHandler = new ReservationHandler(reservationMock.Object, accommodationHandler);
                 reportHandler = new ReportHandler(accommodationHandler, reservationHandler);
             }
@@ -100,7 +100,7 @@ namespace BusinessLogicTest
             {
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation>());
+                    Returns(new List<Accommodation>());
 
                 var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1));
                 accommodationMock.VerifyAll();
@@ -113,7 +113,7 @@ namespace BusinessLogicTest
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation> { accommodation });
+                    Returns(new List<Accommodation> { accommodation });
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
@@ -131,7 +131,7 @@ namespace BusinessLogicTest
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation> { accommodation });
+                    Returns(new List<Accommodation> { accommodation });
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
@@ -149,7 +149,7 @@ namespace BusinessLogicTest
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation> { accommodation });
+                    Returns(new List<Accommodation> { accommodation });
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
@@ -169,7 +169,7 @@ namespace BusinessLogicTest
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation> { accommodation });
+                    Returns(new List<Accommodation> { accommodation });
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
@@ -189,7 +189,7 @@ namespace BusinessLogicTest
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation> { accommodation });
+                    Returns(new List<Accommodation> { accommodation });
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
@@ -209,7 +209,7 @@ namespace BusinessLogicTest
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation> { accommodation });
+                    Returns(new List<Accommodation> { accommodation });
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
@@ -229,7 +229,7 @@ namespace BusinessLogicTest
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation> { accommodation });
+                    Returns(new List<Accommodation> { accommodation });
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
@@ -246,7 +246,7 @@ namespace BusinessLogicTest
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation> { accommodation });
+                    Returns(new List<Accommodation> { accommodation });
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
@@ -263,7 +263,7 @@ namespace BusinessLogicTest
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation> { accommodation });
+                    Returns(new List<Accommodation> { accommodation });
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
@@ -295,7 +295,7 @@ namespace BusinessLogicTest
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation> { accommodation });
+                    Returns(new List<Accommodation> { accommodation });
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation, reservation2 });
 
@@ -309,7 +309,7 @@ namespace BusinessLogicTest
             [TestMethod]
             public void ReportWithTwoaccommodationWithSameQuantity()
             {
-                accommodation accommodation2 = new accommodation()
+                Accommodation accommodation2 = new Accommodation()
                 {
                     Name = "Playa",
                     Stars = 4.0,
@@ -325,7 +325,7 @@ namespace BusinessLogicTest
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                    Returns(new List<accommodation> { accommodation, accommodation2 });
+                    Returns(new List<Accommodation> { accommodation, accommodation2 });
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 

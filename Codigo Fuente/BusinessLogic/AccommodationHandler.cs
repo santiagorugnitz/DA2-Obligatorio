@@ -10,19 +10,19 @@ using DataImport;
 
 namespace BusinessLogic
 {
-    public class accommodationHandler : IaccommodationHandler
+    public class AccommodationHandler : IAccommodationHandler
     {
         private ITouristSpotHandler touristSpotHandler;
-        private IRepository<accommodation> accommodationRepository;
+        private IRepository<Accommodation> accommodationRepository;
 
-        public accommodationHandler(IRepository<accommodation> accommodationRepo,
+        public AccommodationHandler(IRepository<Accommodation> accommodationRepo,
             ITouristSpotHandler touristSpotHand)
         {
             accommodationRepository = accommodationRepo;
             touristSpotHandler = touristSpotHand;
         }
 
-        public accommodation Add(accommodation accommodation, int touristSpotId, List<string> imageNames)
+        public Accommodation Add(Accommodation accommodation, int touristSpotId, List<string> imageNames)
         {
             List<Image> accommodationImages = new List<Image>();
 
@@ -57,7 +57,7 @@ namespace BusinessLogic
 
             return accommodationRepository.Delete(accommodation);
         }
-        public bool Exists(accommodation accommodation)
+        public bool Exists(Accommodation accommodation)
         {
             return accommodationRepository.Get(accommodation.Id) != null;
         }
@@ -71,12 +71,12 @@ namespace BusinessLogic
             return accommodationRepository.Update(accommodation);
         }
 
-        public List<accommodation> SearchByTouristSpot(int spotId,bool onlyAvailable=true)
+        public List<Accommodation> SearchByTouristSpot(int spotId,bool onlyAvailable=true)
         {
             if (spotId == 0)
             {
                 if(onlyAvailable)
-                    return accommodationRepository.GetAll(x =>((accommodation)x).Available).ToList();
+                    return accommodationRepository.GetAll(x =>((Accommodation)x).Available).ToList();
 
                 return accommodationRepository.GetAll().ToList();
             }
@@ -87,19 +87,19 @@ namespace BusinessLogic
             }
 
             if(onlyAvailable)
-            return accommodationRepository.GetAll(x => ((accommodation)x).TouristSpot.Id == spotId && ((accommodation)x).Available).ToList();
+            return accommodationRepository.GetAll(x => ((Accommodation)x).TouristSpot.Id == spotId && ((Accommodation)x).Available).ToList();
 
-            return accommodationRepository.GetAll(x => ((accommodation)x).TouristSpot.Id == spotId).ToList();
+            return accommodationRepository.GetAll(x => ((Accommodation)x).TouristSpot.Id == spotId).ToList();
 
 
         }
 
-        public accommodation Get(int accommodationId)
+        public Accommodation Get(int accommodationId)
         {
             return accommodationRepository.Get(accommodationId);
         }
 
-        public bool Add(List<accommodationImport> accommodations)
+        public bool Add(List<AccommodationImport> accommodations)
         {
             var ret = true;
             foreach (var accommodation in accommodations)
@@ -110,12 +110,12 @@ namespace BusinessLogic
 
                 if (spot == null)
                 {
-                    spot = touristSpotHandler.Add(spotImport.ToEntity(), spotImport.RegionId, spotImport.CategoryIds, spotImport.Image);
+                    spot = touristSpotHandler.Add(spotImport.ToEntity(), spotImport.RegionId, spotImport.Categories.ToList(), spotImport.Image);
                 }
                 try
                 {
                     if (spot == null) throw new BadRequestException();
-                    Add(accommodation.ToEntity(), spot.Id, accommodation.ImageNames);
+                    Add(accommodation.ToEntity(), spot.Id, accommodation.Images);
                 }
                 catch (BadRequestException)
                 {

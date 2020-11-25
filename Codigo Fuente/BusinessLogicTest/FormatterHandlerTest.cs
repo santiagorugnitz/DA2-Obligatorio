@@ -17,7 +17,7 @@ namespace BusinessLogicTest
     [TestClass]
     public class FormatterHandlerTest
     {
-        public static accommodationImport accommodation = new accommodationImport
+        public static AccommodationImport accommodation = new AccommodationImport
         {
             Name = "accommodation"
         };
@@ -29,15 +29,15 @@ namespace BusinessLogicTest
                 return "json";
             }
 
-            List<accommodationImport> IImporter.Upload(List<SourceParameter> sourceParameters)
+            List<AccommodationImport> IImporter.Upload(List<SourceParameter> sourceParameters)
             {
-                return new List<accommodationImport> { accommodation };
+                return new List<AccommodationImport> { accommodation };
             }
         }
 
         private Mock<IDllHandler> dllMock;
         private ImporterHandler handler;
-        private Mock<IaccommodationHandler> accommodationMock;
+        private Mock<IAccommodationHandler> accommodationMock;
 
         [TestInitialize]
         public void SetUp()
@@ -45,8 +45,8 @@ namespace BusinessLogicTest
             dllMock = new Mock<IDllHandler>(MockBehavior.Strict);
             dllMock.Setup(x => x.GetDlls()).Returns(new List<IImporter> { new FormatterMock()});
 
-            accommodationMock = new Mock<IaccommodationHandler>(MockBehavior.Strict);
-            accommodationMock.Setup(x => x.Add(new List<accommodationImport> { accommodation })).Returns(true);
+            accommodationMock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
+            accommodationMock.Setup(x => x.Add(new List<AccommodationImport> { accommodation })).Returns(true);
 
             handler = new ImporterHandler(dllMock.Object, accommodationMock.Object);
         }

@@ -179,7 +179,7 @@
                 <h3>{{accommodation.address}}</h3>
               </mat-card-title>
             </mat-card-header>
-            <img mat-card-image class="image" src={{accommodation.images[accommodation.selectedImage]}} (click)="nextImage(accommodation)"  alt="Photo of {{accommodation.name}}">
+            <img mat-card-image class="image" src={{accommodation.images[accommodation.selectedImage].name}} (click)="nextImage(accommodation)"  alt="Photo of {{accommodation.name}}">
             <span>{{accommodation.selectedImage+1}}/{{accommodation.images.length}}</span>
 
             <p *ngIf="accommodation.score>0">User's score: {{accommodation.score}}</p>            

@@ -18,7 +18,7 @@ namespace BusinessLogicTest
         private TouristSpotCategory joinedEntry;
         private TouristSpotCategory joinedEntry2;
         private TouristSpotCategory joinedEntry3;
-        private Mock<IRepository<accommodation>> accommodationMock;
+        private Mock<IRepository<Accommodation>> accommodationMock;
         private Mock<IRepository<Region>> regionMock;
         private Mock<IRepository<Category>> categoryMock;
         private Mock<IRepository<TouristSpot>> mock;
@@ -88,7 +88,7 @@ namespace BusinessLogicTest
             spot.TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry };
             spot2.TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry, joinedEntry2 };
 
-            accommodationMock = new Mock<IRepository<accommodation>>(MockBehavior.Strict);
+            accommodationMock = new Mock<IRepository<Accommodation>>(MockBehavior.Strict);
             regionMock = new Mock<IRepository<Region>>(MockBehavior.Strict);
             categoryMock = new Mock<IRepository<Category>>(MockBehavior.Strict);
             mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);

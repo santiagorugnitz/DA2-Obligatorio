@@ -53,7 +53,7 @@ namespace WebApi
             services.AddScoped<IAdministratorRepository, AdministratorRepository>();
             services.AddScoped<IAdministratorHandler, AdministratorHandler>();
             services.AddScoped<ITouristSpotHandler, TouristSpotHandler>();
-            services.AddScoped<IaccommodationHandler, accommodationHandler>();
+            services.AddScoped<IAccommodationHandler, AccommodationHandler>();
             services.AddScoped<IRegionHandler, RegionHandler>();
             services.AddScoped<IReservationHandler, ReservationHandler>();
             services.AddScoped<ICategoryHandler, CategoryHandler>();

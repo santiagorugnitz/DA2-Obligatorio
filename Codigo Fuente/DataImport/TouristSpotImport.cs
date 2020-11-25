@@ -13,7 +13,7 @@ namespace DataImport
 
         public int RegionId { get; set; }
 
-        public List<int> CategoryIds { get; set; }
+        public int[] Categories { get; set; }
 
         public string Image { get; set; }
 

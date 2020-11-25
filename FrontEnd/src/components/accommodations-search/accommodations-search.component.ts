@@ -120,10 +120,12 @@ export class AccommodationsSearchComponent implements OnInit {
           res => {
             this.accommodations = res
             for (let accommodation of this.accommodations) {
+              accommodation.selectedImage = 0
               this.calculateTotal(accommodation.id)
               this.calculateScore(accommodation)
-            
             }
+            this.hasSearched = !this.hasSearched
+
           },
           err => {
             alert(`${err.status}: ${err.error}`);;
@@ -131,7 +133,6 @@ export class AccommodationsSearchComponent implements OnInit {
           })
 
 
-        this.hasSearched = !this.hasSearched
       } else {
         alert('The dates are incorrect');
       }
@@ -141,10 +142,10 @@ export class AccommodationsSearchComponent implements OnInit {
     }
   }
 
-  calculateScore(accommodation:Accommodation){
+  calculateScore(accommodation: Accommodation) {
     this.reservationService.getFromAccomodation(accommodation.id).subscribe(
       res => {
-        accommodation.comments = res.filter(x=>x.score>0).map(function (x) {
+        accommodation.comments = res.filter(x => x.score > 0).map(function (x) {
           var comment: Comment
           comment = {
             name: x.name,
@@ -155,8 +156,8 @@ export class AccommodationsSearchComponent implements OnInit {
           return comment
         })
 
-        accommodation.comments.forEach(x=>accommodation.score+=x.score)
-        accommodation.score=accommodation.score/accommodation.comments.length
+        accommodation.comments.forEach(x => accommodation.score += x.score)
+        accommodation.score = accommodation.score / accommodation.comments.length
 
       },
       err => {
@@ -169,12 +170,12 @@ export class AccommodationsSearchComponent implements OnInit {
     this.accommodationService.calculateTotal(Id, this.startingDate, this.finishingDate,
       this.adultQuantity, this.retiredQuantity,
       this.childrenQuantity, this.babyQuantity).subscribe(
-      res =>{
+        res => {
           this.getAccommodationById(Id).total = res
-      },
-      err=>{
+        },
+        err => {
           alert(`${err.status}: ${err.error}`);
-      })
+        })
   }
 
 
@@ -196,7 +197,7 @@ export class AccommodationsSearchComponent implements OnInit {
     return accomodation
   }
 
-  getAccommodationComments(accommodation:Accommodation): void {
+  getAccommodationComments(accommodation: Accommodation): void {
     const dialogRef = this.dialog.open(AccommodationCommentsComponent, {
       width: '300px',
       height: '500px',
@@ -262,9 +263,9 @@ export class MakeReservationDialog {
   }
 
   buttonEnabled() {
-    return this.userControl.valid && this.data.reservation.Name.trim() != '' 
-    && this.surnameControl.valid && this.data.reservation.Surname.trim() != ''
-    && this.emailControl.valid && this.data.reservation.Email.trim() != ''
+    return this.userControl.valid && this.data.reservation.Name.trim() != ''
+      && this.surnameControl.valid && this.data.reservation.Surname.trim() != ''
+      && this.emailControl.valid && this.data.reservation.Email.trim() != ''
   }
 
   openConfirmationDialog(id: number, tel: string, info: string) {

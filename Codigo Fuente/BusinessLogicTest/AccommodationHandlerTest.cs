@@ -14,18 +14,18 @@ using System.Text;
 namespace BusinessLogicTest
 {
     [TestClass]
-    public class accommodationHandlerTest
+    public class AccommodationHandlerTest
     {
-        private accommodation accommodation;
+        private Accommodation accommodation;
         private TouristSpot touristSpot;
-        private Mock<IRepository<accommodation>> accommodationMock;
+        private Mock<IRepository<Accommodation>> accommodationMock;
         private Mock<IRepository<Region>> regionMock;
         private Mock<IRepository<Category>> categoryMock;
         private Mock<IRepository<TouristSpotCategory>> joinedMock;
         private Mock<ITouristSpotHandler> touristSpotHandlerMock;
-        private accommodationHandler handler;
+        private AccommodationHandler handler;
         private List<string> imageNames;
-        private List<accommodationImport> import;
+        private List<AccommodationImport> import;
 
         [TestInitialize]
         public void SetUp()
@@ -48,7 +48,7 @@ namespace BusinessLogicTest
                 TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry }
             };
 
-            accommodation = new accommodation()
+            accommodation = new Accommodation()
             {
                 Id = 1,
                 Name = "Hotel",
@@ -65,14 +65,14 @@ namespace BusinessLogicTest
 
             imageNames = new List<string> { "imagen" };
 
-            import = new List<accommodationImport>() {
-                new accommodationImport
+            import = new List<AccommodationImport>() {
+                new AccommodationImport
                 {
                     Name = "Hotel",
                     Stars = 4.0,
                     Address = "Cuareim",
                     Available = true,
-                    ImageNames = imageNames,
+                    Images = imageNames,
                     Fee = 4000,
                     Description = "Hotel in Mvdeo",
                     Telephone = "+598",
@@ -83,18 +83,18 @@ namespace BusinessLogicTest
                         Description = "asd",
                         Image = "imagen",
                         RegionId = 1,
-                        CategoryIds = new List<int> { 1,2 }
+                        Categories = new int[] { 1,2 }
                     }
                 },
 
             };
 
-            accommodationMock = new Mock<IRepository<accommodation>>(MockBehavior.Loose);
+            accommodationMock = new Mock<IRepository<Accommodation>>(MockBehavior.Loose);
             regionMock = new Mock<IRepository<Region>>(MockBehavior.Loose);
             categoryMock = new Mock<IRepository<Category>>(MockBehavior.Loose);
             joinedMock = new Mock<IRepository<TouristSpotCategory>>(MockBehavior.Strict);
             touristSpotHandlerMock = new Mock<ITouristSpotHandler>(MockBehavior.Strict);
-            handler = new accommodationHandler(accommodationMock.Object, touristSpotHandlerMock.Object);
+            handler = new AccommodationHandler(accommodationMock.Object, touristSpotHandlerMock.Object);
         }
 
 
@@ -280,7 +280,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void DeleteaccommodationWrongId()
         {
-            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns((accommodation)null);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns((Accommodation)null);
 
             var res = handler.Delete(accommodation.Id);
 
@@ -301,7 +301,7 @@ namespace BusinessLogicTest
         public void SearchAvailableaccommodation()
         {
             accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<accommodation> { accommodation });
+                Returns(new List<Accommodation> { accommodation });
             touristSpotHandlerMock.Setup(x => x.Get(1)).Returns(touristSpot);
 
             DateTime checkIn, checkOut = new DateTime();
@@ -312,14 +312,14 @@ namespace BusinessLogicTest
 
             touristSpotHandlerMock.VerifyAll();
             accommodationMock.VerifyAll();
-            Assert.AreEqual(new List<accommodation> { accommodation }[0], res[0]);
+            Assert.AreEqual(new List<Accommodation> { accommodation }[0], res[0]);
         }
 
         [TestMethod]
         public void SearchAllaccommodation()
         {
             accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<accommodation> { accommodation });
+                Returns(new List<Accommodation> { accommodation });
 
             DateTime checkIn, checkOut = new DateTime();
             checkIn = DateTime.Now;
@@ -329,14 +329,14 @@ namespace BusinessLogicTest
 
             touristSpotHandlerMock.VerifyAll();
             accommodationMock.VerifyAll();
-            Assert.AreEqual(new List<accommodation> { accommodation }[0], res[0]);
+            Assert.AreEqual(new List<Accommodation> { accommodation }[0], res[0]);
         }
 
         [TestMethod]
         public void SearchAllAvailableaccommodation()
         {
             accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<accommodation> { accommodation });
+                Returns(new List<Accommodation> { accommodation });
 
             DateTime checkIn, checkOut = new DateTime();
             checkIn = DateTime.Now;
@@ -346,14 +346,14 @@ namespace BusinessLogicTest
 
             touristSpotHandlerMock.VerifyAll();
             accommodationMock.VerifyAll();
-            Assert.AreEqual(new List<accommodation> { accommodation }[0], res[0]);
+            Assert.AreEqual(new List<Accommodation> { accommodation }[0], res[0]);
         }
 
         [TestMethod]
         public void SearchNonAvailableaccommodation()
         {
             accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
-                Returns(new List<accommodation> { });
+                Returns(new List<Accommodation> { });
 
             touristSpotHandlerMock.Setup(x => x.Get(1)).Returns(touristSpot);
 
@@ -396,7 +396,7 @@ namespace BusinessLogicTest
         public void ChangeaccommodationAvaliabilityBadaccommodation()
         {
             accommodationMock.Setup(x => x.Update(accommodation)).Returns(true);
-            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns((accommodation)null);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns((Accommodation)null);
 
             var res = handler.ChangeAvailability(accommodation.Id, false);
 
@@ -407,7 +407,7 @@ namespace BusinessLogicTest
         [TestMethod]
         public void GetaccommodationFalse()
         {
-            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns((accommodation)null);
+            accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns((Accommodation)null);
 
             var res = handler.Get(accommodation.Id);
 
@@ -435,7 +435,7 @@ namespace BusinessLogicTest
 
             touristSpotHandlerMock.Setup(x => x.Get(accommodation.TouristSpot.Name)).Returns(spot);
             touristSpotHandlerMock.Setup(x => x.Get(spot.Id)).Returns(spot);
-            accommodationMock.Setup(x => x.Add(It.IsAny<accommodation>())).Returns(accommodation.ToEntity());
+            accommodationMock.Setup(x => x.Add(It.IsAny<Accommodation>())).Returns(accommodation.ToEntity());
 
             var res = handler.Add(import);
 
@@ -451,9 +451,9 @@ namespace BusinessLogicTest
             var spot = accommodation.TouristSpot.ToEntity();
 
             touristSpotHandlerMock.Setup(x => x.Get(accommodation.TouristSpot.Name)).Returns((TouristSpot)null);
-            touristSpotHandlerMock.Setup(x => x.Add(It.IsAny<TouristSpot>(), accommodation.TouristSpot.RegionId,accommodation.TouristSpot.CategoryIds, accommodation.TouristSpot.Image)).Returns(spot);
+            touristSpotHandlerMock.Setup(x => x.Add(It.IsAny<TouristSpot>(), accommodation.TouristSpot.RegionId, It.IsAny<List<int>>(), accommodation.TouristSpot.Image)).Returns(spot);
             touristSpotHandlerMock.Setup(x => x.Get(spot.Id)).Returns(spot);
-            accommodationMock.Setup(x => x.Add(It.IsAny<accommodation>())).Returns(accommodation.ToEntity());
+            accommodationMock.Setup(x => x.Add(It.IsAny<Accommodation>())).Returns(accommodation.ToEntity());
 
             var res = handler.Add(import);
 
@@ -469,9 +469,9 @@ namespace BusinessLogicTest
             var spot = accommodation.TouristSpot.ToEntity();
 
             touristSpotHandlerMock.Setup(x => x.Get(accommodation.TouristSpot.Name)).Returns((TouristSpot)null);
-            touristSpotHandlerMock.Setup(x => x.Add(It.IsAny<TouristSpot>(), accommodation.TouristSpot.RegionId, accommodation.TouristSpot.CategoryIds, accommodation.TouristSpot.Image)).Returns(spot);
+            touristSpotHandlerMock.Setup(x => x.Add(It.IsAny<TouristSpot>(), accommodation.TouristSpot.RegionId, It.IsAny<List<int>>(), accommodation.TouristSpot.Image)).Returns(spot);
             touristSpotHandlerMock.Setup(x => x.Get(spot.Id)).Returns(spot);
-            accommodationMock.Setup(x => x.Add(It.IsAny<accommodation>())).Throws(new BadRequestException());
+            accommodationMock.Setup(x => x.Add(It.IsAny<Accommodation>())).Throws(new BadRequestException());
 
             var res = handler.Add(import);
 
@@ -487,7 +487,7 @@ namespace BusinessLogicTest
             var spot = accommodation.TouristSpot.ToEntity();
 
             touristSpotHandlerMock.Setup(x => x.Get(accommodation.TouristSpot.Name)).Returns((TouristSpot)null);
-            touristSpotHandlerMock.Setup(x => x.Add(It.IsAny<TouristSpot>(), accommodation.TouristSpot.RegionId, accommodation.TouristSpot.CategoryIds, accommodation.TouristSpot.Image)).Returns((TouristSpot)null);
+            touristSpotHandlerMock.Setup(x => x.Add(It.IsAny<TouristSpot>(), accommodation.TouristSpot.RegionId, It.IsAny<List<int>>(), accommodation.TouristSpot.Image)).Returns((TouristSpot)null);
 
             var res = handler.Add(import);
 
@@ -500,7 +500,7 @@ namespace BusinessLogicTest
         [ExpectedException(typeof(NotFoundException))]
         public void CalculateWrongId()
         {
-            accommodationMock.Setup(x => x.Get(1)).Returns((accommodation)null);
+            accommodationMock.Setup(x => x.Get(1)).Returns((Accommodation)null);
 
             var res = handler.CalculateTotal(1,null);
 

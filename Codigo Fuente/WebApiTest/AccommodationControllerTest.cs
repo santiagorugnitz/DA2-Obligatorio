@@ -13,7 +13,7 @@ using WebApi.Models;
 namespace WebApiTest
 {
     [TestClass]
-    public class accommodationControllerTest
+    public class AccommodationControllerTest
     {
         [TestInitialize]
         public void Setup()
@@ -23,9 +23,9 @@ namespace WebApiTest
         [TestMethod]
         public void PostaccommodationOk()
         {
-            var mock = new Mock<IaccommodationHandler>(MockBehavior.Strict);
-            var controller = new accommodationController(mock.Object);
-            var accommodationModel = new accommodationModel()
+            var mock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
+            var controller = new AccommodationController(mock.Object);
+            var accommodationModel = new AccommodationModel()
             {
                 Name = "Prueba",
                 Stars = 3.0,
@@ -39,8 +39,8 @@ namespace WebApiTest
                 TouristSpotId = 1
             };
 
-            mock.Setup(x => x.Add(It.IsAny<accommodation>(),
-                accommodationModel.TouristSpotId, accommodationModel.ImageNames)).Returns(It.IsAny<accommodation>());
+            mock.Setup(x => x.Add(It.IsAny<Accommodation>(),
+                accommodationModel.TouristSpotId, accommodationModel.ImageNames)).Returns(It.IsAny<Accommodation>());
 
             var result = controller.Post(accommodationModel);
             var okResult = result as OkObjectResult;
@@ -52,9 +52,9 @@ namespace WebApiTest
         [TestMethod]
         public void ChangeAvailabilityOk()
         {
-            var mock = new Mock<IaccommodationHandler>(MockBehavior.Strict);
-            var controller = new accommodationController(mock.Object);
-            var accommodationModel = new accommodationModel()
+            var mock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
+            var controller = new AccommodationController(mock.Object);
+            var accommodationModel = new AccommodationModel()
             {
                 Name = "Prueba",
                 Stars = 3.0,
@@ -81,9 +81,9 @@ namespace WebApiTest
         [TestMethod]
         public void DeleteaccommodationOk()
         {
-            var mock = new Mock<IaccommodationHandler>(MockBehavior.Strict);
-            var controller = new accommodationController(mock.Object);
-            var accommodationModel = new accommodationModel()
+            var mock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
+            var controller = new AccommodationController(mock.Object);
+            var accommodationModel = new AccommodationModel()
             {
                 Name = "Prueba",
                 Stars = 3.0,
@@ -109,9 +109,9 @@ namespace WebApiTest
         [TestMethod]
         public void GetaccommodationByIdOk()
         {
-            var mock = new Mock<IaccommodationHandler>(MockBehavior.Strict);
-            var controller = new accommodationController(mock.Object);
-            var accommodationModel = new accommodationModel()
+            var mock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
+            var controller = new AccommodationController(mock.Object);
+            var accommodationModel = new AccommodationModel()
             {
                 Name = "Prueba",
                 Stars = 3.0,
@@ -137,9 +137,9 @@ namespace WebApiTest
         [TestMethod]
         public void GetaccommodationByTouristSpotOk()
         {
-            var mock = new Mock<IaccommodationHandler>(MockBehavior.Strict);
-            var controller = new accommodationController(mock.Object);
-            var accommodationModel = new accommodationModel()
+            var mock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
+            var controller = new AccommodationController(mock.Object);
+            var accommodationModel = new AccommodationModel()
             {
                 Name = "Prueba",
                 Stars = 3.0,
@@ -154,7 +154,7 @@ namespace WebApiTest
             };
 
             mock.Setup(x => x.SearchByTouristSpot(1,true)).
-                Returns(new List<accommodation> { accommodationModel.ToEntity() });
+                Returns(new List<Accommodation> { accommodationModel.ToEntity() });
 
             Image image = new Image()
             {
@@ -197,9 +197,9 @@ namespace WebApiTest
         [ExpectedException(typeof(NotFoundException))]
         public void Get404()
         {
-            var mock = new Mock<IaccommodationHandler>(MockBehavior.Strict);
-            var controller = new accommodationController(mock.Object);
-            mock.Setup(x => x.Get(It.IsAny<int>())).Returns((accommodation)null);
+            var mock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
+            var controller = new AccommodationController(mock.Object);
+            mock.Setup(x => x.Get(It.IsAny<int>())).Returns((Accommodation)null);
 
             var result = controller.Get(1);
         }
@@ -207,8 +207,8 @@ namespace WebApiTest
         [TestMethod]
         public void CalculateTotal()
         {
-            var mock = new Mock<IaccommodationHandler>(MockBehavior.Strict);
-            var controller = new accommodationController(mock.Object);
+            var mock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
+            var controller = new AccommodationController(mock.Object);
             var stay = new StayModel()
             {
                 AdultQuantity = 3,
