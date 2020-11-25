@@ -15,6 +15,9 @@ namespace Domain
     }
     public class Reservation
     {
+        private static readonly double MAX_SCORE = 5.0;
+        private static readonly double MIN_SCORE = 1.0;
+
         public int Id { get; set; }
 
         public virtual Accommodation Accommodation { get; set; }
@@ -219,7 +222,7 @@ namespace Domain
 
             set
             {
-                if (value == null || value < 1 || value > 5)
+                if (value == null || value < MIN_SCORE || value > MAX_SCORE)
                 {
                     throw new BadRequestException("Score must be between 1 and 5");
                 } 

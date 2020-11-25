@@ -8,6 +8,9 @@ namespace Domain
 {
     public class Accommodation
     {
+        private static readonly double MAX_STARS = 5.0;
+        private static readonly double MIN_STARS = 1.0;
+
         public int Id { get; set; }
 
         private string name;
@@ -35,7 +38,7 @@ namespace Domain
 
             set
             {
-                if (value > 5.0 || value < 1.0)
+                if (value > MAX_STARS || value < MIN_STARS)
                 {
                     throw new BadRequestException("The accommodation stars needs to be between 1 and 5");
                 }
