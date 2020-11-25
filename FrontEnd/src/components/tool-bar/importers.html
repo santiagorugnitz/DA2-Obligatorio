@@ -3,7 +3,7 @@
     <mat-selection-list #importers [multiple]="false">
         <mat-list-option *ngFor="let importer of data.importers" [value]="importer.Id">
           <mat-icon mat-list-icon>note</mat-icon>
-          {{importer.Name}}
+          {{importer.importer}}
         </mat-list-option>
       </mat-selection-list>
       <p></p>

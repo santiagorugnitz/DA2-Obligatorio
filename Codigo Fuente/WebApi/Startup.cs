@@ -58,6 +58,8 @@ namespace WebApi
             services.AddScoped<IReservationHandler, ReservationHandler>();
             services.AddScoped<ICategoryHandler, CategoryHandler>();
             services.AddScoped<IReportHandler, ReportHandler>();
+            services.AddScoped<IDllHandler, DllHandler>();
+            services.AddScoped<IImporterHandler, ImporterHandler>();
 
             services.AddScoped<AuthorizationFilter>();
             services.AddScoped<ExceptionFilter>();

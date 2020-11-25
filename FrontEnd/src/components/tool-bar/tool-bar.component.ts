@@ -43,7 +43,9 @@ export class ToolBarComponent {
   reservationNumber: number
 
   constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
-    public addDialog: MatDialog, private reservationService: ReservationService, private spotService: TouristSpotService, public dialog: MatDialog, private router: Router) {
+    public addDialog: MatDialog, private reservationService: ReservationService, 
+    private spotService: TouristSpotService, public dialog: MatDialog, public importerService: ImportersService,
+    private router: Router) {
     this.loguedUser()
   }
 
@@ -176,11 +178,25 @@ export class ToolBarComponent {
   };
 
   showImporters() {
-    const importerdialogRef = this.dialog.open(ImportersDialog, {
-      data: {
-        importers: [{ Name: "Xml", Id: 1 }, { Name: "Json", Id: 2 }]
+    this.importerService.getImporters().subscribe(
+      res => {
+        var id:number = 1
+        var gotImporters = []
+        res.forEach(importer => {
+          gotImporters.push({importer, id})
+          id++  
+        });
+        const importerdialogRef = this.dialog.open(ImportersDialog, {
+          data: {
+            importers:gotImporters
+          }
+        });
+      },
+      err => {
+        alert(`${err.status}: ${err.error}`);
+        console.log(err);
       }
-    });
+    );
   }
 }
 
