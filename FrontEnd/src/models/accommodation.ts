@@ -1,4 +1,5 @@
 import { TouristSpot } from './tourist-spot'
+import {Comment} from './comment'
 
 export class Accommodation {
   id: number
@@ -14,6 +15,8 @@ export class Accommodation {
   contactInformation: string
   touristSpot: TouristSpot
   selectedImage: number = 0
+  score:number
+  comments:Comment[]
 }
 
 export class AccommodationDTO{

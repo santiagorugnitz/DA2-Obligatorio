@@ -121,6 +121,8 @@ export class AccommodationsSearchComponent implements OnInit {
             this.accommodations = res
             for (let accommodation of this.accommodations) {
               this.calculateTotal(accommodation.id)
+              this.calculateScore(accommodation)
+            
             }
           },
           err => {
@@ -139,10 +141,31 @@ export class AccommodationsSearchComponent implements OnInit {
     }
   }
 
+  calculateScore(accommodation:Accommodation){
+    this.reservationService.getFromAccomodation(accommodation.id).subscribe(
+      res => {
+        accommodation.comments = res.filter(x=>x.score>0).map(function (x) {
+          var comment: Comment
+          comment = {
+            name: x.name,
+            surname: x.surname,
+            score: x.score,
+            text: x.comment,
+          }
+          return comment
+        })
+
+        accommodation.comments.forEach(x=>accommodation.score+=x.score)
+        accommodation.score=accommodation.score/accommodation.comments.length
+
+      },
+      err => {
+        alert(`${err.status}: ${err.error}`);;
+        console.log(err);
+      })
+  }
+
   calculateTotal(Id: number): void {
-
-    
-
     this.accommodationService.calculateTotal(Id, this.startingDate, this.finishingDate,
       this.adultQuantity, this.retiredQuantity,
       this.childrenQuantity, this.babyQuantity).subscribe(
@@ -173,31 +196,12 @@ export class AccommodationsSearchComponent implements OnInit {
     return accomodation
   }
 
-  getAccommodationComments(id: number, name: string): void {
-    var reservations: Comment[]
-    this.reservationService.getFromAccomodation(id).subscribe(
-      res => {
-        reservations = res.map(function (x) {
-          var comment: Comment
-          comment = {
-            name: x.name,
-            surname: x.surname,
-            score: x.score,
-            text: x.comment,
-          }
-          return comment
-        })
-        const dialogRef = this.dialog.open(AccommodationCommentsComponent, {
-          width: '300px',
-          height: '500px',
-          data: { comments: reservations, accommodationName: name }
-        });
-      },
-      err => {
-        alert(`${err.status}: ${err.error}`);;
-        console.log(err);
-      })
-    
+  getAccommodationComments(accommodation:Accommodation): void {
+    const dialogRef = this.dialog.open(AccommodationCommentsComponent, {
+      width: '300px',
+      height: '500px',
+      data: { comments: accommodation.comments, accommodationName: accommodation.name }
+    });
   }
 
   openReservationDialog(accommodation: Accommodation): void {
