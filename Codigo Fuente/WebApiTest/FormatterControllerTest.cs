@@ -52,5 +52,23 @@ namespace WebApiTest
             mock.VerifyAll();
             Assert.IsNotNull(okResult);
         }
+
+        [TestMethod]
+        public void LoadFileFailed()
+        {
+            var mock = new Mock<IImporterHandler>(MockBehavior.Strict);
+            var controller = new ImporterController(mock.Object);
+
+            List<SourceParameter> parameters = new List<SourceParameter> { new SourceParameter
+            { Type = ParameterType.String, Name = "archivo" } };
+
+            mock.Setup(x => x.Add(1, parameters)).Returns(false);
+
+            var result = controller.Upload(1, parameters);
+            var okResult = result as OkObjectResult;
+
+            mock.VerifyAll();
+            Assert.IsNotNull(okResult);
+        }
     }
 }
