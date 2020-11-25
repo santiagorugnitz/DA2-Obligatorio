@@ -32,9 +32,9 @@ export class TouristSpotService {
     return this.http.get<TouristSpot[]>(this.uri,{params:params})
   }
 
-  AddSpot(spot: TouristSpotDTO) {
+  AddSpot(spot: TouristSpotDTO):Observable<string> {
     let myHeaders = new HttpHeaders();
     myHeaders = myHeaders.set('token', localStorage.token)
-    return this.http.post<TouristSpotDTO>(this.uri, spot,{headers:myHeaders})
+    return this.http.post<string>(this.uri, spot,{headers:myHeaders, responseType: 'text' as 'json' })
   }
 }

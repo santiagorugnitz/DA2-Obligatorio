@@ -104,6 +104,7 @@ export class ToolBarComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      result.spot.RegionId = result.spot.Region
       this.addSpot(result.spot)
     });
   }
@@ -223,7 +224,7 @@ export class DialogAddSpot {
     public dialogRef: MatDialogRef<DialogAddSpot>,
     @Inject(MAT_DIALOG_DATA) public data: DialogSpotData,
     private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
-    data.spot = { Id: 0, Name: "", Description: "", Image: "", Categories: [], Region: 0 }
+    data.spot = { Id: 0, Name: "", Description: "", Image: "", CategoryIds: [], RegionId: 0 }
     this.regionService.getRegions().subscribe(
       res => {
         this.regions = res;
@@ -246,13 +247,13 @@ export class DialogAddSpot {
 
   onCategoryClick(checked: Boolean, id: number) {
     if (checked) {
-      this.data.spot.Categories.push(id)
+      this.data.spot.CategoryIds.push(id)
       this.categoriesCount++
     }
     else {
-      for (var i = 0; i < this.data.spot.Categories.length; i++) {
-        if (this.data.spot.Categories[i] == id) {
-          this.data.spot.Categories.splice(i);
+      for (var i = 0; i < this.data.spot.CategoryIds.length; i++) {
+        if (this.data.spot.CategoryIds[i] == id) {
+          this.data.spot.CategoryIds.splice(i);
           this.categoriesCount--
         }
       }
