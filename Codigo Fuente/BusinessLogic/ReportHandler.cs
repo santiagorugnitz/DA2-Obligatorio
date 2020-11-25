@@ -20,8 +20,8 @@ namespace BusinessLogic
         {
             if (startingDate > finishingDate) throw new BadRequestException("The starting date must be before the finishing one");
 
-            var asociatedaccommodations = accommodationHandler.SearchByTouristSpot(spotId,false);
-            List<ReportItem> report = CreateReport(startingDate, finishingDate, asociatedaccommodations);
+            var asociatedAccommodations = accommodationHandler.SearchByTouristSpot(spotId,false);
+            List<ReportItem> report = CreateReport(startingDate, finishingDate, asociatedAccommodations);
 
             report.Sort((x, y) => Compare(x, y));
             return report;
@@ -41,16 +41,16 @@ namespace BusinessLogic
             }
         }
 
-        private List<ReportItem> CreateReport(DateTime startingDate, DateTime finishingDate, List<Accommodation> asociatedaccommodations)
+        private List<ReportItem> CreateReport(DateTime startingDate, DateTime finishingDate, List<Accommodation> asociatedAccommodations)
         {
             List<ReportItem> report = new List<ReportItem>();
 
-            foreach (var actualaccommodation in asociatedaccommodations)
+            foreach (var actualAccommodation in asociatedAccommodations)
             {
-                var reservationsFromaccommodation = reservationHandler.GetAllFromaccommodation(actualaccommodation.Id);
+                var reservationsFromAccommodation = reservationHandler.GetAllFromAccommodation(actualAccommodation.Id);
                 int reservationsNumber = 0;
 
-                foreach (var actualReservation in reservationsFromaccommodation)
+                foreach (var actualReservation in reservationsFromAccommodation)
                 {
                     if (IncludedReservation(actualReservation, startingDate, finishingDate))
                         reservationsNumber++;
@@ -58,7 +58,7 @@ namespace BusinessLogic
 
                 if (reservationsNumber > 0)
                 {
-                    report.Add(new ReportItem { accommodation = actualaccommodation, ReservationsQuantity = reservationsNumber });
+                    report.Add(new ReportItem { accommodation = actualAccommodation, ReservationsQuantity = reservationsNumber });
                 }
             }
 

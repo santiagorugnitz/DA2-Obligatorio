@@ -82,7 +82,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation spot does not exist")]
-        public void AddReservationWithoutaccommodation()
+        public void AddReservationWithoutAccommodation()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accommodationHandler);
@@ -97,7 +97,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
 "The accommodation spot does not exist")]
-        public void AddReservationWithoutAvailableaccommodation()
+        public void AddReservationWithoutAvailableAccommodation()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accommodationHandler);
@@ -112,7 +112,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void AddReservationWithaccommodation()
+        public void AddReservationWithAccommodation()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accommodationHandler);
@@ -460,7 +460,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void GetAllFromaccommodationOk()
+        public void GetAllFromAccommodationOk()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accommodationHandler);
@@ -468,7 +468,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<Reservation>() { reservation });
             accommodationMock.Setup(x => x.Get(reservation.accommodation.Id)).Returns((Accommodation)reservation.accommodation);
 
-            var res = handler.GetAllFromaccommodation(reservation.accommodation.Id);
+            var res = handler.GetAllFromAccommodation(reservation.accommodation.Id);
 
             mock.VerifyAll();
             accommodationMock.VerifyAll();
@@ -476,7 +476,7 @@ namespace BusinessLogicTest
 
         [TestMethod]
         [ExpectedException(typeof(BadRequestException))]
-        public void GetAllFromNonExistingaccommodation()
+        public void GetAllFromNonExistingAccommodation()
         {
             var mock = new Mock<IRepository<Reservation>>(MockBehavior.Strict);
             var handler = new ReservationHandler(mock.Object, accommodationHandler);
@@ -484,7 +484,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<Reservation>() { reservation });
             accommodationMock.Setup(x => x.Get(reservation.accommodation.Id)).Returns((Accommodation)null);
 
-            var res = handler.GetAllFromaccommodation(reservation.accommodation.Id);
+            var res = handler.GetAllFromAccommodation(reservation.accommodation.Id);
         }
 
     }

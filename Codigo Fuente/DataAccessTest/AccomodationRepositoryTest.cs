@@ -66,7 +66,7 @@ namespace DataAccessTest
         }
 
         [TestMethod]
-        public void Addaccommodation()
+        public void AddAccommodation()
         {
             using (var context = new TourismContext(options))
             {
@@ -87,7 +87,7 @@ namespace DataAccessTest
         }
 
         [TestMethod]
-        public void Deleteaccommodation()
+        public void DeleteAccommodation()
         {
             using (var context = new TourismContext(options))
             {
@@ -106,7 +106,7 @@ namespace DataAccessTest
         }
 
         [TestMethod]
-        public void Getaccommodation()
+        public void GetAccommodation()
         {
             using (var context = new TourismContext(options))
             {
@@ -127,7 +127,7 @@ namespace DataAccessTest
         }
 
         [TestMethod]
-        public void Updateaccommodation()
+        public void UpdateAccommodation()
         {
             using (var context = new TourismContext(options))
             {

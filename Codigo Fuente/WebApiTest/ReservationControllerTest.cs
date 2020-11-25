@@ -153,7 +153,7 @@ namespace WebApiTest
         }
 
         [TestMethod]
-        public void GetFromaccommodation()
+        public void GetFromAccommodation()
         {
             var mock = new Mock<IReservationHandler>(MockBehavior.Strict);
             var controller = new ReservationController(mock.Object);
@@ -170,9 +170,9 @@ namespace WebApiTest
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
             };
-            mock.Setup(x => x.GetAllFromaccommodation(1)).Returns(new List<Reservation>() { reservationModel.ToEntity()});
+            mock.Setup(x => x.GetAllFromAccommodation(1)).Returns(new List<Reservation>() { reservationModel.ToEntity()});
 
-            var result = controller.GetFromaccommodation(1);
+            var result = controller.GetFromAccommodation(1);
 
             Assert.AreEqual(true, result is OkObjectResult);
             mock.VerifyAll();

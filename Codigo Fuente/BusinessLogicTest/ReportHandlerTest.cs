@@ -96,7 +96,7 @@ namespace BusinessLogicTest
             }
 
             [TestMethod]
-            public void ReportWithoutaccommodations()
+            public void ReportWithoutAccommodations()
             {
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
@@ -258,7 +258,7 @@ namespace BusinessLogicTest
             }
 
             [TestMethod]
-            public void ReportWithOneReservationForOneaccommodation()
+            public void ReportWithOneReservationForOneAccommodation()
             {
                 touristSpotMock.Setup(x => x.Get(1)).Returns(touristSpot);
                 accommodationMock.Setup(x => x.Get(It.IsAny<int>())).Returns(accommodation);
@@ -275,7 +275,7 @@ namespace BusinessLogicTest
             }
 
             [TestMethod]
-            public void ReportWithTwoReservationForOneaccommodation()
+            public void ReportWithTwoReservationForOneAccommodation()
             {
                 Reservation reservation2 = new Reservation()
                 {
@@ -307,7 +307,7 @@ namespace BusinessLogicTest
             }
 
             [TestMethod]
-            public void ReportWithTwoaccommodationWithSameQuantity()
+            public void ReportWithTwoAccommodationWithSameQuantity()
             {
                 Accommodation accommodation2 = new Accommodation()
                 {

@@ -99,7 +99,7 @@ namespace BusinessLogicTest
 
 
         [TestMethod]
-        public void AddaccommodationWithTouristSpot()
+        public void AddAccommodationWithTouristSpot()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(accommodation.TouristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -114,7 +114,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The tourist spot does not exists")]
-        public void AddaccommodationWithoutTouristSpot()
+        public void AddAccommodationWithoutTouristSpot()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns((TouristSpot)null);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -125,7 +125,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation needs a non empty name")]
-        public void AddaccommodationWithoutName()
+        public void AddAccommodationWithoutName()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -137,7 +137,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation needs a non empty name")]
-        public void AddaccommodationWithoutName2()
+        public void AddAccommodationWithoutName2()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -149,7 +149,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation needs a non empty address")]
-        public void AddaccommodationWithoutDirection()
+        public void AddAccommodationWithoutDirection()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -161,7 +161,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation needs a non empty address")]
-        public void AddaccommodationWithoutDirection2()
+        public void AddAccommodationWithoutDirection2()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -173,7 +173,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation stars needs to be between 1 and 5")]
-        public void AddaccommodationWithNegativeStars()
+        public void AddAccommodationWithNegativeStars()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -185,7 +185,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation stars needs to be between 1 and 5")]
-        public void AddaccommodationWithMoreThan5Stars()
+        public void AddAccommodationWithMoreThan5Stars()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -197,7 +197,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation stars needs to be between 1 and 5")]
-        public void AddaccommodationWith0Stars()
+        public void AddAccommodationWith0Stars()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -209,7 +209,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation fee needs to be more than 0")]
-        public void AddaccommodationWith0Fee()
+        public void AddAccommodationWith0Fee()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -221,7 +221,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation fee needs to be more than 0")]
-        public void AddaccommodationWithNegativeFee()
+        public void AddAccommodationWithNegativeFee()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -233,7 +233,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation needs at least one image")]
-        public void AddaccommodationWithoutImages()
+        public void AddAccommodationWithoutImages()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -245,7 +245,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation needs at least one image")]
-        public void AddaccommodationWithNullImages()
+        public void AddAccommodationWithNullImages()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -257,7 +257,7 @@ namespace BusinessLogicTest
         [TestMethod]
         [ExpectedException(typeof(BadRequestException),
     "The accommodation needs at least one image")]
-        public void AddaccommodationWithNullImagesNames()
+        public void AddAccommodationWithNullImagesNames()
         {
             touristSpotHandlerMock.Setup(x => x.Get(touristSpot.Id)).Returns(touristSpot);
             accommodationMock.Setup(x => x.Add(accommodation)).Returns(accommodation);
@@ -266,7 +266,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void Deleteaccommodation()
+        public void DeleteAccommodation()
         {
             accommodationMock.Setup(x => x.Delete(accommodation)).Returns(true);
             accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
@@ -278,7 +278,7 @@ namespace BusinessLogicTest
 
         [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
-        public void DeleteaccommodationWrongId()
+        public void DeleteAccommodationWrongId()
         {
             accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns((Accommodation)null);
 
@@ -287,7 +287,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void Existsaccommodation()
+        public void ExistsAccommodation()
         {
             accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
 
@@ -298,7 +298,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void SearchAvailableaccommodation()
+        public void SearchAvailableAccommodation()
         {
             accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accommodation> { accommodation });
@@ -316,7 +316,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void SearchAllaccommodation()
+        public void SearchAllAccommodation()
         {
             accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accommodation> { accommodation });
@@ -333,7 +333,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void SearchAllAvailableaccommodation()
+        public void SearchAllAvailableAccommodation()
         {
             accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accommodation> { accommodation });
@@ -350,7 +350,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void SearchNonAvailableaccommodation()
+        public void SearchNonAvailableAccommodation()
         {
             accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<Accommodation> { });
@@ -380,7 +380,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void ChangeaccommodationAvaliabilityOk()
+        public void ChangeAccommodationAvaliabilityOk()
         {
             accommodationMock.Setup(x => x.Update(accommodation)).Returns(true);
             accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
@@ -393,7 +393,7 @@ namespace BusinessLogicTest
 
         [TestMethod]
         [ExpectedException(typeof(NotFoundException))]
-        public void ChangeaccommodationAvaliabilityBadaccommodation()
+        public void ChangeAccommodationAvaliabilityBadAccommodation()
         {
             accommodationMock.Setup(x => x.Update(accommodation)).Returns(true);
             accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns((Accommodation)null);
@@ -405,7 +405,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void GetaccommodationFalse()
+        public void GetAccommodationFalse()
         {
             accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns((Accommodation)null);
 
@@ -416,7 +416,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void GetaccommodationTrue()
+        public void GetAccommodationTrue()
         {
             accommodationMock.Setup(x => x.Get(accommodation.Id)).Returns(accommodation);
 
@@ -428,7 +428,7 @@ namespace BusinessLogicTest
 
 
         [TestMethod]
-        public void Importaccommodations()
+        public void ImportAccommodations()
         {
             var accommodation = import.ElementAt(0);
             var spot = accommodation.TouristSpot.ToEntity();
@@ -445,7 +445,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void ImportaccommodationsNewSpot()
+        public void ImportAccommodationsNewSpot()
         {
             var accommodation = import.ElementAt(0);
             var spot = accommodation.TouristSpot.ToEntity();
@@ -463,7 +463,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void ImportaccommodationsWrongDataaccommodation()
+        public void ImportAccommodationsWrongDataAccommodation()
         {
             var accommodation = import.ElementAt(0);
             var spot = accommodation.TouristSpot.ToEntity();
@@ -481,7 +481,7 @@ namespace BusinessLogicTest
         }
 
         [TestMethod]
-        public void ImportaccommodationsWrongDataSpot()
+        public void ImportAccommodationsWrongDataSpot()
         {
             var accommodation = import.ElementAt(0);
             var spot = accommodation.TouristSpot.ToEntity();

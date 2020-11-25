@@ -21,7 +21,7 @@ namespace WebApiTest
         }
 
         [TestMethod]
-        public void PostaccommodationOk()
+        public void PostAccommodationOk()
         {
             var mock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
             var controller = new AccommodationController(mock.Object);
@@ -79,7 +79,7 @@ namespace WebApiTest
         }
 
         [TestMethod]
-        public void DeleteaccommodationOk()
+        public void DeleteAccommodationOk()
         {
             var mock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
             var controller = new AccommodationController(mock.Object);
@@ -107,7 +107,7 @@ namespace WebApiTest
         }
 
         [TestMethod]
-        public void GetaccommodationByIdOk()
+        public void GetAccommodationByIdOk()
         {
             var mock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
             var controller = new AccommodationController(mock.Object);
@@ -135,7 +135,7 @@ namespace WebApiTest
         }
 
         [TestMethod]
-        public void GetaccommodationByTouristSpotOk()
+        public void GetAccommodationByTouristSpotOk()
         {
             var mock = new Mock<IAccommodationHandler>(MockBehavior.Strict);
             var controller = new AccommodationController(mock.Object);

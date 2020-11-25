@@ -99,7 +99,7 @@ namespace DataAccessTest
         }
 
         [TestMethod]
-        public void Addaccommodation()
+        public void AddAccommodation()
         {
             using (var context = new TourismContext(options))
             {
