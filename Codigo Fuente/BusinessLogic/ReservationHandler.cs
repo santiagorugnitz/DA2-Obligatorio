@@ -31,7 +31,7 @@ namespace BusinessLogic
             }
             else
             {
-                reservation.accommodation = gotAccommodation;
+                reservation.Accommodation = gotAccommodation;
 
                 var stay = new Stay
                 {
@@ -87,7 +87,7 @@ namespace BusinessLogic
             {
                 throw new BadRequestException("The accommodation does not exist");
             }
-            return repository.GetAll(x => ((Reservation)x).accommodation.Id == id).ToList();
+            return repository.GetAll(x => ((Reservation)x).Accommodation.Id == id).ToList();
         }
 
   

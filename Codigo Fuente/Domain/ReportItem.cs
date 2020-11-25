@@ -6,7 +6,7 @@ namespace Domain
 {
     public class ReportItem
     {
-        public Accommodation accommodation {get; set;}
+        public Accommodation Accommodation {get; set;}
         public int ReservationsQuantity { get; set; }
     }
 }

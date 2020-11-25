@@ -16,7 +16,7 @@ namespace BusinessLogic
             accommodationHandler = accommodationHand;
             reservationHandler = reservationHand;
         }
-        public List<ReportItem> accommodationsReport(int spotId, DateTime startingDate, DateTime finishingDate)
+        public List<ReportItem> AccommodationsReport(int spotId, DateTime startingDate, DateTime finishingDate)
         {
             if (startingDate > finishingDate) throw new BadRequestException("The starting date must be before the finishing one");
 
@@ -37,7 +37,7 @@ namespace BusinessLogic
             }
             else
             {
-                return x.accommodation.Id.CompareTo(y.accommodation.Id);
+                return x.Accommodation.Id.CompareTo(y.Accommodation.Id);
             }
         }
 
@@ -58,7 +58,7 @@ namespace BusinessLogic
 
                 if (reservationsNumber > 0)
                 {
-                    report.Add(new ReportItem { accommodation = actualAccommodation, ReservationsQuantity = reservationsNumber });
+                    report.Add(new ReportItem { Accommodation = actualAccommodation, ReservationsQuantity = reservationsNumber });
                 }
             }
 

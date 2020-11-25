@@ -54,7 +54,7 @@ namespace BusinessLogicTest
             reservation = new Reservation()
             {
                 Id = 1,
-                accommodation = accommodation,
+                Accommodation = accommodation,
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
                 Adults = new Tuple<int, int>(2, 3),
@@ -466,9 +466,9 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<Reservation>() { reservation });
-            accommodationMock.Setup(x => x.Get(reservation.accommodation.Id)).Returns((Accommodation)reservation.accommodation);
+            accommodationMock.Setup(x => x.Get(reservation.Accommodation.Id)).Returns((Accommodation)reservation.Accommodation);
 
-            var res = handler.GetAllFromAccommodation(reservation.accommodation.Id);
+            var res = handler.GetAllFromAccommodation(reservation.Accommodation.Id);
 
             mock.VerifyAll();
             accommodationMock.VerifyAll();
@@ -482,9 +482,9 @@ namespace BusinessLogicTest
             var handler = new ReservationHandler(mock.Object, accommodationHandler);
 
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(new List<Reservation>() { reservation });
-            accommodationMock.Setup(x => x.Get(reservation.accommodation.Id)).Returns((Accommodation)null);
+            accommodationMock.Setup(x => x.Get(reservation.Accommodation.Id)).Returns((Accommodation)null);
 
-            var res = handler.GetAllFromAccommodation(reservation.accommodation.Id);
+            var res = handler.GetAllFromAccommodation(reservation.Accommodation.Id);
         }
 
     }

@@ -52,7 +52,7 @@ namespace DataAccessTest
             reservation = new Reservation()
             {
                 Id = 1,
-                accommodation = accommodation,
+                Accommodation = accommodation,
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
 
@@ -115,7 +115,7 @@ namespace DataAccessTest
             Reservation reservation2 = new Reservation()
             {
                 Id = 2,
-                accommodation = accommodation,
+                Accommodation = accommodation,
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
 
@@ -160,7 +160,7 @@ namespace DataAccessTest
             Reservation reservation2 = new Reservation()
             {
                 Id = 2,
-                accommodation = accommodation,
+                Accommodation = accommodation,
                 CheckIn = DateTime.Today.AddDays(1),
                 CheckOut = DateTime.Today.AddDays(10),
 

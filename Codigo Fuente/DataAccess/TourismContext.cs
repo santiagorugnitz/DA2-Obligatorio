@@ -8,7 +8,7 @@ namespace DataAccess
     public class TourismContext : DbContext
     {
         public DbSet<Administrator> Administrators { get; set; }
-        public DbSet<Accommodation> accommodations { get; set; }
+        public DbSet<Accommodation> Accommodations { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<TouristSpot> TouristSpots { get; set; }
         public DbSet<Region> Regions { get; set; }
@@ -68,11 +68,11 @@ namespace DataAccess
                 .HasKey(x => x.Id);
 
             modelBuilder.Entity<Reservation>()
-                .HasOne(x => x.accommodation);
+                .HasOne(x => x.Accommodation);
 
             modelBuilder.Entity<Accommodation>()
                 .HasMany<Reservation>()
-                .WithOne(l => l.accommodation)
+                .WithOne(l => l.Accommodation)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Accommodation>()

@@ -61,7 +61,7 @@ namespace BusinessLogicTest
                 reservation = new Reservation()
                 {
                     Id = 1,
-                    accommodation = accommodation,
+                    Accommodation = accommodation,
                     CheckIn = DateTime.Today.AddDays(1),
                     CheckOut = DateTime.Today.AddDays(10),
                     Adults = new Tuple<int, int>(2, 1),
@@ -92,7 +92,7 @@ namespace BusinessLogicTest
     "The starting date must be before the finishing one")]
             public void ReportWithIncorrectDates()
             {
-                reportHandler.accommodationsReport(1, DateTime.Now, DateTime.Now.AddDays(-1));
+                reportHandler.AccommodationsReport(1, DateTime.Now, DateTime.Now.AddDays(-1));
             }
 
             [TestMethod]
@@ -102,7 +102,7 @@ namespace BusinessLogicTest
                 accommodationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Accommodation>());
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 0);
             }
@@ -120,7 +120,7 @@ namespace BusinessLogicTest
                 reservation.CheckIn = DateTime.Now;
                 reservation.CheckOut = DateTime.Now.AddDays(1);
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(2), DateTime.Now.AddDays(3));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(2), DateTime.Now.AddDays(3));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 0);
             }
@@ -138,7 +138,7 @@ namespace BusinessLogicTest
                 reservation.CheckIn = DateTime.Now.AddDays(4);
                 reservation.CheckOut = DateTime.Now.AddDays(5);
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 0);
             }
@@ -156,10 +156,10 @@ namespace BusinessLogicTest
                 reservation.CheckIn = DateTime.Now;
                 reservation.CheckOut = DateTime.Now.AddDays(2);
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 1);
-                Assert.AreEqual(result.First().accommodation, accommodation);
+                Assert.AreEqual(result.First().Accommodation, accommodation);
                 Assert.AreEqual(result.First().ReservationsQuantity, 1);
             }
 
@@ -176,10 +176,10 @@ namespace BusinessLogicTest
                 reservation.CheckIn = DateTime.Now.AddDays(2);
                 reservation.CheckOut = DateTime.Now.AddDays(4);
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(3));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 1);
-                Assert.AreEqual(result.First().accommodation, accommodation);
+                Assert.AreEqual(result.First().Accommodation, accommodation);
                 Assert.AreEqual(result.First().ReservationsQuantity, 1);
             }
 
@@ -196,10 +196,10 @@ namespace BusinessLogicTest
                 reservation.CheckIn = DateTime.Now.AddDays(2);
                 reservation.CheckOut = DateTime.Now.AddDays(4);
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(2));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(2));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 1);
-                Assert.AreEqual(result.First().accommodation, accommodation);
+                Assert.AreEqual(result.First().Accommodation, accommodation);
                 Assert.AreEqual(result.First().ReservationsQuantity, 1);
             }
 
@@ -216,10 +216,10 @@ namespace BusinessLogicTest
                 reservation.CheckIn = DateTime.Now;
                 reservation.CheckOut = DateTime.Now.AddDays(1);
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(2));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(1), DateTime.Now.AddDays(2));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 1);
-                Assert.AreEqual(result.First().accommodation, accommodation);
+                Assert.AreEqual(result.First().Accommodation, accommodation);
                 Assert.AreEqual(result.First().ReservationsQuantity, 1);
             }
 
@@ -235,7 +235,7 @@ namespace BusinessLogicTest
 
                 reservation.ReservationState = ReservationState.Rejected;
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 0);
             }
@@ -252,7 +252,7 @@ namespace BusinessLogicTest
 
                 reservation.ReservationState = ReservationState.Expired;
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(-1));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 0);
             }
@@ -267,10 +267,10 @@ namespace BusinessLogicTest
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 1);
-                Assert.AreEqual(result.First().accommodation, accommodation);
+                Assert.AreEqual(result.First().Accommodation, accommodation);
                 Assert.AreEqual(result.First().ReservationsQuantity, 1);
             }
 
@@ -280,7 +280,7 @@ namespace BusinessLogicTest
                 Reservation reservation2 = new Reservation()
                 {
                     Id = 2,
-                    accommodation = accommodation,
+                    Accommodation = accommodation,
                     CheckIn = DateTime.Today.AddDays(2),
                     CheckOut = DateTime.Today.AddDays(10),
                     Adults = new Tuple<int, int>(2, 1),
@@ -299,10 +299,10 @@ namespace BusinessLogicTest
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation, reservation2 });
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 1);
-                Assert.AreEqual(result.First().accommodation, accommodation);
+                Assert.AreEqual(result.First().Accommodation, accommodation);
                 Assert.AreEqual(result.First().ReservationsQuantity, 2);
             }
 
@@ -329,12 +329,12 @@ namespace BusinessLogicTest
                 reservationMock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                     Returns(new List<Reservation> { reservation });
 
-                var result = reportHandler.accommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
+                var result = reportHandler.AccommodationsReport(1, DateTime.Now.AddDays(-10), DateTime.Now.AddDays(10));
                 accommodationMock.VerifyAll();
                 Assert.AreEqual(result.Count(), 2);
-                Assert.AreEqual(result.First().accommodation, accommodation);
+                Assert.AreEqual(result.First().Accommodation, accommodation);
                 Assert.AreEqual(result.First().ReservationsQuantity, 1);
-                Assert.AreEqual(result.Last().accommodation, accommodation2);
+                Assert.AreEqual(result.Last().Accommodation, accommodation2);
             }
         }
     }

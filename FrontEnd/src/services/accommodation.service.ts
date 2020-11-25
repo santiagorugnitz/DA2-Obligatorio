@@ -42,7 +42,7 @@ export class AccommodationService {
   }
 
   getAccommodationByTouristSpot(spotId: Number): Observable<Accommodation[]> {
-    let params = new HttpParams().set("spotId", spotId.toString());
+    let params = new HttpParams().set("spotId", spotId.toString()).set("onlyAvailable", "true");
     return this.http.get<Accommodation[]>(this.uri, { params: params })
   }
 
