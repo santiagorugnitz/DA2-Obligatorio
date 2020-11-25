@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>Choose an importer and the file route</h1>
 <div mat-dialog-content style="height: 100%;">
     <mat-selection-list #importers [multiple]="false">
-        <mat-list-option *ngFor="let importer of data.importers" [value]="importer.Id">
+        <mat-list-option *ngFor="let importer of data.importers" [value]="importer.id">
           <mat-icon mat-list-icon>note</mat-icon>
           {{importer.importer}}
         </mat-list-option>

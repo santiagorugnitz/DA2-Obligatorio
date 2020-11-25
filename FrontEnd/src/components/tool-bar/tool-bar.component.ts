@@ -181,7 +181,7 @@ export class ToolBarComponent {
   showImporters() {
     this.importerService.getImporters().subscribe(
       res => {
-        var id:number = 1
+        var id:number = 0
         var gotImporters = []
         res.forEach(importer => {
           gotImporters.push({importer, id})

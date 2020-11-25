@@ -19,9 +19,10 @@ export class ImportersService {
   }
 
   import(id: number, fileName: string): Observable<string> {
-
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token)
     var body = [{Type:"File",Name:"File",Value:fileName}]
-    return this.http.post<string>(`${this.uri}/${id}/upload`,body)
+    return this.http.post<string>(`${this.uri}/${id}/upload`,body, {headers:myHeaders, responseType: 'text' as 'json' })
 
   }
 
