@@ -220,6 +220,9 @@ namespace WebApi.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
+
                     b.Property<double>("Stars")
                         .HasColumnType("float");
 
