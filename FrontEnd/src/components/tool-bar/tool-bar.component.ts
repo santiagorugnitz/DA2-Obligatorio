@@ -104,7 +104,6 @@ export class ToolBarComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      result.spot.RegionId = result.spot.Region
       this.addSpot(result.spot)
     });
   }
