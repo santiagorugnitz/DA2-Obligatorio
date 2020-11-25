@@ -13,7 +13,13 @@
       </mat-form-field>
 
       <mat-dialog-actions align="end">
-        <button mat-button  (click)="onImport(importers.selectedOptions.selected[0]?.value)"> Import</button>
+        <div *ngIf="importers.selectedOptions.selected[0]?.value != undefined">
+          <button mat-button (click)="onImport(importers.selectedOptions.selected[0]?.value)">Import</button>
+        </div>
+        <div *ngIf="importers.selectedOptions.selected[0]?.value == undefined">
+          <mat-error>Enter an importer type</mat-error>
+          <button mat-button disabled (click)="onImport(importers.selectedOptions.selected[0]?.value)">Import</button>
+          </div>
       </mat-dialog-actions>
       
 </div>
