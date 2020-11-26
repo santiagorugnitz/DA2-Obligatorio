@@ -7,6 +7,8 @@ namespace Domain
 {
     public class TouristSpot
     {
+        private static readonly int DESCRIPTION_MAX_LENGTH = 2000;
+
         public int Id { get; set; }
 
         private string name;
@@ -32,7 +34,7 @@ namespace Domain
         {
             set
             {
-                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length > 2000)
+                if (string.IsNullOrWhiteSpace(value) || value.Trim().Length > DESCRIPTION_MAX_LENGTH)
                 {
                     throw new BadRequestException("The spot needs a correct description (less than 2000 characters) and non empty");
                 }

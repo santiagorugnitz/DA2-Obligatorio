@@ -1,0 +1,83 @@
+<form>
+  <mat-card class="shipping-card">
+    <mat-card-header>
+      <h1 class="title">{{spot.name}}</h1>
+
+      <ng-container *ngIf="hasSearched then has; else notSearched"></ng-container>
+      <ng-template #has>
+
+        <mat-form-field class="date">
+          <mat-label>Starting Date</mat-label>
+          <input matInput [matDatepicker]="picker1" [value]="startingDate" (dateInput)="changeStartingDate($event)"
+            (dateChange)="changeStartingDate($event)">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker disabled #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="date">
+          <mat-label>Finishing Date</mat-label>
+          <input matInput [matDatepicker]="picker2" [value]="finishingDate" (dateInput)="changeFinishingDate($event)"
+            (dateChange)="changeFinishingDate($event)">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker disabled #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <section>
+          <button mat-flat-button class="button" (click)="search()">
+            <a>Cancel</a>
+          </button>
+        </section>
+
+      </ng-template>
+
+      <ng-template #notSearched>
+
+        <mat-form-field class="date">
+          <mat-label>Starting Date</mat-label>
+          <input matInput [matDatepicker]="picker1" [value]="startingDate" (dateInput)="changeStartingDate($event)"
+            (dateChange)="changeStartingDate($event)">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="date">
+          <mat-label>Finishing Date</mat-label>
+          <input matInput [matDatepicker]="picker2" [value]="finishingDate" (dateInput)="changeFinishingDate($event)"
+            (dateChange)="changeFinishingDate($event)">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+
+        <section>
+          <button mat-flat-button class="button" (click)="search()">
+            <a>Search</a>
+          </button>
+        </section>
+
+      </ng-template>
+
+
+
+    </mat-card-header>
+    <mat-card-content>
+
+
+      <ng-container *ngIf="hasSearched then searched; else not"></ng-container>
+      <ng-template #searched>
+
+        <h1 style="margin-left: 10%;">Report result:</h1>
+
+        <mat-list role="list" *ngFor="let item of reportList"  style="margin-left: 25%;">
+          <mat-list-item role="listitem">{{item.accommodation.name}} : {{item.reservationsQuantity}} Reservations</mat-list-item>
+        </mat-list>
+
+      </ng-template>
+
+      <ng-template #not>
+        <h2 class="subtitle">Complete the fields to start searching!</h2>
+      </ng-template>
+
+
+    </mat-card-content>
+  </mat-card>
+</form>

@@ -1,0 +1,74 @@
+<h1 mat-dialog-title>Add Accommodation</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Name:</mat-label>
+    <input matInput [(ngModel)]="data.accommodation.name" [formControl]="userControl" required>
+    <mat-error *ngIf="userControl.invalid || data.accommodation.name.trim().length == 0">Enter a non empty name
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Address:</mat-label>
+    <input matInput [(ngModel)]="data.accommodation.address" [formControl]="adressControl" required>
+    <mat-error *ngIf="adressControl.invalid || data.accommodation.address.trim().length == 0">Enter a non empty adress
+    </mat-error>
+  </mat-form-field>
+  <div>
+    <mat-label>Stars: {{data.accommodation.stars}}</mat-label>
+    <mat-slider [min]="1" [max]="5" [step]="1" [(value)]="actualStars" (change)="changeStars()"></mat-slider>
+  </div>
+  <mat-form-field>
+    <mat-label>Description:</mat-label>
+    <input matInput [(ngModel)]="data.accommodation.description">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Fee:</mat-label>
+    <input matInput type="number" onkeypress="return event.charCode >= 48" min="1" [(ngModel)]="data.accommodation.fee">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Availability:</mat-label>
+    <mat-select [formControl]="availabilityControl" required [(value)]="selectedAv" (selectionChange)="changeAv()">
+      <mat-option value="Yes">
+        Yes
+      </mat-option>
+      <mat-option value="No">
+        No
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="availabilityControl.hasError('required')">Please select an option</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Telephone:</mat-label>
+    <input matInput [(ngModel)]="data.accommodation.telephone">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Contact Information:</mat-label>
+    <input matInput [(ngModel)]="data.accommodation.contactInformation">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Spot: </mat-label>
+    <mat-select [formControl]="spotControl" required [(value)]="selectedSpot" (selectionChange)="changeSpot()">
+      <mat-option *ngFor="let spot of spots" [value]="spot.id">
+        {{spot.name}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="spotControl.hasError('required')">Please select an option</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Image:</mat-label>
+    <input matInput placeholder="Insert image Url" [(ngModel)]="actualImageLink">
+  </mat-form-field>
+  <mat-error *ngIf="!imageUploaded">At least one image needs to be uploaded</mat-error>
+  <button mat-button (click)="addImage()">Add Image</button>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <div *ngIf="buttonEnabled()">
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Add</button>
+  </div>
+  <div *ngIf="!buttonEnabled()">
+    <button mat-button disabled [mat-dialog-close]="data" cdkFocusInitial>Add</button>
+    <div *ngIf="!buttonEnabled()">
+      <mat-error>Enter all required values</mat-error>
+    </div>
+  </div>

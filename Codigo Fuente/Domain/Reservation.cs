@@ -7,17 +7,20 @@ namespace Domain
 {
     public enum ReservationState
     {
-        Creada,
-        Pendiente_Pago,
-        Aceptada,
-        Rechazada,
-        Expirada
+        Created,
+        Pending_Payment,
+        Accepted,
+        Rejected,
+        Expired
     }
     public class Reservation
     {
+        private static readonly double MAX_SCORE = 5.0;
+        private static readonly double MIN_SCORE = 1.0;
+
         public int Id { get; set; }
 
-        public virtual Accomodation Accomodation { get; set; }
+        public virtual Accommodation Accommodation { get; set; }
 
         private DateTime checkIn;
         public DateTime CheckIn
@@ -87,19 +90,52 @@ namespace Domain
             }
         }
 
+        private int retiredQuantity;
+        public int RetiredQuantity
+        {
+            get { return retiredQuantity; }
+            private set
+            {
+                if (value < 0)
+                {
+                    throw new BadRequestException("The retired guests quantity must be 0 or more");
+                }
+                else
+                {
+                    retiredQuantity = value;
+                }
+            }
+        }
+
         private int adultQuantity;
         public int AdultQuantity
         {
             get { return adultQuantity; }
+            private set
+            {
+                if (value < 0)
+                {
+                    throw new BadRequestException("The adult quantity must be 0 or more");
+                }
+                else
+                {
+                    adultQuantity = value;
+                }
+            }
+        }
+
+        public Tuple<int, int> Adults
+        {
             set
             {
-                if (value <= 0)
+                if (value.Item1 == 0 && value.Item2 == 0)
                 {
                     throw new BadRequestException("The reservation needs at least one adult guest");
                 }
                 else
                 {
-                    adultQuantity = value;
+                    AdultQuantity = value.Item1;
+                    RetiredQuantity = value.Item2;
                 }
             }
         }
@@ -178,5 +214,25 @@ namespace Domain
         public string StateDescription { get; set; }
 
         public double Total { get; set; }
+
+        private double? score;
+        public double? Score
+        {
+            get { return score; }
+
+            set
+            {
+                if (value == null || value < MIN_SCORE || value > MAX_SCORE)
+                {
+                    throw new BadRequestException("Score must be between 1 and 5");
+                } 
+                else
+                {
+                    score = value;
+                }
+            }
+        }
+
+        public string Comment { get;set; }
     }
 }

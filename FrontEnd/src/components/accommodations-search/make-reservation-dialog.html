@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Almost done!</h1>
+<div mat-dialog-content>
+  <p>Fill in your contact information</p>
+  <mat-form-field>
+    <mat-label>Name:</mat-label>
+    <input matInput [(ngModel)]="data.reservation.Name" [formControl]="userControl" required>
+    <mat-error *ngIf="userControl.invalid || data.reservation.Name.trim().length == 0">Enter a non empty name</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Surname:</mat-label>
+    <input matInput [(ngModel)]="data.reservation.Surname" [formControl]="surnameControl" required>
+    <mat-error *ngIf="surnameControl.invalid || data.reservation.Surname.trim().length == 0">Enter a non empty surname</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Mail:</mat-label>
+    <input matInput [(ngModel)]="data.reservation.Email" [formControl]="emailControl" required>
+    <mat-error *ngIf="emailControl.invalid || data.reservation.Email.trim().length == 0">Enter a non empty email</mat-error>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <div *ngIf="buttonEnabled()">
+  <button mat-button (click)="onSubmit(data.reservation)" [mat-dialog-close]="data">Make reservation</button>
+</div>
+<div *ngIf="!buttonEnabled()">
+  <button mat-button disabled (click)="onSubmit(data.reservation)" [mat-dialog-close]="data">Make reservation</button>
+  <div *ngIf="!buttonEnabled()">
+    <mat-error>Enter all required values</mat-error>
+  </div>
+  </div>
+</div>

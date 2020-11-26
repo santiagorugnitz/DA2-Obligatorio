@@ -7,6 +7,7 @@ using Domain;
 using Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IIS.Core;
 using WebApi.Filters;
 using WebApi.Models;
 
@@ -27,7 +28,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] ReservationModel reservation)
         {
-            var res = handler.Add(reservation.ToEntity(), reservation.AccomodationId);
+            var res = handler.Add(reservation.ToEntity(), reservation.AccommodationId);
             return Ok(res.Id);
 
         }
@@ -41,9 +42,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet()]
-        public IActionResult GetFromAccomodation(int accomodationId)
+        public IActionResult GetFromAccommodation(int accommodationId)
         {
-            return Ok(handler.GetAllFromAccomodation(accomodationId));
+            return Ok(handler.GetAllFromAccommodation(accommodationId));
         }
 
         [ServiceFilter(typeof(AuthorizationFilter))]
@@ -52,6 +53,13 @@ namespace WebApi.Controllers
         {
             handler.ChangeState(id, change.State, change.Description);
             return Ok("Reservation state updated");
+        }
+
+        [HttpPut("{id}/review")]
+        public IActionResult Review(int id, [FromBody] ReviewModel review)
+        {
+            handler.Review(id, review.Score, review.Comment);
+            return Ok("Review submited");
         }
     }
 }

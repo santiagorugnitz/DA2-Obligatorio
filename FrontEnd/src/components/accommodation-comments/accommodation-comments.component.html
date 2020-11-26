@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{data.accommodationName}}</h1>
+
+<div mat-dialog-content style="height: 100%;">
+  <mat-grid-list cols="1" class="comment" *ngFor="let comment of comments">
+    <mat-card class="comment-card">
+
+      <mat-card-content>
+        <p>{{comment.name}} {{comment.surname}}</p>
+        <p>Score: {{comment.score}}</p>
+        <p>{{comment.text}}</p>
+
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-list>
+</div>
+<mat-dialog-actions align="end">
+
+  <button mat-button (click)="onCloseClick()">Close</button>
+</mat-dialog-actions>

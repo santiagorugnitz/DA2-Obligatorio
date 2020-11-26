@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>State: {{state}}</h1>
+<div mat-dialog-content style="height: 100%;">
+  <p>Description: {{data.description}}</p>
+  <ng-container *ngIf="(data.userComment == '' || data.userComment == null) then show; else hide"></ng-container>
+  <ng-template #show>
+    <div>
+      <mat-form-field>
+        <mat-label>Leave us a review</mat-label>
+        <textarea matInput [(ngModel)]="comment"></textarea>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-label>Stars: {{this.score}}</mat-label>
+      <mat-slider [min]="1" [max]="5" [step]="1" [(ngModel)]="this.score" [thumbLabel]="true"></mat-slider>
+    </div>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button (click)="onSubmit(data)" cdkFocusInitial>Ok</button>
+    </mat-dialog-actions>
+  </ng-template>
+  <ng-template #hide>
+    <div>
+      <p>You commented: {{data.userComment}}</p>
+    </div>
+    <div>
+      <mat-label>Stars: {{this.score}}</mat-label>
+    </div>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Ok</button>
+    </mat-dialog-actions>
+  </ng-template>
+
+</div>

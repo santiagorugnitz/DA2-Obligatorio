@@ -14,7 +14,10 @@
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\DataAccessInterface\DataAccessInterface.csproj" />
+    <ProjectReference Include="..\DataImport\DataImport.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\JsonFormatter\JsonImporter.csproj" />
+    <ProjectReference Include="..\XmlFormatter\XmlImporter.csproj" />
   </ItemGroup>
 
 </Project>

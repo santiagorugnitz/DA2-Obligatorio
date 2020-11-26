@@ -13,36 +13,38 @@ namespace BusinessLogic
     {
 
         private IRepository<Reservation> repository;
-        private IAccomodationHandler accomodationHandler;
+        private IAccommodationHandler accommodationHandler;
 
-        public ReservationHandler(IRepository<Reservation> repo, IAccomodationHandler accomodationHand)
+        public ReservationHandler(IRepository<Reservation> repo, IAccommodationHandler accommodationHand)
         {
             repository = repo;
-            accomodationHandler = accomodationHand;
+            accommodationHandler = accommodationHand;
         }
 
-        public Reservation Add(Reservation reservation, int accomodationId)
+        public Reservation Add(Reservation reservation, int accommodationId)
         {
-            var gotAccomodation = accomodationHandler.Get(accomodationId);
-            if (gotAccomodation != null)
+            var gotAccommodation = accommodationHandler.Get(accommodationId);
+            if (gotAccommodation == null || !gotAccommodation.Available)
             {
-                reservation.Accomodation = gotAccomodation;
-                reservation.Total = CalculateTotal(reservation);
-                return  repository.Add(reservation);
+                throw new BadRequestException("There is no available accommodation with that id");
+            
             }
             else
             {
-                throw new BadRequestException("There is no accomodation with that id");
-            }
-        }
+                reservation.Accommodation = gotAccommodation;
 
-        private double CalculateTotal(Reservation reservation)
-        {
-            double ret = 0;
-            int days = (reservation.CheckOut - reservation.CheckIn).Days;
-            ret += reservation.AdultQuantity + reservation.ChildrenQuantity*0.5 + reservation.BabyQuantity*0.25;
-            ret *= days * reservation.Accomodation.Fee;
-            return ret;
+                var stay = new Stay
+                {
+                    Adults = new Tuple<int, int>(reservation.AdultQuantity, reservation.RetiredQuantity),
+                    ChildrenQuantity = reservation.ChildrenQuantity,
+                    BabyQuantity = reservation.BabyQuantity,
+                    CheckIn = reservation.CheckIn,
+                    CheckOut = reservation.CheckOut
+                };
+
+                reservation.Total = accommodationHandler.CalculateTotal(accommodationId,stay);
+                return repository.Add(reservation);
+            }
         }
 
         public bool Delete(Reservation reservation)
@@ -53,6 +55,18 @@ namespace BusinessLogic
         public Reservation CheckState(int id)
         {
             return repository.Get(id);
+        }
+
+        public bool Review(int id, double score, string comment)
+        {
+            Reservation reservation = repository.Get(id);
+            if (reservation == null)
+            {
+                throw new NotFoundException("The reservation does not exist");
+            }
+            reservation.Score = score;
+            reservation.Comment = comment;
+            return repository.Update(reservation);
         }
 
         public bool ChangeState(int idReservation, ReservationState state, string description)
@@ -67,13 +81,15 @@ namespace BusinessLogic
             return repository.Update(reservation);
         }
 
-        public List<Reservation> GetAllFromAccomodation(int id)
+        public List<Reservation> GetAllFromAccommodation(int id)
         {
-            if (accomodationHandler.Get(id) == null)
+            if (accommodationHandler.Get(id) == null)
             {
-                throw new BadRequestException("The accomodation does not exist");
+                throw new BadRequestException("The accommodation does not exist");
             }
-            return repository.GetAll(x => ((Reservation)x).Accomodation.Id ==id).ToList();
+            return repository.GetAll(x => ((Reservation)x).Accommodation.Id == id).ToList();
         }
+
+  
     }
 }

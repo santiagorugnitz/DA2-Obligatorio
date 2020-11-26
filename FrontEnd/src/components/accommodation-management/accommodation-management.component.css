@@ -1,0 +1,66 @@
+.button {
+    background-color: #9b0368b6;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+  }
+  
+  .button:hover {
+    background-color: #c110d8; /* Green */
+    color: white;
+  } 
+
+  mat-form-field{
+    display: inline-block;
+    margin: 10px 10px;  
+  }
+
+  .accommodation-card {
+    margin: 5%;
+  }
+  
+  .accommodation{
+    float: left;
+    margin-left: 13%;
+  }
+
+  .add-accommodation-button{
+    width: 11%;
+    margin-left: 45%;
+    display: block;
+    align-content: center;
+    overflow: auto;
+    background-color: #9b0368;
+    border: outset;
+    border-width: thick;
+    border-radius: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition-duration: 0.4s;
+  }
+
+  
+  .add-accommodation-button:hover {
+    background-color: #c110d8; 
+    color: white;
+  } 
+
+  table {
+    width: 90%;
+    margin: 5%;
+    border-radius: 5px;
+  }
+
+  .table-container {
+    overflow: auto;
+    text-align: left;
+    border-radius: 10%;
+    display: block;
+    background-color: rgb(255 255 255 / 86%);
+    margin-bottom: 2%;
+  }

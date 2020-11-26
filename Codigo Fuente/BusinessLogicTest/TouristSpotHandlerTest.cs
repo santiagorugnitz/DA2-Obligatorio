@@ -18,7 +18,7 @@ namespace BusinessLogicTest
         private TouristSpotCategory joinedEntry;
         private TouristSpotCategory joinedEntry2;
         private TouristSpotCategory joinedEntry3;
-        private Mock<IRepository<Accomodation>> accomodationMock;
+        private Mock<IRepository<Accommodation>> accommodationMock;
         private Mock<IRepository<Region>> regionMock;
         private Mock<IRepository<Category>> categoryMock;
         private Mock<IRepository<TouristSpot>> mock;
@@ -88,7 +88,7 @@ namespace BusinessLogicTest
             spot.TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry };
             spot2.TouristSpotCategories = new List<TouristSpotCategory> { joinedEntry, joinedEntry2 };
 
-            accomodationMock = new Mock<IRepository<Accomodation>>(MockBehavior.Strict);
+            accommodationMock = new Mock<IRepository<Accommodation>>(MockBehavior.Strict);
             regionMock = new Mock<IRepository<Region>>(MockBehavior.Strict);
             categoryMock = new Mock<IRepository<Category>>(MockBehavior.Strict);
             mock = new Mock<IRepository<TouristSpot>>(MockBehavior.Strict);
@@ -450,8 +450,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<TouristSpot> { spot, spot2 });
 
-            List<TouristSpot> res = handler.Search(new List<int>() { 1, 2 },
-                0);
+            List<TouristSpot> res = handler.Search(new List<int>() { 1, 2 },-1);
         }
 
         [TestMethod]
@@ -468,7 +467,7 @@ namespace BusinessLogicTest
             mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).
                 Returns(new List<TouristSpot> { spot, spot2 });
 
-            List<TouristSpot> res = handler.Search(null, 0);
+            List<TouristSpot> res = handler.Search(null, -1);
         }
 
         [TestMethod]
