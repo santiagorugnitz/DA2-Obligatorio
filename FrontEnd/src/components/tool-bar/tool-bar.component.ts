@@ -40,10 +40,12 @@ export class ToolBarComponent {
   Password = new FormControl('')
   isLoggued = false;
 
-  reservationNumber :number
+  reservationNumber: number
 
   constructor(private breakpointObserver: BreakpointObserver, private administratorService: AdministratorsService,
-    public addDialog: MatDialog,private reservationService:ReservationService, private spotService: TouristSpotService, public dialog: MatDialog, private router: Router) {
+    public addDialog: MatDialog, private reservationService: ReservationService, 
+    private spotService: TouristSpotService, public dialog: MatDialog, public importerService: ImportersService,
+    private router: Router) {
     this.loguedUser()
   }
 
@@ -56,7 +58,7 @@ export class ToolBarComponent {
         this.loguedUser()
       },
       err => {
-        
+
         alert('Username or Password are incorrect, please, try again');
         console.log(err);
       }
@@ -69,7 +71,7 @@ export class ToolBarComponent {
         //alert(res)
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
@@ -82,12 +84,14 @@ export class ToolBarComponent {
   }
 
   loguedUser(): void {
-    this.userLoggued = {name:'', email:localStorage.getItem('email'), 
-    password:localStorage.getItem('password'), id:0}
+    this.userLoggued = {
+      name: '', email: localStorage.getItem('email'),
+      password: localStorage.getItem('password'), id: 0
+    }
     this.isUserLoggued()
   }
 
-  isUserLoggued(){
+  isUserLoggued() {
     const token = localStorage.token;
     this.isLoggued = (token != null && token !== undefined && token !== '');
   }
@@ -107,56 +111,93 @@ export class ToolBarComponent {
   addSpot(spot: TouristSpotDTO): void {
     this.spotService.AddSpot(spot).subscribe(
       res => {
-        alert("Yay")
+        //alert(res)
       },
-      err =>{
-        alert('There was an unexpected error, please, try again');
+      err => {
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     )
   }
 
   openReservation() {
-
     var reservation: Reservation
-
     this.reservationService.getReservation(this.reservationNumber).subscribe(
       res => {
-        reservation= res
+        reservation = res
         const dialogRef = this.dialog.open(ReservationDialog, {
           data: {
-            id:reservation.id,
+            id: reservation.id,
             state: reservation.reservationState,
             description: reservation.stateDescription,
-            noComment: reservation.score==0,
+            userComment: reservation.comment,
+            score: reservation.score
           }
         });
-    
+
         dialogRef.afterClosed().subscribe(result => {
           result;
         });
       },
       err => {
-        alert(err.message);
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
+  }
+  
+  getUserComment(reservation: Reservation, email: string): string {
+    return reservation.comment
+  }
+;
 
+  openReservationStateChange() {
+    var reservation: Reservation
+    this.reservationService.getReservation(this.reservationNumber).subscribe(
+      res => {
+        reservation = res
+        const dialogRef = this.dialog.open(ReservationStateDialog, {
+          data: {
+            id: reservation.id,
+            state: reservation.reservationState,
+            description: reservation.stateDescription,
+            userComment: '',
+            score: reservation.score
+          }
+        });
 
-    
+        dialogRef.afterClosed().subscribe(result => {
+          result;
+        });
+      },
+      err => {
+        alert(`${err.status}: ${err.error}`);
+        console.log(err);
+      }
+    );
   };
 
-
   showImporters() {
-    const importerdialogRef = this.dialog.open(ImportersDialog, {
-      data: {
-        importers: [{ Name: "Xml", Id: 1 },{ Name: "Json", Id: 2 }]
+    this.importerService.getImporters().subscribe(
+      res => {
+        var id:number = 0
+        var gotImporters = []
+        res.forEach(importer => {
+          gotImporters.push({importer, id})
+          id++  
+        });
+        const importerdialogRef = this.dialog.open(ImportersDialog, {
+          data: {
+            importers:gotImporters
+          }
+        });
+      },
+      err => {
+        alert(`${err.status}: ${err.error}`);
+        console.log(err);
       }
-    });
+    );
   }
-
-
-
 }
 
 export interface DialogSpotData {
@@ -182,13 +223,13 @@ export class DialogAddSpot {
     public dialogRef: MatDialogRef<DialogAddSpot>,
     @Inject(MAT_DIALOG_DATA) public data: DialogSpotData,
     private breakpointObserver: BreakpointObserver, private regionService: RegionService, private categoryService: CategoryService, private spotService: TouristSpotService) {
-    data.spot = { Id: 0, Name: "", Description: "", Image: "", Categories: [], Region: 0 }
+    data.spot = { Id: 0, Name: "", Description: "", Image: "", CategoryIds: [], RegionId: 0 }
     this.regionService.getRegions().subscribe(
       res => {
         this.regions = res;
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
@@ -197,7 +238,7 @@ export class DialogAddSpot {
         this.categories = res;
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(`${err.status}: ${err.error}`);
         console.log(err);
       }
     );
@@ -205,13 +246,13 @@ export class DialogAddSpot {
 
   onCategoryClick(checked: Boolean, id: number) {
     if (checked) {
-      this.data.spot.Categories.push(id)
+      this.data.spot.CategoryIds.push(id)
       this.categoriesCount++
     }
     else {
-      for (var i = 0; i < this.data.spot.Categories.length; i++) {
-        if (this.data.spot.Categories[i] == id) {
-          this.data.spot.Categories.splice(i);
+      for (var i = 0; i < this.data.spot.CategoryIds.length; i++) {
+        if (this.data.spot.CategoryIds[i] == id) {
+          this.data.spot.CategoryIds.splice(i);
           this.categoriesCount--
         }
       }
@@ -231,10 +272,11 @@ export class DialogAddSpot {
 
 }
 export interface ReservationData {
-  id:number
+  id: number
   state: string;
   description: string;
-  noComment: Boolean;
+  userComment: string;
+  score: number;
 }
 
 export interface ImportersData {
@@ -246,23 +288,81 @@ export interface ImportersData {
   templateUrl: 'reservation-state-dialog.html',
 })
 export class ReservationDialog {
+  
+  posibleStates: string[] = ['Created','Pending_Payment','Accepted','Rejected','Expired']
+  comment: string;
+  score: number = 5;
+  state:string
+
   constructor(
     public dialogRef: MatDialogRef<ReservationDialog>,
     @Inject(MAT_DIALOG_DATA)
     public data: ReservationData,
     private reservationService: ReservationService,
-    ) { }
+  ) {
+    this.state = this.posibleStates[this.data.state]
+    this.score = this.data.score
+   } 
 
-  comment: string;
-  score: number = 5;
-
+  
   onSubmit(data: ReservationData) {
-    
-    this.reservationService.review(data.id,this.comment,this.score)
+
+    this.reservationService.review(data.id, this.score, this.comment).subscribe(
+      res => {
+        alert(res)
+      },
+      err => {
+        alert(`${err.status}: ${err.error}`);
+        console.log(err);
+      }
+    )
     this.dialogRef.close()
 
   }
 }
+
+@Component({
+  selector: 'reservation-change-state-dialog',
+  templateUrl: 'reservation-change-state-dialog.html',
+})
+export class ReservationStateDialog {
+  
+  posibleStates: string[] = ['Created','Pending_Payment','Accepted','Rejected','Expired']
+  score: number = 5;
+  descriptionControl = new FormControl('', Validators.required);
+  stateControl = new FormControl('', Validators.required);
+  
+  constructor(
+    public dialogRef: MatDialogRef<ReservationDialog>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: ReservationData,
+    private reservationService: ReservationService,
+  ) { }
+
+  onSubmit(data: ReservationData) {
+    this.reservationService.changeState(data.id, this.posibleStates.indexOf(this.data.state), this.data.description).subscribe(
+      res => {
+        alert(res)
+      },
+      err => {
+        alert(`${err.status}: ${err.error}`);
+        console.log(err);
+      }
+    )
+    this.dialogRef.close()
+  }
+  
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  buttonEnabled() {
+    return this.descriptionControl.valid && this.data.description.trim().length != 0 &&
+    this.stateControl.valid
+  }
+}
+
+
 @Component({
   selector: 'importers-dialog',
   templateUrl: 'importers.html',
@@ -273,19 +373,19 @@ export class ImportersDialog {
     @Inject(MAT_DIALOG_DATA)
     public data: ImportersData,
     private importersService: ImportersService
-    ) { }
+  ) { }
 
-  fileName:string
+  fileName: string
 
 
   onImport(id: number) {
     if (this.fileName != "") {
-      this.importersService.import(id,this.fileName).subscribe(
-        res =>{
+      this.importersService.import(id, this.fileName).subscribe(
+        res => {
           alert(res)
         },
-        err =>{
-          alert(err.message)
+        err => {
+          alert(`${err.status}: ${err.error}`)
           console.log(err);
         }
       )

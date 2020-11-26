@@ -26,7 +26,7 @@ namespace WebApi.Controllers
         [HttpGet("{spotId}, {startingDate}, {finishingDate}")]
         public IActionResult Get(int spotId, DateTime startingDate, DateTime finishingDate)
         {
-            return Ok(handler.AccomodationsReport(spotId, startingDate, finishingDate));
+            return Ok(handler.AccommodationsReport(spotId, startingDate, finishingDate));
         }
     }
 }

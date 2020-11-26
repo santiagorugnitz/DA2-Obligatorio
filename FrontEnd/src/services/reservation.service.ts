@@ -3,7 +3,7 @@ import { RouterStateSnapshot } from '@angular/router';
 import { PendingReservation } from 'src/models/pending-reservation';
 import {Reservation} from "../models/reservation";
 import { environment } from 'src/environments/environment';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ReservationService {
-
+  
   uri = `${environment.baseUrl}/reservations`;
 
   constructor(private http: HttpClient) {}
@@ -20,15 +20,18 @@ export class ReservationService {
     return this.http.get<Reservation>(`${this.uri}/${id}`)
   }
 
-  review(id:number,comment:string,score:number){
-    let body = {comment:comment,score:score}
-    return this.http.put(`${this.uri}/${id}`, body);
-
+  review(id:number,score:number, comment:string): Observable<string>{
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set("Content-Type","application/json");
+    let body = {score:score, comment:comment}
+    return this.http.put<string>(`${this.uri}/${id}/review`, body, {headers:myHeaders, responseType: 'text' as 'json'});
   }
   
-  changeState(id:number,state:string,description:string){
+  changeState(id:number,state:number,description:string):Observable<string>{
+    let myHeaders = new HttpHeaders();
+    myHeaders = myHeaders.set('token', localStorage.token).set("Content-Type","application/json");
     let body = {state:state,description:description}
-    return this.http.put(`${this.uri}/${id}`, body);
+    return this.http.put<string>(`${this.uri}/${id}`, body, {headers:myHeaders, responseType: 'text' as 'json'});
   }
 
   postReservation(reservation:PendingReservation):Observable<number>{
@@ -36,7 +39,7 @@ export class ReservationService {
   }
 
   getFromAccomodation(id:number):Observable<Reservation[]>{
-    let params = new HttpParams().set("accomodationId",id.toString());
+    let params = new HttpParams().set("accommodationId",id.toString());
     return this.http.get<Reservation[]>(this.uri,{params:params})
 
   }

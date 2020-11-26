@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Reservation Id: {{data.id}}</h1>
+<div mat-dialog-content style="height: 100%;">
+  <mat-form-field style="width: 100%;">
+    <mat-label>Description:</mat-label>
+    <input matInput [(ngModel)]="data.description" [formControl]="descriptionControl" required>
+    <mat-error *ngIf="descriptionControl.invalid || data.description.trim().length == 0">Enter a non empty description</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>State</mat-label>
+    <mat-select [formControl]="stateControl" required [(value)]="data.state">
+      <mat-option *ngFor="let state of posibleStates" [value]="state">
+        {{state}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="stateControl.hasError('required')">Please select an option</mat-error>
+  </mat-form-field>
+
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <div *ngIf="buttonEnabled()">
+  <button mat-button (click)="onSubmit(data)" [mat-dialog-close]="data" cdkFocusInitial>Change State</button>
+</div>
+
+<div *ngIf="!buttonEnabled()">
+  <button mat-button disabled [mat-dialog-close]="data" cdkFocusInitial>Change State</button>
+  <div *ngIf="!buttonEnabled()">
+    <mat-error>Enter all required values</mat-error>
+  </div>
+  </div>

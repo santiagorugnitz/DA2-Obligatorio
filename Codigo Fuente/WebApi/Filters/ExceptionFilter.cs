@@ -10,11 +10,16 @@ namespace WebApi.Filters
 {
     public class ExceptionFilter : Attribute, IExceptionFilter
     {
+        private static readonly int SERVER_ERROR_STATUS_CODE = 500;
+        private static readonly int BAD_REQUEST_STATUS_CODE = 400;
+        private static readonly int NOT_FOUND_STATUS_CODE = 404;
+
+
         public void OnException(ExceptionContext context)
         {
-            int code = 500;
-            if (context.Exception is NotFoundException) code = 404;
-            else if (context.Exception is BadRequestException) code = 400;
+            int code = SERVER_ERROR_STATUS_CODE;
+            if (context.Exception is NotFoundException) code = NOT_FOUND_STATUS_CODE;
+            else if (context.Exception is BadRequestException) code = BAD_REQUEST_STATUS_CODE;
             
             context.Result = new ContentResult()
             {

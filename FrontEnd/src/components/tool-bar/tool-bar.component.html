@@ -23,12 +23,17 @@
         <button mat-flat-button class="button" routerLink="spot-search">
           <a routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Tourist Spot Search</a>
         </button>
-        <mat-form-field class="reservationNumber">
+        <mat-form-field class="reservationNumber"  appearance="legacy">
           <mat-label>Check your reservation</mat-label>
           <input matInput placeholder="Ex. 12364" type="number" onkeypress="return event.charCode >= 48" min="1" [(ngModel)]="reservationNumber">
-          <button mat-button matSuffix mat-icon-button (click)="openReservation()">
+          
+          <button mat-button matSuffix mat-icon-button  style="font-size: 25px;margin-right: 2%;" (click)="openReservation()">
             <mat-icon>search</mat-icon>
           </button>
+          <button mat-button matSuffix mat-icon-button style="font-size: 25px;" *ngIf="isLoggued" (click)="openReservationStateChange()">
+            <mat-icon>assignment</mat-icon>
+          </button>
+
         </mat-form-field>
       </div>
       <div class="loginForm">

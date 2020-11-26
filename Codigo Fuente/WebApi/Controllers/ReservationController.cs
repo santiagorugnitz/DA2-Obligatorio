@@ -42,9 +42,9 @@ namespace WebApi.Controllers
         }
 
         [HttpGet()]
-        public IActionResult GetFromAccomodation(int accomodationId)
+        public IActionResult GetFromAccommodation(int accommodationId)
         {
-            return Ok(handler.GetAllFromAccomodation(accomodationId));
+            return Ok(handler.GetAllFromAccommodation(accommodationId));
         }
 
         [ServiceFilter(typeof(AuthorizationFilter))]

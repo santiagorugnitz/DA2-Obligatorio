@@ -28,7 +28,7 @@ namespace WebApiTest
                 BabyQuantity = 1,
                 Email = "Email@prueba",
                 Surname = "Prueba",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
                 StateDescription = "Done",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
@@ -56,7 +56,7 @@ namespace WebApiTest
                 BabyQuantity = 1,
                 Email = "Email@prueba",
                 Surname = "Prueba",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
                 StateDescription = "Done",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
@@ -84,7 +84,7 @@ namespace WebApiTest
                 BabyQuantity = 1,
                 Email = "Email@prueba",
                 Surname = "Prueba",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
                 StateDescription = "Done",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
@@ -92,7 +92,7 @@ namespace WebApiTest
 
             ReservationChangeModel model = new ReservationChangeModel()
             {
-                State = ReservationState.Aceptada,
+                State = ReservationState.Accepted,
                 Description = "valid"
             };
 
@@ -119,7 +119,7 @@ namespace WebApiTest
                 BabyQuantity = 1,
                 Email = "Email@prueba",
                 Surname = "Prueba",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
                 StateDescription = "Done",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
@@ -153,7 +153,7 @@ namespace WebApiTest
         }
 
         [TestMethod]
-        public void GetFromAccomodation()
+        public void GetFromAccommodation()
         {
             var mock = new Mock<IReservationHandler>(MockBehavior.Strict);
             var controller = new ReservationController(mock.Object);
@@ -165,14 +165,14 @@ namespace WebApiTest
                 BabyQuantity = 1,
                 Email = "Email@prueba",
                 Surname = "Prueba",
-                ReservationState = ReservationState.Aceptada,
+                ReservationState = ReservationState.Accepted,
                 StateDescription = "Done",
                 CheckIn = DateTime.Now,
                 CheckOut = DateTime.Now.AddDays(10)
             };
-            mock.Setup(x => x.GetAllFromAccomodation(1)).Returns(new List<Reservation>() { reservationModel.ToEntity()});
+            mock.Setup(x => x.GetAllFromAccommodation(1)).Returns(new List<Reservation>() { reservationModel.ToEntity()});
 
-            var result = controller.GetFromAccomodation(1);
+            var result = controller.GetFromAccommodation(1);
 
             Assert.AreEqual(true, result is OkObjectResult);
             mock.VerifyAll();

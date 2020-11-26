@@ -48,7 +48,7 @@ export class AdministratorsService {
 
   modifyUser(Id:number, name:string, email:string, password:string): Observable<any>{
     let myHeaders = new HttpHeaders();
-    myHeaders = myHeaders.set('token', localStorage.token);
+    myHeaders = myHeaders.set('token', localStorage.token).set("Content-Type","application/json");
     return this.http.put<void>(`${this.uri}/${Id}`, {Name:name, Email:email, Password:password}, 
     { headers: myHeaders, responseType: 'text' as 'json' });
   }

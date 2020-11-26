@@ -199,7 +199,7 @@ namespace BusinessLogicTest
             Assert.AreNotEqual(null, res);
         }
 
-        [ExpectedException(typeof(BadRequestException),"The Administrator needs a non empty password")]
+        [ExpectedException(typeof(BadRequestException), "The Administrator needs a non empty password")]
         [TestMethod]
         public void LoginBad()
         {
@@ -262,7 +262,7 @@ namespace BusinessLogicTest
             var handler = new AdministratorHandler(mock.Object);
 
             mock.Setup(x => x.Find(administrator.Token)).Returns(administrator);
-            
+
             var res = handler.IsLogged(administrator.Token);
 
             mock.VerifyAll();
@@ -296,16 +296,27 @@ namespace BusinessLogicTest
             mock.VerifyAll();
             Assert.AreEqual(administrator, res[0]);
         }
+
         [TestMethod]
         public void Update()
         {
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
+            List<Administrator> returnedList = new List<Administrator>();
+
+            var admin2 = new Administrator
+            {
+                Name = "Santiago",
+                Email = "newMail",
+                Password = "1234",
+                Token = "asdg25-f812j"
+            };
 
             mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(returnedList);
             mock.Setup(x => x.Update(administrator)).Returns(true);
 
-            var res = handler.Update(administrator);
+            var res = handler.Update(admin2);
 
             mock.VerifyAll();
             Assert.AreEqual(true, res);
@@ -317,19 +328,46 @@ namespace BusinessLogicTest
         {
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
+            List<Administrator> returnedList = new List<Administrator>();
+            returnedList.Add(administrator);
 
-            mock.Setup(x => x.Get(administrator.Id)).Returns((Administrator) null);
+            var admin2 = new Administrator();
+            admin2.Email = "newEmail";
+
+            mock.Setup(x => x.Get(administrator.Id)).Returns((Administrator)null);
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(returnedList);
             mock.Setup(x => x.Update(administrator)).Returns(true);
 
-            var res = handler.Update(administrator);
-
-            mock.VerifyAll();
-            Assert.AreEqual(true, res);
+            var res = handler.Update(admin2);
         }
+
+        [ExpectedException(typeof(BadRequestException))]
+        [TestMethod]
+        public void UpdateUnsuccesfullByRepeatedEmail()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            List<Administrator> returnedList = new List<Administrator>();
+            var admin2 = new Administrator {
+                Id=7,
+                Email = "admin2@mail.com"
+            };
+            returnedList.Add(administrator);
+            returnedList.Add(admin2);
+
+            administrator.Email = admin2.Email;
+            
+            mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
+            mock.Setup(x => x.GetAll(It.IsAny<Func<object, bool>>())).Returns(returnedList);
+            //mock.Setup(x => x.Update(administrator)).Returns(true);
+
+            var res = handler.Update(administrator);
+        } 
 
         [ExpectedException(typeof(NotFoundException))]
         [TestMethod]
-        public void UpdateWrongId()
+        public void DeleteWrongId()
         {
             var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
             var handler = new AdministratorHandler(mock.Object);
@@ -337,8 +375,22 @@ namespace BusinessLogicTest
             mock.Setup(x => x.Get(administrator.Id)).Returns((Administrator)null);
 
             var res = handler.Delete(administrator.Id);
-
         }
+
+        [TestMethod]
+        public void DeleteSuccesfull()
+        {
+            var mock = new Mock<IAdministratorRepository>(MockBehavior.Strict);
+            var handler = new AdministratorHandler(mock.Object);
+
+            mock.Setup(x => x.Get(administrator.Id)).Returns(administrator);
+            mock.Setup(x => x.Delete(administrator)).Returns(true);
+
+            var res = handler.Delete(administrator.Id);
+            mock.VerifyAll();
+            Assert.AreEqual(true, res);
+        }
+
 
     }
 }

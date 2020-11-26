@@ -53,11 +53,13 @@ namespace WebApi
             services.AddScoped<IAdministratorRepository, AdministratorRepository>();
             services.AddScoped<IAdministratorHandler, AdministratorHandler>();
             services.AddScoped<ITouristSpotHandler, TouristSpotHandler>();
-            services.AddScoped<IAccomodationHandler, AccomodationHandler>();
+            services.AddScoped<IAccommodationHandler, AccommodationHandler>();
             services.AddScoped<IRegionHandler, RegionHandler>();
             services.AddScoped<IReservationHandler, ReservationHandler>();
             services.AddScoped<ICategoryHandler, CategoryHandler>();
             services.AddScoped<IReportHandler, ReportHandler>();
+            services.AddScoped<IDllHandler, DllHandler>();
+            services.AddScoped<IImporterHandler, ImporterHandler>();
 
             services.AddScoped<AuthorizationFilter>();
             services.AddScoped<ExceptionFilter>();

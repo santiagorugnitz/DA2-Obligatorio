@@ -133,7 +133,7 @@ namespace BusinessLogic
         {
             List<TouristSpot> spotsList;
 
-            if (region == null)
+            if (region == null || region==0)
             {
                 spotsList = spotsRepository.GetAll().ToList();
             }

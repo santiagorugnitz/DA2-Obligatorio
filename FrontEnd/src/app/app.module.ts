@@ -15,7 +15,7 @@ import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SpotSearchComponent } from '../components/spot-search/spot-search.component';
-import { DialogAddSpot, ToolBarComponent, ReservationDialog, ImportersDialog } from '../components/tool-bar/tool-bar.component';
+import { DialogAddSpot, ToolBarComponent, ReservationDialog, ReservationStateDialog, ImportersDialog } from '../components/tool-bar/tool-bar.component';
 import { AccommodationsSearchComponent, MakeReservationDialog, ReservationConfirmationDialog} from '../components/accommodations-search/accommodations-search.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatGridListModule} from '@angular/material/grid-list';
@@ -35,7 +35,8 @@ import { AccommodationManagementComponent, DialogAddAccommodation } from 'src/co
 import { MatRadioButton } from '@angular/material/radio';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {MatTableModule} from '@angular/material/table';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from 'src/services/interceptor.service';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { HttpClientModule } from '@angular/common/http';
     SpotReportComponent,
     DialogAddAccommodation,
     AccommodationManagementComponent,
-    DialogAddSpot
+    DialogAddSpot,
+    ReservationStateDialog
   ],
   imports: [
     BrowserModule,
@@ -88,7 +90,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatTableModule,
     HttpClientModule,
   ],
-  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
+  providers: [{ provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },
+                {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

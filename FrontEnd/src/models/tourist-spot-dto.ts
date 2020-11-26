@@ -4,7 +4,7 @@ export class TouristSpotDTO {
     Name: String
     Description: String
     Image: String
-    Region: number
-    Categories: number[]
+    RegionId: number
+    CategoryIds: number[]
 
 }

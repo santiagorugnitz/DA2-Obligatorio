@@ -44,7 +44,7 @@ export class SpotSearchComponent implements OnInit {
         this.regions = res;
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );
@@ -54,14 +54,15 @@ export class SpotSearchComponent implements OnInit {
         this.categories = res;
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );
   }
 
   userLoggued():boolean{
-    return localStorage.getItem('token') != ''
+    const token = localStorage.token;
+    return (token != null && token !== undefined && token !== '');
   }
 
   onCategoryClick(checked: Boolean, id: Number) {
@@ -85,7 +86,7 @@ export class SpotSearchComponent implements OnInit {
         this.spots= res;
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );

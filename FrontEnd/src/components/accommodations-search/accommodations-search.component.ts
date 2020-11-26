@@ -59,7 +59,7 @@ export class AccommodationsSearchComponent implements OnInit {
         this.spot = res
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );
@@ -120,16 +120,19 @@ export class AccommodationsSearchComponent implements OnInit {
           res => {
             this.accommodations = res
             for (let accommodation of this.accommodations) {
+              accommodation.selectedImage = 0
               this.calculateTotal(accommodation.id)
+              this.calculateScore(accommodation)
             }
+            this.hasSearched = !this.hasSearched
+
           },
           err => {
-            alert('There was an unexpected error, please, try again');
+            alert(`${err.status}: ${err.error}`);;
             console.log(err);
           })
 
 
-        this.hasSearched = !this.hasSearched
       } else {
         alert('The dates are incorrect');
       }
@@ -139,12 +142,41 @@ export class AccommodationsSearchComponent implements OnInit {
     }
   }
 
-  calculateTotal(Id: number): void {
+  calculateScore(accommodation: Accommodation) {
+    this.reservationService.getFromAccomodation(accommodation.id).subscribe(
+      res => {
+        accommodation.comments = res.filter(x => x.score > 0).map(function (x) {
+          var comment: Comment
+          comment = {
+            name: x.name,
+            surname: x.surname,
+            score: x.score,
+            text: x.comment,
+          }
+          return comment
+        })
 
-    this.getAccommodationById(Id).total = this.accommodationService.calculateTotal(
-      Id, this.startingDate, this.finishingDate,
+        accommodation.score = 0
+        accommodation.comments.forEach(x => accommodation.score += x.score)
+        accommodation.score = accommodation.score / accommodation.comments.length
+
+      },
+      err => {
+        alert(`${err.status}: ${err.error}`);;
+        console.log(err);
+      })
+  }
+
+  calculateTotal(Id: number): void {
+    this.accommodationService.calculateTotal(Id, this.startingDate, this.finishingDate,
       this.adultQuantity, this.retiredQuantity,
-      this.childrenQuantity, this.babyQuantity)
+      this.childrenQuantity, this.babyQuantity).subscribe(
+        res => {
+          this.getAccommodationById(Id).total = res
+        },
+        err => {
+          alert(`${err.status}: ${err.error}`);
+        })
   }
 
 
@@ -166,50 +198,32 @@ export class AccommodationsSearchComponent implements OnInit {
     return accomodation
   }
 
-  getAccommodationComments(id: number, name: string): void {
-    var reservations: Comment[]
-    this.reservationService.getFromAccomodation(id).subscribe(
-      res => {
-        reservations = res.map(function (x) {
-          var comment: Comment
-          comment = {
-            name: x.name,
-            surname: x.surname,
-            score: x.score,
-            text: x.comment,
-          }
-          return comment
-        })
-      },
-      err => {
-        alert('There was an unexpected error, please, try again');
-        console.log(err);
-      })
+  getAccommodationComments(accommodation: Accommodation): void {
     const dialogRef = this.dialog.open(AccommodationCommentsComponent, {
       width: '300px',
       height: '500px',
-      data: { comments: reservations, accommodationName: name }
+      data: { comments: accommodation.comments, accommodationName: accommodation.name }
     });
   }
 
-  openReservationDialog(id: number): void {
+  openReservationDialog(accommodation: Accommodation): void {
 
     const dialogRef = this.dialog.open(MakeReservationDialog, {
       width: '250px',
       data: {
         reservation: {
-          AccommodationId: id,
+          AccommodationId: accommodation.id,
           CheckIn: this.startingDate,
           CheckOut: this.finishingDate,
           BabyQuantity: this.babyQuantity,
           ChildrenQuantity: this.childrenQuantity,
           AdultQuantity: this.adultQuantity,
           RetiredQuantity: this.retiredQuantity,
-          ReservationState: "Creada",
+          ReservationState: "Created",
           StateDescription: "",
         },
-        telephone: "+59812343",
-        contactInfo: "Thank you for your reservation, see you soon!"
+        telephone: accommodation.telephone,
+        contactInfo: accommodation.contactInformation
       }
     });
   }
@@ -221,6 +235,10 @@ export class AccommodationsSearchComponent implements OnInit {
 })
 export class MakeReservationDialog {
 
+  userControl = new FormControl('', Validators.required);
+  surnameControl = new FormControl('', Validators.required);
+  emailControl = new FormControl('', Validators.required);
+
   constructor(
     public dialogRef: MatDialogRef<MakeReservationDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private reservationService: ReservationService, public dialog: MatDialog) { }
@@ -231,9 +249,7 @@ export class MakeReservationDialog {
 
   onSubmit(reservation: PendingReservation) {
     this.dialogRef.close()
-
     var reservationNumber = -1
-
 
     this.reservationService.postReservation(this.data.reservation).subscribe(
       res => {
@@ -241,15 +257,16 @@ export class MakeReservationDialog {
         this.openConfirmationDialog(reservationNumber, this.data.telephone, this.data.contactInfo)
       },
       err => {
-        alert('There was an unexpected error, please, try again');
+        alert(`${err.status}: ${err.error}`);;
         console.log(err);
       }
     );
+  }
 
-
-
-
-
+  buttonEnabled() {
+    return this.userControl.valid && this.data.reservation.Name.trim() != ''
+      && this.surnameControl.valid && this.data.reservation.Surname.trim() != ''
+      && this.emailControl.valid && this.data.reservation.Email.trim() != ''
   }
 
   openConfirmationDialog(id: number, tel: string, info: string) {
