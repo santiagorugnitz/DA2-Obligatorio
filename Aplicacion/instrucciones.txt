@@ -1,0 +1,2 @@
+el frontend espera que el backend corra en el puerto 6969
+este valor se puede modificar en el environment de produccion y volviendo a hacer el build de la aplicación
