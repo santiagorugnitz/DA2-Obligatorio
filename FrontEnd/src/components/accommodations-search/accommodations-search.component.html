@@ -182,10 +182,10 @@
             <img mat-card-image class="image" src={{accommodation.images[accommodation.selectedImage].name}} (click)="nextImage(accommodation)"  alt="Photo of {{accommodation.name}}">
             <span>{{accommodation.selectedImage+1}}/{{accommodation.images.length}}</span>
 
-            <p *ngIf="accommodation.score>0">User's score: {{accommodation.score}}</p>            
             <button mat-flat-button class="button-reservation" (click)="getAccommodationComments(accommodation)">
               <a>Show Comments</a>
             </button>
+            <p *ngIf="accommodation.score>0">User's score: {{accommodation.score}}</p>            
             
             <mat-card-content>
               <p>

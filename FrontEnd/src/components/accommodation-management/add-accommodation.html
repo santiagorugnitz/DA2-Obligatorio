@@ -7,7 +7,7 @@
     </mat-error>
   </mat-form-field>
   <mat-form-field>
-    <mat-label>Adress:</mat-label>
+    <mat-label>Address:</mat-label>
     <input matInput [(ngModel)]="data.accommodation.address" [formControl]="adressControl" required>
     <mat-error *ngIf="adressControl.invalid || data.accommodation.address.trim().length == 0">Enter a non empty adress
     </mat-error>

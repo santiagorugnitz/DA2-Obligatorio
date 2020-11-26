@@ -156,6 +156,7 @@ export class AccommodationsSearchComponent implements OnInit {
           return comment
         })
 
+        accommodation.score = 0
         accommodation.comments.forEach(x => accommodation.score += x.score)
         accommodation.score = accommodation.score / accommodation.comments.length
 

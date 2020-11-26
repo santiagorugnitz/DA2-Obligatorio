@@ -15,7 +15,7 @@ using DataImport;
 namespace BusinessLogicTest
 {
     [TestClass]
-    public class FormatterHandlerTest
+    public class ImporterHandlerTest
     {
         public static AccommodationImport accommodation = new AccommodationImport
         {

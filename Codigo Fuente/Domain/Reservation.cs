@@ -8,7 +8,7 @@ namespace Domain
     public enum ReservationState
     {
         Created,
-        Payment_Pendent,
+        Pending_Payment,
         Accepted,
         Rejected,
         Expired

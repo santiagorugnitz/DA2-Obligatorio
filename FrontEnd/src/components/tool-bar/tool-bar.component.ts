@@ -289,7 +289,7 @@ export interface ImportersData {
 })
 export class ReservationDialog {
   
-  posibleStates: string[] = ['Created','Payment_Pendent','Accepted','Rejected','Expired']
+  posibleStates: string[] = ['Created','Pending_Payment','Accepted','Rejected','Expired']
   comment: string;
   score: number = 5;
   state:string
@@ -327,7 +327,7 @@ export class ReservationDialog {
 })
 export class ReservationStateDialog {
   
-  posibleStates: string[] = ['Created','Payment_Pendent','Accepted','Rejected','Expired']
+  posibleStates: string[] = ['Created','Pending_Payment','Accepted','Rejected','Expired']
   score: number = 5;
   descriptionControl = new FormControl('', Validators.required);
   stateControl = new FormControl('', Validators.required);
